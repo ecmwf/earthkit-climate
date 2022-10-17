@@ -170,9 +170,8 @@ def _pandas_frequency_and_bins(
 
 def rolling_reduce(
         dataarray: xr.DataArray,
-        how='mean',
-        q=[50],
-        dropna_how=None,
+        how_reduce='mean',
+        how_dropna=None,
         **kwargs
 ) -> xr.DataArray:
     """Return reduced data using a moving window over which to apply the reduction.
@@ -181,18 +180,16 @@ def rolling_reduce(
     ----------
     dataarray : xr.DataArray
         Data over which the moving window is applied according to the reduction method.
-    min_periods (optional) : integer 
+    min_periods (optional) : integer (xr.dataarray.rolling)
         The minimum number of observations in the window required to have a value
         (otherwise result is NaN). Default is to set **min_periods** equal to the size of the window.
-    center (optional): bool
+    center (optional): bool (xr.dataarray.rolling)
         Set the labels at the centre of the window.
-    how (optional) : str,
+    how_reduce (optional) : str,
         Function to be applied for reduction. Default is 'mean'.
-    q (optional): float, 
-        Value of percentile to be used if **how** == 'percentile'
-    dropna_how (str, optional): Determine if dimension is removed from the output when we have at least one NaN or
+    how_dropna (str, optional): Determine if dimension is removed from the output when we have at least one NaN or
         all NaN. **dropna_how** can be either 'any' or 'all'. Default is 'any'.
-    **windows (dim=window): where **dim** is str dtype and corresponds to the dimension that the rolling
+    **kwargs : where **dim** is str dtype and corresponds to the dimension that the rolling
         iterator is created along (e.g., time), and **window** is int dtype corresponding to the size of the moving
         window.
 
@@ -200,18 +197,20 @@ def rolling_reduce(
     -------
     xr.DataArray
     """
+    # Expand dim kwarg to individual kwargs
+    if isinstance(kwargs.get('dim'), dict):
+        kwargs.update(kwargs.pop('dim'))
+
     window_dims = [
         _dim for _dim in list(dataarray.dims) if _dim in list(kwargs)
     ]
     accepted_rolling_kwargs = ['min_periods', 'center'] + window_dims
-    rolling_kwargs {
+    rolling_kwargs = {
         _kwarg: kwargs.pop(_kwarg) for _kwarg in kwargs
         if _kwarg in accepted_rolling_kwargs
     }
 
     dropna_how = kwargs.pop('dropna_how', None)
-
-    how_reduce = kwargs.pop('how', 'mean')
 
     # Any kwargs left after above reductions are kwargs for reduction method
     reduce_kwargs = kwargs
@@ -236,5 +235,5 @@ def rolling_reduce(
             data_windowed = data_windowed.dropna(dim, how=dropna_how)
 
     data_windowed.attrs.update(dataarray.attrs)
-    
+
     return data_windowed
