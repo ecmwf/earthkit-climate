@@ -109,11 +109,12 @@ def resample(
     return result
 
 
-def groupby(
+def groupby_time(
     dataarray: xr.DataArray,
     frequency: str = None,
     bin_widths: int = None,
     squeeze: bool = True,
+    time_dim = 'time',
 ):
     if frequency is None:
         try:
@@ -127,10 +128,10 @@ def groupby(
         bin_widths = bin_widths or possible_bins
 
     if bin_widths is not None:
-        return _groupby_bins(dataarray, frequency, bin_widths, squeeze)
+        return _groupby_bins(dataarray, frequency, bin_widths, squeeze, time_dim=time_dim)
 
     try:
-        grouped_data = dataarray.groupby(f"time.{frequency}", squeeze=squeeze)
+        grouped_data = dataarray.groupby(f"{time_dim}.{frequency}", squeeze=squeeze)
     except AttributeError:
         raise ValueError(
             f"Invalid frequency '{frequency}' - see xarray documentation for "
@@ -144,19 +145,20 @@ def _groupby_bins(
     frequency: str,
     bin_widths: int,
     squeeze: bool,
+    time_dim: str = 'time',
 ):
     if not isinstance(bin_widths, (list, tuple)):
         max_value = _BIN_MAXES[frequency]
         bin_widths = list(range(0, max_value + 1, bin_widths))
-    # try:
-    grouped_data = dataarray.groupby_bins(
-        f"time.{frequency}", bin_widths, squeeze=squeeze
-    )
-    # except AttributeError:
-    #     raise ValueError(
-    #         f"Invalid frequency '{frequency}' - see xarray documentation for "
-    #         f"a full list of valid frequencies."
-    #     )
+    try:
+        grouped_data = dataarray.groupby_bins(
+            f"{time_dim}.{frequency}", bin_widths, squeeze=squeeze
+        )
+    except AttributeError:
+        raise ValueError(
+            f"Invalid frequency '{frequency}' - see xarray documentation for "
+            f"a full list of valid frequencies."
+        )
     return grouped_data
 
 

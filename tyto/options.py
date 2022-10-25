@@ -1,5 +1,7 @@
 import numpy as np
 
+
+# TODO: Replace with method from meteokit
 def nanaverage(
     data,
     weights=None,
