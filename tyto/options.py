@@ -3,42 +3,41 @@ import numpy as np
 def nanaverage(
     data,
     weights=None,
-    axis=None,
     **kwargs
 ):
-    '''
-    A merge of the functionality of np.nanmean and np.average. 
-    It returns the mean of the data with correct handling of nan
-    values (nanmean), and it accepts a weights argument (average)
+    '''A merge of the functionality of np.nanmean and np.average.
 
-    Args:
-        data : numpy array
-        weights: Weights to apply to the data for averaging. 
+    Parameters
+    ----------
+    data : numpy array
+    weights: Weights to apply to the data for averaging. 
             Weights will be normalised and must correspond to the
             shape of the numpy data array and axis/axes that is/are
             averaged over.
-        axis: axis/axes to compute the nanaverage over.
-        kwargs: any other np.nansum kwargs
-    Returns:
-        weights equal to cosine of latitude coordinate
+    axis: axis/axes to compute the nanaverage over.
+    kwargs: any other np.nansum kwargs
+
+    Returns
+    -------
+    numpy array
+        mean of data (along axis) where nan-values are ignored
+        and weights applied if provided.
     '''
     if weights is not None:
         # set weights to nan where data is nan:
         this_weights = np.ones(data.shape)*weights
         this_weights[np.isnan(data)] = np.nan
-
-        # Weights must be scaled to the mean of valid
+        # Weights must be scaled to the sum of valid
         #  weights for each relevant axis:
         this_denom = np.nansum(
             this_weights, **kwargs
         )
-        # If averaging over axis/axes then we must add dummy
+        # If averaging over an axis then we must add dummy
         # dimension[s] to the denominator to make compatible
         # with the weights.
-        if axis is not None:
+        if kwargs.get('axis', None) is not None:
             reshape = list(this_weights.shape)
-            for a in axis:
-                reshape[a] = 1
+            reshape[kwargs.get('axis')] = 1
             this_denom = this_denom.reshape(reshape)
         
         # Scale weights to mean of valid weights:
@@ -50,6 +49,7 @@ def nanaverage(
             data * this_weights, **kwargs
         )
     else:
+        # If no weights, then nanmean will suffice
         nanaverage = np.nanmean(data, **kwargs)
 
     return nanaverage
