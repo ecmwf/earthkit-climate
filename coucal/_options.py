@@ -32,10 +32,14 @@ def nanaverage(data, weights=None, **kwargs):
         # If averaging over an axis then we must add dummy
         # dimension[s] to the denominator to make compatible
         # with the weights.
-        if kwargs.get("axis", None) is not None:
-            reshape = list(this_weights.shape)
-            reshape[kwargs.get("axis")] = 1
-            this_denom = this_denom.reshape(reshape)
+        axis = kwargs.get('axis', [])
+        if isinstance(axis, int):
+            axis = list(axis)
+        reshape = list(this_weights.shape)
+        for ax in axis:
+            reshape[ax] = 1
+        print(kwargs.get("axis"), reshape, this_denom.shape)
+        this_denom = this_denom.reshape(reshape)
 
         # Scale weights to mean of valid weights:
         this_weights = this_weights / this_denom
@@ -119,7 +123,8 @@ def _latitude_weights(dataarray: xr.DataArray, lat_dim_names=["latitude", "lat"]
 
 
 HOW_DICT = {
-    "average": nanaverage,
+    "average": np.average,
+    "nanaverage": nanaverage,
     "mean": np.nanmean,
     "stddev": np.nanstd,
     "std": np.nanstd,
