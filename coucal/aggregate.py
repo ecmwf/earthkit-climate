@@ -161,10 +161,7 @@ def _groupby_time(
     try:
         grouped_data = dataarray.groupby(f"{time_dim}.{frequency}", squeeze=squeeze)
     except AttributeError:
-        raise ValueError(
-            f"Invalid frequency '{frequency}' - see xarray documentation for "
-            f"a full list of valid frequencies."
-        )
+        raise ValueError( f"Invalid frequency '{frequency}' - see xarray documentation for "                              )
     if frequency in ["season"]:
         grouped_data = grouped_data.reindex(season=["DJF", "MAM", "JJA", "SON"])
     return grouped_data
