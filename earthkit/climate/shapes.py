@@ -1,6 +1,6 @@
+import logging
 import typing as T
 from copy import deepcopy
-import logging
 
 import geopandas as gpd
 import numpy as np
@@ -14,6 +14,7 @@ from earthkit.climate.tools import (
 )
 
 logger = logging.getLogger(__name__)
+
 
 def _transform_from_latlon(lat, lon):
     """
@@ -286,7 +287,6 @@ def reduce(
             return out
     else:
         return _reduce_dataarray(dataarray, geodataframe, **kwargs)
-    
 
 
 def _reduce_dataarray(
@@ -338,7 +338,6 @@ def _reduce_dataarray(
         Each slice of layer corresponds to a feature in layer.
 
     """
-
     extra_out_attrs = {}
     # If how is string, fetch function from dictionary:
     if isinstance(how, str):
@@ -346,7 +345,9 @@ def _reduce_dataarray(
         how = get_how(how)
     assert isinstance(how, T.Callable), f"how must be a callable: {how}"
 
-    new_long_name = f"{how_label.title()} {dataarray.attrs.get('long_name', dataarray.name)}"
+    new_long_name = (
+        f"{how_label.title()} {dataarray.attrs.get('long_name', dataarray.name)}"
+    )
     new_short_name = f"{dataarray.name}_{how_label or how.__name__}"
 
     if isinstance(extra_reduce_dims, str):
@@ -373,10 +374,8 @@ def _reduce_dataarray(
         # If weighted, use xarray weighted arrays which correctly handle missing values etc.
         if weights is not None:
             dataarray.weighted(weights)
-        
-        reduced = this.reduce(
-            how, dim=reduce_dims, **red_kwargs
-        ).compute()
+
+        reduced = this.reduce(how, dim=reduce_dims, **red_kwargs).compute()
         reduced = reduced.assign_attrs(dataarray.attrs)
         reduced_list.append(reduced)
         # context.debug(f"Shapes.average reduced ({i}): {reduced} \n{i}")
@@ -407,16 +406,18 @@ def _reduce_dataarray(
         }
     )
     out_xr = out_xr.assign_attrs()
-    if return_as in ["pandas"]: # Return as a fully expanded pandas.DataFrame
-        logger.warn("Returning reduced data in pandas format is considered experimental and the format")
+    if return_as in ["pandas"]:  # Return as a fully expanded pandas.DataFrame
+        logger.warn(
+            "Returning reduced data in pandas format is considered experimental and the format"
+        )
         # Convert to DataFrame
         out = geodataframe.set_index(mask_dim)
         out = out.join(out_xr.to_dataframe())
-        out.attrs.update({
-            **extra_out_attrs
-        })
+        out.attrs.update({**extra_out_attrs})
     elif return_as in ["pandas_compact"]:
-        logger.warn("Returning reduced data in pandas format is considered experimental and the format")
+        logger.warn(
+            "Returning reduced data in pandas format is considered experimental and the format"
+        )
         # Out dims for attributes:
         out_dims = {
             dim: dataarray.coords.get(dim).values if dim in dataarray.coords else None
@@ -427,25 +428,20 @@ def _reduce_dataarray(
         reduced_list = [red.values for red in reduced_list]
         # reduced_list = [red.to_dataframe() for red in reduced_list]
         reduce_attrs = geodataframe.attrs.get("reduce_attrs", {})
-        reduce_attrs.update({
-            f"{dataarray.name}": dataarray.attrs,
-            f"{new_short_name}": {
-                "dims": out_dims,
-                "long_name": new_long_name,
-                "units": dataarray.attrs.get('units'),
-                **extra_out_attrs
-            },
-        })
-        out = geodataframe.assign(**{new_short_name: reduced_list})
-        out.attrs.update(
+        reduce_attrs.update(
             {
-                "reduce_attrs": reduce_attrs
+                f"{dataarray.name}": dataarray.attrs,
+                f"{new_short_name}": {
+                    "dims": out_dims,
+                    "long_name": new_long_name,
+                    "units": dataarray.attrs.get("units"),
+                    **extra_out_attrs,
+                },
             }
         )
+        out = geodataframe.assign(**{new_short_name: reduced_list})
+        out.attrs.update({"reduce_attrs": reduce_attrs})
     else:
-        out = out_xr.assign_attrs({
-            **geodataframe.attrs,
-            **extra_out_attrs
-        })
+        out = out_xr.assign_attrs({**geodataframe.attrs, **extra_out_attrs})
 
     return out
