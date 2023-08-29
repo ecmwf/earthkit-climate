@@ -1,5 +1,6 @@
 import typing as T
 from copy import deepcopy
+import logging
 
 import geopandas as gpd
 import numpy as np
@@ -12,6 +13,7 @@ from earthkit.climate.tools import (
     get_spatial_dims,
 )
 
+logger = logging.getLogger(__name__)
 
 def _transform_from_latlon(lat, lon):
     """
@@ -296,7 +298,7 @@ def _reduce_dataarray(
     lon_key: T.Union[None, str] = None,
     extra_reduce_dims: T.Union[list, str] = [],
     mask_dim: str = "FID",
-    return_as: str = "pandas",
+    return_as: str = "xarray",
     how_label: T.Union[str, None] = None,
     squeeze: bool = True,
     **kwargs,
@@ -336,11 +338,16 @@ def _reduce_dataarray(
         Each slice of layer corresponds to a feature in layer.
 
     """
+
+    extra_out_attrs = {}
     # If how is string, fetch function from dictionary:
     if isinstance(how, str):
         how_label = deepcopy(how)
         how = get_how(how)
     assert isinstance(how, T.Callable), f"how must be a callable: {how}"
+
+    new_long_name = f"{how_label.title()} {dataarray.attrs.get('long_name', dataarray.name)}"
+    new_short_name = f"{dataarray.name}_{how_label or how.__name__}"
 
     if isinstance(extra_reduce_dims, str):
         extra_reduce_dims = [extra_reduce_dims]
@@ -356,6 +363,8 @@ def _reduce_dataarray(
     if isinstance(weights, str):
         weights = WEIGHTS_DICT[weights](dataarray)
 
+    reduce_dims = spatial_dims + extra_reduce_dims
+    extra_out_attrs.update({"reduce_dims": reduce_dims})
     red_kwargs = {}
     reduced_list = []
     for mask in _shape_mask_iterator(geodataframe, dataarray, **kwargs):
@@ -364,9 +373,9 @@ def _reduce_dataarray(
         # If weighted, use xarray weighted arrays which correctly handle missing values etc.
         if weights is not None:
             dataarray.weighted(weights)
-
+        
         reduced = this.reduce(
-            how, dim=spatial_dims + extra_reduce_dims, **red_kwargs
+            how, dim=reduce_dims, **red_kwargs
         ).compute()
         reduced = reduced.assign_attrs(dataarray.attrs)
         reduced_list.append(reduced)
@@ -389,21 +398,25 @@ def _reduce_dataarray(
     if squeeze:
         reduced_list = [red_data.squeeze() for red_data in reduced_list]
 
-    if return_as in ["xarray"]:
-        out = xr.concat(reduced_list, dim=mask_dim)
-        out = out.assign_coords(
-            **{
-                mask_dim: (mask_dim, mask_dim_values),
-                #  TODO: the following creates an xarray that cannot be saved to netCDF
-                # "geometry": (mask_dim, [geom for geom in geodataframe["geometry"]]),
-            }
-        )
-        out = out.assign_attrs(geodataframe.attrs)
-    else:
-        how_label = f"{dataarray.name}_{how_label or how.__name__}"
-        if how_label in geodataframe:
-            how_label += "_reduced"
-
+    out_xr = xr.concat(reduced_list, dim=mask_dim)
+    out_xr = out_xr.assign_coords(
+        **{
+            mask_dim: (mask_dim, mask_dim_values),
+            #  TODO: the following creates an xarray that cannot be saved to netCDF
+            # "geometry": (mask_dim, [geom for geom in geodataframe["geometry"]]),
+        }
+    )
+    out_xr = out_xr.assign_attrs()
+    if return_as in ["pandas"]: # Return as a fully expanded pandas.DataFrame
+        logger.warn("Returning reduced data in pandas format is considered experimental and the format")
+        # Convert to DataFrame
+        out = geodataframe.set_index(mask_dim)
+        out = out.join(out_xr.to_dataframe())
+        out.attrs.update({
+            **extra_out_attrs
+        })
+    elif return_as in ["pandas_compact"]:
+        logger.warn("Returning reduced data in pandas format is considered experimental and the format")
         # Out dims for attributes:
         out_dims = {
             dim: dataarray.coords.get(dim).values if dim in dataarray.coords else None
@@ -413,13 +426,26 @@ def _reduce_dataarray(
         # if all([not red.shape for red in reduced_list]):
         reduced_list = [red.values for red in reduced_list]
         # reduced_list = [red.to_dataframe() for red in reduced_list]
-
-        out = geodataframe.assign(**{how_label: reduced_list})
+        reduce_attrs = geodataframe.attrs.get("reduce_attrs", {})
+        reduce_attrs.update({
+            f"{dataarray.name}": dataarray.attrs,
+            f"{new_short_name}": {
+                "dims": out_dims,
+                "long_name": new_long_name,
+                "units": dataarray.attrs.get('units'),
+                **extra_out_attrs
+            },
+        })
+        out = geodataframe.assign(**{new_short_name: reduced_list})
         out.attrs.update(
             {
-                f"{dataarray.name}_attrs": dataarray.attrs,
-                f"{how_label}_dims": out_dims,
+                "reduce_attrs": reduce_attrs
             }
         )
+    else:
+        out = out_xr.assign_attrs({
+            **geodataframe.attrs,
+            **extra_out_attrs
+        })
 
     return out
