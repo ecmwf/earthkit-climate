@@ -212,7 +212,6 @@ def get_dim_key(
 
 
 def get_spatial_info(dataarray, lat_key=None, lon_key=None):
-
     # Figure out the keys for the latitude and longitude variables
     if lat_key is None:
         lat_key = get_dim_key(dataarray, "y")
@@ -223,7 +222,9 @@ def get_spatial_info(dataarray, lat_key=None, lon_key=None):
     #  will be 'lat' and 'lon'. For irregular data it could be any dimensions
     lat_dims = dataarray.coords[lat_key].dims
     lon_dims = dataarray.coords[lon_key].dims
-    spatial_dims = [dim for dim in lat_dims] + [dim for dim in lon_dims if dim not in lat_dims]
+    spatial_dims = [dim for dim in lat_dims] + [
+        dim for dim in lon_dims if dim not in lat_dims
+    ]
 
     # Assert that latitude and longitude have the same dimensions
     #   (irregular data, e.g. x&y or obs)
@@ -231,7 +232,7 @@ def get_spatial_info(dataarray, lat_key=None, lon_key=None):
     assert (lat_dims == lon_dims) or (
         (lat_dims == (lat_key,)) and (lon_dims) == (lon_key,)
     )
-    if (lat_dims == lon_dims):
+    if lat_dims == lon_dims:
         regular = False
     elif (lat_dims == (lat_key,)) and (lon_dims) == (lon_key,):
         regular = True
@@ -245,6 +246,6 @@ def get_spatial_info(dataarray, lat_key=None, lon_key=None):
         "lat_key": lat_key,
         "lon_key": lon_key,
         "regular": regular,
-        "spatial_dims": spatial_dims
+        "spatial_dims": spatial_dims,
     }
     return spatial_info

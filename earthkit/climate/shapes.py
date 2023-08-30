@@ -3,8 +3,8 @@ import typing as T
 from copy import deepcopy
 
 import geopandas as gpd
-import pandas as pd
 import numpy as np
+import pandas as pd
 import xarray as xr
 
 from earthkit.climate.tools import (
@@ -242,15 +242,16 @@ def mask(
         A masked data array/dataset with same dimensions as the input dataarray/dataset. Any point that
         does not lie in any of the features of geodataframe is masked.
     """
-    spatial_info = get_spatial_info(
-        dataarray, lat_key=lat_key, lon_key=lon_key
-    )
+    spatial_info = get_spatial_info(dataarray, lat_key=lat_key, lon_key=lon_key)
     # Get spatial info required by mask functions:
-    mask_kwargs.update({key: spatial_info[key] for key in ["lat_key", "lon_key", "regular"]})
+    mask_kwargs.update(
+        {key: spatial_info[key] for key in ["lat_key", "lon_key", "regular"]}
+    )
     mask = shapes_to_mask(geodataframe, dataarray, **mask_kwargs)
-    out =  dataarray.where(mask)
+    out = dataarray.where(mask)
     out.attrs.update(geodataframe.attrs)
     return out
+
 
 def masks(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
@@ -287,11 +288,11 @@ def masks(
         Each slice of layer corresponds to a feature in layer.
     """
     masked_arrays = []
-    spatial_info = get_spatial_info(
-        dataarray, lat_key=lat_key, lon_key=lon_key
-    )
+    spatial_info = get_spatial_info(dataarray, lat_key=lat_key, lon_key=lon_key)
     # Get spatial info required by mask functions:
-    mask_kwargs.update({key: spatial_info[key] for key in ["lat_key", "lon_key", "regular"]})
+    mask_kwargs.update(
+        {key: spatial_info[key] for key in ["lat_key", "lon_key", "regular"]}
+    )
 
     for mask in _shape_mask_iterator(geodataframe, dataarray, **mask_kwargs):
         masked_arrays.append(dataarray.where(mask))
@@ -443,11 +444,11 @@ def _reduce_dataarray(
     if isinstance(extra_reduce_dims, str):
         extra_reduce_dims = [extra_reduce_dims]
 
-    spatial_info = get_spatial_info(
-        dataarray, lat_key=lat_key, lon_key=lon_key
-    )
+    spatial_info = get_spatial_info(dataarray, lat_key=lat_key, lon_key=lon_key)
     # Get spatial info required by mask functions:
-    mask_kwargs.update({key: spatial_info[key] for key in ["lat_key", "lon_key", "regular"]})
+    mask_kwargs.update(
+        {key: spatial_info[key] for key in ["lat_key", "lon_key", "regular"]}
+    )
     spatial_dims = spatial_info.get("spatial_dims")
 
     reduce_dims = spatial_dims + extra_reduce_dims
