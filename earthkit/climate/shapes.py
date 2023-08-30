@@ -472,6 +472,7 @@ def _reduce_dataarray(
     mask_dim_index = get_mask_dim_index(mask_dim, geodataframe)
 
     out_xr = xr.concat(reduced_list, dim=mask_dim_index)
+    out_xr = out_xr.rename(new_short_name)
 
     # #  TODO: the following creates an xarray that cannot be saved to netCDF
     # out_xr = out_xr.assign_coords(
