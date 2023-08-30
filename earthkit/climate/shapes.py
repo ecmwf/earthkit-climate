@@ -351,7 +351,7 @@ def reduce(
         if kwargs.get("return_as", "xarray") in ["xarray"]:
             out_ds = xr.Dataset().assign_attrs(dataarray.attrs)
             for var in dataarray.data_vars:
-                out_da = _reduce_dataarray(dataarray[var], *args, **kwargs)
+                out_da = _reduce_dataarray(dataarray[var], geodataframe, *args, **kwargs)
                 out_ds[out_da.name] = out_da
             return out_ds
         else:
