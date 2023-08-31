@@ -162,13 +162,14 @@ def _groupby_time(
             dataarray, frequency, bin_widths, squeeze, time_dim=time_dim
         )
 
-    try:
-        grouped_data = dataarray.groupby(f"{time_dim}.{frequency}", squeeze=squeeze)
-    except AttributeError:
-        raise ValueError(
-            f"Invalid frequency '{frequency}' - see xarray documentation for "
-            f"a full list of valid frequencies."
-        )
+    # try:
+    #     grouped_data = dataarray.groupby(f"{time_dim}.{frequency}", squeeze=squeeze)
+    # except AttributeError:
+    #     raise ValueError(
+    #         f"Invalid frequency '{frequency}' - see xarray documentation for "
+    #         f"a full list of valid frequencies."
+    #     )
+        
     if frequency in ["season"]:
         grouped_data = grouped_data.reindex(season=["DJF", "MAM", "JJA", "SON"])
     return grouped_data
@@ -177,8 +178,8 @@ def _groupby_time(
 def _groupby_bins(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     frequency: str,
-    bin_widths: int,
-    squeeze: bool,
+    bin_widths: int = 1,
+    squeeze: bool = False,
     time_dim: str = "time",
 ):
     if not isinstance(bin_widths, (list, tuple)):
