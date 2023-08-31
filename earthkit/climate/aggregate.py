@@ -142,7 +142,7 @@ def resample(
 def _groupby_time(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     frequency: str = None,
-    bin_widths: int = None,
+    bin_widths: T.Union[int, None] = None,
     squeeze: bool = True,
     time_dim: str = "time",
 ):
@@ -161,17 +161,15 @@ def _groupby_time(
         grouped_data = _groupby_bins(
             dataarray, frequency, bin_widths, squeeze, time_dim=time_dim
         )
+    else:
+        try:
+            grouped_data = dataarray.groupby(f"{time_dim}.{frequency}", squeeze=squeeze)
+        except AttributeError:
+            raise ValueError(
+                f"Invalid frequency '{frequency}' - see xarray documentation for "
+                f"a full list of valid frequencies."
+            )
 
-    # try:
-    #     grouped_data = dataarray.groupby(f"{time_dim}.{frequency}", squeeze=squeeze)
-    # except AttributeError:
-    #     raise ValueError(
-    #         f"Invalid frequency '{frequency}' - see xarray documentation for "
-    #         f"a full list of valid frequencies."
-    #     )
-        
-    if frequency in ["season"]:
-        grouped_data = grouped_data.reindex(season=["DJF", "MAM", "JJA", "SON"])
     return grouped_data
 
 
