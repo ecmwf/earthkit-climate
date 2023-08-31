@@ -309,7 +309,8 @@ def masks(
 def reduce(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     geodataframe: gpd.GeoDataFrame,
-    *args, **kwargs,
+    *args,
+    **kwargs,
 ):
     """
     Apply a shape object to an xarray.DataArray object using the specified 'how' method.
@@ -351,7 +352,9 @@ def reduce(
         if kwargs.get("return_as", "xarray") in ["xarray"]:
             out_ds = xr.Dataset().assign_attrs(dataarray.attrs)
             for var in dataarray.data_vars:
-                out_da = _reduce_dataarray(dataarray[var], geodataframe, *args, **kwargs)
+                out_da = _reduce_dataarray(
+                    dataarray[var], geodataframe, *args, **kwargs
+                )
                 out_ds[out_da.name] = out_da
             return out_ds
         else:

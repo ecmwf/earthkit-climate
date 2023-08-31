@@ -280,7 +280,8 @@ def _reduce_dataarray(
 
 def reduce(
     dataarray: T.Union[xr.DataArray, xr.Dataset],
-    *args, **kwargs,
+    *args,
+    **kwargs,
 ):
     """
     Reduce an xarray.dataarray or xarray.dataset using a specified `how` method.

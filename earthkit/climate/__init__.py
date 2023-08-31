@@ -36,9 +36,4 @@ else:
 
     shapes = transform_module_inputs(shapes)
 
-__all__ = [
-    "__version__",
-    "aggregate",
-    "climatology",
-    "shapes"
-]
+__all__ = ["__version__", "aggregate", "climatology", "shapes"]
