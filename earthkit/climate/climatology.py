@@ -10,22 +10,25 @@ def time_dim_decorator(func):
     @functools.wraps(func)
     def wrapper(
         dataarray: T.Union[xr.Dataset, xr.DataArray],
-        *args, time_dim: T.Union[str, None] = None, **kwargs
+        *args,
+        time_dim: T.Union[str, None] = None,
+        **kwargs,
     ):
-        print('time_dim', kwargs)
+        print("time_dim", kwargs)
         if time_dim is None:
             time_dim = tools.get_dim_key(dataarray, "t")
         return func(dataarray, *args, time_dim=time_dim, **kwargs)
+
     return wrapper
 
 
 GROUPBY_KWARGS = ["frequency", "bin_widths", "squeeze"]
+
+
 def groupby_kwargs_decorator(func):
     @functools.wraps(func)
-    def wrapper(
-        *args, groupby_kwargs: dict = {}, **kwargs
-    ):
-        print('gb_kwargs', kwargs)
+    def wrapper(*args, groupby_kwargs: dict = {}, **kwargs):
+        print("gb_kwargs", kwargs)
         new_kwargs = {}
         for k, v in kwargs.copy().items():
             if k in GROUPBY_KWARGS:
@@ -33,18 +36,19 @@ def groupby_kwargs_decorator(func):
             else:
                 new_kwargs[k] = v
         return func(*args, groupby_kwargs=groupby_kwargs, **new_kwargs)
+
     return wrapper
+
 
 def season_order_decorator(func):
     @functools.wraps(func)
-    def wrapper(
-        *args, **kwargs
-    ):
-        print('season', kwargs)
+    def wrapper(*args, **kwargs):
+        print("season", kwargs)
         result = func(*args, **kwargs)
-        if kwargs.get('frequency', 'NOTseason') in ['season']:
+        if kwargs.get("frequency", "NOTseason") in ["season"]:
             result.reindex(season=["DJF", "MAM", "JJA", "SON"])
         return result
+
     return wrapper
 
 
@@ -55,7 +59,7 @@ def mean(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     time_dim: T.Union[str, None] = None,
     groupby_kwargs: dict = {},
-    **reduce_kwargs
+    **reduce_kwargs,
 ) -> xr.DataArray:
     """
     Calculate the climatological mean.
@@ -74,7 +78,7 @@ def mean(
     time_dim : str (optional)
         Name of the time dimension in the data object, default behviour is to detect the
         time dimension from the input object
-    **reduce_kwargs : 
+    **reduce_kwargs :
         Any other kwargs that are accepted by `earthkit.climate.aggregate.reduce` (except how)
 
     Returns
@@ -84,7 +88,9 @@ def mean(
     print(groupby_kwargs)
     print(reduce_kwargs)
     grouped_data = aggregate._groupby_time(
-        dataarray, time_dim=time_dim, **groupby_kwargs,
+        dataarray,
+        time_dim=time_dim,
+        **groupby_kwargs,
     )
     return aggregate.reduce(grouped_data, how="mean", dim=time_dim, **reduce_kwargs)
 
@@ -96,7 +102,7 @@ def stdev(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     time_dim: T.Union[str, None] = None,
     groupby_kwargs: dict = {},
-    **reduce_kwargs
+    **reduce_kwargs,
 ) -> xr.DataArray:
     """
     Calculate of the climatological standard deviation.
@@ -115,7 +121,7 @@ def stdev(
     time_dim : str (optional)
         Name of the time dimension in the data object, default behviour is to detect the
         time dimension from the input object
-    **reduce_kwargs : 
+    **reduce_kwargs :
         Any other kwargs that are accepted by `earthkit.climate.aggregate.reduce` (except how)
 
     Returns
@@ -123,15 +129,14 @@ def stdev(
     xr.DataArray
     """
     grouped_data = aggregate._groupby_time(
-        dataarray, time_dim=time_dim, **groupby_kwargs,
+        dataarray,
+        time_dim=time_dim,
+        **groupby_kwargs,
     )
     return aggregate.reduce(grouped_data, how="std", dim=time_dim, **reduce_kwargs)
 
 
-def median(
-    dataarray: T.Union[xr.Dataset, xr.DataArray],
-    **kwargs
-) -> xr.DataArray:
+def median(dataarray: T.Union[xr.Dataset, xr.DataArray], **kwargs) -> xr.DataArray:
     """
     Calculate the climatological median.
 
@@ -149,7 +154,7 @@ def median(
     time_dim : str (optional)
         Name of the time dimension in the data object, default behviour is to detect the
         time dimension from the input object
-    **reduce_kwargs : 
+    **reduce_kwargs :
         Any other kwargs that are accepted by `earthkit.climate.aggregate.reduce` (except how)
 
     Returns
@@ -167,7 +172,7 @@ def max(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     time_dim: T.Union[str, None] = None,
     groupby_kwargs: dict = {},
-    **reduce_kwargs
+    **reduce_kwargs,
 ) -> xr.DataArray:
     """
     Calculate the climatological maximum.
@@ -186,7 +191,7 @@ def max(
     time_dim : str (optional)
         Name of the time dimension in the data object, default behviour is to detect the
         time dimension from the input object
-    **reduce_kwargs : 
+    **reduce_kwargs :
         Any other kwargs that are accepted by `earthkit.climate.aggregate.reduce` (except how)
 
     Returns
@@ -194,7 +199,9 @@ def max(
     xr.DataArray
     """
     grouped_data = aggregate._groupby_time(
-        dataarray, time_dim=time_dim, **groupby_kwargs,
+        dataarray,
+        time_dim=time_dim,
+        **groupby_kwargs,
     )
     return aggregate.reduce(grouped_data, how="max", dim=time_dim, **reduce_kwargs)
 
@@ -206,7 +213,7 @@ def min(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     time_dim: T.Union[str, None] = None,
     groupby_kwargs: dict = {},
-    **reduce_kwargs
+    **reduce_kwargs,
 ) -> xr.DataArray:
     """
     Calculate the climatological minimum.
@@ -225,7 +232,7 @@ def min(
     time_dim : str (optional)
         Name of the time dimension in the data object, default behviour is to detect the
         time dimension from the input object
-    **reduce_kwargs : 
+    **reduce_kwargs :
         Any other kwargs that are accepted by `earthkit.climate.aggregate.reduce` (except how)
 
     Returns
@@ -233,7 +240,9 @@ def min(
     xr.DataArray
     """
     grouped_data = aggregate._groupby_time(
-        dataarray, time_dim=time_dim, **groupby_kwargs,
+        dataarray,
+        time_dim=time_dim,
+        **groupby_kwargs,
     )
     return aggregate.reduce(grouped_data, how="min", dim=time_dim, **reduce_kwargs)
 
@@ -246,7 +255,7 @@ def quantiles(
     quantiles: list,
     time_dim: T.Union[str, None] = None,
     groupby_kwargs: dict = {},
-    **reduce_kwargs
+    **reduce_kwargs,
 ) -> xr.DataArray:
     """
     Calculate a set of climatological quantiles.
@@ -267,7 +276,7 @@ def quantiles(
     time_dim : str (optional)
         Name of the time dimension in the data object, default behviour is to detect the
         time dimension from the input object
-    **reduce_kwargs : 
+    **reduce_kwargs :
         Any other kwargs that are accepted by `earthkit.climate.aggregate.reduce` (except how)
 
     Returns
@@ -314,7 +323,7 @@ def percentiles(
     time_dim : str (optional)
         Name of the time dimension in the data object, default behviour is to detect the
         time dimension from the input object
-    **reduce_kwargs : 
+    **reduce_kwargs :
         Any other kwargs that are accepted by `earthkit.climate.aggregate.reduce` (except how)
 
     Returns
@@ -342,7 +351,7 @@ def anomaly(
     climatology_range: tuple = (None, None),
     time_dim: T.Union[str, None] = None,
     groupby_kwargs: dict = {},
-    **reduce_kwargs
+    **reduce_kwargs,
 ):
     """
     Calculate the anomaly from a reference climatology.
@@ -367,7 +376,7 @@ def anomaly(
     time_dim : str (optional)
         Name of the time dimension in the data object, default behviour is to detect the
         time dimension from the input object
-    **reduce_kwargs : 
+    **reduce_kwargs :
         Any other kwargs that are accepted by `earthkit.climate.climatology.mean`
 
     Returns
@@ -379,8 +388,13 @@ def anomaly(
             selection = dataarray.sel(time=slice(*climatology_range))
         else:
             selection = dataarray
-        climatology = mean(selection, time_dim=time_dim, groupby_kwargs=groupby_kwargs, **reduce_kwargs)
-    anomaly = aggregate._groupby_time(dataarray, time_dim=time_dim, **groupby_kwargs) - climatology
+        climatology = mean(
+            selection, time_dim=time_dim, groupby_kwargs=groupby_kwargs, **reduce_kwargs
+        )
+    anomaly = (
+        aggregate._groupby_time(dataarray, time_dim=time_dim, **groupby_kwargs)
+        - climatology
+    )
     anomaly.assign_attrs(dataarray.attrs)
 
     if "standard_name" in anomaly.attrs:
