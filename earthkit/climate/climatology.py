@@ -6,55 +6,9 @@ import xarray as xr
 from earthkit.climate import aggregate, tools
 
 
-def time_dim_decorator(func):
-    @functools.wraps(func)
-    def wrapper(
-        dataarray: T.Union[xr.Dataset, xr.DataArray],
-        *args,
-        time_dim: T.Union[str, None] = None,
-        **kwargs,
-    ):
-        print("time_dim", kwargs)
-        if time_dim is None:
-            time_dim = tools.get_dim_key(dataarray, "t")
-        return func(dataarray, *args, time_dim=time_dim, **kwargs)
-
-    return wrapper
-
-
-GROUPBY_KWARGS = ["frequency", "bin_widths", "squeeze"]
-
-
-def groupby_kwargs_decorator(func):
-    @functools.wraps(func)
-    def wrapper(*args, groupby_kwargs: dict = {}, **kwargs):
-        print("gb_kwargs", kwargs)
-        new_kwargs = {}
-        for k, v in kwargs.copy().items():
-            if k in GROUPBY_KWARGS:
-                groupby_kwargs.setdefault(k, v)
-            else:
-                new_kwargs[k] = v
-        return func(*args, groupby_kwargs=groupby_kwargs, **new_kwargs)
-
-    return wrapper
-
-
-def season_order_decorator(func):
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        print("season", kwargs)
-        result = func(*args, **kwargs)
-        if kwargs.get("frequency", "NOTseason") in ["season"]:
-            result.reindex(season=["DJF", "MAM", "JJA", "SON"])
-        return result
-
-    return wrapper
-
-
-@time_dim_decorator
-@groupby_kwargs_decorator
-@season_order_decorator
+@tools.time_dim_decorator
+@tools.groupby_kwargs_decorator
+@tools.season_order_decorator
 def mean(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     time_dim: T.Union[str, None] = None,
@@ -85,8 +39,6 @@ def mean(
     -------
     xr.DataArray
     """
-    print(groupby_kwargs)
-    print(reduce_kwargs)
     grouped_data = aggregate._groupby_time(
         dataarray,
         time_dim=time_dim,
@@ -95,9 +47,9 @@ def mean(
     return aggregate.reduce(grouped_data, how="mean", dim=time_dim, **reduce_kwargs)
 
 
-@time_dim_decorator
-@groupby_kwargs_decorator
-@season_order_decorator
+@tools.time_dim_decorator
+@tools.groupby_kwargs_decorator
+@tools.season_order_decorator
 def stdev(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     time_dim: T.Union[str, None] = None,
@@ -165,9 +117,9 @@ def median(dataarray: T.Union[xr.Dataset, xr.DataArray], **kwargs) -> xr.DataArr
     return result.isel(quantile=0)
 
 
-@time_dim_decorator
-@groupby_kwargs_decorator
-@season_order_decorator
+@tools.time_dim_decorator
+@tools.groupby_kwargs_decorator
+@tools.season_order_decorator
 def max(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     time_dim: T.Union[str, None] = None,
@@ -206,9 +158,9 @@ def max(
     return aggregate.reduce(grouped_data, how="max", dim=time_dim, **reduce_kwargs)
 
 
-@time_dim_decorator
-@groupby_kwargs_decorator
-@season_order_decorator
+@tools.time_dim_decorator
+@tools.groupby_kwargs_decorator
+@tools.season_order_decorator
 def min(
     dataarray: T.Union[xr.Dataset, xr.DataArray],
     time_dim: T.Union[str, None] = None,
@@ -247,9 +199,9 @@ def min(
     return aggregate.reduce(grouped_data, how="min", dim=time_dim, **reduce_kwargs)
 
 
-@time_dim_decorator
-@groupby_kwargs_decorator
-@season_order_decorator
+@tools.time_dim_decorator
+@tools.groupby_kwargs_decorator
+@tools.season_order_decorator
 def quantiles(
     dataarray: xr.DataArray,
     quantiles: list,
@@ -342,19 +294,93 @@ def percentiles(
     return result
 
 
-@time_dim_decorator
-@groupby_kwargs_decorator
-@season_order_decorator
+@tools.time_dim_decorator
+@tools.groupby_kwargs_decorator
+@tools.season_order_decorator
 def anomaly(
     dataarray: xr.DataArray,
     climatology: xr.DataArray = None,
     climatology_range: tuple = (None, None),
     time_dim: T.Union[str, None] = None,
     groupby_kwargs: dict = {},
+    relative: bool = False,
     **reduce_kwargs,
 ):
     """
     Calculate the anomaly from a reference climatology.
+
+    Parameters
+    ----------
+    dataarray : xr.DataArray
+        The DataArray over which to calculate the anomaly from the reference
+        climatology. Must contain a `time` dimension.
+    climatology :  (xr.DataArray, optional)
+        Reference climatology data against which the anomaly is to be calculated.
+        If not provided then the climatological mean is calculated from dataarray.
+    climatology_range : (list or tuple, optional)
+        Start and end year of the period to be used for the reference climatology. Default
+        is to use the entire time-series.
+    frequency : str (optional)
+        Valid options are `day`, `week` and `month`.
+    bin_widths : int or list (optional)
+        If `bin_widths` is an `int`, it defines the width of each group bin on
+        the frequency provided by `frequency`. If `bin_widths` is a sequence
+        it defines the edges of each bin, allowing for non-uniform bin widths.
+    time_dim : str (optional)
+        Name of the time dimension in the data object, default behviour is to detect the
+        time dimension from the input object
+    relative : bool (optional)
+        Return the relative anomaly, i.e. the percentage change w.r.t the climatological period
+    **reduce_kwargs :
+        Any other kwargs that are accepted by `earthkit.climate.climatology.mean`
+
+    Returns
+    -------
+    xr.DataArray
+    """
+    if climatology is None:
+        if all(c_r is not None for c_r in climatology_range):
+            selection = dataarray.sel(time=slice(*climatology_range))
+        else:
+            selection = dataarray
+        climatology = mean(
+            selection, groupby_kwargs=groupby_kwargs, **reduce_kwargs, time_dim=time_dim,
+        )
+    anomaly_array = aggregate._groupby_time(dataarray, time_dim=time_dim, **groupby_kwargs) - climatology
+    if relative:
+        anomaly_array = aggregate._groupby_time(anomaly_array, time_dim=time_dim, **groupby_kwargs) / climatology
+        name_tag = "relative anomaly"
+        update_attrs = {"units": "%"}
+    else:
+        name_tag = "anomaly"
+        update_attrs = {}
+    
+    anomaly_array = aggregate.resample(
+        anomaly_array, how="mean", **reduce_kwargs, **groupby_kwargs, dim=time_dim
+    )
+    update_attrs = {
+        **dataarray.attrs,
+        **update_attrs
+    }
+    if "standard_name" in update_attrs:
+        update_attrs["standard_name"] += f"_{name_tag.replace(' ', '_')}"
+    if "long_name" in anomaly_array.attrs:
+        update_attrs["long_name"] += f" {name_tag}"
+    
+    anomaly_array = anomaly_array.assign_attrs(update_attrs)
+
+    return anomaly_array
+
+
+@tools.time_dim_decorator
+@tools.groupby_kwargs_decorator
+@tools.season_order_decorator
+def relative_anomaly(
+    dataarray: xr.DataArray,
+    *args, **kwargs
+):
+    """
+    Calculate the relative anomaly from a reference climatology, i.e. percentage change
 
     Parameters
     ----------
@@ -383,23 +409,6 @@ def anomaly(
     -------
     xr.DataArray
     """
-    if climatology is None:
-        if all(c_r is not None for c_r in climatology_range):
-            selection = dataarray.sel(time=slice(*climatology_range))
-        else:
-            selection = dataarray
-        climatology = mean(
-            selection, time_dim=time_dim, groupby_kwargs=groupby_kwargs, **reduce_kwargs
-        )
-    anomaly = (
-        aggregate._groupby_time(dataarray, time_dim=time_dim, **groupby_kwargs)
-        - climatology
-    )
-    anomaly.assign_attrs(dataarray.attrs)
-
-    if "standard_name" in anomaly.attrs:
-        anomaly.attrs["standard_name"] += "_anomaly"
-    if "long_name" in anomaly.attrs:
-        anomaly.attrs["long_name"] += " anomaly"
-
-    return anomaly
+    anomaly_xarray = anomaly(dataarray, *args, relative=True, **kwargs)
+    
+    return anomaly_xarray
