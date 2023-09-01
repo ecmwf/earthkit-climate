@@ -4,7 +4,6 @@ from copy import deepcopy
 import numpy as np
 import xarray as xr
 
-
 from earthkit.climate import tools
 
 #: Mapping from pandas frequency strings to xarray time groups
@@ -25,8 +24,13 @@ _BIN_MAXES = {
     "season": 4,
 }
 
+
 @tools.time_dim_decorator
-def daily_mean(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[str, None] = None, **kwargs):
+def daily_mean(
+    dataarray: T.Union[xr.Dataset, xr.DataArray],
+    time_dim: T.Union[str, None] = None,
+    **kwargs,
+):
     """
     Calculate the daily mean.
 
@@ -45,7 +49,11 @@ def daily_mean(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[s
 
 
 @tools.time_dim_decorator
-def daily_max(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[str, None] = None, **kwargs):
+def daily_max(
+    dataarray: T.Union[xr.Dataset, xr.DataArray],
+    time_dim: T.Union[str, None] = None,
+    **kwargs,
+):
     """
     Calculate the daily max.
 
@@ -64,7 +72,11 @@ def daily_max(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[st
 
 
 @tools.time_dim_decorator
-def daily_min(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[str, None] = None, **kwargs):
+def daily_min(
+    dataarray: T.Union[xr.Dataset, xr.DataArray],
+    time_dim: T.Union[str, None] = None,
+    **kwargs,
+):
     """
     Calculate the daily min.
 
@@ -83,7 +95,11 @@ def daily_min(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[st
 
 
 @tools.time_dim_decorator
-def monthly_mean(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[str, None] = None, **kwargs):
+def monthly_mean(
+    dataarray: T.Union[xr.Dataset, xr.DataArray],
+    time_dim: T.Union[str, None] = None,
+    **kwargs,
+):
     """
     Calculate the monthly mean.
 
@@ -100,8 +116,13 @@ def monthly_mean(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union
     """
     return resample(dataarray, frequency="M", dim=time_dim, how="mean", **kwargs)
 
+
 @tools.time_dim_decorator
-def monthly_max(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[str, None] = None, **kwargs):
+def monthly_max(
+    dataarray: T.Union[xr.Dataset, xr.DataArray],
+    time_dim: T.Union[str, None] = None,
+    **kwargs,
+):
     """
     Calculate the monthly max.
 
@@ -120,7 +141,11 @@ def monthly_max(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[
 
 
 @tools.time_dim_decorator
-def monthly_min(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[str, None] = None, **kwargs):
+def monthly_min(
+    dataarray: T.Union[xr.Dataset, xr.DataArray],
+    time_dim: T.Union[str, None] = None,
+    **kwargs,
+):
     """
     Calculate the monthly min.
 
@@ -136,6 +161,7 @@ def monthly_min(dataarray: T.Union[xr.Dataset, xr.DataArray], time_dim: T.Union[
     xr.DataArray
     """
     return resample(dataarray, frequency="M", dim=time_dim, how="min", **kwargs)
+
 
 def resample(
     dataarray: T.Union[xr.Dataset, xr.DataArray],

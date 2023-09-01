@@ -1,4 +1,3 @@
-import functools
 import typing as T
 
 import xarray as xr
@@ -344,29 +343,35 @@ def anomaly(
         else:
             selection = dataarray
         climatology = mean(
-            selection, groupby_kwargs=groupby_kwargs, **reduce_kwargs, time_dim=time_dim,
+            selection,
+            groupby_kwargs=groupby_kwargs,
+            **reduce_kwargs,
+            time_dim=time_dim,
         )
-    anomaly_array = aggregate._groupby_time(dataarray, time_dim=time_dim, **groupby_kwargs) - climatology
+    anomaly_array = (
+        aggregate._groupby_time(dataarray, time_dim=time_dim, **groupby_kwargs)
+        - climatology
+    )
     if relative:
-        anomaly_array = aggregate._groupby_time(anomaly_array, time_dim=time_dim, **groupby_kwargs) / climatology
+        anomaly_array = (
+            aggregate._groupby_time(anomaly_array, time_dim=time_dim, **groupby_kwargs)
+            / climatology
+        )
         name_tag = "relative anomaly"
         update_attrs = {"units": "%"}
     else:
         name_tag = "anomaly"
         update_attrs = {}
-    
+
     anomaly_array = aggregate.resample(
         anomaly_array, how="mean", **reduce_kwargs, **groupby_kwargs, dim=time_dim
     )
-    update_attrs = {
-        **dataarray.attrs,
-        **update_attrs
-    }
+    update_attrs = {**dataarray.attrs, **update_attrs}
     if "standard_name" in update_attrs:
         update_attrs["standard_name"] += f"_{name_tag.replace(' ', '_')}"
     if "long_name" in anomaly_array.attrs:
         update_attrs["long_name"] += f" {name_tag}"
-    
+
     anomaly_array = anomaly_array.assign_attrs(update_attrs)
 
     return anomaly_array
@@ -375,12 +380,9 @@ def anomaly(
 @tools.time_dim_decorator
 @tools.groupby_kwargs_decorator
 @tools.season_order_decorator
-def relative_anomaly(
-    dataarray: xr.DataArray,
-    *args, **kwargs
-):
+def relative_anomaly(dataarray: xr.DataArray, *args, **kwargs):
     """
-    Calculate the relative anomaly from a reference climatology, i.e. percentage change
+    Calculate the relative anomaly from a reference climatology, i.e. percentage change.
 
     Parameters
     ----------
@@ -410,5 +412,5 @@ def relative_anomaly(
     xr.DataArray
     """
     anomaly_xarray = anomaly(dataarray, *args, relative=True, **kwargs)
-    
+
     return anomaly_xarray

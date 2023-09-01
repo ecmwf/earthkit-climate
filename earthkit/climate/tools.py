@@ -1,5 +1,5 @@
-import typing as T
 import functools
+import typing as T
 
 import numpy as np
 import xarray as xr
@@ -46,7 +46,6 @@ def season_order_decorator(func):
         return result
 
     return wrapper
-
 
 
 # TODO: Replace with method from meteokit
