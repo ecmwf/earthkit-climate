@@ -59,10 +59,10 @@ select = [
 ]
 
 [tool.setuptools]
-packages = ["earthkit.aggregate"]
+packages = ["earthkit.climate"]
 
 [tool.setuptools_scm]
-write_to = "earthkit/aggregate/version.py"
+write_to = "earthkit/climate/version.py"
 write_to_template = '''
 # Do not change! Do not track in version control!
 __version__ = "{version}"

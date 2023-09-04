@@ -2,7 +2,7 @@ import typing as T
 
 import xarray as xr
 
-from earthkit.aggregate import temporal, tools
+from earthkit.climate.aggregate import temporal, tools
 
 
 @tools.time_dim_decorator
