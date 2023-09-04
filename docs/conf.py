@@ -38,7 +38,7 @@ autodoc_typehints = "none"
 
 # autoapi configuration
 autoapi_dirs = [
-    "../earthkit/climate",
+    # "../earthkit/climate",
     "../earthkit/climate/aggregate",
 ]
 autoapi_ignore = ["*/version.py"]

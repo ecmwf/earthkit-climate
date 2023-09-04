@@ -1,21 +1,3 @@
-# Welcome to 
-
-Statistical analysis tools for meteorological and climate data..
-
-```{toctree}
-:caption: 'Contents:'
-:maxdepth: 2
-
-examples.md
-API Reference <_api/index>
-```
-
-# Indices and tables
-
-- {ref}`genindex`
-- {ref}`modindex`
-- {ref}`search`
-
 Welcome to the eaRthkIt-climate documentation!
 ======================================================
 
@@ -55,8 +37,6 @@ data object understood by earthkit-data.
    :caption: Installation
 
    install
-   development
-   licence
 
 
 Indices and tables
