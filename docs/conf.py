@@ -9,7 +9,7 @@
 import os
 import sys
 
-import earthkit.climate as climate
+import earthkit.aggregate as aggregate
 
 sys.path.insert(0, os.path.abspath("../"))
 
@@ -18,8 +18,8 @@ sys.path.insert(0, os.path.abspath("../"))
 project = "earthkit-climate"
 copyright = "2022, European Centre for Medium Range Weather Forecasts"
 author = "European Centre for Medium Range Weather Forecasts"
-version = climate.__version__
-release = climate.__version__
+version = aggregate.__version__
+release = aggregate.__version__
 
 # -- General configuration ---------------------------------------------------
 
