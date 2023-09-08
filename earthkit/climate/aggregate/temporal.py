@@ -69,6 +69,10 @@ def rolling_reduce(
     **kwargs,
 ):
     """Deprecated method location, please see `earthkit.climate.aggregate.rolling_reduce`."""
+    logger.warn(
+        "`earthkit.climate.aggregate.temporal.rolling_reduce` is a deprecated location for this method, "
+        "please use `earthkit.climate.aggregate.rolling_reduce` instead."
+    )
     return _rolling_reduce(dataarray, *args, **kwargs)
 
 
