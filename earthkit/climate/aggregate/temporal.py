@@ -1,21 +1,18 @@
-import typing as T
 import logging
-import numpy as np
-import xarray as xr
+import typing as T
 
-from earthkit.climate.aggregate import tools, resample
+import xarray as xr
 
 # These are included here for legacy purposes, but the code is abstract so not part of temporal namespace
 from earthkit.climate.aggregate import reduce as _reduce
 from earthkit.climate.aggregate import reduce as _rolling_reduce
+from earthkit.climate.aggregate import resample, tools
 
 logger = logging.getLogger(__name__)
 
 
 def reduce(*args, **kwargs):
-    """
-    Deprecated method location, please see `earthkit.climate.aggregate.reduce`
-    """
+    """Deprecated method location, please see `earthkit.climate.aggregate.reduce`."""
     logger.warn(
         "`earthkit.climate.aggregate.temporal.reduce` is a deprecated location for this method, "
         "please use `earthkit.climate.aggregate.reduce` instead."
@@ -24,14 +21,13 @@ def reduce(*args, **kwargs):
 
 
 def rolling_reduce(*args, **kwargs):
-    """
-    Deprecated method location, please see `earthkit.climate.aggregate.rolling_reduce`
-    """
+    """Deprecated method location, please see `earthkit.climate.aggregate.rolling_reduce`."""
     logger.warn(
         "`earthkit.climate.aggregate.temporal.rolling_reduce` is a deprecated location for this method, "
         "please use `earthkit.climate.aggregate.rolling_reduce` instead."
     )
     return _rolling_reduce(*args, **kwargs)
+
 
 @tools.time_dim_decorator
 def daily_mean(
@@ -263,4 +259,3 @@ def monthly_min(
     xr.DataArray
     """
     return resample(dataarray, frequency="M", dim=time_dim, how="min", **kwargs)
-

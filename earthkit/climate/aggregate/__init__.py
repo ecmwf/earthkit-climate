@@ -8,7 +8,10 @@ Aggregation tools for meteorological and climate data..
 from earthkit.climate.aggregate import climatology, spatial, temporal
 
 try:
-    from earthkit.data.utils.module_inputs_wrapper import transform_module_inputs, transform_function_inputs
+    from earthkit.data.utils.module_inputs_wrapper import (
+        transform_function_inputs,
+        transform_module_inputs,
+    )
 except ImportError:
     pass
 else:
@@ -18,7 +21,7 @@ else:
 
     spatial = transform_module_inputs(spatial)
 
-from earthkit.climate.aggregate.general import reduce, rolling_reduce, resample
+from earthkit.climate.aggregate.general import reduce, resample, rolling_reduce
 
 reduce = transform_function_inputs(reduce)
 rolling_reduce = transform_function_inputs(rolling_reduce)

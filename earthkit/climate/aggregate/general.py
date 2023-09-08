@@ -1,10 +1,9 @@
-"""
-General aggregation methods which will be exposed at the top level via aggregate/__init__.py
-"""
-from copy import deepcopy
+"""General aggregation methods which will be exposed at the top level via aggregate/__init__.py."""
 import typing as T
-import xarray as xr
+from copy import deepcopy
+
 import numpy as np
+import xarray as xr
 
 from earthkit.climate.aggregate import tools
 

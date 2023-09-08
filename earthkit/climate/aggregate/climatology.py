@@ -2,7 +2,7 @@ import typing as T
 
 import xarray as xr
 
-from earthkit.climate.aggregate import tools, reduce, resample
+from earthkit.climate.aggregate import reduce, resample, tools
 
 
 def _pandas_frequency_and_bins(
@@ -12,7 +12,6 @@ def _pandas_frequency_and_bins(
     bins = int(frequency[: -len(freq)]) or None
     freq = tools._PANDAS_FREQUENCIES.get(freq.lstrip(" "), frequency)
     return freq, bins
-
 
 
 def _groupby_time(
@@ -69,8 +68,6 @@ def _groupby_bins(
             f"a full list of valid frequencies."
         )
     return grouped_data
-
-
 
 
 @tools.time_dim_decorator
@@ -417,8 +414,7 @@ def anomaly(
             time_dim=time_dim,
         )
     anomaly_array = (
-        _groupby_time(dataarray, time_dim=time_dim, **groupby_kwargs)
-        - climatology
+        _groupby_time(dataarray, time_dim=time_dim, **groupby_kwargs) - climatology
     )
     if relative:
         anomaly_array = (
