@@ -5,7 +5,7 @@ Aggregation tools for meteorological and climate data..
   :noindex:
 """
 
-from earthkit.climate.aggregate import climatology, spatial, temporal
+from earthkit.climate.aggregate import climatology, general, spatial, temporal
 
 try:
     from earthkit.data.utils.module_inputs_wrapper import (
@@ -15,6 +15,8 @@ try:
 except ImportError:
     pass
 else:
+    general = transform_module_inputs(general)
+
     temporal = transform_module_inputs(temporal)
 
     climatology = transform_module_inputs(climatology)
@@ -29,6 +31,7 @@ resample = transform_function_inputs(resample)
 
 __all__ = [
     "__version__",
+    "general",
     "temporal",
     "climatology",
     "spatial",
