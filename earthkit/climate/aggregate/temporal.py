@@ -3,10 +3,13 @@ import typing as T
 
 import xarray as xr
 
-# These are included here for legacy purposes, but the code is abstract so not part of temporal namespace
-from earthkit.climate.aggregate import reduce as _reduce
-from earthkit.climate.aggregate import reduce as _rolling_reduce
-from earthkit.climate.aggregate import resample, tools
+from earthkit.climate.aggregate import tools
+from earthkit.climate.aggregate.general import resample
+
+if True:
+    # These are included here for legacy purposes, but the code is abstract so not part of temporal namespace
+    from earthkit.climate.aggregate.general import reduce as _reduce
+    from earthkit.climate.aggregate.general import reduce as _rolling_reduce
 
 logger = logging.getLogger(__name__)
 
