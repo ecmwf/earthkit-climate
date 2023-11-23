@@ -20,6 +20,6 @@ except ImportError:  # pragma: no cover
     # Local copy or not installed with setuptools
     __version__ = "999"
 
-from earthkit.climate import aggregate
+from earthkit import aggregate
 
 __all__ = [aggregate, __version__]
