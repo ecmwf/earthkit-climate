@@ -1,7 +1,6 @@
-"""
-heuristics 
-"""
+"""Heuristics methods for climate indicators."""
 import typing as T
+
 import numpy as np
 
 
@@ -9,10 +8,10 @@ def growing_degree_days(
     tas_mean: T.Union[None, np.ndarray] = None,
     tas_max: T.Union[None, np.ndarray] = None,
     tas_min: T.Union[None, np.ndarray] = None,
-    tas_base: float=0.,
-    time_axis: int=0,
-    time_start_index: int=0,
-    time_stop_index: T.Union[None, int] = None
+    tas_base: float = 0.0,
+    time_axis: int = 0,
+    time_start_index: int = 0,
+    time_stop_index: T.Union[None, int] = None,
 ) -> np.ndarray:
     """Return the Growing Degree Days (GDD) index calculated from daily Near-Surface Air Temperature data.
 
@@ -45,20 +44,20 @@ def growing_degree_days(
     """
     # Check we have either tas_mean, or tas_min and tax_max
     l_tas_mean = tas_mean is not None
-    l_tas_minmax = (tas_min is not None and tas_max is not None)
+    l_tas_minmax = tas_min is not None and tas_max is not None
 
     if l_tas_mean and not l_tas_minmax:
         gdu = tas_mean - tas_base
     elif l_tas_minmax and not l_tas_mean:
-        gdu = (tas_max + tas_min)/2 - tas_base
+        gdu = (tas_max + tas_min) / 2 - tas_base
     elif l_tas_mean and l_tas_minmax:
         raise AssertionError("Please provide tas_mean OR tas_min+tas_max.")
     else:
         raise AssertionError("Insufficient arguments provided.")
 
-    gdu[gdu<0.] = 0.
+    gdu[gdu < 0.0] = 0.0
     _gdu = np.rollaxis(gdu, time_axis)
-    
+
     gdd = np.zeros_like(gdu)
     _gdd = np.rollaxis(gdd, time_axis)
 
@@ -78,8 +77,8 @@ def heating_degree_days(
 ) -> np.ndarray:
     """Return daily heating degree days.
 
-    The heating degree days are computed using Spinoni's method which is used by the European 
-    Environmental Agency (EEA). The method is described in the following 
+    The heating degree days are computed using Spinoni's method which is used by the European
+    Environmental Agency (EEA). The method is described in the following
     `paper (Spinoni et al., 2018) <https://doi.org/10.1002/joc.5362>`_.
 
     Parameters
@@ -118,8 +117,8 @@ def cooling_degree_days(
 ) -> np.ndarray:
     """Return daily cooling degree days.
 
-    The cooling degree days are computed using Spinoni's method which is used by the European 
-    Environmental Agency (EEA). The method is described in the following 
+    The cooling degree days are computed using Spinoni's method which is used by the European
+    Environmental Agency (EEA). The method is described in the following
     `paper (Spinoni et al., 2018) <https://doi.org/10.1002/joc.5362>`_.
 
     Parameters
