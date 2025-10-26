@@ -19,4 +19,5 @@ dependencies:
 - sphinx-rtd-theme
 - xarray
 - pip:
+  - earthkit-transforms
   - git+https://github.com/ecmwf/multiurl
