@@ -6,12 +6,14 @@ A toolkit for statistical analysis of temporal-geospatial data.
 This project is **BETA** and will be **Experimental** for the foreseeable future.
 Interfaces and functionality are likely to change, and the project itself may be scrapped.
 **DO NOT** use this software in any project/software that is operational.
+**NOTE**: As of October 2025, this package has been updated to use `earthkit-transforms` (previously `ek-aggregate`).
 
 ## Quick Start
 
 ```python
 >>> from earthkit.climate import aggregate
-
+# or directly:
+>>> import earthkit.transforms as aggregate
 ```
 
 ## Detailed documentation
