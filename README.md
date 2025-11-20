@@ -29,7 +29,6 @@
 > [!IMPORTANT]
 > This software is **Emerging** and subject to ECMWF's guidelines on [Software Maturity](https://github.com/ecmwf/codex/raw/refs/heads/main/Project%20Maturity).
 
-
 ## Quick Start
 
 Install the package in editable mode:
@@ -50,7 +49,6 @@ pr = precipitation.simple_daily_intensity(precip_data, freq="monthly")
 
 For full documentation, including API reference and example notebooks, visit the
 [earthkit-climate ReadTheDocs page](https://earthkit-climate.readthedocs.io)
-
 
 ## Development & Contribution Workflow
 
@@ -106,8 +104,6 @@ make docs-build
 make template-update
 ```
 
-______________________________________________________________________
-
 ## Project Structure
 
 ```
@@ -130,8 +126,6 @@ earthkit-climate/
 ├── Makefile                   # Developer utilities (Pixi integrated)
 └── README.md
 ```
-
-______________________________________________________________________
 
 ## License
 
