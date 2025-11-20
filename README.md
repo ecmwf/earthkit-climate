@@ -26,7 +26,7 @@
   <a href="https://earthkit-climate.readthedocs.io/en/latest/">Documentation</a>
 </p>
 
-> \[!IMPORTANT\]
+> [!IMPORTANT]
 > This software is **Emerging** and subject to ECMWF's guidelines on [Software Maturity](https://github.com/ecmwf/codex/raw/refs/heads/main/Project%20Maturity).
 
 
