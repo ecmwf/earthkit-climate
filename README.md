@@ -1,19 +1,34 @@
-# earthkit-climate
+<p align="center">
+  <picture>
+    <source srcset="https://github.com/ecmwf/logos/raw/refs/heads/main/logos/earthkit/earthkit-climate-dark.svg" media="(prefers-color-scheme: dark)">
+    <img src="https://github.com/ecmwf/logos/raw/refs/heads/main/logos/earthkit/earthkit-climate-light.svg" height="120">
+  </picture>
+</p>
 
-**A toolkit for statistical analysis and processing of climate and geospatial data.**
+<p align="center">
+  <a href="https://github.com/ecmwf/codex/raw/refs/heads/main/ESEE">
+    <img src="https://github.com/ecmwf/codex/raw/refs/heads/main/ESEE/foundation_badge.svg" alt="ECMWF Software EnginE">
+  </a>
+  <a href="https://github.com/ecmwf/codex/raw/refs/heads/main/Project Maturity">
+    <img src="https://github.com/ecmwf/codex/raw/refs/heads/main/Project Maturity/emerging_badge.svg" alt="Maturity Level">
+  </a>
+  <a href="https://opensource.org/licenses/apache-2-0">
+    <img src="https://img.shields.io/badge/Licence-Apache 2.0-blue.svg" alt="Licence">
+  </a>
+  <a href="https://github.com/ecmwf/earthkit-climate/releases">
+    <img src="https://img.shields.io/github/v/release/ecmwf/earthkit-climate?color=purple&label=Release" alt="Latest Release">
+  </a>
+</p>
 
-`earthkit-climate` provides tools to compute and analyze **climate indicators** (e.g., precipitation, temperature) and perform **unit conversions, percentiles, and provenance tracking**.
-It is part of the **Earthkit ecosystem** and designed for reproducible, modular workflows.
+<p align="center">
+  <a href="#quick-start">Quick Start</a>
+  •
+  <a href="https://earthkit-climate.readthedocs.io/en/latest/">Documentation</a>
+</p>
 
-______________________________________________________________________
+> \[!IMPORTANT\]
+> This software is **Emerging** and subject to ECMWF's guidelines on [Software Maturity](https://github.com/ecmwf/codex/raw/refs/heads/main/Project%20Maturity).
 
-## Disclaimer
-
-This project is currently in **BETA** and **experimental**.
-Interfaces, structure, and functionality are subject to change without notice.
-Do **not** use this software in any operational or production system.
-
-______________________________________________________________________
 
 ## Quick Start
 
@@ -33,14 +48,9 @@ from earthkit.climate.utils import conversions
 pr = precipitation.simple_daily_intensity(precip_data, freq="monthly")
 ```
 
-______________________________________________________________________
-
-## Documentation
-
 For full documentation, including API reference and example notebooks, visit the
 [earthkit-climate ReadTheDocs page](https://earthkit-climate.readthedocs.io)
 
-______________________________________________________________________
 
 ## Development & Contribution Workflow
 
