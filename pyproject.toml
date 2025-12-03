@@ -1,20 +1,22 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = [
-  "setuptools>=61",
-  "wheel",
-  "setuptools-scm>=8"
-]
+requires = ["setuptools>=65", "wheel", "setuptools-scm>=8"]
 
 [project]
+authors = [
+  {name = "European Centre for Medium-Range Weather Forecasts (ECMWF)", email = "software.support@ecmwf.int"}
+]
 classifiers = [
   "Development Status :: 2 - Pre-Alpha",
   "Intended Audience :: Science/Research",
   "License :: OSI Approved :: Apache Software License",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
   "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
   "Topic :: Scientific/Engineering"
 ]
 dependencies = [
@@ -24,16 +26,21 @@ dependencies = [
   "xsdba>=0.5,<0.6",
   "earthkit-data>=0.17.0"
 ]
-description = "Aggregation tools for meteorological and climate data."
-dynamic = ["version"]
+description = "Tools for calculating climate indicies, climate change analysis and attribution."
+dynamic = ["version", "readme"]
 license = {file = "LICENSE"}
 name = "earthkit-climate"
-readme = "README.md"
-requires-python = ">=3.10,<3.13"
+requires-python = ">=3.10"
 
 [project.optional-dependencies]
 dev = ["black", "ruff", "mypy", "pre-commit", "make", "ipython"]
 docs = ["sphinx", "sphinx-rtd-theme", "sphinx-autoapi", "nbsphinx"]
+tests = ["pytest", "pytest-cov", "pytest-mock >=3.15.1,<4"]
+
+[project.urls]
+documentation = "https://earthkit-climate.readthedocs.io/"
+issues = "https://github.com/ecmwf/earthkit-climate/issues"
+repository = "https://github.com/ecmwf/earthkit-climate"
 
 [tool.coverage.run]
 branch = true
@@ -81,6 +88,9 @@ select = [
   "I",  # isort
   "D"  # pydocstyle
 ]
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"], content-type = "text/markdown"}
 
 # ---- Namespace package configuration ----
 [tool.setuptools.packages.find]
