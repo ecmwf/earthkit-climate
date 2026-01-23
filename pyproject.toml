@@ -128,6 +128,7 @@ readme = {file = ["README.md"], content-type = "text/markdown"}
 where = ["src"]
 
 [tool.setuptools_scm]
+local_scheme = "no-local-version"
 write_to = "src/earthkit/climate/version.py"
 write_to_template = '''
 # Do not change! Do not track in version control!
