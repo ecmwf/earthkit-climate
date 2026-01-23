@@ -1,7 +1,12 @@
-Welcome to Earthkit-climate's documentation!
-============================================
+earthkit-climate
+================
 
-**earthkit-climate** is the package responsible for the climate index calculation within the earthkit ecosystem. It includes a wrapper prototype that allows the use of the ``xclim`` python package to compute a large amount of pre-defined climate indices used by the climate science community, and to define new ones.
+.. important::
+
+   This software is **Emerging** and subject to ECMWF's guidelines on `Software Maturity <https://github.com/ecmwf/codex/raw/refs/heads/main/Project%20Maturity>`_.
+
+
+**earthkit-climate** is the package responsible for climate index calculations within the earthkit ecosystem. It includes a wrapper prototype that allows the use of the `xclim <https://xclim.readthedocs.io/en/stable/>`_ Python package to compute a large amount of pre-defined climate indices used by the climate science community, and to define new ones.
 
 ``xclim`` relies heavily on the ``xarray`` python library and the ``numpy`` & ``scipy`` ecosystem. Its main elements are:
 
@@ -9,31 +14,55 @@ Welcome to Earthkit-climate's documentation!
 - **Climate indicators**: climate indices wrapped in an object that provides more metadata and validation facilities (health checks) of the input. it includes attributes for CF metadata (cell methods), references, keywords, and more.
 - **Lower level process functions**: these include aggregation, computation spell length and counting, optimized computation of reference percentiles, bias correction methods and ensemble statistics. These functions are used by the implemented indices and can also be used to build new indices not included in the library.
 
+
+Quickstart
+==========
+
+Install the package from PyPI:
+
+
+.. code-block:: bash
+
+   pip install earthkit-climate
+
+
+Compute a precipitation indicator from xclim:
+
+.. code-block:: python
+
+   from earthkit.climate.indicators import precipitation
+   pr = precipitation.simple_daily_intensity(precip_data, freq="monthly")
+
+
+
 .. toctree::
-   :caption: EXAMPLES
-   :maxdepth: 2
+   :caption: Examples
+   :maxdepth: 1
 
    tutorials
    gallery
 
+
 .. toctree::
-   :caption: DOCUMENTATION
-   :maxdepth: 2
+   :caption: Documentation
+   :maxdepth: 1
 
    user-guide
    API Reference <_api/index>
-   development
+
 
 .. toctree::
-   :caption: INSTALLATION
-   :maxdepth: 2
+   :caption: Package
+   :maxdepth: 1
 
    installation
-   release-notes
+   development
+   release-notes/index
    license
 
+
 .. toctree::
-   :caption: PROJECTS
-   :maxdepth: 2
+   :caption: Projects
+   :maxdepth: 1
 
    earthkit <https://earthkit.readthedocs.io/en/latest/>

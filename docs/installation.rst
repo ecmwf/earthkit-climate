@@ -1,11 +1,8 @@
 Installation
 ============
 
-Quick Start
------------
-
-Install the package in editable mode:
+earthkit-climate is available on PyPI.
 
 .. code-block:: bash
 
-   pip install -e .
+   pip install earthkit-climate
