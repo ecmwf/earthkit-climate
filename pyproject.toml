@@ -82,10 +82,7 @@ docs-build = "rm -rf docs/_api docs/_build && sphinx-build -M html docs docs/_bu
 earthkit-plots = ">=0.5.0"
 
 [tool.pixi.tasks]
-docker-build = "docker build -t earthkit-climate ."
-docker-run = "docker run --rm -ti -v $(pwd):/srv earthkit-climate"
 qa = "pre-commit run --all-files"
-template-update = "pre-commit run --all-files cruft -c .pre-commit-config-cruft.yaml"
 type-check = "python -m mypy . --no-namespace-packages"
 unit-tests = "python -m pytest -vv --cov=. --cov-report=html --doctest-glob='*.md' --doctest-glob='*.rst'"
 
