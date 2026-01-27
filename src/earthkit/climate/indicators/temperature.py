@@ -15,12 +15,19 @@ import xclim.indicators.atmos
 
 import earthkit.climate.utils.conversions as conversions
 from earthkit.climate.api.wrapper import wrap_xclim_indicator
+from earthkit.data.utils.inputs_transform import transform_inputs_decorator
 
+ENSURE_UNITS = {
+    "tas": "degC",
+    "tasmin": "degC",
+    "tasmax": "degC",
+}
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def australian_hardiness_zones(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Australian hardiness zones.
 
@@ -48,10 +55,11 @@ def australian_hardiness_zones(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.australian_hardiness_zones)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def biologically_effective_degree_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Biologically effective degree days.
 
@@ -81,10 +89,11 @@ def biologically_effective_degree_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.biologically_effective_degree_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def cold_spell_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Cold spell days.
 
@@ -111,10 +120,11 @@ def cold_spell_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cold_spell_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def cold_spell_duration_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Cold Spell Duration Index (CSDI).
 
@@ -142,10 +152,11 @@ def cold_spell_duration_index(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cold_spell_duration_index)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def cold_spell_frequency(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Cold spell frequency.
 
@@ -170,10 +181,11 @@ def cold_spell_frequency(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cold_spell_frequency)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def cold_spell_max_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Cold spell maximum length.
 
@@ -200,10 +212,11 @@ def cold_spell_max_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cold_spell_max_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def cold_spell_total_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Cold spell total length.
 
@@ -230,10 +243,11 @@ def cold_spell_total_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cold_spell_total_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def consecutive_frost_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Consecutive frost days.
 
@@ -259,10 +273,11 @@ def consecutive_frost_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.consecutive_frost_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def maximum_consecutive_frost_free_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Maximum consecutive frost free days.
 
@@ -289,10 +304,11 @@ def maximum_consecutive_frost_free_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.maximum_consecutive_frost_free_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def cool_night_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Cool night index.
 
@@ -319,10 +335,11 @@ def cool_night_index(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cool_night_index)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def cooling_degree_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Cooling degree days.
 
@@ -349,10 +366,11 @@ def cooling_degree_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cooling_degree_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def cooling_degree_days_approximation(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Cooling degree days approximation.
 
@@ -381,10 +399,11 @@ def cooling_degree_days_approximation(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cooling_degree_days_approximation)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def corn_heat_units(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Corn heat units.
 
@@ -409,10 +428,11 @@ def corn_heat_units(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.corn_heat_units)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def chill_portions(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Chill portions.
 
@@ -444,10 +464,11 @@ def chill_portions(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.chill_portions)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def chill_units(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Chill units.
 
@@ -475,10 +496,11 @@ def chill_units(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.chill_units)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def degree_days_exceedance_date(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Degree day exceedance date.
 
@@ -503,10 +525,11 @@ def degree_days_exceedance_date(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.degree_days_exceedance_date)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def daily_freezethaw_cycles(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Daily freeze-thaw cycles.
 
@@ -534,10 +557,11 @@ def daily_freezethaw_cycles(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.daily_freezethaw_cycles)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def daily_temperature_range(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Mean of daily temperature range.
 
@@ -563,10 +587,11 @@ def daily_temperature_range(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.daily_temperature_range)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def max_daily_temperature_range(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Maximum of daily temperature range.
 
@@ -592,10 +617,11 @@ def max_daily_temperature_range(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.max_daily_temperature_range)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def daily_temperature_range_variability(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Variability of daily temperature range.
 
@@ -621,10 +647,11 @@ def daily_temperature_range_variability(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.daily_temperature_range_variability)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def extreme_temperature_range(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Extreme temperature range.
 
@@ -650,10 +677,11 @@ def extreme_temperature_range(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.extreme_temperature_range)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def fire_season(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Fire season mask.
 
@@ -678,10 +706,11 @@ def fire_season(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.fire_season)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def first_day_tg_above(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     First day of temperatures superior to a given temperature threshold.
 
@@ -706,10 +735,11 @@ def first_day_tg_above(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.first_day_tg_above)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def first_day_tg_below(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     First day of temperatures inferior to a given temperature threshold.
 
@@ -734,10 +764,11 @@ def first_day_tg_below(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.first_day_tg_below)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def first_day_tn_above(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     First day of temperatures superior to a given temperature threshold.
 
@@ -762,10 +793,11 @@ def first_day_tn_above(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.first_day_tn_above)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def first_day_tn_below(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     First day of temperatures inferior to a given temperature threshold.
 
@@ -790,10 +822,11 @@ def first_day_tn_below(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.first_day_tn_below)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def first_day_tx_above(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     First day of temperatures superior to a given temperature threshold.
 
@@ -818,10 +851,11 @@ def first_day_tx_above(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.first_day_tx_above)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def first_day_tx_below(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     First day of temperatures inferior to a given temperature threshold.
 
@@ -846,10 +880,11 @@ def first_day_tx_below(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.first_day_tx_below)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def freezethaw_spell_frequency(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Freeze-thaw spell frequency.
 
@@ -877,10 +912,11 @@ def freezethaw_spell_frequency(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.freezethaw_spell_frequency)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def freezethaw_spell_max_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Maximal length of freeze-thaw spells.
 
@@ -908,10 +944,11 @@ def freezethaw_spell_max_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.freezethaw_spell_max_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def freezethaw_spell_mean_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Freeze-thaw spell mean length.
 
@@ -939,10 +976,11 @@ def freezethaw_spell_mean_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.freezethaw_spell_mean_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def freezing_degree_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Freezing degree days.
 
@@ -969,10 +1007,11 @@ def freezing_degree_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.freezing_degree_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def freshet_start(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Day of year of spring freshet start.
 
@@ -997,10 +1036,11 @@ def freshet_start(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.freshet_start)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def frost_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Frost days.
 
@@ -1026,10 +1066,11 @@ def frost_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.frost_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def frost_free_season_end(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Frost free season end.
 
@@ -1054,10 +1095,11 @@ def frost_free_season_end(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.frost_free_season_end)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def frost_free_season_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Frost free season length.
 
@@ -1085,10 +1127,11 @@ def frost_free_season_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.frost_free_season_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def frost_free_season_start(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Frost free season start.
 
@@ -1113,10 +1156,11 @@ def frost_free_season_start(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.frost_free_season_start)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def frost_free_spell_max_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Frost free spell maximum length.
 
@@ -1143,10 +1187,11 @@ def frost_free_spell_max_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.frost_free_spell_max_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def frost_season_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Frost season length.
 
@@ -1174,10 +1219,11 @@ def frost_season_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.frost_season_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def growing_degree_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Growing degree days.
 
@@ -1204,10 +1250,11 @@ def growing_degree_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.growing_degree_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def growing_season_end(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Growing season end.
 
@@ -1232,10 +1279,11 @@ def growing_season_end(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.growing_season_end)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def growing_season_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Growing season length.
 
@@ -1263,10 +1311,11 @@ def growing_season_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.growing_season_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def growing_season_start(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Growing season start.
 
@@ -1291,10 +1340,11 @@ def growing_season_start(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.growing_season_start)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heat_spell_frequency(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heat spell frequency.
 
@@ -1319,10 +1369,11 @@ def heat_spell_frequency(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heat_spell_frequency)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heat_spell_max_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heat spell maximum length.
 
@@ -1349,10 +1400,11 @@ def heat_spell_max_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heat_spell_max_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heat_spell_total_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heat spell total length.
 
@@ -1379,10 +1431,11 @@ def heat_spell_total_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heat_spell_total_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heat_wave_frequency(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heat wave frequency.
 
@@ -1407,10 +1460,11 @@ def heat_wave_frequency(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heat_wave_frequency)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heat_wave_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heat wave index.
 
@@ -1437,10 +1491,11 @@ def heat_wave_index(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heat_wave_index)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heat_wave_max_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heat wave maximum length.
 
@@ -1467,10 +1522,11 @@ def heat_wave_max_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heat_wave_max_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heat_wave_total_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heat wave total length.
 
@@ -1497,10 +1553,11 @@ def heat_wave_total_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heat_wave_total_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heating_degree_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heating degree days.
 
@@ -1527,10 +1584,11 @@ def heating_degree_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heating_degree_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def heating_degree_days_approximation(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Heating degree days approximation.
 
@@ -1559,10 +1617,11 @@ def heating_degree_days_approximation(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.heating_degree_days_approximation)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def hot_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Hot days.
 
@@ -1588,10 +1647,11 @@ def hot_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.hot_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def hot_spell_frequency(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Hot spell frequency.
 
@@ -1616,10 +1676,11 @@ def hot_spell_frequency(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.hot_spell_frequency)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def hot_spell_max_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Hot spell maximum length.
 
@@ -1646,10 +1707,11 @@ def hot_spell_max_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.hot_spell_max_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def hot_spell_max_magnitude(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Hot spell maximum magnitude.
 
@@ -1676,10 +1738,11 @@ def hot_spell_max_magnitude(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.hot_spell_max_magnitude)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def hot_spell_total_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Hot spell total length.
 
@@ -1706,10 +1769,11 @@ def hot_spell_total_length(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.hot_spell_total_length)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def huglin_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Huglin heliothermal index.
 
@@ -1737,10 +1801,11 @@ def huglin_index(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.huglin_index)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def ice_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Ice days.
 
@@ -1766,10 +1831,11 @@ def ice_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.ice_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def last_spring_frost(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Last spring frost.
 
@@ -1794,10 +1860,11 @@ def last_spring_frost(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.last_spring_frost)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def late_frost_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Late frost days.
 
@@ -1824,10 +1891,11 @@ def late_frost_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.late_frost_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def latitude_temperature_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Latitude temperature index.
 
@@ -1855,10 +1923,11 @@ def latitude_temperature_index(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.latitude_temperature_index)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def maximum_consecutive_warm_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Maximum consecutive warm days.
 
@@ -1885,10 +1954,11 @@ def maximum_consecutive_warm_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.maximum_consecutive_warm_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tg10p(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Days with mean temperature below the 10th percentile.
 
@@ -1914,10 +1984,11 @@ def tg10p(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tg10p)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tg90p(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Days with mean temperature above the 90th percentile.
 
@@ -1943,10 +2014,11 @@ def tg90p(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tg90p)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tg_days_above(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Number of days with mean temperature above a given threshold.
 
@@ -1972,10 +2044,11 @@ def tg_days_above(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tg_days_above)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tg_days_below(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Number of days with mean temperature below a given threshold.
 
@@ -2001,10 +2074,11 @@ def tg_days_below(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tg_days_below)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tg_max(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Maximum of mean temperature.
 
@@ -2030,10 +2104,11 @@ def tg_max(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tg_max)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tg_mean(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Mean temperature.
 
@@ -2059,10 +2134,11 @@ def tg_mean(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tg_mean)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tg_min(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Minimum of mean temperature.
 
@@ -2088,10 +2164,11 @@ def tg_min(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tg_min)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def thawing_degree_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Thawing degree days.
 
@@ -2118,10 +2195,11 @@ def thawing_degree_days(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.thawing_degree_days)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tn10p(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Days with minimum temperature below the 10th percentile.
 
@@ -2147,10 +2225,11 @@ def tn10p(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tn10p)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tn90p(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Days with minimum temperature above the 90th percentile.
 
@@ -2176,10 +2255,11 @@ def tn90p(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tn90p)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tn_days_above(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Number of days with minimum temperature above a given threshold.
 
@@ -2205,10 +2285,11 @@ def tn_days_above(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tn_days_above)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tn_days_below(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Number of days with minimum temperature below a given threshold.
 
@@ -2234,10 +2315,11 @@ def tn_days_below(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tn_days_below)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tn_max(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Maximum of minimum temperature.
 
@@ -2263,10 +2345,11 @@ def tn_max(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tn_max)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tn_mean(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Mean of minimum temperature.
 
@@ -2292,10 +2375,11 @@ def tn_mean(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tn_mean)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tn_min(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Minimum temperature.
 
@@ -2321,10 +2405,11 @@ def tn_min(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tn_min)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tropical_nights(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Tropical nights.
 
@@ -2350,10 +2435,11 @@ def tropical_nights(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tropical_nights)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tx10p(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Days with maximum temperature below the 10th percentile.
 
@@ -2379,10 +2465,11 @@ def tx10p(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tx10p)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tx90p(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Days with maximum temperature above the 90th percentile.
 
@@ -2408,10 +2495,11 @@ def tx90p(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tx90p)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tx_days_above(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Number of days with maximum temperature above a given threshold.
 
@@ -2437,10 +2525,11 @@ def tx_days_above(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tx_days_above)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tx_days_below(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Number of days with maximum temperature below a given threshold.
 
@@ -2466,10 +2555,11 @@ def tx_days_below(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tx_days_below)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tx_max(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Maximum temperature.
 
@@ -2495,10 +2585,11 @@ def tx_max(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tx_max)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tx_mean(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Mean of maximum temperature.
 
@@ -2524,10 +2615,11 @@ def tx_mean(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tx_mean)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tx_min(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Minimum of maximum temperature.
 
@@ -2553,10 +2645,11 @@ def tx_min(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tx_min)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def tx_tn_days_above(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Number of days with daily minimum and maximum temperatures exceeding thresholds.
 
@@ -2582,10 +2675,11 @@ def tx_tn_days_above(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.tx_tn_days_above)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def usda_hardiness_zones(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     USDA hardiness zones.
 
@@ -2613,10 +2707,11 @@ def usda_hardiness_zones(
     wrapper = wrap_xclim_indicator(xclim.indicators.atmos.usda_hardiness_zones)
     return wrapper(ds, **kwargs)
 
+@transform_inputs_decorator(ensure_units=ENSURE_UNITS)
 def warm_spell_duration_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    ds: xarray.Dataset,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> xarray.Dataset:
     """
     Warm spell duration index.
 

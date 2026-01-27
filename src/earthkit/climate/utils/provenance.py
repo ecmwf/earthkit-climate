@@ -21,7 +21,7 @@ from earthkit.climate.utils.conversions import MetadataDict
 def add_indicator_provenance(
     metadata: MetadataDict,
     indicator: Any,
-    dataset: xr.Dataset,
+    *args,
     **kwargs: Any,
 ) -> MetadataDict:
     """
@@ -47,7 +47,7 @@ def add_indicator_provenance(
     metadata["cf_attrs"] = getattr(indicator, "cf_attrs", None)
 
     signature = inspect.signature(indicator)
-    bound_args = signature.bind_partial(ds=dataset, **kwargs)
+    bound_args = signature.bind_partial(*args, **kwargs)
     bound_args.apply_defaults()
 
     metadata["call_info"] = {

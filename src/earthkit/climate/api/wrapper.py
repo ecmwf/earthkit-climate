@@ -54,23 +54,25 @@ def wrap_xclim_indicator(xclim_fn: Callable) -> Callable:
         """
         metadata: Dict[str, Any] = {}
 
-        # --- STEP 1: Load & Standardize Main Data ---
-        # Convert Earthkit object to xarray Dataset
-        dataset, metadata = conversions.to_xarray_dataset(earthkit_input, metadata)
+        # # --- STEP 1: Load & Standardize Main Data ---
+        # # Convert Earthkit object to xarray Dataset
+        # dataset, metadata = conversions.to_xarray_dataset(earthkit_input, metadata)
 
-        # Standardize units for common variables to Kelvin
-        for var in ["tas", "tasmin", "tasmax"]:
-            if var in dataset:
-                dataset = units.ensure_units(dataset, var, "degC", strict=False)
-        if "pr" in dataset:
-            dataset = units.ensure_units(dataset, "pr", "mm/day", strict=False)
+        # # Standardize units for common variables to Kelvin
+        # for var in ["tas", "tasmin", "tasmax"]:
+        #     if var in dataset:
+        #         dataset = units.ensure_units(dataset, var, "degC", strict=False)
+        # if "pr" in dataset:
+        #     dataset = units.ensure_units(dataset, "pr", "mm/day", strict=False)
 
         # --- STEP 2: Execution ---
         # We pass the single merged dataset (ds) and the variable name mappings
-        output_dataset: xr.Dataset = xclim_fn(ds=dataset, *args, **kwargs)
+        print("ek-clim wrapper Args:", args)
+        print("ek-clim wrapper Kwargs:", kwargs)
+        output_dataset: xr.Dataset = xclim_fn(*args, ds=earthkit_input, **kwargs)
 
         # --- STEP 3: Provenance & Output ---
-        metadata = provenance.add_indicator_provenance(metadata, xclim_fn, dataset, **kwargs)
+        metadata = provenance.add_indicator_provenance(metadata, xclim_fn, *args, **kwargs)
 
         return conversions.to_earthkit_field(output_dataset, metadata)
 
