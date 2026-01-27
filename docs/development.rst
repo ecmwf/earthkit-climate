@@ -1,11 +1,11 @@
 Development
 ===========
 
-Development & Contribution Workflow
------------------------------------
+The code is hosted on GitHub: `ecmwf/earthkit-climate <https://github.com/ecmwf/earthkit-climate>`_
 
-1. Setup environment (with Pixi)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Environment
+-----------
 
 This project uses `Pixi <https://pixi.sh>`_ for dependency and environment management.
 It provides fast, reproducible environments and replaces Conda-based workflows.
@@ -18,8 +18,13 @@ Install Pixi following the `official instructions <https://pixi.sh/latest/#insta
 
 This command installs all dependencies as defined in ``pyproject.toml`` and ``pixi.lock``.
 
-2. Common Tasks
-~~~~~~~~~~~~~~~
+.. warning::
+
+   We are not yet commited to maintaining a Pixi configuration long-term.
+
+
+Task runners
+------------
 
 This project uses ``pixi`` tasks to manage development workflows, replacing the legacy ``Makefile``.
 
@@ -47,12 +52,6 @@ This project uses ``pixi`` tasks to manage development workflows, replacing the 
 
      pixi run -e docs docs-build
 
-- **Docker**: Build and run the docker container.
-
-  .. code-block:: bash
-
-     pixi run docker-build
-     pixi run docker-run
 
 - **Sync with ECMWF template**:
 
