@@ -1,0 +1,47 @@
+[dependencies]
+earthkit-data = ">=0.17.0"
+numpy = ">=1.22"
+python = "3.12.*"
+xarray = ">=2023.1"
+xclim = ">=0.59.1"
+xsdba = ">=0.5,<0.6"
+
+[environments]
+dev = ["dev"]
+docs = ["docs"]
+
+[feature.dev.dependencies]
+black = "*"
+ipykernel = "*"
+ipython = "*"
+mypy = "*"
+pre-commit = "*"
+pytest = "*"
+pytest-cov = "*"
+pytest-mock = "*"
+ruff = "*"
+
+[feature.docs.dependencies]
+nbsphinx = ">=0.9.8,<0.10"
+pandoc = "*"
+sphinx = "*"
+sphinx-autoapi = ">=3.6.1,<4"
+sphinx-rtd-theme = ">=3.0.2,<4"
+
+[feature.docs.tasks]
+docs-build = "rm -rf docs/_api docs/_build && sphinx-build -M html docs docs/_build"
+
+[pypi-dependencies]
+earthkit-climate = {path = ".", editable = true}
+earthkit-plots = ">=0.5.0"
+
+[tasks]
+qa = "pre-commit run --all-files"
+template-update = "pre-commit run --all-files cruft -c .pre-commit-config-cruft.yaml"
+type-check = "python -m mypy . --no-namespace-packages"
+unit-tests = "python -m pytest -vv --cov=. --cov-report=html --doctest-glob='*.md' --doctest-glob='*.rst'"
+
+[workspace]
+channels = ["conda-forge"]
+name = "earthkit-climate"
+platforms = ["win-64", "linux-64", "osx-64", "osx-arm64"]

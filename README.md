@@ -104,14 +104,17 @@ This project uses `pixi` tasks to manage development workflows, replacing the le
 - **Unit Tests**: Run the test suite using pytest.
 
   ```bash
-  pixi run unit-tests
   ```
+
+pixi run -e dev unit-tests
+
+````
 
 - **Type Checking**: Run static type analysis with mypy.
 
-  ```bash
-  pixi run type-check
-  ```
+```bash
+pixi run -e dev type-check
+````
 
 - **Build Documentation**: Build the Sphinx documentation. Note that this task runs in the `docs` environment.
 
