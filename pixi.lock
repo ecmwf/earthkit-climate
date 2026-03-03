@@ -5792,8 +5792,8 @@ packages:
   timestamp: 1733217860944
 - pypi: ./
   name: earthkit-climate
-  version: 0.1.1.dev68
-  sha256: 64129c6c22973e64d5797cb9def633140cd35600b2c405644fb07fd05536c5a1
+  version: 0.2.1.dev14
+  sha256: 88404dd796446845001839758c0a3db2eb8a3dccecbdb5dbf7d18bde6aa4f7a4
   requires_dist:
   - earthkit-data>=0.17.0
   - numpy>=1.22
