@@ -50,7 +50,7 @@ docs = [
   "roman-numerals-py>=3.1.0,<4",
   "sphinx",
   "sphinx-autoapi",
-  "sphinx-rtd-theme"
+  "furo"
 ]
 
 [tool.coverage.run]
@@ -83,6 +83,11 @@ select = [
   "W",  # pycodestyle warnings
   "I",  # isort
   "D"  # pydocstyle
+]
+
+[tool.ruff.lint.per-file-ignores]
+"docs/conf.py" = [
+  "E501"  # line too long
 ]
 
 [tool.setuptools.dynamic]
