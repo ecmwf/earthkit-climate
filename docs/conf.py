@@ -43,10 +43,7 @@ autodoc_typehints = "none"
 
 # autoapi configuration
 autoapi_dirs = ["../src/earthkit/climate"]
-autoapi_ignore = [
-    "*/version.py",
-    "*/utils/*",
-]
+autoapi_ignore = ["*/version.py"]
 autoapi_options = [
     "members",
     "inherited-members",
