@@ -1,18 +1,15 @@
 name: Quality assurance
-
 on:
   push:
     branches: ["main", "develop"]
   pull_request:
     branches: ["main", "develop"]
     types: [opened, synchronize, reopened]
-
 jobs:
   pre-commit:
     uses: ecmwf/reusable-workflows/.github/workflows/qa-precommit-run.yml@v2
     with:
       skip-hooks: "no-commit-to-branch"
-
   tests:
     strategy:
       matrix:

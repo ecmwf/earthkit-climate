@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "setuptools.build_meta"
-requires = ["setuptools>=65", "wheel", "setuptools-scm>=8"]
+requires = ["setuptools>=65", "setuptools-scm>=8", "wheel"]
 
 [project]
 authors = [
@@ -17,40 +17,37 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14",
   "Topic :: Scientific/Engineering"
 ]
 dependencies = [
-  "earthkit-data>=0.17.0",
+  "earthkit-data>=0.17",
   "numpy>=1.22",
   "xarray>=2023.1",
   "xclim>=0.59.1",
   "xsdba>=0.5,<0.6"
 ]
 description = "Tools for calculating climate indicies, climate change analysis and attribution."
-dynamic = ["version", "readme"]
+dynamic = ["readme", "version"]
 license = {file = "LICENSE"}
 name = "earthkit-climate"
 requires-python = ">=3.10"
-
-[project.optional-dependencies]
-dev = [
+optional-dependencies.dev = [
   "black",
-  "ruff",
+  "ipykernel",
+  "ipython",
   "mypy",
   "pre-commit",
-  "ipython",
   "pytest",
   "pytest-cov",
   "pytest-mock",
-  "ipykernel"
+  "ruff"
 ]
-docs = [
+optional-dependencies.docs = [
+  "furo",
   "nbsphinx",
-  "roman-numerals-py>=3.1.0,<4",
+  "roman-numerals-py>=3.1,<4",
   "sphinx",
-  "sphinx-autoapi",
-  "furo"
+  "sphinx-autoapi"
 ]
 
 [tool.coverage.run]
@@ -61,9 +58,7 @@ addopts = "-vv --cov=. --cov-report=html --doctest-glob='*.md' --doctest-glob='*
 
 [tool.ruff]
 line-length = 120
-
-[tool.ruff.lint]
-ignore = [
+lint.ignore = [
   "D1",  # pydocstyle: Missing Docstrings
   "D107",  # pydocstyle: numpy convention
   "D203",
@@ -77,16 +72,14 @@ ignore = [
   "D416",
   "D417"
 ]
-select = [
-  "F",  # pyflakes
+lint.select = [
+  "D",  # pydocstyle
   "E",  # pycodestyle
-  "W",  # pycodestyle warnings
+  "F",  # pyflakes
   "I",  # isort
-  "D"  # pydocstyle
+  "W"  # pycodestyle warnings
 ]
-
-[tool.ruff.lint.per-file-ignores]
-"docs/conf.py" = [
+lint.per-file-ignores."docs/conf.py" = [
   "E501"  # line too long
 ]
 
