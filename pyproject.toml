@@ -78,9 +78,11 @@ ignore = [
   "D417"
 ]
 select = [
-  "E",  # pycodestyle
   "F",  # pyflakes
+  "E",  # pycodestyle
+  "W",  # pycodestyle warnings
   "I",  # isort
+  "D",  # pydocstyle
 ]
 
 [tool.ruff.lint.isort]
