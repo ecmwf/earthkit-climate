@@ -75,9 +75,7 @@ def get_percentile(
         expanded = ref_da.groupby(f"time.{time_component}").map(
             lambda group: xr.full_like(
                 group,
-                ds_percentile[varname].sel(
-                    {time_component: getattr(group.time.dt, time_component)[0].item()}
-                ),
+                ds_percentile[varname].sel({time_component: getattr(group.time.dt, time_component)[0].item()}),
                 float,
             )
         )

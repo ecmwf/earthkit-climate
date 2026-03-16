@@ -181,18 +181,12 @@ def generate_module_content(category: str, indicators: List[Any]) -> str:
 
         # Indent the docstring correctly
         lines = docstring.split("\n")
-        indented_doc = (
-            lines[0] + "\n" + "\n".join([("    " + line if line.strip() else "") for line in lines[1:]])
-        )
+        indented_doc = lines[0] + "\n" + "\n".join([("    " + line if line.strip() else "") for line in lines[1:]])
 
-        code = FUNCTION_TEMPLATE.format(
-            func_name=func_name, xclim_func_name=xclim_func_name, docstring=indented_doc
-        )
+        code = FUNCTION_TEMPLATE.format(func_name=func_name, xclim_func_name=xclim_func_name, docstring=indented_doc)
         functions_code.append(code)
 
-    return MODULE_TEMPLATE.format(
-        category_title=category.capitalize(), functions_code="".join(functions_code)
-    )
+    return MODULE_TEMPLATE.format(category_title=category.capitalize(), functions_code="".join(functions_code))
 
 
 def main():

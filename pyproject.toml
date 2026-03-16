@@ -82,11 +82,8 @@ select = [
   "E",  # pycodestyle
   "W",  # pycodestyle warnings
   "I",  # isort
-  "D",  # pydocstyle
+  "D"  # pydocstyle
 ]
-
-[tool.ruff.lint.isort]
-force-single-line = true
 
 [tool.ruff.lint.per-file-ignores]
 "docs/conf.py" = [
