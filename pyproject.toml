@@ -32,7 +32,6 @@ license = {file = "LICENSE"}
 name = "earthkit-climate"
 requires-python = ">=3.10"
 optional-dependencies.dev = [
-  "black",
   "ipykernel",
   "ipython",
   "mypy",
@@ -58,6 +57,7 @@ addopts = "-vv --cov=. --cov-report=html --doctest-glob='*.md' --doctest-glob='*
 
 [tool.ruff]
 line-length = 120
+preview = true
 lint.ignore = [
   "D1",  # pydocstyle: Missing Docstrings
   "D107",  # pydocstyle: numpy convention
