@@ -48,9 +48,9 @@ earthkit-utils = {git = "https://github.com/ecmwf/earthkit-utils.git", branch = 
 [tasks]
 qa = "pre-commit run --all-files"
 template-update = "pre-commit run --all-files cruft -c .pre-commit-config-cruft.yaml"
-type-check = "python -m mypy . --no-namespace-packages"
 test = "python -m pytest"
 test-integration = "python -m pytest tests/integration -m integration"
+type-check = "python -m mypy . --no-namespace-packages"
 
 [workspace]
 channels = ["conda-forge"]
