@@ -52,9 +52,14 @@ optional-dependencies.docs = [
 
 [tool.coverage.run]
 branch = true
+source = ["src/earthkit/climate"]
 
 [tool.pytest.ini_options]
-addopts = "-vv --cov=. --cov-report=html --doctest-glob='*.md' --doctest-glob='*.rst'"
+testpaths = ["tests/unit"]
+markers = [
+    "integration: marks tests as slow integration tests (skipped by default)"
+]
+addopts = "-vv --cov --cov-report=html --doctest-glob='*.md' --doctest-glob='*.rst' -m 'not integration' -n auto"
 
 [tool.ruff]
 line-length = 120

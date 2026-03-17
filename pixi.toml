@@ -22,6 +22,7 @@ pre-commit = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-mock = "*"
+pytest-xdist = "*"
 ruff = "*"
 
 [feature.dev.pypi-dependencies]
@@ -48,7 +49,8 @@ earthkit-utils = {git = "https://github.com/ecmwf/earthkit-utils.git", branch = 
 qa = "pre-commit run --all-files"
 template-update = "pre-commit run --all-files cruft -c .pre-commit-config-cruft.yaml"
 type-check = "python -m mypy . --no-namespace-packages"
-unit-tests = "python -m pytest -vv --cov=. --cov-report=html --doctest-glob='*.md' --doctest-glob='*.rst'"
+test = "python -m pytest"
+test-integration = "python -m pytest tests/integration -m integration"
 
 [workspace]
 channels = ["conda-forge"]

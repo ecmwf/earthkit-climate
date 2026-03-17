@@ -89,7 +89,7 @@ def test_precipitation_indicator(
     ds_in = dummy_precip_ds
 
     # Call the earthkit function
-    earthkit_fn(ds_in, **kwargs)
+    earthkit_fn(ds=ds_in, **kwargs)
 
     # Verify wrapped function called with the dataset and arguments
     mock_fn.assert_called_once()
