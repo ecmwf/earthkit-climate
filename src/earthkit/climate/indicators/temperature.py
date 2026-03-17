@@ -20,11 +20,11 @@ from earthkit.utils.decorators.format_handlers import format_handler
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.australian_hardiness_zones)
 def australian_hardiness_zones(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 30,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -73,20 +73,20 @@ def australian_hardiness_zones(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.biologically_effective_degree_days)
 def biologically_effective_degree_days(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
-    lat: xarray.DataArray | str = 'lat',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
+    lat: xarray.DataArray | str = "lat",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '10 degC',
-    method: Literal['gladstones', 'icclim', 'jones', 'smoothed', 'stepwise'] = 'gladstones',
+    thresh_tasmin: Any = "10 degC",
+    method: Literal["gladstones", "icclim", "jones", "smoothed", "stepwise"] = "gladstones",
     cap_value: float = 1.0,
-    low_dtr: Any = '10 degC',
-    high_dtr: Any = '13 degC',
-    max_daily_degree_days: Any = '9 degC',
-    start_date: str | str = '04-01',
-    end_date: str | str = '11-01',
-    freq: str = 'YS',
+    low_dtr: Any = "10 degC",
+    high_dtr: Any = "13 degC",
+    max_daily_degree_days: Any = "9 degC",
+    start_date: str | str = "04-01",
+    end_date: str | str = "11-01",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -178,13 +178,13 @@ def biologically_effective_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_days)
 def cold_spell_days(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '-10 degC',
+    thresh: Any = "-10 degC",
     window: int = 5,
-    freq: str = 'YS-JUL',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
+    freq: str = "YS-JUL",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -242,15 +242,15 @@ def cold_spell_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_duration_index)
 def cold_spell_duration_index(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmin_per: xarray.DataArray | str = 'tasmin_per',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmin_per: xarray.DataArray | str = "tasmin_per",
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 6,
-    freq: str = 'YS',
+    freq: str = "YS",
     resample_before_rl: bool = True,
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = '<',
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -315,13 +315,13 @@ def cold_spell_duration_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_frequency)
 def cold_spell_frequency(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '-10 degC',
+    thresh: Any = "-10 degC",
     window: int = 5,
-    freq: str = 'YS-JUL',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
+    freq: str = "YS-JUL",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -378,13 +378,13 @@ def cold_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_max_length)
 def cold_spell_max_length(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '-10 degC',
+    thresh: Any = "-10 degC",
     window: int = 1,
-    freq: str = 'YS-JUL',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
+    freq: str = "YS-JUL",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -442,13 +442,13 @@ def cold_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_total_length)
 def cold_spell_total_length(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '-10 degC',
+    thresh: Any = "-10 degC",
     window: int = 3,
-    freq: str = 'YS-JUL',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
+    freq: str = "YS-JUL",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -506,11 +506,11 @@ def cold_spell_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.consecutive_frost_days)
 def consecutive_frost_days(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    freq: str = 'YS-JUL',
+    thresh: Any = "0 degC",
+    freq: str = "YS-JUL",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -560,11 +560,11 @@ def consecutive_frost_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.maximum_consecutive_frost_free_days)
 def maximum_consecutive_frost_free_days(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    freq: str = 'YS',
+    thresh: Any = "0 degC",
+    freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -615,11 +615,11 @@ def maximum_consecutive_frost_free_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cool_night_index)
 def cool_night_index(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     lat: xarray.DataArray | str | None = None,
     ds: xarray.Dataset | Any = None,
     *,
-    freq: Literal['YS', 'YS-JAN'] = 'YS',
+    freq: Literal["YS", "YS-JAN"] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -666,11 +666,11 @@ def cool_night_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cooling_degree_days)
 def cooling_degree_days(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '18.0 degC',
-    freq: str = 'YS',
+    thresh: Any = "18.0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -716,13 +716,13 @@ def cooling_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cooling_degree_days_approximation)
 def cooling_degree_days_approximation(
-    tasmax: xarray.DataArray | str = 'tasmax',
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tas: xarray.DataArray | str = 'tas',
+    tasmax: xarray.DataArray | str = "tasmax",
+    tasmin: xarray.DataArray | str = "tasmin",
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '18.0 degC',
-    freq: str = 'YS',
+    thresh: Any = "18.0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -776,12 +776,12 @@ def cooling_degree_days_approximation(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.corn_heat_units)
 def corn_heat_units(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '4.44 degC',
-    thresh_tasmax: Any = '10 degC',
+    thresh_tasmin: Any = "4.44 degC",
+    thresh_tasmax: Any = "10 degC",
     **kwargs: Any,
 ) -> Any:
     """
@@ -830,10 +830,10 @@ def corn_heat_units(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.chill_portions)
 def chill_portions(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -883,11 +883,11 @@ def chill_portions(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.chill_units)
 def chill_units(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
     positive_only: bool = False,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -936,15 +936,15 @@ def chill_units(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.degree_days_exceedance_date)
 def degree_days_exceedance_date(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    sum_thresh: Any = '25 K days',
-    op: Literal['>', 'gt', '<', 'lt', '>=', 'ge', '<=', 'le'] = '>',
+    thresh: Any = "0 degC",
+    sum_thresh: Any = "25 K days",
+    op: Literal[">", "gt", "<", "lt", ">=", "ge", "<=", "le"] = ">",
     after_date: str | None = None,
     never_reached: str | int | None = None,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1006,15 +1006,15 @@ def degree_days_exceedance_date(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.daily_freezethaw_cycles)
 def daily_freezethaw_cycles(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '0 degC',
-    thresh_tasmax: Any = '0 degC',
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = '<=',
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = '>',
-    freq: str = 'YS',
+    thresh_tasmin: Any = "0 degC",
+    thresh_tasmax: Any = "0 degC",
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
+    freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -1078,11 +1078,11 @@ def daily_freezethaw_cycles(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.daily_temperature_range)
 def daily_temperature_range(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1127,11 +1127,11 @@ def daily_temperature_range(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.max_daily_temperature_range)
 def max_daily_temperature_range(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1176,11 +1176,11 @@ def max_daily_temperature_range(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.daily_temperature_range_variability)
 def daily_temperature_range_variability(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1225,11 +1225,11 @@ def daily_temperature_range_variability(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.extreme_temperature_range)
 def extreme_temperature_range(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1274,17 +1274,17 @@ def extreme_temperature_range(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.fire_season)
 def fire_season(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     snd: xarray.DataArray | str | None = None,
     ds: xarray.Dataset | Any = None,
     *,
-    method: str = 'WF93',
+    method: str = "WF93",
     freq: str | None = None,
-    temp_start_thresh: Any = '12 degC',
-    temp_end_thresh: Any = '5 degC',
+    temp_start_thresh: Any = "12 degC",
+    temp_end_thresh: Any = "5 degC",
     temp_condition_days: int = 3,
     snow_condition_days: int = 3,
-    snow_thresh: Any = '0.01 m',
+    snow_thresh: Any = "0.01 m",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1353,14 +1353,14 @@ def fire_season(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tg_above)
 def first_day_tg_above(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
-    after_date: str = '01-01',
+    thresh: Any = "0 degC",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
+    after_date: str = "01-01",
     window: int = 1,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1416,14 +1416,14 @@ def first_day_tg_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tg_below)
 def first_day_tg_below(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
-    after_date: str = '07-01',
+    thresh: Any = "0 degC",
+    op: Literal["<", "lt", "<=", "le"] = "<",
+    after_date: str = "07-01",
     window: int = 1,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1479,14 +1479,14 @@ def first_day_tg_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tn_above)
 def first_day_tn_above(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
-    after_date: str = '01-01',
+    thresh: Any = "0 degC",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
+    after_date: str = "01-01",
     window: int = 1,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1542,14 +1542,14 @@ def first_day_tn_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tn_below)
 def first_day_tn_below(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
-    after_date: str = '07-01',
+    thresh: Any = "0 degC",
+    op: Literal["<", "lt", "<=", "le"] = "<",
+    after_date: str = "07-01",
     window: int = 1,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1605,14 +1605,14 @@ def first_day_tn_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tx_above)
 def first_day_tx_above(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
-    after_date: str = '01-01',
+    thresh: Any = "0 degC",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
+    after_date: str = "01-01",
     window: int = 1,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1668,14 +1668,14 @@ def first_day_tx_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tx_below)
 def first_day_tx_below(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
-    after_date: str = '07-01',
+    thresh: Any = "0 degC",
+    op: Literal["<", "lt", "<=", "le"] = "<",
+    after_date: str = "07-01",
     window: int = 1,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1731,16 +1731,16 @@ def first_day_tx_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freezethaw_spell_frequency)
 def freezethaw_spell_frequency(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '0 degC',
-    thresh_tasmax: Any = '0 degC',
+    thresh_tasmin: Any = "0 degC",
+    thresh_tasmax: Any = "0 degC",
     window: int = 1,
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = '<=',
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = '>',
-    freq: str = 'YS',
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
+    freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -1807,16 +1807,16 @@ def freezethaw_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freezethaw_spell_max_length)
 def freezethaw_spell_max_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '0 degC',
-    thresh_tasmax: Any = '0 degC',
+    thresh_tasmin: Any = "0 degC",
+    thresh_tasmax: Any = "0 degC",
     window: int = 1,
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = '<=',
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = '>',
-    freq: str = 'YS',
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
+    freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -1883,14 +1883,14 @@ def freezethaw_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freezethaw_spell_mean_length)
 def freezethaw_spell_mean_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '0 degC',
-    thresh_tasmax: Any = '0 degC',
+    thresh_tasmin: Any = "0 degC",
+    thresh_tasmax: Any = "0 degC",
     window: int = 1,
-    freq: str = 'YS',
+    freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -1951,11 +1951,11 @@ def freezethaw_spell_mean_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freezing_degree_days)
 def freezing_degree_days(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    freq: str = 'YS',
+    thresh: Any = "0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2001,14 +2001,14 @@ def freezing_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freshet_start)
 def freshet_start(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
-    after_date: str = '01-01',
+    thresh: Any = "0 degC",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
+    after_date: str = "01-01",
     window: int = 5,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2064,11 +2064,11 @@ def freshet_start(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_days)
 def frost_days(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    freq: str = 'YS',
+    thresh: Any = "0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2113,14 +2113,14 @@ def frost_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_free_season_end)
 def frost_free_season_end(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
+    thresh: Any = "0 degC",
     window: int = 5,
-    mid_date: str | None = '07-01',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
-    freq: str = 'YS',
+    mid_date: str | None = "07-01",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2176,14 +2176,14 @@ def frost_free_season_end(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_free_season_length)
 def frost_free_season_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
+    thresh: Any = "0 degC",
     window: int = 5,
-    mid_date: str | None = '07-01',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
-    freq: str = 'YS',
+    mid_date: str | None = "07-01",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2240,14 +2240,14 @@ def frost_free_season_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_free_season_start)
 def frost_free_season_start(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
+    thresh: Any = "0 degC",
     window: int = 5,
-    mid_date: str | None = '07-01',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
-    freq: str = 'YS',
+    mid_date: str | None = "07-01",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2303,13 +2303,13 @@ def frost_free_season_start(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_free_spell_max_length)
 def frost_free_spell_max_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0.0 degC',
+    thresh: Any = "0.0 degC",
     window: int = 1,
-    freq: str = 'YS-JUL',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
+    freq: str = "YS-JUL",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -2367,14 +2367,14 @@ def frost_free_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_season_length)
 def frost_season_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 5,
-    mid_date: str | None = '01-01',
-    thresh: Any = '0 degC',
-    freq: str = 'YS-JUL',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
+    mid_date: str | None = "01-01",
+    thresh: Any = "0 degC",
+    freq: str = "YS-JUL",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2432,11 +2432,11 @@ def frost_season_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.growing_degree_days)
 def growing_degree_days(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '4.0 degC',
-    freq: str = 'YS',
+    thresh: Any = "4.0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2482,14 +2482,14 @@ def growing_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.growing_season_end)
 def growing_season_end(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '5.0 degC',
-    mid_date: str | None = '07-01',
+    thresh: Any = "5.0 degC",
+    mid_date: str | None = "07-01",
     window: int = 5,
-    freq: str = 'YS',
-    op: Literal['>', '>=', 'lt', 'le'] = '>=',
+    freq: str = "YS",
+    op: Literal[">", ">=", "lt", "le"] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2547,14 +2547,14 @@ def growing_season_end(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.growing_season_length)
 def growing_season_length(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '5.0 degC',
+    thresh: Any = "5.0 degC",
     window: int = 6,
-    mid_date: str | None = '07-01',
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
+    mid_date: str | None = "07-01",
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2612,14 +2612,14 @@ def growing_season_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.growing_season_start)
 def growing_season_start(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '5.0 degC',
-    mid_date: str | None = '07-01',
+    thresh: Any = "5.0 degC",
+    mid_date: str | None = "07-01",
     window: int = 5,
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2675,17 +2675,17 @@ def growing_season_start(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_spell_frequency)
 def heat_spell_frequency(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = 'mean',
-    freq: str = 'YS',
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
+    freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
-    thresh_tasmin: Any = '20 °C',
-    thresh_tasmax: Any = '33 °C',
+    thresh_tasmin: Any = "20 °C",
+    thresh_tasmax: Any = "33 °C",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2752,17 +2752,17 @@ def heat_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_spell_max_length)
 def heat_spell_max_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = 'mean',
-    freq: str = 'YS',
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
+    freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
-    thresh_tasmin: Any = '20 °C',
-    thresh_tasmax: Any = '33 °C',
+    thresh_tasmin: Any = "20 °C",
+    thresh_tasmax: Any = "33 °C",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2829,17 +2829,17 @@ def heat_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_spell_total_length)
 def heat_spell_total_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = 'mean',
-    freq: str = 'YS',
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
+    freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
-    thresh_tasmin: Any = '20 °C',
-    thresh_tasmax: Any = '33 °C',
+    thresh_tasmin: Any = "20 °C",
+    thresh_tasmax: Any = "33 °C",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2906,15 +2906,15 @@ def heat_spell_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_wave_frequency)
 def heat_wave_frequency(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '22.0 degC',
-    thresh_tasmax: Any = '30 degC',
+    thresh_tasmin: Any = "22.0 degC",
+    thresh_tasmax: Any = "30 degC",
     window: int = 3,
-    freq: str = 'YS',
-    op: Literal['>', '>=', 'gt', 'ge'] = '>',
+    freq: str = "YS",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -2977,13 +2977,13 @@ def heat_wave_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_wave_index)
 def heat_wave_index(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '25 degC',
+    thresh: Any = "25 degC",
     window: int = 5,
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3041,15 +3041,15 @@ def heat_wave_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_wave_max_length)
 def heat_wave_max_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '22.0 degC',
-    thresh_tasmax: Any = '30 degC',
+    thresh_tasmin: Any = "22.0 degC",
+    thresh_tasmax: Any = "30 degC",
     window: int = 3,
-    freq: str = 'YS',
-    op: Literal['>', '>=', 'gt', 'ge'] = '>',
+    freq: str = "YS",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3112,15 +3112,15 @@ def heat_wave_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_wave_total_length)
 def heat_wave_total_length(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '22.0 degC',
-    thresh_tasmax: Any = '30 degC',
+    thresh_tasmin: Any = "22.0 degC",
+    thresh_tasmax: Any = "30 degC",
     window: int = 3,
-    freq: str = 'YS',
-    op: Literal['>', '>=', 'gt', 'ge'] = '>',
+    freq: str = "YS",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3183,11 +3183,11 @@ def heat_wave_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heating_degree_days)
 def heating_degree_days(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '17.0 degC',
-    freq: str = 'YS',
+    thresh: Any = "17.0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3233,13 +3233,13 @@ def heating_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heating_degree_days_approximation)
 def heating_degree_days_approximation(
-    tasmax: xarray.DataArray | str = 'tasmax',
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tas: xarray.DataArray | str = 'tas',
+    tasmax: xarray.DataArray | str = "tasmax",
+    tasmin: xarray.DataArray | str = "tasmin",
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '17.0 degC',
-    freq: str = 'YS',
+    thresh: Any = "17.0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3293,11 +3293,11 @@ def heating_degree_days_approximation(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_days)
 def hot_days(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '25 degC',
-    freq: str = 'YS',
+    thresh: Any = "25 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3342,13 +3342,13 @@ def hot_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_spell_frequency)
 def hot_spell_frequency(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '30 degC',
+    thresh: Any = "30 degC",
     window: int = 3,
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3405,13 +3405,13 @@ def hot_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_spell_max_length)
 def hot_spell_max_length(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '30 degC',
+    thresh: Any = "30 degC",
     window: int = 1,
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3468,12 +3468,12 @@ def hot_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_spell_max_magnitude)
 def hot_spell_max_magnitude(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '25.0 degC',
+    thresh: Any = "25.0 degC",
     window: int = 3,
-    freq: str = 'YS',
+    freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3528,13 +3528,13 @@ def hot_spell_max_magnitude(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_spell_total_length)
 def hot_spell_total_length(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '30 degC',
+    thresh: Any = "30 degC",
     window: int = 3,
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3592,17 +3592,17 @@ def hot_spell_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.huglin_index)
 def huglin_index(
-    tas: xarray.DataArray | str = 'tas',
-    tasmax: xarray.DataArray | str = 'tasmax',
-    lat: xarray.DataArray | str = 'lat',
+    tas: xarray.DataArray | str = "tas",
+    tasmax: xarray.DataArray | str = "tasmax",
+    lat: xarray.DataArray | str = "lat",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '10 degC',
-    method: str = 'jones',
+    thresh: Any = "10 degC",
+    method: str = "jones",
     cap_value: float = 1.0,
-    start_date: str | str = '04-01',
-    end_date: str | str = '10-01',
-    freq: Literal['YS', 'YS-JAN', 'YS-JUL'] = 'YS',
+    start_date: str | str = "04-01",
+    end_date: str | str = "10-01",
+    freq: Literal["YS", "YS-JAN", "YS-JUL"] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3679,11 +3679,11 @@ def huglin_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.ice_days)
 def ice_days(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    freq: str = 'YS',
+    thresh: Any = "0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3728,14 +3728,14 @@ def ice_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.last_spring_frost)
 def last_spring_frost(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
-    before_date: str = '07-01',
+    thresh: Any = "0 degC",
+    op: Literal["<", "lt", "<=", "le"] = "<",
+    before_date: str = "07-01",
     window: int = 1,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3791,11 +3791,11 @@ def last_spring_frost(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.late_frost_days)
 def late_frost_days(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    freq: str = 'YS',
+    thresh: Any = "0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3841,11 +3841,11 @@ def late_frost_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.latitude_temperature_index)
 def latitude_temperature_index(
-    tas: xarray.DataArray | str = 'tas',
-    lat: xarray.DataArray | str = 'lat',
+    tas: xarray.DataArray | str = "tas",
+    lat: xarray.DataArray | str = "lat",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3895,11 +3895,11 @@ def latitude_temperature_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.maximum_consecutive_warm_days)
 def maximum_consecutive_warm_days(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '25 degC',
-    freq: str = 'YS',
+    thresh: Any = "25 degC",
+    freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3950,13 +3950,13 @@ def maximum_consecutive_warm_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg10p)
 def tg10p(
-    tas: xarray.DataArray | str = 'tas',
-    tas_per: xarray.DataArray | str = 'tas_per',
+    tas: xarray.DataArray | str = "tas",
+    tas_per: xarray.DataArray | str = "tas_per",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = '<',
+    op: Literal[">", ">=", "gt", "ge"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4012,13 +4012,13 @@ def tg10p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg90p)
 def tg90p(
-    tas: xarray.DataArray | str = 'tas',
-    tas_per: xarray.DataArray | str = 'tas_per',
+    tas: xarray.DataArray | str = "tas",
+    tas_per: xarray.DataArray | str = "tas_per",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = '>',
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4074,12 +4074,12 @@ def tg90p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_days_above)
 def tg_days_above(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '10.0 degC',
-    freq: str = 'YS',
-    op: Literal['<', 'lt', '<=', 'le'] = '>',
+    thresh: Any = "10.0 degC",
+    freq: str = "YS",
+    op: Literal["<", "lt", "<=", "le"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4127,12 +4127,12 @@ def tg_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_days_below)
 def tg_days_below(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '10.0 degC',
-    freq: str = 'YS',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
+    thresh: Any = "10.0 degC",
+    freq: str = "YS",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4180,10 +4180,10 @@ def tg_days_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_max)
 def tg_max(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4225,10 +4225,10 @@ def tg_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_mean)
 def tg_mean(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4270,10 +4270,10 @@ def tg_mean(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_min)
 def tg_min(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4315,11 +4315,11 @@ def tg_min(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.thawing_degree_days)
 def thawing_degree_days(
-    tas: xarray.DataArray | str = 'tas',
+    tas: xarray.DataArray | str = "tas",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '0 degC',
-    freq: str = 'YS',
+    thresh: Any = "0 degC",
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4365,13 +4365,13 @@ def thawing_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn10p)
 def tn10p(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmin_per: xarray.DataArray | str = 'tasmin_per',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmin_per: xarray.DataArray | str = "tasmin_per",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = '<',
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4427,13 +4427,13 @@ def tn10p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn90p)
 def tn90p(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmin_per: xarray.DataArray | str = 'tasmin_per',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmin_per: xarray.DataArray | str = "tasmin_per",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = '>',
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4489,12 +4489,12 @@ def tn90p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_days_above)
 def tn_days_above(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '20.0 degC',
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
+    thresh: Any = "20.0 degC",
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4542,12 +4542,12 @@ def tn_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_days_below)
 def tn_days_below(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '-10.0 degC',
-    freq: str = 'YS',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
+    thresh: Any = "-10.0 degC",
+    freq: str = "YS",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4595,10 +4595,10 @@ def tn_days_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_max)
 def tn_max(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4640,10 +4640,10 @@ def tn_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_mean)
 def tn_mean(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4685,10 +4685,10 @@ def tn_mean(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_min)
 def tn_min(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4730,12 +4730,12 @@ def tn_min(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tropical_nights)
 def tropical_nights(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '20.0 degC',
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
+    thresh: Any = "20.0 degC",
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4783,13 +4783,13 @@ def tropical_nights(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx10p)
 def tx10p(
-    tasmax: xarray.DataArray | str = 'tasmax',
-    tasmax_per: xarray.DataArray | str = 'tasmax_per',
+    tasmax: xarray.DataArray | str = "tasmax",
+    tasmax_per: xarray.DataArray | str = "tasmax_per",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = '<',
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4845,13 +4845,13 @@ def tx10p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx90p)
 def tx90p(
-    tasmax: xarray.DataArray | str = 'tasmax',
-    tasmax_per: xarray.DataArray | str = 'tasmax_per',
+    tasmax: xarray.DataArray | str = "tasmax",
+    tasmax_per: xarray.DataArray | str = "tasmax_per",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = '>',
+    op: Literal["<", "<=", "lt", "le"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4907,12 +4907,12 @@ def tx90p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_days_above)
 def tx_days_above(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '25.0 degC',
-    freq: str = 'YS',
-    op: Literal['>', 'gt', '>=', 'ge'] = '>',
+    thresh: Any = "25.0 degC",
+    freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4960,12 +4960,12 @@ def tx_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_days_below)
 def tx_days_below(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh: Any = '25.0 degC',
-    freq: str = 'YS',
-    op: Literal['<', 'lt', '<=', 'le'] = '<',
+    thresh: Any = "25.0 degC",
+    freq: str = "YS",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5013,10 +5013,10 @@ def tx_days_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_max)
 def tx_max(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5058,10 +5058,10 @@ def tx_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_mean)
 def tx_mean(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5103,10 +5103,10 @@ def tx_mean(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_min)
 def tx_min(
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5148,14 +5148,14 @@ def tx_min(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_tn_days_above)
 def tx_tn_days_above(
-    tasmin: xarray.DataArray | str = 'tasmin',
-    tasmax: xarray.DataArray | str = 'tasmax',
+    tasmin: xarray.DataArray | str = "tasmin",
+    tasmax: xarray.DataArray | str = "tasmax",
     ds: xarray.Dataset | Any = None,
     *,
-    thresh_tasmin: Any = '22 degC',
-    thresh_tasmax: Any = '30 degC',
-    freq: str = 'YS',
-    op: Literal['>', '>=', 'gt', 'ge'] = '>',
+    thresh_tasmin: Any = "22 degC",
+    thresh_tasmax: Any = "30 degC",
+    freq: str = "YS",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5209,11 +5209,11 @@ def tx_tn_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.usda_hardiness_zones)
 def usda_hardiness_zones(
-    tasmin: xarray.DataArray | str = 'tasmin',
+    tasmin: xarray.DataArray | str = "tasmin",
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 30,
-    freq: str = 'YS',
+    freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5262,15 +5262,15 @@ def usda_hardiness_zones(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.warm_spell_duration_index)
 def warm_spell_duration_index(
-    tasmax: xarray.DataArray | str = 'tasmax',
-    tasmax_per: xarray.DataArray | str = 'tasmax_per',
+    tasmax: xarray.DataArray | str = "tasmax",
+    tasmax_per: xarray.DataArray | str = "tasmax_per",
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 6,
-    freq: str = 'YS',
+    freq: str = "YS",
     resample_before_rl: bool = True,
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = '>',
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """

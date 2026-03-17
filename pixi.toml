@@ -1,4 +1,5 @@
 [dependencies]
+cdsapi = ">=0.7.7,<0.8"
 flox = ">=0.11.0,<0.12"
 numpy = ">=1.22"
 python = "3.12.*"
@@ -6,7 +7,6 @@ seaborn = ">=0.13.2,<0.14"
 xarray = ">=2023.1"
 xclim = ">=0.59.1"
 xsdba = ">=0.5,<0.6"
-cdsapi = ">=0.7.7,<0.8"
 
 [environments]
 dev = ["dev"]
@@ -17,24 +17,23 @@ black = "*"
 ipykernel = "*"
 ipython = "*"
 mypy = "*"
+nbformat = ">=5.10.4,<6"
 pre-commit = "*"
 pytest = "*"
 pytest-cov = "*"
 pytest-mock = "*"
 ruff = "*"
-nbformat = ">=5.10.4,<6"
 
 [feature.dev.pypi-dependencies]
 earthkit-transforms = ">=0.5.3.1, <0.6"
 
 [feature.docs.dependencies]
+furo = "*"
 nbsphinx = ">=0.9.8,<0.10"
 pandoc = "*"
 sphinx = "*"
 sphinx-autoapi = ">=3.6.1,<4"
 sphinx-rtd-theme = ">=3.0.2,<4"
-furo = "*"
-
 
 [feature.docs.tasks]
 docs-build = "rm -rf docs/_build && sphinx-build -M html docs docs/_build"

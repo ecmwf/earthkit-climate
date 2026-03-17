@@ -137,12 +137,10 @@ def load_datasets() -> dict[str, xr.Dataset]:
     """
     cache_dir: str = os.path.expanduser("~/.cache/earthkit/data")
     os.makedirs(cache_dir, exist_ok=True)
-    earthkit.data.config.set(
-        {
-            "cache-policy": "user",
-            "temporary-directory-root": cache_dir,
-        }
-    )
+    earthkit.data.config.set({
+        "cache-policy": "user",
+        "temporary-directory-root": cache_dir,
+    })
 
     datasets: dict[str, xr.Dataset] = {}
     print(f"Loading {len(_URLS)} datasets via earthkit-data...")
@@ -487,9 +485,9 @@ def run_benchmarks(
 
     # Add speedup relative to Xclim No Flox for each indicator
     def calculate_speedup(group: pd.DataFrame) -> pd.DataFrame:
-        reference_time: float = group[
-            (group["Library"] == "Xclim") & (group["Mode"] == "1. No Flox (Lazy)")
-        ]["mean_time"].values[0]
+        reference_time: float = group[(group["Library"] == "Xclim") & (group["Mode"] == "1. No Flox (Lazy)")][
+            "mean_time"
+        ].values[0]
         group["Speedup"] = reference_time / group["mean_time"]
         return group
 

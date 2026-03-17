@@ -82,12 +82,10 @@ def data_cache() -> dict[str, xr.Dataset]:
     """
     cache_dir: str = os.path.expanduser("~/.cache/earthkit/data")
     os.makedirs(cache_dir, exist_ok=True)
-    earthkit.data.config.set(
-        {
-            "cache-policy": "user",
-            "temporary-directory-root": cache_dir,
-        }
-    )
+    earthkit.data.config.set({
+        "cache-policy": "user",
+        "temporary-directory-root": cache_dir,
+    })
 
     datasets: dict[str, xr.Dataset] = {}
     for key, url in _URLS.items():
@@ -295,12 +293,8 @@ def test_indicator_correctness(indicator_config: dict[str, Any]) -> None:
     xc_da: xr.DataArray = xc_result
 
     # --- Assertions: both results must be non-empty DataArrays ---
-    assert isinstance(ek_da, xr.DataArray), (
-        f"[{name}] earthkit result is not a DataArray: {type(ek_da)}"
-    )
-    assert isinstance(xc_da, xr.DataArray), (
-        f"[{name}] xclim result is not a DataArray: {type(xc_da)}"
-    )
+    assert isinstance(ek_da, xr.DataArray), f"[{name}] earthkit result is not a DataArray: {type(ek_da)}"
+    assert isinstance(xc_da, xr.DataArray), f"[{name}] xclim result is not a DataArray: {type(xc_da)}"
     assert ek_da.size > 0, f"[{name}] earthkit result is empty"
     assert xc_da.size > 0, f"[{name}] xclim result is empty"
     assert ek_da.notnull().any().item(), f"[{name}] earthkit result is all-NaN"

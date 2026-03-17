@@ -335,9 +335,10 @@ def generate_module_content(category: str, indicators: List[Any]) -> str:
         )
         functions_code.append(code)
 
-    return MODULE_TEMPLATE.format(
-        category_title=category.capitalize(), functions_code="\n".join(functions_code)
-    ).rstrip() + "\n"
+    return (
+        MODULE_TEMPLATE.format(category_title=category.capitalize(), functions_code="\n".join(functions_code)).rstrip()
+        + "\n"
+    )
 
 
 def main():
