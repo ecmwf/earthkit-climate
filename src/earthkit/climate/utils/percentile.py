@@ -157,4 +157,8 @@ def calculate_percentile_doy(
     per_name = f"{variable}_per"
     per = per.rename(per_name)
 
+    # If the percentile is a singleton, squeeze the dimension to avoid downstream plotting issues
+    if "percentiles" in per.dims and per.sizes["percentiles"] == 1:
+        per = per.squeeze("percentiles", drop=True)
+
     return per.to_dataset()

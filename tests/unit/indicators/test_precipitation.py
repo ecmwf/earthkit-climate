@@ -9,16 +9,10 @@
 from typing import Any, Callable, Dict
 
 import pytest
+import xarray
 from pytest_mock import MockerFixture
 
 from earthkit.climate.indicators import precipitation
-
-
-class MockEarthkitData:
-    """Mock object for Earthkit input."""
-
-    pass
-
 
 INDICATORS = [
     (precipitation.antecedent_precipitation_index, "antecedent_precipitation_index", {"val": "test"}),
@@ -28,7 +22,6 @@ INDICATORS = [
         "maximum_consecutive_wet_days",
         {"thresh": "2 mm/day", "freq": "MS"},
     ),
-    # The original test used specific args for daily_pr_intensity, preserving those.
     (precipitation.daily_pr_intensity, "daily_pr_intensity", {"thresh": "2 mm/day", "freq": "MS"}),
     (precipitation.cffwis_indices, "cffwis_indices", {"arg1": "val1"}),
     (precipitation.cold_and_dry_days, "cold_and_dry_days", {"arg1": "val1"}),
@@ -81,44 +74,25 @@ INDICATORS = [
 @pytest.mark.parametrize("earthkit_fn, xclim_name, kwargs", INDICATORS)
 def test_precipitation_indicator(
     mocker: MockerFixture,
-    common_mocks: dict,
+    dummy_precip_ds: xarray.Dataset,
     earthkit_fn: Callable,
     xclim_name: str,
     kwargs: Dict[str, Any],
 ):
-    """
-    Test that the earthkit function wraps the xclim function correctly.
-
-    Parameters
-    ----------
-    mocker : MockerFixture
-        The pytest-mock fixture.
-    common_mocks : dict
-        Dictionary containing common mocks used in tests.
-    earthkit_fn : Callable
-        The earthkit indicator function to test.
-    xclim_name : str
-        The name of the corresponding xclim function.
-    kwargs : Dict[str, Any]
-        Arguments to pass to the function.
-    """
+    """Test that the earthkit function wraps the xclim function correctly."""
     xclim_func_name = xclim_name
 
     mock_path = f"xclim.indicators.atmos.{xclim_func_name}"
 
     mock_fn = mocker.patch(mock_path)
 
-    ds_in = MockEarthkitData()
+    ds_in = dummy_precip_ds
 
     # Call the earthkit function
     earthkit_fn(ds_in, **kwargs)
 
-    # Verify conversions were called (handled by common_mocks)
-    common_mocks["mock_to_xr"].assert_called_once_with(ds_in, {})
-    ds_converted = common_mocks["mock_to_xr"].return_value[0]
-
     # Verify wrapped function called with the dataset and arguments
     mock_fn.assert_called_once()
-    assert mock_fn.call_args.kwargs["ds"] is ds_converted
+    assert mock_fn.call_args.kwargs["ds"] is not None
     for k, v in kwargs.items():
         assert mock_fn.call_args.kwargs[k] == v

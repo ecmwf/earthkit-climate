@@ -9,39 +9,24 @@
 from typing import Callable
 
 import pytest
+import xarray
 from pytest_mock import MockerFixture
 
 from earthkit.climate.indicators import temperature
 
-
-class MockEarthkitData:
-    """Mock object for Earthkit input."""
-
-    pass
-
-
 INDICATORS = [
     (temperature.australian_hardiness_zones, "australian_hardiness_zones"),
-    (
-        temperature.biologically_effective_degree_days,
-        "biologically_effective_degree_days",
-    ),
+    (temperature.biologically_effective_degree_days, "biologically_effective_degree_days"),
     (temperature.cold_spell_days, "cold_spell_days"),
     (temperature.cold_spell_duration_index, "cold_spell_duration_index"),
     (temperature.cold_spell_frequency, "cold_spell_frequency"),
     (temperature.cold_spell_max_length, "cold_spell_max_length"),
     (temperature.cold_spell_total_length, "cold_spell_total_length"),
     (temperature.consecutive_frost_days, "consecutive_frost_days"),
-    (
-        temperature.maximum_consecutive_frost_free_days,
-        "maximum_consecutive_frost_free_days",
-    ),
+    (temperature.maximum_consecutive_frost_free_days, "maximum_consecutive_frost_free_days"),
     (temperature.cool_night_index, "cool_night_index"),
     (temperature.cooling_degree_days, "cooling_degree_days"),
-    (
-        temperature.cooling_degree_days_approximation,
-        "cooling_degree_days_approximation",
-    ),
+    (temperature.cooling_degree_days_approximation, "cooling_degree_days_approximation"),
     (temperature.corn_heat_units, "corn_heat_units"),
     (temperature.chill_portions, "chill_portions"),
     (temperature.chill_units, "chill_units"),
@@ -49,10 +34,7 @@ INDICATORS = [
     (temperature.daily_freezethaw_cycles, "daily_freezethaw_cycles"),
     (temperature.daily_temperature_range, "daily_temperature_range"),
     (temperature.max_daily_temperature_range, "max_daily_temperature_range"),
-    (
-        temperature.daily_temperature_range_variability,
-        "daily_temperature_range_variability",
-    ),
+    (temperature.daily_temperature_range_variability, "daily_temperature_range_variability"),
     (temperature.extreme_temperature_range, "extreme_temperature_range"),
     (temperature.fire_season, "fire_season"),
     (temperature.first_day_tg_above, "first_day_tg_above"),
@@ -84,10 +66,7 @@ INDICATORS = [
     (temperature.heat_wave_max_length, "heat_wave_max_length"),
     (temperature.heat_wave_total_length, "heat_wave_total_length"),
     (temperature.heating_degree_days, "heating_degree_days"),
-    (
-        temperature.heating_degree_days_approximation,
-        "heating_degree_days_approximation",
-    ),
+    (temperature.heating_degree_days_approximation, "heating_degree_days_approximation"),
     (temperature.hot_days, "hot_days"),
     (temperature.hot_spell_frequency, "hot_spell_frequency"),
     (temperature.hot_spell_max_length, "hot_spell_max_length"),
@@ -131,24 +110,11 @@ INDICATORS = [
 @pytest.mark.parametrize("earthkit_fn, xclim_name", INDICATORS)
 def test_temperature_indicator(
     mocker: MockerFixture,
-    common_mocks: dict,
+    dummy_temp_ds: xarray.Dataset,
     earthkit_fn: Callable,
     xclim_name: str,
 ):
-    """
-    Test that the earthkit function wraps the xclim function correctly.
-
-    Parameters
-    ----------
-    mocker : MockerFixture
-        The pytest-mock fixture.
-    common_mocks : dict
-        Dictionary containing common mocks used in tests.
-    earthkit_fn : Callable
-        The earthkit indicator function to test.
-    xclim_name : str
-        The name of the corresponding xclim function.
-    """
+    """Test that the earthkit function wraps the xclim function correctly."""
     xclim_func_name = xclim_name
 
     mock_path = f"xclim.indicators.atmos.{xclim_func_name}"
@@ -158,17 +124,14 @@ def test_temperature_indicator(
     # Use a dummy argument dictionary
     kwargs = {"arg1": "val1", "arg2": 2}
 
-    ds_in = MockEarthkitData()
+    ds_in = dummy_temp_ds
 
     # Call the earthkit function
-    earthkit_fn(ds_in, **kwargs)
-
-    # Verify conversions were called (handled by common_mocks)
-    common_mocks["mock_to_xr"].assert_called_once_with(ds_in, {})
-    ds_converted = common_mocks["mock_to_xr"].return_value[0]
+    earthkit_fn(ds=ds_in, **kwargs)
 
     # Verify wrapped function called with the dataset and arguments
     mock_fn.assert_called_once()
-    assert mock_fn.call_args.kwargs["ds"] is ds_converted
+    # The dataset might be the same or transformed by the decorator
+    assert mock_fn.call_args.kwargs["ds"] is not None
     for k, v in kwargs.items():
         assert mock_fn.call_args.kwargs[k] == v

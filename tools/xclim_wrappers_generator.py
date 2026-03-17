@@ -25,28 +25,55 @@ MODULE_TEMPLATE = """# (C) Copyright 2025 - ECMWF and individual contributors.
 
 \"\"\"{category_title} indices.\"\"\"
 
-from typing import Any
+from typing import Any, Literal
 
 import xarray
 import xclim.indicators.atmos
+from earthkit.utils.decorators.format_handlers import format_handler
 
-import earthkit.climate.utils.conversions as conversions
-from earthkit.climate.api.wrapper import wrap_xclim_indicator
+# from earthkit.climate.utils.decorators import metadata_handler
 
 {functions_code}
 """
 
 FUNCTION_TEMPLATE = """
+@format_handler()
+# @metadata_handler({xclim_obj_ref})
 def {func_name}(
-    ds: conversions.EarthkitData | xarray.Dataset,
-    **kwargs: Any,
-) -> conversions.EarthkitData:
+{signature_params}
+) -> Any:
     \"\"\"
     {docstring}
     \"\"\"
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.{xclim_func_name})
-    return wrapper(ds, **kwargs)
+    return {xclim_obj_ref}({call_params})
 """
+
+
+def simplify_type(type_obj: Any) -> str:
+    """Simplify complex types to strings that can be used in the generated code."""
+    if type_obj == inspect.Parameter.empty:
+        return "Any"
+
+    type_str = str(type_obj)
+
+    # Common replacements
+    replacements = {
+        "xarray.core.dataarray.DataArray": "xarray.DataArray",
+        "xarray.core.dataset.Dataset": "xarray.Dataset",
+        "xarray.core.datatree.DataTree": "Any",
+        "Quantified": "Any",  # xclim specific, hard to import reliably
+        "DayOfYearStr": "str",
+        "Indexer": "Any",
+    }
+
+    for old, new in replacements.items():
+        type_str = type_str.replace(old, new)
+
+    # Remove quotes
+    if type_str.startswith("'") and type_str.endswith("'"):
+        type_str = type_str[1:-1]
+
+    return type_str
 
 
 def generate_docstring(indicator: Any, xclim_func_name: str) -> str:
@@ -117,29 +144,141 @@ def generate_docstring(indicator: Any, xclim_func_name: str) -> str:
     if units_section:
         sections.append(units_section)
 
-    sections.append(
-        f"This function wraps `xclim.indicators.atmos.{xclim_func_name} "
+    link_prefix = f"This function wraps `xclim.indicators.atmos.{xclim_func_name}"
+    link_url = (
         f"<https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.{xclim_func_name}>`_."
     )
+    sections.append(f"{link_prefix}\n    {link_url}")
 
-    # Static footer
-    footer = inspect.cleandoc(f"""
-        Parameters
-        ----------
-        ds : conversions.EarthkitData | xarray.Dataset
-            Input dataset. See xclim documentation for required variables.
-        **kwargs : Any
-            Additional keyword arguments forwarded to
-            :func:`xclim.indicators.atmos.{xclim_func_name}`.
+    # Parameters section
+    params_lines = [
+        "Parameters",
+        "----------",
+    ]
 
+    try:
+        sig = inspect.signature(indicator)
+        for name, param in sig.parameters.items():
+            if name == "ds":
+                continue
+
+            # Skip VAR parameters as they are handled by docstring **kwargs
+            if param.kind in (inspect.Parameter.VAR_KEYWORD, inspect.Parameter.VAR_POSITIONAL):
+                continue
+
+            # Try to get description from indicator.parameters
+            param_meta = indicator.parameters.get(name)
+            description = getattr(param_meta, "description", "") if param_meta else ""
+
+            type_hint = simplify_type(param.annotation)
+
+            params_lines.append(f"{name} : {type_hint}")
+            if description:
+                # Wrap description with hanging indent
+                wrapped_description = textwrap.fill(
+                    description, width=88, initial_indent="    ", subsequent_indent="    "
+                )
+                params_lines.append(wrapped_description)
+    except Exception:
+        pass
+
+    params_lines.append("ds : xarray.Dataset | Any")
+    params_lines.append("    Input dataset.")
+    params_lines.append("**kwargs : Any")
+    params_lines.append("    Additional keyword arguments.")
+
+    sections.append("\n".join(params_lines))
+
+    # Returns section
+    returns_section = inspect.cleandoc("""
         Returns
         -------
-        conversions.EarthkitData
-            The computed index as an Earthkit-compatible field.
+        Any
+            The computed index.
     """)
-    sections.append(footer)
+    sections.append(returns_section)
 
     return "\n\n".join(sections)
+
+
+def format_signature_params(indicator: Any) -> str:
+    """Format the parameters for the function signature."""
+    params = []
+
+    try:
+        sig = inspect.signature(indicator)
+
+        sig_params = list(sig.parameters.values())
+
+        pos_no_default = []
+        pos_with_default = []
+        kw_only = []
+
+        for p in sig_params:
+            if p.name == "ds":
+                continue
+
+            if p.kind in (inspect.Parameter.POSITIONAL_OR_KEYWORD, inspect.Parameter.POSITIONAL_ONLY):
+                if p.default == inspect.Parameter.empty:
+                    pos_no_default.append(p)
+                else:
+                    pos_with_default.append(p)
+            elif p.kind == inspect.Parameter.KEYWORD_ONLY:
+                kw_only.append(p)
+            # Skip VAR_KEYWORD and VAR_POSITIONAL as we add our own **kwargs
+
+        for p in pos_no_default:
+            type_hint = simplify_type(p.annotation)
+            params.append(f"    {p.name}: {type_hint},")
+
+        for p in pos_with_default:
+            type_hint = simplify_type(p.annotation)
+            default_val = repr(p.default)
+            params.append(f"    {p.name}: {type_hint} = {default_val},")
+
+        # Add ds here
+        params.append("    ds: xarray.Dataset | Any = None,")
+
+        if kw_only:
+            params.append("    *,")
+            for p in kw_only:
+                type_hint = simplify_type(p.annotation)
+                if p.default != inspect.Parameter.empty:
+                    default_val = repr(p.default)
+                    params.append(f"    {p.name}: {type_hint} = {default_val},")
+                else:
+                    params.append(f"    {p.name}: {type_hint},")
+
+    except Exception:
+        pass
+
+    params.append("    **kwargs: Any,")
+
+    return "\n".join(params)
+
+
+def format_call_params(indicator: Any) -> str:
+    """Format the parameters for the xclim call."""
+    try:
+        sig = inspect.signature(indicator)
+        call_args = []
+        for name, param in sig.parameters.items():
+            if name == "ds":
+                call_args.append("ds=ds")
+            elif param.kind in (inspect.Parameter.VAR_KEYWORD, inspect.Parameter.VAR_POSITIONAL):
+                continue  # Skip VAR parameters, they are covered by **kwargs
+            else:
+                call_args.append(f"{name}={name}")
+        call_args.append("**kwargs")
+
+        # If the total length is likely to exceed 88 chars (indent=4 + total), or many parameters
+        total_len = sum(len(arg) for arg in call_args) + 2 * len(call_args) + 30  # 30 for the 'return xclim...' part
+        if len(call_args) > 3 or total_len > 80:
+            return "\n        " + ",\n        ".join(call_args) + ",\n    "
+
+        return ", ".join(call_args)
+    except Exception:
+        return "ds=ds, **kwargs"
 
 
 def generate_module_content(category: str, indicators: List[Any]) -> str:
@@ -183,10 +322,22 @@ def generate_module_content(category: str, indicators: List[Any]) -> str:
         lines = docstring.split("\n")
         indented_doc = lines[0] + "\n" + "\n".join([("    " + line if line.strip() else "") for line in lines[1:]])
 
-        code = FUNCTION_TEMPLATE.format(func_name=func_name, xclim_func_name=xclim_func_name, docstring=indented_doc)
+        signature_params = format_signature_params(ind)
+        call_params = format_call_params(ind)
+        xclim_obj_ref = f"xclim.indicators.atmos.{xclim_func_name}"
+
+        code = FUNCTION_TEMPLATE.format(
+            func_name=func_name,
+            signature_params=signature_params,
+            call_params=call_params,
+            xclim_obj_ref=xclim_obj_ref,
+            docstring=indented_doc,
+        )
         functions_code.append(code)
 
-    return MODULE_TEMPLATE.format(category_title=category.capitalize(), functions_code="".join(functions_code))
+    return MODULE_TEMPLATE.format(
+        category_title=category.capitalize(), functions_code="\n".join(functions_code)
+    ).rstrip() + "\n"
 
 
 def main():

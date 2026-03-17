@@ -1,5 +1,4 @@
 [dependencies]
-earthkit-data = ">=0.17.0"
 flox = ">=0.11.0,<0.12"
 numpy = ">=1.22"
 python = "3.12.*"
@@ -7,6 +6,7 @@ seaborn = ">=0.13.2,<0.14"
 xarray = ">=2023.1"
 xclim = ">=0.59.1"
 xsdba = ">=0.5,<0.6"
+cdsapi = ">=0.7.7,<0.8"
 
 [environments]
 dev = ["dev"]
@@ -22,6 +22,10 @@ pytest = "*"
 pytest-cov = "*"
 pytest-mock = "*"
 ruff = "*"
+nbformat = ">=5.10.4,<6"
+
+[feature.dev.pypi-dependencies]
+earthkit-transforms = ">=0.5.3.1, <0.6"
 
 [feature.docs.dependencies]
 nbsphinx = ">=0.9.8,<0.10"
@@ -29,13 +33,17 @@ pandoc = "*"
 sphinx = "*"
 sphinx-autoapi = ">=3.6.1,<4"
 sphinx-rtd-theme = ">=3.0.2,<4"
+furo = "*"
+
 
 [feature.docs.tasks]
-docs-build = "rm -rf docs/_api docs/_build && sphinx-build -M html docs docs/_build"
+docs-build = "rm -rf docs/_build && sphinx-build -M html docs docs/_build"
 
 [pypi-dependencies]
 earthkit-climate = {path = ".", editable = true}
-earthkit-plots = ">=0.5.0"
+earthkit-data = ">=0.17.0"
+earthkit-plots = ">=0.5.0,<0.6"
+earthkit-utils = {git = "https://github.com/ecmwf/earthkit-utils.git", branch = "develop"}
 
 [tasks]
 qa = "pre-commit run --all-files"

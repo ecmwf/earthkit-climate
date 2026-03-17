@@ -8,19 +8,25 @@
 
 """Precipitation indices."""
 
-from typing import Any
+from typing import Any, Literal
 
 import xarray
 import xclim.indicators.atmos
+from earthkit.utils.decorators.format_handlers import format_handler
 
-import earthkit.climate.utils.conversions as conversions
-from earthkit.climate.api.wrapper import wrap_xclim_indicator
+# from earthkit.climate.utils.decorators import metadata_handler
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.antecedent_precipitation_index)
 def antecedent_precipitation_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    window: int = 7,
+    p_exp: float = 0.935,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Antecedent precipitation index.
 
@@ -31,29 +37,47 @@ def antecedent_precipitation_index(
 
     - api: mm
 
-    This function wraps `xclim.indicators.atmos.antecedent_precipitation_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.antecedent_precipitation_index>`_.
+    This function wraps `xclim.indicators.atmos.antecedent_precipitation_index
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.antecedent_precipitation_index>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation data.
+    window : int
+        Window for the days of precipitation data to be weighted and summed, default is 7.
+    p_exp : float
+        Weighting exponent, default is 0.935.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.antecedent_precipitation_index`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.antecedent_precipitation_index)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.antecedent_precipitation_index(
+        pr=pr,
+        window=window,
+        p_exp=p_exp,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.maximum_consecutive_dry_days)
 def maximum_consecutive_dry_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS',
+    resample_before_rl: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Maximum consecutive dry days.
 
@@ -64,29 +88,61 @@ def maximum_consecutive_dry_days(
 
     - cdd: days
 
-    This function wraps `xclim.indicators.atmos.maximum_consecutive_dry_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_dry_days>`_.
+    This function wraps `xclim.indicators.atmos.maximum_consecutive_dry_days
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_dry_days>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    thresh : Any
+        Threshold precipitation on which to base evaluation.
+    freq : str
+        Resampling frequency.
+    resample_before_rl : bool
+        Determines if the resampling should take place before or after the run length
+        encoding (or a similar algorithm) is applied to runs.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.maximum_consecutive_dry_days`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.maximum_consecutive_dry_days)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.maximum_consecutive_dry_days(
+        pr=pr,
+        thresh=thresh,
+        freq=freq,
+        resample_before_rl=resample_before_rl,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.cffwis_indices)
 def cffwis_indices(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    tas: xarray.DataArray | str = 'tas',
+    pr: xarray.DataArray | str = 'pr',
+    sfcWind: xarray.DataArray | str = 'sfcWind',
+    hurs: xarray.DataArray | str = 'hurs',
+    lat: xarray.DataArray | str = 'lat',
+    snd: xarray.DataArray | str | None = None,
+    ffmc0: xarray.DataArray | str | None = None,
+    dmc0: xarray.DataArray | str | None = None,
+    dc0: xarray.DataArray | str | None = None,
+    season_mask: xarray.DataArray | str | None = None,
+    ds: xarray.Dataset | Any = None,
+    *,
+    season_method: str | None = None,
+    overwintering: bool = False,
+    dry_start: str | None = None,
+    initial_start_up: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Canadian fire weather index system indices.
 
@@ -103,29 +159,87 @@ def cffwis_indices(
     - bui: dimensionless
     - fwi: dimensionless
 
-    This function wraps `xclim.indicators.atmos.cffwis_indices <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cffwis_indices>`_.
+    This function wraps `xclim.indicators.atmos.cffwis_indices
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cffwis_indices>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    tas : xarray.DataArray | str
+        Noon temperature.
+    pr : xarray.DataArray | str
+        Rain fall in open over previous 24 hours, at noon.
+    sfcWind : xarray.DataArray | str
+        Noon wind speed.
+    hurs : xarray.DataArray | str
+        Noon relative humidity.
+    lat : xarray.DataArray | str
+        Latitude coordinate.
+    snd : xarray.DataArray | str | None
+        Noon snow depth, only used if `season_method='LA08'` is passed.
+    ffmc0 : xarray.DataArray | str | None
+        Initial values of the fine fuel moisture code.
+    dmc0 : xarray.DataArray | str | None
+        Initial values of the Duff moisture code.
+    dc0 : xarray.DataArray | str | None
+        Initial values of the drought code.
+    season_mask : xarray.DataArray | str | None
+        Boolean mask, True where/when the fire season is active.
+    season_method : str | None
+        How to compute the start-up and shutdown of the fire season. If "None", no start-ups
+        or shutdowns are computed, similar to the R fire function. Ignored if `season_mask`
+        is given.
+    overwintering : bool
+        Whether to activate DC overwintering or not. If True, either season_method or
+        season_mask must be given.
+    dry_start : str | None
+        Whether to activate the DC and DMC "dry start" mechanism or not, see
+        :py:func:`fire_weather_ufunc`.
+    initial_start_up : bool
+        If True (default), gridpoints where the fire season is active on the first timestep
+        go through a start_up phase for that time step. Otherwise, previous codes must be
+        given as a continuing fire season is assumed for those points.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.cffwis_indices`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cffwis_indices)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.cffwis_indices(
+        tas=tas,
+        pr=pr,
+        sfcWind=sfcWind,
+        hurs=hurs,
+        lat=lat,
+        snd=snd,
+        ffmc0=ffmc0,
+        dmc0=dmc0,
+        dc0=dc0,
+        season_mask=season_mask,
+        season_method=season_method,
+        overwintering=overwintering,
+        dry_start=dry_start,
+        initial_start_up=initial_start_up,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.cold_and_dry_days)
 def cold_and_dry_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    tas: xarray.DataArray | str = 'tas',
+    pr: xarray.DataArray | str = 'pr',
+    tas_per: xarray.DataArray | str = 'tas_per',
+    pr_per: xarray.DataArray | str = 'pr_per',
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Cold and dry days.
 
@@ -136,29 +250,54 @@ def cold_and_dry_days(
 
     - cold_and_dry_days: days
 
-    This function wraps `xclim.indicators.atmos.cold_and_dry_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_and_dry_days>`_.
+    This function wraps `xclim.indicators.atmos.cold_and_dry_days
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_and_dry_days>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    tas : xarray.DataArray | str
+        Mean daily temperature values.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    tas_per : xarray.DataArray | str
+        First quartile of daily mean temperature computed by month.
+    pr_per : xarray.DataArray | str
+        First quartile of daily total precipitation computed by month.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.cold_and_dry_days`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cold_and_dry_days)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.cold_and_dry_days(
+        tas=tas,
+        pr=pr,
+        tas_per=tas_per,
+        pr_per=pr_per,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.cold_and_wet_days)
 def cold_and_wet_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    tas: xarray.DataArray | str = 'tas',
+    pr: xarray.DataArray | str = 'pr',
+    tas_per: xarray.DataArray | str = 'tas_per',
+    pr_per: xarray.DataArray | str = 'pr_per',
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Cold and wet days.
 
@@ -169,29 +308,53 @@ def cold_and_wet_days(
 
     - cold_and_wet_days: days
 
-    This function wraps `xclim.indicators.atmos.cold_and_wet_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_and_wet_days>`_.
+    This function wraps `xclim.indicators.atmos.cold_and_wet_days
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_and_wet_days>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    tas : xarray.DataArray | str
+        Mean daily temperature values.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    tas_per : xarray.DataArray | str
+        First quartile of daily mean temperature computed by month.
+    pr_per : xarray.DataArray | str
+        Third quartile of daily total precipitation computed by month.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.cold_and_wet_days`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.cold_and_wet_days)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.cold_and_wet_days(
+        tas=tas,
+        pr=pr,
+        tas_per=tas_per,
+        pr_per=pr_per,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.maximum_consecutive_wet_days)
 def maximum_consecutive_wet_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS',
+    resample_before_rl: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Maximum consecutive wet days.
 
@@ -202,29 +365,53 @@ def maximum_consecutive_wet_days(
 
     - cwd: days
 
-    This function wraps `xclim.indicators.atmos.maximum_consecutive_wet_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_wet_days>`_.
+    This function wraps `xclim.indicators.atmos.maximum_consecutive_wet_days
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_wet_days>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    thresh : Any
+        Threshold precipitation on which to base evaluation.
+    freq : str
+        Resampling frequency.
+    resample_before_rl : bool
+        Determines if the resampling should take place before or after the run length
+        encoding (or a similar algorithm) is applied to runs.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.maximum_consecutive_wet_days`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.maximum_consecutive_wet_days)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.maximum_consecutive_wet_days(
+        pr=pr,
+        thresh=thresh,
+        freq=freq,
+        resample_before_rl=resample_before_rl,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.days_over_precip_doy_thresh)
 def days_over_precip_doy_thresh(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    pr_per: xarray.DataArray | str = 'pr_per',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS',
+    bootstrap: bool = False,
+    op: Literal['>', '>=', 'gt', 'ge'] = '>',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Number of days with precipitation above a given daily percentile.
 
@@ -235,29 +422,64 @@ def days_over_precip_doy_thresh(
 
     - days_over_precip_doy_thresh: days
 
-    This function wraps `xclim.indicators.atmos.days_over_precip_doy_thresh <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_over_precip_doy_thresh>`_.
+    This function wraps `xclim.indicators.atmos.days_over_precip_doy_thresh
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_over_precip_doy_thresh>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    pr_per : xarray.DataArray | str
+        Percentile of wet day precipitation flux. Either computed daily (one value per day
+        of year) or computed over a period (one value per spatial point).
+    thresh : Any
+        Precipitation value over which a day is considered wet.
+    freq : str
+        Resampling frequency.
+    bootstrap : bool
+        Flag to run bootstrapping of percentiles. Used by percentile_bootstrap decorator.
+        Bootstrapping is only useful when the percentiles are computed on a part of the
+        studied sample. This period, common to percentiles and the sample must be
+        bootstrapped to avoid inhomogeneities with the rest of the time series. Do not
+        enable bootstrap when there is no common period, otherwise it will provide the wrong
+        results. Note that bootstrapping is computationally expensive.
+    op : Literal['>', '>=', 'gt', 'ge']
+        Comparison operation. Default: ">".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.days_over_precip_doy_thresh`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.days_over_precip_doy_thresh)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.days_over_precip_doy_thresh(
+        pr=pr,
+        pr_per=pr_per,
+        thresh=thresh,
+        freq=freq,
+        bootstrap=bootstrap,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.days_over_precip_thresh)
 def days_over_precip_thresh(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    pr_per: xarray.DataArray | str = 'pr_per',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS',
+    bootstrap: bool = False,
+    op: Literal['>', '>=', 'gt', 'ge'] = '>',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Number of days with precipitation above a given percentile.
 
@@ -268,29 +490,62 @@ def days_over_precip_thresh(
 
     - days_over_precip_thresh: days
 
-    This function wraps `xclim.indicators.atmos.days_over_precip_thresh <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_over_precip_thresh>`_.
+    This function wraps `xclim.indicators.atmos.days_over_precip_thresh
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_over_precip_thresh>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    pr_per : xarray.DataArray | str
+        Percentile of wet day precipitation flux. Either computed daily (one value per day
+        of year) or computed over a period (one value per spatial point).
+    thresh : Any
+        Precipitation value over which a day is considered wet.
+    freq : str
+        Resampling frequency.
+    bootstrap : bool
+        Flag to run bootstrapping of percentiles. Used by percentile_bootstrap decorator.
+        Bootstrapping is only useful when the percentiles are computed on a part of the
+        studied sample. This period, common to percentiles and the sample must be
+        bootstrapped to avoid inhomogeneities with the rest of the time series. Do not
+        enable bootstrap when there is no common period, otherwise it will provide the wrong
+        results. Note that bootstrapping is computationally expensive.
+    op : Literal['>', '>=', 'gt', 'ge']
+        Comparison operation. Default: ">".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.days_over_precip_thresh`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.days_over_precip_thresh)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.days_over_precip_thresh(
+        pr=pr,
+        pr_per=pr_per,
+        thresh=thresh,
+        freq=freq,
+        bootstrap=bootstrap,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.days_with_snow)
 def days_with_snow(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    prsn: xarray.DataArray | str = 'prsn',
+    ds: xarray.Dataset | Any = None,
+    *,
+    low: Any = '0 kg m-2 s-1',
+    high: Any = '1E6 kg m-2 s-1',
+    freq: str = 'YS-JUL',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Days with snowfall.
 
@@ -300,29 +555,56 @@ def days_with_snow(
 
     - days_with_snow: days
 
-    This function wraps `xclim.indicators.atmos.days_with_snow <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_with_snow>`_.
+    This function wraps `xclim.indicators.atmos.days_with_snow
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_with_snow>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    prsn : xarray.DataArray | str
+        Snowfall flux.
+    low : Any
+        Minimum threshold snowfall flux or liquid water equivalent snowfall rate.
+    high : Any
+        Maximum threshold snowfall flux or liquid water equivalent snowfall rate.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.days_with_snow`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.days_with_snow)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.days_with_snow(
+        prsn=prsn,
+        low=low,
+        high=high,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.drought_code)
 def drought_code(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    tas: xarray.DataArray | str = 'tas',
+    pr: xarray.DataArray | str = 'pr',
+    lat: xarray.DataArray | str = 'lat',
+    snd: xarray.DataArray | str | None = None,
+    dc0: xarray.DataArray | str | None = None,
+    season_mask: xarray.DataArray | str | None = None,
+    ds: xarray.Dataset | Any = None,
+    *,
+    season_method: str | None = None,
+    overwintering: bool = False,
+    dry_start: str | None = None,
+    initial_start_up: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Daily drought code.
 
@@ -333,29 +615,73 @@ def drought_code(
 
     - dc: dimensionless
 
-    This function wraps `xclim.indicators.atmos.drought_code <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.drought_code>`_.
+    This function wraps `xclim.indicators.atmos.drought_code
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.drought_code>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    tas : xarray.DataArray | str
+        Noon temperature.
+    pr : xarray.DataArray | str
+        Rain fall in open over previous 24 hours, at noon.
+    lat : xarray.DataArray | str
+        Latitude coordinate.
+    snd : xarray.DataArray | str | None
+        Noon snow depth.
+    dc0 : xarray.DataArray | str | None
+        Initial values of the drought code.
+    season_mask : xarray.DataArray | str | None
+        Boolean mask, True where/when the fire season is active.
+    season_method : str | None
+        How to compute the start-up and shutdown of the fire season. If "None", no start-ups
+        or shutdowns are computed, similar to the R fire function. Ignored if `season_mask`
+        is given.
+    overwintering : bool
+        Whether to activate DC overwintering or not. If True, either season_method or
+        season_mask must be given.
+    dry_start : str | None
+        Whether to activate the DC and DMC "dry start" mechanism and which method to use.
+        See :py:func:`fire_weather_ufunc`.
+    initial_start_up : bool
+        If True (default), grid points where the fire season is active on the first timestep
+        go through a start_up phase for that time step. Otherwise, previous codes must be
+        given as a continuing fire season is assumed for those points.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.drought_code`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.drought_code)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.drought_code(
+        tas=tas,
+        pr=pr,
+        lat=lat,
+        snd=snd,
+        dc0=dc0,
+        season_mask=season_mask,
+        season_method=season_method,
+        overwintering=overwintering,
+        dry_start=dry_start,
+        initial_start_up=initial_start_up,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.griffiths_drought_factor)
 def griffiths_drought_factor(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    smd: xarray.DataArray | str = 'smd',
+    ds: xarray.Dataset | Any = None,
+    *,
+    limiting_func: str = 'xlim',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Griffiths drought factor based on the soil moisture deficit.
 
@@ -367,29 +693,56 @@ def griffiths_drought_factor(
 
     - df: dimensionless
 
-    This function wraps `xclim.indicators.atmos.griffiths_drought_factor <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.griffiths_drought_factor>`_.
+    This function wraps `xclim.indicators.atmos.griffiths_drought_factor
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.griffiths_drought_factor>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Total rainfall over previous 24 hours [mm/day].
+    smd : xarray.DataArray | str
+        Daily soil moisture deficit (often KBDI) [mm/day].
+    limiting_func : str
+        How to limit the values of the drought factor. If "xlim" (default), use equation
+        (14) in :cite:t:`ffdi-finkele_2006`. If "discrete", use equation Eq (13) in
+        :cite:t:`ffdi-finkele_2006`, but with the lower limit of each category bound
+        adjusted to match the upper limit of the previous bound.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.griffiths_drought_factor`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.griffiths_drought_factor)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.griffiths_drought_factor(
+        pr=pr,
+        smd=smd,
+        limiting_func=limiting_func,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.duff_moisture_code)
 def duff_moisture_code(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    tas: xarray.DataArray | str = 'tas',
+    pr: xarray.DataArray | str = 'pr',
+    hurs: xarray.DataArray | str = 'hurs',
+    lat: xarray.DataArray | str = 'lat',
+    snd: xarray.DataArray | str | None = None,
+    dmc0: xarray.DataArray | str | None = None,
+    season_mask: xarray.DataArray | str | None = None,
+    ds: xarray.Dataset | Any = None,
+    *,
+    season_method: str | None = None,
+    dry_start: str | None = None,
+    initial_start_up: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Duff moisture code (fwi component).
 
@@ -401,29 +754,73 @@ def duff_moisture_code(
 
     - dmc: dimensionless
 
-    This function wraps `xclim.indicators.atmos.duff_moisture_code <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.duff_moisture_code>`_.
+    This function wraps `xclim.indicators.atmos.duff_moisture_code
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.duff_moisture_code>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    tas : xarray.DataArray | str
+        Noon temperature.
+    pr : xarray.DataArray | str
+        Rain fall in open over previous 24 hours, at noon.
+    hurs : xarray.DataArray | str
+        Noon relative humidity.
+    lat : xarray.DataArray | str
+        Latitude coordinate.
+    snd : xarray.DataArray | str | None
+        Noon snow depth.
+    dmc0 : xarray.DataArray | str | None
+        Initial values of the duff moisture code.
+    season_mask : xarray.DataArray | str | None
+        Boolean mask, True where/when the fire season is active.
+    season_method : str | None
+        How to compute the start-up and shutdown of the fire season. If "None", no start-ups
+        or shutdowns are computed, similar to the R fire function. Ignored if `season_mask`
+        is given.
+    dry_start : str | None
+        Whether to activate the DC and DMC "dry start" mechanism and which method to use.
+        See :py:func:`fire_weather_ufunc`.
+    initial_start_up : bool
+        If True (default), grid points where the fire season is active on the first timestep
+        go through a start_up phase for that time step. Otherwise, previous codes must be
+        given as a continuing fire season is assumed for those points.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.duff_moisture_code`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.duff_moisture_code)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.duff_moisture_code(
+        tas=tas,
+        pr=pr,
+        hurs=hurs,
+        lat=lat,
+        snd=snd,
+        dmc0=dmc0,
+        season_mask=season_mask,
+        season_method=season_method,
+        dry_start=dry_start,
+        initial_start_up=initial_start_up,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.dry_days)
 def dry_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '0.2 mm/d',
+    freq: str = 'YS',
+    op: Literal['<', 'lt', '<=', 'le'] = '<',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Number of dry days.
 
@@ -433,29 +830,52 @@ def dry_days(
 
     - dry_days: days
 
-    This function wraps `xclim.indicators.atmos.dry_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_days>`_.
+    This function wraps `xclim.indicators.atmos.dry_days
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_days>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Threshold precipitation on which to base evaluation.
+    freq : str
+        Resampling frequency.
+    op : Literal['<', 'lt', '<=', 'le']
+        Comparison operation. Default: "<".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.dry_days`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.dry_days)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.dry_days(
+        pr=pr,
+        thresh=thresh,
+        freq=freq,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.dry_spell_frequency)
 def dry_spell_frequency(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm',
+    window: int = 3,
+    freq: str = 'YS',
+    resample_before_rl: bool = True,
+    op: Literal['sum', 'max', 'min', 'mean'] = 'sum',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Dry spell frequency.
 
@@ -466,29 +886,64 @@ def dry_spell_frequency(
 
     - dry_spell_frequency: dimensionless
 
-    This function wraps `xclim.indicators.atmos.dry_spell_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_frequency>`_.
+    This function wraps `xclim.indicators.atmos.dry_spell_frequency
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_frequency>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Precipitation amount under which a period is considered dry. The value against which
+        the threshold is compared depends on `op`.
+    window : int
+        Minimum length of the spells.
+    freq : str
+        Resampling frequency.
+    resample_before_rl : bool
+        Determines if the resampling should take place before or after the run length
+        encoding (or a similar algorithm) is applied to runs.
+    op : Literal['sum', 'max', 'min', 'mean']
+        Operation to perform on the window. Default is "sum", which checks that the sum of
+        accumulated precipitation over the whole window is less than the threshold. "max"
+        checks that the maximal daily precipitation amount within the window is less than
+        the threshold. This is the same as verifying that each individual day is below the
+        threshold.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.dry_spell_frequency`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.dry_spell_frequency)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.dry_spell_frequency(
+        pr=pr,
+        thresh=thresh,
+        window=window,
+        freq=freq,
+        resample_before_rl=resample_before_rl,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.dry_spell_max_length)
 def dry_spell_max_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm',
+    window: int = 1,
+    op: Literal['max', 'sum'] = 'sum',
+    freq: str = 'YS',
+    resample_before_rl: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Dry spell maximum length.
 
@@ -499,29 +954,59 @@ def dry_spell_max_length(
 
     - dry_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.dry_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.dry_spell_max_length
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_max_length>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Accumulated precipitation value under which a period is considered dry.
+    window : int
+        Number of days when the maximum or accumulated precipitation is under the threshold.
+    op : Literal['max', 'sum']
+        Reduce operation.
+    freq : str
+        Resampling frequency.
+    resample_before_rl : bool
+        Determines if the resampling should take place before or after the run length
+        encoding (or a similar algorithm) is applied to runs.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.dry_spell_max_length`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.dry_spell_max_length)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.dry_spell_max_length(
+        pr=pr,
+        thresh=thresh,
+        window=window,
+        op=op,
+        freq=freq,
+        resample_before_rl=resample_before_rl,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.dry_spell_total_length)
 def dry_spell_total_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm',
+    window: int = 3,
+    op: Literal['sum', 'max', 'min', 'mean'] = 'sum',
+    freq: str = 'YS',
+    resample_before_rl: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Dry spell total length.
 
@@ -532,29 +1017,62 @@ def dry_spell_total_length(
 
     - dry_spell_total_length: days
 
-    This function wraps `xclim.indicators.atmos.dry_spell_total_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_total_length>`_.
+    This function wraps `xclim.indicators.atmos.dry_spell_total_length
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_total_length>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Accumulated precipitation value under which a period is considered dry.
+    window : int
+        Number of days when the maximum or accumulated precipitation is under the threshold.
+    op : Literal['sum', 'max', 'min', 'mean']
+        Operation to perform on the window. Default is "sum", which checks that the sum of
+        accumulated precipitation over the whole window is less than the threshold. "max"
+        checks that the maximal daily precipitation amount within the window is less than
+        the threshold. This is the same as verifying that each individual day is below the
+        threshold.
+    freq : str
+        Resampling frequency.
+    resample_before_rl : bool
+        Determines if the resampling should take place before or after the run length
+        encoding (or a similar algorithm) is applied to runs.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.dry_spell_total_length`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.dry_spell_total_length)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.dry_spell_total_length(
+        pr=pr,
+        thresh=thresh,
+        window=window,
+        op=op,
+        freq=freq,
+        resample_before_rl=resample_before_rl,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.dryness_index)
 def dryness_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    evspsblpot: xarray.DataArray | str = 'evspsblpot',
+    lat: xarray.DataArray | str | None = None,
+    ds: xarray.Dataset | Any = None,
+    *,
+    wo: Any = '200 mm',
+    freq: Literal['YS', 'YS-JAN'] = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Dryness index.
 
@@ -566,29 +1084,53 @@ def dryness_index(
 
     - dryness_index: mm
 
-    This function wraps `xclim.indicators.atmos.dryness_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dryness_index>`_.
+    This function wraps `xclim.indicators.atmos.dryness_index
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dryness_index>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Precipitation.
+    evspsblpot : xarray.DataArray | str
+        Potential evapotranspiration.
+    lat : xarray.DataArray | str | None
+        Latitude coordinate as an array, float or string. If None, a CF-conformant
+        "latitude" field must be available within the passed DataArray.
+    wo : Any
+        The initial soil water reserve accessible to root systems [length]. Default: 200 mm.
+    freq : Literal['YS', 'YS-JAN']
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.dryness_index`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.dryness_index)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.dryness_index(
+        pr=pr,
+        evspsblpot=evspsblpot,
+        lat=lat,
+        wo=wo,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.mcarthur_forest_fire_danger_index)
 def mcarthur_forest_fire_danger_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    drought_factor: xarray.DataArray | str = 'drought_factor',
+    tasmax: xarray.DataArray | str = 'tasmax',
+    hurs: xarray.DataArray | str = 'hurs',
+    sfcWind: xarray.DataArray | str = 'sfcWind',
+    ds: xarray.Dataset | Any = None,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Mcarthur forest fire danger index (ffdi) mark 5.
 
@@ -598,29 +1140,58 @@ def mcarthur_forest_fire_danger_index(
 
     - ffdi: dimensionless
 
-    This function wraps `xclim.indicators.atmos.mcarthur_forest_fire_danger_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.mcarthur_forest_fire_danger_index>`_.
+    This function wraps `xclim.indicators.atmos.mcarthur_forest_fire_danger_index
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.mcarthur_forest_fire_danger_index>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    drought_factor : xarray.DataArray | str
+        The drought factor, often the daily Griffiths drought factor (see
+        :py:func:`griffiths_drought_factor`).
+    tasmax : xarray.DataArray | str
+        The daily maximum temperature near the surface, or similar. Different applications
+        have used different inputs here, including the previous/current day's maximum daily
+        temperature at a height of 2m, and the daily mean temperature at a height of 2m.
+    hurs : xarray.DataArray | str
+        The relative humidity near the surface and near the time of the maximum daily
+        temperature, or similar. Different applications have used different inputs here,
+        including the mid-afternoon relative humidity at a height of 2m, and the daily mean
+        relative humidity at a height of 2m.
+    sfcWind : xarray.DataArray | str
+        The wind speed near the surface and near the time of the maximum daily temperature,
+        or similar. Different applications have used different inputs here, including the
+        mid-afternoon wind speed at a height of 10m, and the daily mean wind speed at a
+        height of 10m.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.mcarthur_forest_fire_danger_index`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.mcarthur_forest_fire_danger_index)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.mcarthur_forest_fire_danger_index(
+        drought_factor=drought_factor,
+        tasmax=tasmax,
+        hurs=hurs,
+        sfcWind=sfcWind,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.first_snowfall)
 def first_snowfall(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    prsn: xarray.DataArray | str = 'prsn',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS-JUL',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     First day where snowfall exceeded a given threshold.
 
@@ -631,29 +1202,50 @@ def first_snowfall(
 
     - first_snowfall: dimensionless
 
-    This function wraps `xclim.indicators.atmos.first_snowfall <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_snowfall>`_.
+    This function wraps `xclim.indicators.atmos.first_snowfall
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_snowfall>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    prsn : xarray.DataArray | str
+        Snowfall flux.
+    thresh : Any
+        Threshold snowfall flux or liquid water equivalent snowfall rate. (default: 1
+        mm/day).
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.first_snowfall`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.first_snowfall)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.first_snowfall(
+        prsn=prsn,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.fraction_over_precip_doy_thresh)
 def fraction_over_precip_doy_thresh(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    pr_per: xarray.DataArray | str = 'pr_per',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS',
+    bootstrap: bool = False,
+    op: Literal['>', '>=', 'gt', 'ge'] = '>',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Fraction of precipitation due to wet days with daily precipitation over a given daily percentile.
 
@@ -665,29 +1257,64 @@ def fraction_over_precip_doy_thresh(
 
     - fraction_over_precip_doy_thresh: dimensionless
 
-    This function wraps `xclim.indicators.atmos.fraction_over_precip_doy_thresh <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fraction_over_precip_doy_thresh>`_.
+    This function wraps `xclim.indicators.atmos.fraction_over_precip_doy_thresh
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fraction_over_precip_doy_thresh>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    pr_per : xarray.DataArray | str
+        Percentile of wet day precipitation flux. Either computed daily (one value per day
+        of year) or computed over a period (one value per spatial point).
+    thresh : Any
+        Precipitation value over which a day is considered wet.
+    freq : str
+        Resampling frequency.
+    bootstrap : bool
+        Flag to run bootstrapping of percentiles. Used by percentile_bootstrap decorator.
+        Bootstrapping is only useful when the percentiles are computed on a part of the
+        studied sample. This period, common to percentiles and the sample must be
+        bootstrapped to avoid inhomogeneities with the rest of the time series. Do not
+        enable bootstrap when there is no common period, otherwise it will provide the wrong
+        results. Note that bootstrapping is computationally expensive.
+    op : Literal['>', '>=', 'gt', 'ge']
+        Comparison operation. Default: ">".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.fraction_over_precip_doy_thresh`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.fraction_over_precip_doy_thresh)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.fraction_over_precip_doy_thresh(
+        pr=pr,
+        pr_per=pr_per,
+        thresh=thresh,
+        freq=freq,
+        bootstrap=bootstrap,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.fraction_over_precip_thresh)
 def fraction_over_precip_thresh(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    pr_per: xarray.DataArray | str = 'pr_per',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS',
+    bootstrap: bool = False,
+    op: Literal['>', '>=', 'gt', 'ge'] = '>',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Fraction of precipitation due to wet days with daily precipitation over a given percentile.
 
@@ -699,29 +1326,63 @@ def fraction_over_precip_thresh(
 
     - fraction_over_precip_thresh: dimensionless
 
-    This function wraps `xclim.indicators.atmos.fraction_over_precip_thresh <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fraction_over_precip_thresh>`_.
+    This function wraps `xclim.indicators.atmos.fraction_over_precip_thresh
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fraction_over_precip_thresh>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    pr_per : xarray.DataArray | str
+        Percentile of wet day precipitation flux. Either computed daily (one value per day
+        of year) or computed over a period (one value per spatial point).
+    thresh : Any
+        Precipitation value over which a day is considered wet.
+    freq : str
+        Resampling frequency.
+    bootstrap : bool
+        Flag to run bootstrapping of percentiles. Used by percentile_bootstrap decorator.
+        Bootstrapping is only useful when the percentiles are computed on a part of the
+        studied sample. This period, common to percentiles and the sample must be
+        bootstrapped to avoid inhomogeneities with the rest of the time series. Do not
+        enable bootstrap when there is no common period, otherwise it will provide the wrong
+        results. Note that bootstrapping is computationally expensive.
+    op : Literal['>', '>=', 'gt', 'ge']
+        Comparison operation. Default: ">".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.fraction_over_precip_thresh`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.fraction_over_precip_thresh)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.fraction_over_precip_thresh(
+        pr=pr,
+        pr_per=pr_per,
+        thresh=thresh,
+        freq=freq,
+        bootstrap=bootstrap,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.high_precip_low_temp)
 def high_precip_low_temp(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    tas: xarray.DataArray | str = 'tas',
+    ds: xarray.Dataset | Any = None,
+    *,
+    pr_thresh: Any = '0.4 mm/d',
+    tas_thresh: Any = '-0.2 degC',
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Days with precipitation and cold temperature.
 
@@ -732,29 +1393,52 @@ def high_precip_low_temp(
 
     - high_precip_low_temp: days
 
-    This function wraps `xclim.indicators.atmos.high_precip_low_temp <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.high_precip_low_temp>`_.
+    This function wraps `xclim.indicators.atmos.high_precip_low_temp
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.high_precip_low_temp>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    tas : xarray.DataArray | str
+        Daily mean, minimum or maximum temperature.
+    pr_thresh : Any
+        Precipitation threshold to exceed.
+    tas_thresh : Any
+        Temperature threshold not to exceed.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.high_precip_low_temp`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.high_precip_low_temp)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.high_precip_low_temp(
+        pr=pr,
+        tas=tas,
+        pr_thresh=pr_thresh,
+        tas_thresh=tas_thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.keetch_byram_drought_index)
 def keetch_byram_drought_index(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    tasmax: xarray.DataArray | str = 'tasmax',
+    pr_annual: xarray.DataArray | str = 'pr_annual',
+    kbdi0: xarray.DataArray | str | None = None,
+    ds: xarray.Dataset | Any = None,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Keetch-byram drought index (kbdi) for soil moisture deficit.
 
@@ -768,29 +1452,50 @@ def keetch_byram_drought_index(
 
     - kbdi: mm/day
 
-    This function wraps `xclim.indicators.atmos.keetch_byram_drought_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.keetch_byram_drought_index>`_.
+    This function wraps `xclim.indicators.atmos.keetch_byram_drought_index
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.keetch_byram_drought_index>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Total rainfall over previous 24 hours [mm/day].
+    tasmax : xarray.DataArray | str
+        Maximum temperature near the surface over previous 24 hours [degC].
+    pr_annual : xarray.DataArray | str
+        Mean (over years) annual accumulated rainfall [mm/year].
+    kbdi0 : xarray.DataArray | str | None
+        Previous KBDI values used to initialise the KBDI calculation [mm/day]. Defaults to
+        0.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.keetch_byram_drought_index`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.keetch_byram_drought_index)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.keetch_byram_drought_index(
+        pr=pr,
+        tasmax=tasmax,
+        pr_annual=pr_annual,
+        kbdi0=kbdi0,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.last_snowfall)
 def last_snowfall(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    prsn: xarray.DataArray | str = 'prsn',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS-JUL',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Last day where snowfall exceeded a given threshold.
 
@@ -801,29 +1506,48 @@ def last_snowfall(
 
     - last_snowfall: dimensionless
 
-    This function wraps `xclim.indicators.atmos.last_snowfall <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.last_snowfall>`_.
+    This function wraps `xclim.indicators.atmos.last_snowfall
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.last_snowfall>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    prsn : xarray.DataArray | str
+        Snowfall flux.
+    thresh : Any
+        Threshold snowfall flux or liquid water equivalent snowfall rate (default: 1
+        mm/day).
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.last_snowfall`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.last_snowfall)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.last_snowfall(
+        prsn=prsn,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.liquid_precip_ratio)
 def liquid_precip_ratio(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    tas: xarray.DataArray | str = 'tas',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '0 degC',
+    freq: str = 'QS-DEC',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Fraction of liquid to total precipitation.
 
@@ -835,29 +1559,50 @@ def liquid_precip_ratio(
 
     - liquid_precip_ratio: dimensionless
 
-    This function wraps `xclim.indicators.atmos.liquid_precip_ratio <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_ratio>`_.
+    This function wraps `xclim.indicators.atmos.liquid_precip_ratio
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_ratio>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    tas : xarray.DataArray | str
+        Mean daily temperature.
+    thresh : Any
+        Threshold temperature under which precipitation is assumed to be solid.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.liquid_precip_ratio`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.liquid_precip_ratio)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.liquid_precip_ratio(
+        pr=pr,
+        tas=tas,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.liquid_precip_average)
 def liquid_precip_average(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    tas: xarray.DataArray | str = 'tas',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '0 degC',
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Averaged liquid precipitation.
 
@@ -868,29 +1613,50 @@ def liquid_precip_average(
 
     - liquidprcpavg: mm
 
-    This function wraps `xclim.indicators.atmos.liquid_precip_average <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_average>`_.
+    This function wraps `xclim.indicators.atmos.liquid_precip_average
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_average>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    tas : xarray.DataArray | str
+        Mean, maximum or minimum daily temperature.
+    thresh : Any
+        Threshold of `tas` over which the precipication is assumed to be liquid rain.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.liquid_precip_average`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.liquid_precip_average)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.liquid_precip_average(
+        pr=pr,
+        tas=tas,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.liquid_precip_accumulation)
 def liquid_precip_accumulation(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    tas: xarray.DataArray | str = 'tas',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '0 degC',
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Total accumulated liquid precipitation.
 
@@ -901,29 +1667,49 @@ def liquid_precip_accumulation(
 
     - liquidprcptot: mm
 
-    This function wraps `xclim.indicators.atmos.liquid_precip_accumulation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_accumulation>`_.
+    This function wraps `xclim.indicators.atmos.liquid_precip_accumulation
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_accumulation>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    tas : xarray.DataArray | str
+        Mean, maximum or minimum daily temperature.
+    thresh : Any
+        Threshold of `tas` over which the precipication is assumed to be liquid rain.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.liquid_precip_accumulation`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.liquid_precip_accumulation)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.liquid_precip_accumulation(
+        pr=pr,
+        tas=tas,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.max_n_day_precipitation_amount)
 def max_n_day_precipitation_amount(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    window: int = 1,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Maximum n-day total precipitation.
 
@@ -933,29 +1719,46 @@ def max_n_day_precipitation_amount(
 
     - rx{window}day: mm
 
-    This function wraps `xclim.indicators.atmos.max_n_day_precipitation_amount <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_n_day_precipitation_amount>`_.
+    This function wraps `xclim.indicators.atmos.max_n_day_precipitation_amount
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_n_day_precipitation_amount>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation values.
+    window : int
+        Window size in days.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.max_n_day_precipitation_amount`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.max_n_day_precipitation_amount)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.max_n_day_precipitation_amount(
+        pr=pr,
+        window=window,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.max_pr_intensity)
 def max_pr_intensity(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    window: int = 1,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Maximum precipitation intensity over time window.
 
@@ -965,29 +1768,46 @@ def max_pr_intensity(
 
     - max_pr_intensity: mm h-1
 
-    This function wraps `xclim.indicators.atmos.max_pr_intensity <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_pr_intensity>`_.
+    This function wraps `xclim.indicators.atmos.max_pr_intensity
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_pr_intensity>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Hourly precipitation values.
+    window : int
+        Window size in hours.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.max_pr_intensity`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.max_pr_intensity)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.max_pr_intensity(
+        pr=pr,
+        window=window,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.precip_average)
 def precip_average(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '0 degC',
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Averaged precipitation (solid and liquid).
 
@@ -1000,29 +1820,45 @@ def precip_average(
 
     - prcpavg: mm
 
-    This function wraps `xclim.indicators.atmos.precip_average <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.precip_average>`_.
+    This function wraps `xclim.indicators.atmos.precip_average
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.precip_average>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    thresh : Any
+        Threshold of `tas` over which the precipication is assumed to be liquid rain.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.precip_average`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.precip_average)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.precip_average(
+        pr=pr,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.precip_accumulation)
 def precip_accumulation(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Total accumulated precipitation (solid and liquid).
 
@@ -1035,29 +1871,45 @@ def precip_accumulation(
 
     - prcptot: mm
 
-    This function wraps `xclim.indicators.atmos.precip_accumulation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.precip_accumulation>`_.
+    This function wraps `xclim.indicators.atmos.precip_accumulation
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.precip_accumulation>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.precip_accumulation`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.precip_accumulation)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.precip_accumulation(
+        pr=pr,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.rain_on_frozen_ground_days)
 def rain_on_frozen_ground_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    tas: xarray.DataArray | str = 'tas',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/d',
+    window: int = 7,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Number of rain on frozen ground days.
 
@@ -1069,29 +1921,65 @@ def rain_on_frozen_ground_days(
 
     - rain_frzgr: days
 
-    This function wraps `xclim.indicators.atmos.rain_on_frozen_ground_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rain_on_frozen_ground_days>`_.
+    This function wraps `xclim.indicators.atmos.rain_on_frozen_ground_days
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rain_on_frozen_ground_days>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    tas : xarray.DataArray | str
+        Mean daily temperature.
+    thresh : Any
+        Precipitation threshold to consider a day as a rain event.
+    window : int
+        Minimum number of days below freezing temperature needed to consider the ground
+        frozen.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.rain_on_frozen_ground_days`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.rain_on_frozen_ground_days)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.rain_on_frozen_ground_days(
+        pr=pr,
+        tas=tas,
+        thresh=thresh,
+        window=window,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.rain_season)
 def rain_season(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh_wet_start: Any = '25.0 mm',
+    window_wet_start: int = 3,
+    window_not_dry_start: int = 30,
+    thresh_dry_start: Any = '1.0 mm',
+    window_dry_start: int = 7,
+    method_dry_start: str = 'per_day',
+    date_min_start: str = '05-01',
+    date_max_start: str = '12-31',
+    thresh_dry_end: Any = '0.0 mm',
+    window_dry_end: int = 20,
+    method_dry_end: str = 'per_day',
+    date_min_end: str = '09-01',
+    date_max_end: str = '12-31',
+    freq: Any = 'YS-JAN',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Rain season.
 
@@ -1106,29 +1994,101 @@ def rain_season(
     - rain_season_end: dimensionless
     - rain_season_length: days
 
-    This function wraps `xclim.indicators.atmos.rain_season <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rain_season>`_.
+    This function wraps `xclim.indicators.atmos.rain_season
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rain_season>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Precipitation data.
+    thresh_wet_start : Any
+        Accumulated precipitation threshold associated with `window_wet_start`.
+    window_wet_start : int
+        Number of days when accumulated precipitation is above `thresh_wet_start`. Defines
+        the first condition to start the rain season.
+    window_not_dry_start : int
+        Number of days, after `window_wet_start` days, during which no dry period must be
+        found as a second and last condition to start the rain season. A dry sequence is
+        defined with `thresh_dry_start`, `window_dry_start` and `method_dry_start`.
+    thresh_dry_start : Any
+        Threshold length defining a dry day in the sequence related to `window_dry_start`.
+    window_dry_start : int
+        Number of days used to define a dry sequence in the start of the season. Daily
+        precipitations lower than `thresh_dry_start` during `window_dry_start` days are
+        considered a dry sequence. The precipitations must be lower than `thresh_dry_start`
+        for either every day in the sequence (`method_dry_start == "per_day"`) or for the
+        total (`method_dry_start == "total"`).
+    method_dry_start : str
+        Method used to define a dry sequence associated with `window_dry_start`. The
+        threshold `thresh_dry_start` is either compared to every daily precipitation
+        (`method_dry_start == "per_day"`) or to total precipitations (`method_dry_start ==
+        "total"`) in the sequence `window_dry_start` days.
+    date_min_start : str
+        First day of year when season can start ("mm-dd").
+    date_max_start : str
+        Last day of year when season can start ("mm-dd").
+    thresh_dry_end : Any
+        Threshold length defining a dry day in the sequence related to `window_dry_end`.
+    window_dry_end : int
+        Number of days used to define a dry sequence in the end of the season. Daily
+        precipitations lower than `thresh_dry_end` during `window_dry_end` days are
+        considered a dry sequence. The precipitations must be lower than `thresh_dry_end`
+        for either every day in the sequence (`method_dry_end == "per_day"`) or for the
+        total (`method_dry_end == "total"`).
+    method_dry_end : str
+        Method used to define a dry sequence associated with `window_dry_end`. The threshold
+        `thresh_dry_end` is either compared to every daily precipitation (`method_dry_end ==
+        "per_day"`) or to total precipitations (`method_dry_end == "total"`) in the sequence
+        `window_dry` days.
+    date_min_end : str
+        First day of year when season can end ("mm-dd").
+    date_max_end : str
+        Last day of year when season can end ("mm-dd").
+    freq : Any
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.rain_season`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.rain_season)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.rain_season(
+        pr=pr,
+        thresh_wet_start=thresh_wet_start,
+        window_wet_start=window_wet_start,
+        window_not_dry_start=window_not_dry_start,
+        thresh_dry_start=thresh_dry_start,
+        window_dry_start=window_dry_start,
+        method_dry_start=method_dry_start,
+        date_min_start=date_min_start,
+        date_max_start=date_max_start,
+        thresh_dry_end=thresh_dry_end,
+        window_dry_end=window_dry_end,
+        method_dry_end=method_dry_end,
+        date_min_end=date_min_end,
+        date_max_end=date_max_end,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.rprctot)
 def rprctot(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    prc: xarray.DataArray | str = 'prc',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm/day',
+    freq: str = 'YS',
+    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Proportion of accumulated precipitation arising from convective processes.
 
@@ -1139,29 +2099,51 @@ def rprctot(
 
     - rprctot: dimensionless
 
-    This function wraps `xclim.indicators.atmos.rprctot <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rprctot>`_.
+    This function wraps `xclim.indicators.atmos.rprctot
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rprctot>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    prc : xarray.DataArray | str
+        Daily convective precipitation.
+    thresh : Any
+        Precipitation value over which a day is considered wet.
+    freq : str
+        Resampling frequency.
+    op : Literal['>', 'gt', '>=', 'ge']
+        Comparison operation. Default: ">=".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.rprctot`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.rprctot)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.rprctot(
+        pr=pr,
+        prc=prc,
+        thresh=thresh,
+        freq=freq,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.max_1day_precipitation_amount)
 def max_1day_precipitation_amount(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Maximum 1-day total precipitation.
 
@@ -1171,29 +2153,44 @@ def max_1day_precipitation_amount(
 
     - rx1day: mm/day
 
-    This function wraps `xclim.indicators.atmos.max_1day_precipitation_amount <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_1day_precipitation_amount>`_.
+    This function wraps `xclim.indicators.atmos.max_1day_precipitation_amount
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_1day_precipitation_amount>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation values.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.max_1day_precipitation_amount`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.max_1day_precipitation_amount)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.max_1day_precipitation_amount(
+        pr=pr,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.daily_pr_intensity)
 def daily_pr_intensity(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS',
+    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Simple daily intensity index.
 
@@ -1203,29 +2200,49 @@ def daily_pr_intensity(
 
     - sdii: mm d-1
 
-    This function wraps `xclim.indicators.atmos.daily_pr_intensity <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_pr_intensity>`_.
+    This function wraps `xclim.indicators.atmos.daily_pr_intensity
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_pr_intensity>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Precipitation value over which a day is considered wet.
+    freq : str
+        Resampling frequency.
+    op : Literal['>', 'gt', '>=', 'ge']
+        Comparison operation. Default: ">=".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.daily_pr_intensity`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.daily_pr_intensity)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.daily_pr_intensity(
+        pr=pr,
+        thresh=thresh,
+        freq=freq,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.snowfall_frequency)
 def snowfall_frequency(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    prsn: xarray.DataArray | str = 'prsn',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS-JUL',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Snowfall frequency.
 
@@ -1236,29 +2253,47 @@ def snowfall_frequency(
 
     - snowfall_frequency: %
 
-    This function wraps `xclim.indicators.atmos.snowfall_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.snowfall_frequency>`_.
+    This function wraps `xclim.indicators.atmos.snowfall_frequency
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.snowfall_frequency>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    prsn : xarray.DataArray | str
+        Snowfall flux.
+    thresh : Any
+        Threshold snowfall flux or liquid water equivalent snowfall rate (default: 1
+        mm/day).
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.snowfall_frequency`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.snowfall_frequency)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.snowfall_frequency(
+        prsn=prsn,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.snowfall_intensity)
 def snowfall_intensity(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    prsn: xarray.DataArray | str = 'prsn',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS-JUL',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Snowfall intensity.
 
@@ -1269,29 +2304,48 @@ def snowfall_intensity(
 
     - snowfall_intensity: mm/day
 
-    This function wraps `xclim.indicators.atmos.snowfall_intensity <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.snowfall_intensity>`_.
+    This function wraps `xclim.indicators.atmos.snowfall_intensity
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.snowfall_intensity>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    prsn : xarray.DataArray | str
+        Snowfall flux.
+    thresh : Any
+        Threshold snowfall flux or liquid water equivalent snowfall rate (default: 1
+        mm/day).
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.snowfall_intensity`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.snowfall_intensity)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.snowfall_intensity(
+        prsn=prsn,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.solid_precip_average)
 def solid_precip_average(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    tas: xarray.DataArray | str = 'tas',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '0 degC',
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Averaged solid precipitation.
 
@@ -1302,29 +2356,50 @@ def solid_precip_average(
 
     - solidprcpavg: mm
 
-    This function wraps `xclim.indicators.atmos.solid_precip_average <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.solid_precip_average>`_.
+    This function wraps `xclim.indicators.atmos.solid_precip_average
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.solid_precip_average>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    tas : xarray.DataArray | str
+        Mean, maximum or minimum daily temperature.
+    thresh : Any
+        Threshold of `tas` over which the precipication is assumed to be liquid rain.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.solid_precip_average`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.solid_precip_average)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.solid_precip_average(
+        pr=pr,
+        tas=tas,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.solid_precip_accumulation)
 def solid_precip_accumulation(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    tas: xarray.DataArray | str = 'tas',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '0 degC',
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Total accumulated solid precipitation.
 
@@ -1335,29 +2410,51 @@ def solid_precip_accumulation(
 
     - solidprcptot: mm
 
-    This function wraps `xclim.indicators.atmos.solid_precip_accumulation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.solid_precip_accumulation>`_.
+    This function wraps `xclim.indicators.atmos.solid_precip_accumulation
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.solid_precip_accumulation>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Mean daily precipitation flux.
+    tas : xarray.DataArray | str
+        Mean, maximum or minimum daily temperature.
+    thresh : Any
+        Threshold of `tas` over which the precipication is assumed to be liquid rain.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.solid_precip_accumulation`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.solid_precip_accumulation)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.solid_precip_accumulation(
+        pr=pr,
+        tas=tas,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.warm_and_dry_days)
 def warm_and_dry_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    tas: xarray.DataArray | str = 'tas',
+    pr: xarray.DataArray | str = 'pr',
+    tas_per: xarray.DataArray | str = 'tas_per',
+    pr_per: xarray.DataArray | str = 'pr_per',
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Warm and dry days.
 
@@ -1368,29 +2465,54 @@ def warm_and_dry_days(
 
     - warm_and_dry_days: days
 
-    This function wraps `xclim.indicators.atmos.warm_and_dry_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_and_dry_days>`_.
+    This function wraps `xclim.indicators.atmos.warm_and_dry_days
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_and_dry_days>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    tas : xarray.DataArray | str
+        Mean daily temperature values.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    tas_per : xarray.DataArray | str
+        Third quartile of daily mean temperature computed by month.
+    pr_per : xarray.DataArray | str
+        First quartile of daily total precipitation computed by month.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.warm_and_dry_days`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.warm_and_dry_days)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.warm_and_dry_days(
+        tas=tas,
+        pr=pr,
+        tas_per=tas_per,
+        pr_per=pr_per,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.warm_and_wet_days)
 def warm_and_wet_days(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    tas: xarray.DataArray | str = 'tas',
+    pr: xarray.DataArray | str = 'pr',
+    tas_per: xarray.DataArray | str = 'tas_per',
+    pr_per: xarray.DataArray | str = 'pr_per',
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Warm and wet days.
 
@@ -1401,29 +2523,52 @@ def warm_and_wet_days(
 
     - warm_and_wet_days: days
 
-    This function wraps `xclim.indicators.atmos.warm_and_wet_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_and_wet_days>`_.
+    This function wraps `xclim.indicators.atmos.warm_and_wet_days
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_and_wet_days>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    tas : xarray.DataArray | str
+        Mean daily temperature values.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    tas_per : xarray.DataArray | str
+        Third quartile of daily mean temperature computed by month.
+    pr_per : xarray.DataArray | str
+        Third quartile of daily total precipitation computed by month.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.warm_and_wet_days`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.warm_and_wet_days)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.warm_and_wet_days(
+        tas=tas,
+        pr=pr,
+        tas_per=tas_per,
+        pr_per=pr_per,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.water_cycle_intensity)
 def water_cycle_intensity(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    evspsbl: xarray.DataArray | str = 'evspsbl',
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: Any = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Water cycle intensity.
 
@@ -1433,29 +2578,46 @@ def water_cycle_intensity(
 
     - water_cycle_intensity: mm
 
-    This function wraps `xclim.indicators.atmos.water_cycle_intensity <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.water_cycle_intensity>`_.
+    This function wraps `xclim.indicators.atmos.water_cycle_intensity
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.water_cycle_intensity>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Precipitation flux.
+    evspsbl : xarray.DataArray | str
+        Actual evapotranspiration flux.
+    freq : Any
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.water_cycle_intensity`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.water_cycle_intensity)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.water_cycle_intensity(
+        pr=pr,
+        evspsbl=evspsbl,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.wet_precip_accumulation)
 def wet_precip_accumulation(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1 mm/day',
+    freq: str = 'YS',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Total accumulated precipitation (solid and liquid) during wet days.
 
@@ -1466,29 +2628,49 @@ def wet_precip_accumulation(
 
     - wet_prcptot: mm
 
-    This function wraps `xclim.indicators.atmos.wet_precip_accumulation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_precip_accumulation>`_.
+    This function wraps `xclim.indicators.atmos.wet_precip_accumulation
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_precip_accumulation>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Total precipitation flux [mm d-1], [mm week-1], [mm month-1] or similar.
+    thresh : Any
+        Threshold over which precipitation starts being cumulated.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.wet_precip_accumulation`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.wet_precip_accumulation)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.wet_precip_accumulation(
+        pr=pr,
+        thresh=thresh,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.wet_spell_frequency)
 def wet_spell_frequency(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm',
+    window: int = 3,
+    freq: str = 'YS',
+    resample_before_rl: bool = True,
+    op: Literal['sum', 'min', 'max', 'mean'] = 'sum',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Wet spell frequency.
 
@@ -1500,29 +2682,64 @@ def wet_spell_frequency(
 
     - wet_spell_frequency: dimensionless
 
-    This function wraps `xclim.indicators.atmos.wet_spell_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_frequency>`_.
+    This function wraps `xclim.indicators.atmos.wet_spell_frequency
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_frequency>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Precipitation amount over which a period is considered dry. The value against which
+        the threshold is compared depends on `op`.
+    window : int
+        Minimum length of the spells.
+    freq : str
+        Resampling frequency.
+    resample_before_rl : bool
+        Determines if the resampling should take place before or after the run length
+        encoding (or a similar algorithm) is applied to runs.
+    op : Literal['sum', 'min', 'max', 'mean']
+        Operation to perform on the window. Default is "sum", which checks that the sum of
+        accumulated precipitation over the whole window is more than the threshold. "min"
+        checks that the maximal daily precipitation amount within the window is more than
+        the threshold. This is the same as verifying that each individual day is above the
+        threshold.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.wet_spell_frequency`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.wet_spell_frequency)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.wet_spell_frequency(
+        pr=pr,
+        thresh=thresh,
+        window=window,
+        freq=freq,
+        resample_before_rl=resample_before_rl,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.wet_spell_max_length)
 def wet_spell_max_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm',
+    window: int = 1,
+    op: Literal['min', 'sum', 'max', 'mean'] = 'sum',
+    freq: str = 'YS',
+    resample_before_rl: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Wet spell maximum length.
 
@@ -1534,29 +2751,62 @@ def wet_spell_max_length(
 
     - wet_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.wet_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.wet_spell_max_length
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_max_length>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Accumulated precipitation value over which a period is considered wet.
+    window : int
+        Number of days when the maximum or accumulated precipitation is over threshold.
+    op : Literal['min', 'sum', 'max', 'mean']
+        Reduce operation. `min` means that all days within the minimum window must exceed
+        the threshold. `sum` means that the accumulated precipitation within the window must
+        exceed the threshold. In all cases, the whole window is marked a part of a wet
+        spell.
+    freq : str
+        Resampling frequency.
+    resample_before_rl : bool
+        Determines if the resampling should take place before or after the run length
+        encoding (or a similar algorithm) is applied to runs.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.wet_spell_max_length`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.wet_spell_max_length)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.wet_spell_max_length(
+        pr=pr,
+        thresh=thresh,
+        window=window,
+        op=op,
+        freq=freq,
+        resample_before_rl=resample_before_rl,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.wet_spell_total_length)
 def wet_spell_total_length(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm',
+    window: int = 3,
+    op: Literal['min', 'sum', 'max', 'mean'] = 'sum',
+    freq: str = 'YS',
+    resample_before_rl: bool = True,
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Wet spell total length.
 
@@ -1568,29 +2818,60 @@ def wet_spell_total_length(
 
     - wet_spell_total_length: days
 
-    This function wraps `xclim.indicators.atmos.wet_spell_total_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_total_length>`_.
+    This function wraps `xclim.indicators.atmos.wet_spell_total_length
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_total_length>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Accumulated precipitation value over which a period is considered wet.
+    window : int
+        Number of days when the maximum or accumulated precipitation is over the threshold.
+    op : Literal['min', 'sum', 'max', 'mean']
+        Reduce operation. `min` means that all days within the minimum window must exceed
+        the threshold. `sum` means that the accumulated precipitation within the window must
+        exceed the threshold. In all cases, the whole window is marked a part of a wet
+        spell.
+    freq : str
+        Resampling frequency.
+    resample_before_rl : bool
+        Determines if the resampling should take place before or after the run length
+        encoding (or a similar algorithm) is applied to runs.
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.wet_spell_total_length`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.wet_spell_total_length)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.wet_spell_total_length(
+        pr=pr,
+        thresh=thresh,
+        window=window,
+        op=op,
+        freq=freq,
+        resample_before_rl=resample_before_rl,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.wetdays)
 def wetdays(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm/day',
+    freq: str = 'YS',
+    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Number of wet days.
 
@@ -1600,29 +2881,50 @@ def wetdays(
 
     - wetdays: days
 
-    This function wraps `xclim.indicators.atmos.wetdays <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wetdays>`_.
+    This function wraps `xclim.indicators.atmos.wetdays
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wetdays>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Precipitation value over which a day is considered wet.
+    freq : str
+        Resampling frequency.
+    op : Literal['>', 'gt', '>=', 'ge']
+        Comparison operation. Default: ">=".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.wetdays`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.wetdays)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.wetdays(
+        pr=pr,
+        thresh=thresh,
+        freq=freq,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
 
 
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.wetdays_prop)
 def wetdays_prop(
-    ds: conversions.EarthkitData | xarray.Dataset,
+    pr: xarray.DataArray | str = 'pr',
+    ds: xarray.Dataset | Any = None,
+    *,
+    thresh: Any = '1.0 mm/day',
+    freq: str = 'YS',
+    op: Literal['>', 'gt', '>=', 'ge'] = '>=',
     **kwargs: Any,
-) -> conversions.EarthkitData:
+) -> Any:
     """
     Proportion of wet days.
 
@@ -1632,20 +2934,34 @@ def wetdays_prop(
 
     - wetdays_prop: 1
 
-    This function wraps `xclim.indicators.atmos.wetdays_prop <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wetdays_prop>`_.
+    This function wraps `xclim.indicators.atmos.wetdays_prop
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wetdays_prop>`_.
 
     Parameters
     ----------
-    ds : conversions.EarthkitData | xarray.Dataset
-        Input dataset. See xclim documentation for required variables.
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    thresh : Any
+        Precipitation value over which a day is considered wet.
+    freq : str
+        Resampling frequency.
+    op : Literal['>', 'gt', '>=', 'ge']
+        Comparison operation. Default: ">=".
+    ds : xarray.Dataset | Any
+        Input dataset.
     **kwargs : Any
-        Additional keyword arguments forwarded to
-        :func:`xclim.indicators.atmos.wetdays_prop`.
+        Additional keyword arguments.
 
     Returns
     -------
-    conversions.EarthkitData
-        The computed index as an Earthkit-compatible field.
+    Any
+        The computed index.
     """
-    wrapper = wrap_xclim_indicator(xclim.indicators.atmos.wetdays_prop)
-    return wrapper(ds, **kwargs)
+    return xclim.indicators.atmos.wetdays_prop(
+        pr=pr,
+        thresh=thresh,
+        freq=freq,
+        op=op,
+        ds=ds,
+        **kwargs,
+    )
