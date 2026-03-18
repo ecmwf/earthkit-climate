@@ -10,19 +10,20 @@
 
 from __future__ import annotations
 
-from typing import Any, Dict, Mapping, Tuple
+from collections.abc import Mapping
+from typing import Any, TypeAlias
 
 import earthkit.data as ekd
 import xarray
 
-EarthkitData = ekd.FieldList | ekd.Field
-MetadataDict = Dict[str, Any]
+EarthkitData: TypeAlias = ekd.FieldList | ekd.Field
+MetadataDict: TypeAlias = dict[str, Any]
 
 
 def to_xarray_dataset(
     earthkit_input: EarthkitData | xarray.Dataset,
     metadata: Mapping[str, Any] | None = None,
-) -> Tuple[xarray.Dataset, MetadataDict]:
+) -> tuple[xarray.Dataset, MetadataDict]:
     """
     Convert Earthkit-like data to an ``xarray.Dataset`` and gather metadata.
 

@@ -23,6 +23,9 @@ pytest-cov = "*"
 pytest-mock = "*"
 ruff = "*"
 
+[feature.dev.pypi-dependencies]
+pandas-stubs = "*"
+
 [feature.docs.dependencies]
 nbsphinx = ">=0.9.8,<0.10"
 pandoc = "*"
@@ -40,7 +43,7 @@ earthkit-plots = ">=0.5.0"
 [tasks]
 qa = "pre-commit run --all-files"
 template-update = "pre-commit run --all-files cruft -c .pre-commit-config-cruft.yaml"
-type-check = "python -m mypy . --no-namespace-packages"
+type-check = "MYPYPATH=src python -m mypy src tests"
 unit-tests = "python -m pytest -vv --cov=. --cov-report=html --doctest-glob='*.md' --doctest-glob='*.rst'"
 
 [workspace]

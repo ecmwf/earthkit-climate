@@ -18,4 +18,4 @@ except ImportError:  # pragma: no cover
 # test collection lightweight and not require optional dependencies (e.g., xclim).
 from .utils import conversions
 
-__all__ = [conversions, __version__]
+__all__ = ["conversions", "__version__"]

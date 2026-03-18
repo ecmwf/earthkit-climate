@@ -6,15 +6,30 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 
+from __future__ import annotations
+
+from collections.abc import Callable
 from functools import wraps
-from typing import Any, Callable, Dict, Union
+from typing import Any, Protocol, TypeAlias
 
 import xarray as xr
 
-from earthkit.climate.utils import conversions, provenance, units
+from ..utils import conversions, provenance, units
+
+IndicatorInput: TypeAlias = conversions.EarthkitData | xr.Dataset
 
 
-def wrap_xclim_indicator(xclim_fn: Callable) -> Callable:
+class XclimIndicator(Protocol):
+    """Protocol for xclim indicators wrapped by this module."""
+
+    parameters: Any
+    cf_attrs: Any
+    compute: Any
+
+    def __call__(self, *args: Any, **kwargs: Any) -> xr.Dataset | xr.DataArray: ...
+
+
+def wrap_xclim_indicator(xclim_fn: XclimIndicator) -> Callable[..., conversions.EarthkitData]:
     """
     Wraps an xclim indicator to handle Earthkit inputs and unit alignment.
 
@@ -31,9 +46,9 @@ def wrap_xclim_indicator(xclim_fn: Callable) -> Callable:
 
     @wraps(xclim_fn)
     def wrapper(
-        earthkit_input: Union[conversions.EarthkitData, xr.Dataset],
-        *args,
-        **kwargs,
+        earthkit_input: IndicatorInput,
+        *args: Any,
+        **kwargs: Any,
     ) -> conversions.EarthkitData:
         """
         Wrapper function that processes Earthkit inputs and calls the xclim indicator.
@@ -52,7 +67,7 @@ def wrap_xclim_indicator(xclim_fn: Callable) -> Callable:
         conversions.EarthkitData
             The result of the indicator calculation wrapped as an Earthkit object.
         """
-        metadata: Dict[str, Any] = {}
+        metadata: conversions.MetadataDict = {}
 
         # --- STEP 1: Load & Standardize Main Data ---
         # Convert Earthkit object to xarray Dataset
@@ -67,7 +82,7 @@ def wrap_xclim_indicator(xclim_fn: Callable) -> Callable:
 
         # --- STEP 2: Execution ---
         # We pass the single merged dataset (ds) and the variable name mappings
-        output_dataset: xr.Dataset = xclim_fn(ds=dataset, *args, **kwargs)
+        output_dataset = xclim_fn(ds=dataset, *args, **kwargs)
 
         # --- STEP 3: Provenance & Output ---
         metadata = provenance.add_indicator_provenance(metadata, xclim_fn, dataset, **kwargs)

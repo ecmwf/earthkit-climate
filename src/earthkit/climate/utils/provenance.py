@@ -11,16 +11,24 @@
 from __future__ import annotations
 
 import inspect
-from typing import Any
+from typing import Any, Protocol
 
 import xarray as xr
 
-from earthkit.climate.utils.conversions import MetadataDict
+from .conversions import MetadataDict
+
+
+class IndicatorWithCompute(Protocol):
+    """Indicator-like object with a callable interface and a compute method."""
+
+    def compute(self, *args: Any, **kwargs: Any) -> object: ...
+
+    def __call__(self, *args: Any, **kwargs: Any) -> object: ...
 
 
 def add_indicator_provenance(
     metadata: MetadataDict,
-    indicator: Any,
+    indicator: IndicatorWithCompute,
     dataset: xr.Dataset,
     **kwargs: Any,
 ) -> MetadataDict:

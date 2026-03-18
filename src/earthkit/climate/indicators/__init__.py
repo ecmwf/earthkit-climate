@@ -12,3 +12,7 @@
 the input and include attributes for CF metadata (cell methods), references,
 keywords, and more.
 """
+
+from . import precipitation, temperature
+
+__all__ = ["precipitation", "temperature"]
