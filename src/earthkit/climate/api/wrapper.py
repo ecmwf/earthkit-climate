@@ -26,7 +26,7 @@ class XclimIndicator(Protocol):
     cf_attrs: Any
     compute: Any
 
-    def __call__(self, *args: Any, **kwargs: Any) -> xr.Dataset | xr.DataArray: ...
+    def __call__(self, *args, **kwargs) -> xr.Dataset | xr.DataArray: ...
 
 
 def wrap_xclim_indicator(xclim_fn: XclimIndicator) -> Callable[..., conversions.EarthkitData]:
@@ -47,8 +47,8 @@ def wrap_xclim_indicator(xclim_fn: XclimIndicator) -> Callable[..., conversions.
     @wraps(xclim_fn)
     def wrapper(
         earthkit_input: IndicatorInput,
-        *args: Any,
-        **kwargs: Any,
+        *args,
+        **kwargs,
     ) -> conversions.EarthkitData:
         """
         Wrapper function that processes Earthkit inputs and calls the xclim indicator.
