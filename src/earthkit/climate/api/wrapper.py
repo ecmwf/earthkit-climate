@@ -14,7 +14,7 @@ from typing import Any, Protocol, TypeAlias
 
 import xarray as xr
 
-from ..utils import conversions, provenance, units
+from earthkit.climate.utils import conversions, provenance, units
 
 IndicatorInput: TypeAlias = conversions.EarthkitData | xr.Dataset
 

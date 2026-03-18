@@ -13,8 +13,8 @@ from typing import Any
 import xarray
 import xclim.indicators.atmos
 
-from ..api.wrapper import wrap_xclim_indicator
-from ..utils import conversions
+import earthkit.climate.utils.conversions as conversions
+from earthkit.climate.api.wrapper import wrap_xclim_indicator
 
 
 def australian_hardiness_zones(

@@ -13,6 +13,7 @@ the input and include attributes for CF metadata (cell methods), references,
 keywords, and more.
 """
 
-from . import precipitation, temperature
+import earthkit.climate.indicators.precipitation as precipitation
+import earthkit.climate.indicators.temperature as temperature
 
 __all__ = ["precipitation", "temperature"]

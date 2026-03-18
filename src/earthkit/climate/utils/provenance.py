@@ -15,7 +15,7 @@ from typing import Any, Protocol
 
 import xarray as xr
 
-from .conversions import MetadataDict
+from earthkit.climate.utils.conversions import MetadataDict
 
 
 class IndicatorWithCompute(Protocol):
