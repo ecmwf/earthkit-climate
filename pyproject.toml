@@ -76,6 +76,11 @@ test-benchmark = [
 branch = true
 source = ["src/earthkit/climate"]
 
+[tool.mypy]
+exclude = ["build", "dist"]
+files = ["src"]
+namespace_packages = true
+
 [tool.pytest.ini_options]
 addopts = "-vv --cov --cov-report=html --doctest-glob='*.md' --doctest-glob='*.rst' -m 'not integration' -n auto"
 markers = [
