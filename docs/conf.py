@@ -79,7 +79,7 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # a list of builtin themes.
 #
 html_theme = "furo"
-html_logo = "_static/earthkit-climate-light.svg"
+# html_logo = "_static/earthkit-climate-light.svg"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -113,7 +113,7 @@ html_theme_options = {
         "color-sidebar-item-expander-background--hover": "#001F3F",
     },
     "light_logo": "earthkit-climate-dark.svg",
-    "dark_logo": "earthkit-climate-dark.svg",
+    "dark_logo": "earthkit-climate-light.svg",
     "source_repository": "https://github.com/ecmwf/earthkit-climate/",
     # "source_branch": source_branch,
     "source_directory": "docs/source",
