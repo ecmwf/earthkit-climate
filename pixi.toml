@@ -12,6 +12,7 @@ docs = ["docs"]
 
 [feature.dev.dependencies]
 black = "*"
+cdsapi = ">=0.7.7,<0.8"
 ipykernel = "*"
 ipython = "*"
 mypy = "*"
@@ -22,7 +23,6 @@ pytest-cov = "*"
 pytest-mock = "*"
 pytest-xdist = "*"
 ruff = "*"
-cdsapi = ">=0.7.7,<0.8"
 
 [feature.dev.pypi-dependencies]
 earthkit-transforms = ">=0.5.3.1, <0.6"
