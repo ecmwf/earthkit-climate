@@ -9,8 +9,6 @@
 """
 Integration tests for climate indicator performance analysis.
 
-Migrated from docs/notebooks/performance_analysis.ipynb.
-
 These tests verify that the earthkit-climate indicators produce results that are
 consistent with their xclim counterparts when applied to real CMIP6 datasets
 downloaded via earthkit-data. They run in the optimised mode (flox enabled,
