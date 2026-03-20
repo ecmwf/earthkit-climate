@@ -70,8 +70,7 @@ def simplify_type(type_obj: Any) -> str:
         type_str = type_str.replace(old, new)
 
     # Remove quotes
-    if type_str.startswith("'") and type_str.endswith("'"):
-        type_str = type_str[1:-1]
+    type_str = type_str.strip("'")
 
     return type_str
 

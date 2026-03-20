@@ -113,7 +113,7 @@ html_theme_options = {
         "color-sidebar-item-expander-background--hover": "#001F3F",
     },
     "light_logo": "earthkit-climate-dark.svg",
-    "dark_logo": "earthkit-climate-light.svg",
+    "dark_logo": "earthkit-climate-dark.svg",
     "source_repository": "https://github.com/ecmwf/earthkit-climate/",
     # "source_branch": source_branch,
     "source_directory": "docs/source",
