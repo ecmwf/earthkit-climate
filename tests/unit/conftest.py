@@ -49,3 +49,31 @@ def daily_temperature_ds() -> xr.Dataset:
     data = rng.normal(loc=10.0, scale=2.0, size=time.size)
     ds = xr.Dataset({"tas": ("time", data)}, coords={"time": time})
     return ds
+
+
+@pytest.fixture
+def dummy_wind_ds() -> xr.Dataset:
+    """Simple wind dataset."""
+    time = pd.date_range("2000-01-01", periods=3)
+    ds = xr.Dataset(
+        {
+            "sfcWind": ("time", [2.0, 5.0, 3.0]),
+            "sfcWindmax": ("time", [4.0, 8.0, 6.0]),
+        },
+        coords={"time": time},
+    )
+    for var in ds.data_vars:
+        ds[var].attrs["units"] = "m s-1"
+    return ds
+
+
+@pytest.fixture
+def dummy_synoptic_ds() -> xr.Dataset:
+    """Simple synoptic dataset."""
+    time = pd.date_range("2000-01-01", periods=3)
+    ds = xr.Dataset(
+        {"ua": (("time", "lat", "lon"), np.ones((len(time), 2, 2)))},
+        coords={"time": time, "lat": [45, 46], "lon": [5, 6]},
+    )
+    ds["ua"].attrs["units"] = "m s-1"
+    return ds

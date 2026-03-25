@@ -68,6 +68,12 @@ INDICATORS = [
     (precipitation.wet_spell_total_length, "wet_spell_total_length", {"arg1": "val1"}),
     (precipitation.wetdays, "wetdays", {"arg1": "val1"}),
     (precipitation.wetdays_prop, "wetdays_prop", {"arg1": "val1"}),
+    (precipitation.standardized_precipitation_index, "standardized_precipitation_index", {"arg1": "val1"}),
+    (
+        precipitation.standardized_precipitation_evapotranspiration_index,
+        "standardized_precipitation_evapotranspiration_index",
+        {"arg1": "val1"},
+    ),
 ]
 
 
