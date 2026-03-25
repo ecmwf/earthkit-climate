@@ -235,8 +235,8 @@ def format_signature_params(indicator: Any) -> str:
         for p in pos_with_default:
             type_hint = simplify_type(p.annotation)
             default_val = repr(p.default)
-            if isinstance(p.default, str) and "'" in default_val and "\"" not in default_val:
-                default_val = f"\"{p.default}\""
+            if isinstance(p.default, str) and "'" in default_val and '"' not in default_val:
+                default_val = f'"{p.default}"'
             params.append(f"    {p.name}: {type_hint} = {default_val},")
 
         # Add ds here
@@ -248,8 +248,8 @@ def format_signature_params(indicator: Any) -> str:
                 type_hint = simplify_type(p.annotation)
                 if p.default != inspect.Parameter.empty:
                     default_val = repr(p.default)
-                    if isinstance(p.default, str) and "'" in default_val and "\"" not in default_val:
-                        default_val = f"\"{p.default}\""
+                    if isinstance(p.default, str) and "'" in default_val and '"' not in default_val:
+                        default_val = f'"{p.default}"'
                     params.append(f"    {p.name}: {type_hint} = {default_val},")
                 else:
                     params.append(f"    {p.name}: {type_hint},")
