@@ -63,6 +63,8 @@ def simplify_type(type_obj: Any) -> str:
         "xarray.core.datatree.DataTree": "Any",
         "Quantified": "Any",  # xclim specific, hard to import reliably
         "DayOfYearStr": "str",
+        "DateStr": "str",
+        "rv_continuous": "Any",
         "Indexer": "Any",
     }
 
@@ -233,6 +235,8 @@ def format_signature_params(indicator: Any) -> str:
         for p in pos_with_default:
             type_hint = simplify_type(p.annotation)
             default_val = repr(p.default)
+            if isinstance(p.default, str) and "'" in default_val and "\"" not in default_val:
+                default_val = f"\"{p.default}\""
             params.append(f"    {p.name}: {type_hint} = {default_val},")
 
         # Add ds here
@@ -244,6 +248,8 @@ def format_signature_params(indicator: Any) -> str:
                 type_hint = simplify_type(p.annotation)
                 if p.default != inspect.Parameter.empty:
                     default_val = repr(p.default)
+                    if isinstance(p.default, str) and "'" in default_val and "\"" not in default_val:
+                        default_val = f"\"{p.default}\""
                     params.append(f"    {p.name}: {type_hint} = {default_val},")
                 else:
                     params.append(f"    {p.name}: {type_hint},")
@@ -356,11 +362,14 @@ def main():
     module_to_category = {
         "_precip": "precipitation",
         "_temperature": "temperature",
-        # "_wind": "wind",
-        # "_synoptic": "synoptic",
+        "_wind": "wind",
+        "_synoptic": "synoptic",
+        "_conversion": "precipitation",  # Snow depth/water equivalent conversions
     }
 
     indicators_map = {cat: [] for cat in module_to_category.values()}
+    # We'll use this for anything that doesn't fit the above
+    indicators_map["other"] = []
 
     for name in names:
         # We need the object to check type/attributes and pass to generation
@@ -383,8 +392,18 @@ def main():
             category = module_to_category[module_name]
             indicators_map[category].append(obj)
         else:
-            print(f"Skipping {name} from unknown module {module_name}")
-            continue
+            # Fallback based on keywords or other attributes
+            keywords = getattr(obj, "keywords", "")
+            if "precipitation" in keywords or "snow" in keywords or "rain" in keywords:
+                indicators_map["precipitation"].append(obj)
+            elif "temperature" in keywords or "heat" in keywords or "cold" in keywords:
+                indicators_map["temperature"].append(obj)
+            elif "wind" in keywords:
+                indicators_map["wind"].append(obj)
+            elif "synoptic" in keywords:
+                indicators_map["synoptic"].append(obj)
+            else:
+                indicators_map["other"].append(obj)
 
     for category, indicators in indicators_map.items():
         if not indicators:

@@ -409,7 +409,7 @@ def days_over_precip_doy_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -477,7 +477,7 @@ def days_over_precip_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -818,7 +818,7 @@ def dry_days(
     *,
     thresh: Any = "0.2 mm/d",
     freq: str = "YS",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -873,7 +873,7 @@ def dry_spell_frequency(
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
-    op: Literal["sum", "max", "min", "mean"] = "sum",
+    op: Literal['sum', 'max', 'min', 'mean'] = "sum",
     **kwargs: Any,
 ) -> Any:
     """
@@ -939,7 +939,7 @@ def dry_spell_max_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 1,
-    op: Literal["max", "sum"] = "sum",
+    op: Literal['max', 'sum'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1002,7 +1002,7 @@ def dry_spell_total_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 3,
-    op: Literal["sum", "max", "min", "mean"] = "sum",
+    op: Literal['sum', 'max', 'min', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1070,7 +1070,7 @@ def dryness_index(
     ds: xarray.Dataset | Any = None,
     *,
     wo: Any = "200 mm",
-    freq: Literal["YS", "YS-JAN"] = "YS",
+    freq: Literal['YS', 'YS-JAN'] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1243,7 +1243,7 @@ def fraction_over_precip_doy_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1312,7 +1312,7 @@ def fraction_over_precip_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2086,7 +2086,7 @@ def rprctot(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2188,7 +2188,7 @@ def daily_pr_intensity(
     *,
     thresh: Any = "1 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2444,6 +2444,186 @@ def solid_precip_accumulation(
 
 
 @format_handler()
+# @metadata_handler(xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index)
+def standardized_precipitation_evapotranspiration_index(
+    wb: xarray.DataArray | str = "wb",
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: str | None = "MS",
+    window: int = 1,
+    dist: str | Any = "gamma",
+    method: str = "ML",
+    fitkwargs: dict | None = None,
+    cal_start: str | None = None,
+    cal_end: str | None = None,
+    params: Any | None = None,
+    **kwargs: Any,
+) -> Any:
+    """
+    Standardized precipitation evapotranspiration index (spei).
+
+    Water budget (precipitation - evapotranspiration) over a moving window, normalized such
+    that the SPEI averages to 0 for the calibration data. The window unit `X` is the minimal
+    time period defined by the resampling frequency.
+
+    **Units:**
+
+    - spei: dimensionless
+
+    This function wraps `xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index>`_.
+
+    Parameters
+    ----------
+    wb : xarray.DataArray | str
+        Daily water budget (pr - pet).
+    freq : str | None
+        Resampling frequency. A monthly or daily frequency is expected. Option `None`
+        assumes that the desired resampling has already been applied input dataset and will
+        skip the resampling step.
+    window : int
+        Averaging window length relative to the resampling frequency. For example, if
+        `freq="MS"`, i.e. a monthly resampling, the window is an integer number of months.
+    dist : str | Any
+        Name of the univariate distribution, or a callable `rv_continuous` (see
+        :py:mod:`scipy.stats`).
+    method : str
+        Name of the fitting method, such as `ML` (maximum likelihood), `APP` (approximate).
+        The approximate method uses a deterministic function that does not involve any
+        optimization, which can be sensitive to noise. `PWM` should be used with a
+        `lmoments3` distribution.
+    fitkwargs : dict | None
+        Kwargs passed to ``xclim.indices.stats.fit`` used to impose values of certains
+        parameters (`floc`, `fscale`). If method is `PWM`, `fitkwargs` should be empty,
+        except for `floc` with `dist`=`gamma` which is allowed.
+    cal_start : str | None
+        Start date of the calibration period. A `DateStr` is expected, that is a `str` in
+        format `"YYYY-MM-DD"`. Default option `None` means that the calibration period
+        begins at the start of the input dataset.
+    cal_end : str | None
+        End date of the calibration period. A `DateStr` is expected, that is a `str` in
+        format `"YYYY-MM-DD"`. Default option `None` means that the calibration period
+        finishes at the end of the input dataset.
+    params : Any | None
+        Fit parameters. The `params` can be computed using
+        ``xclim.indices.stats.standardized_index_fit_params`` in advance. The output can be
+        given here as input, and it overrides other options.
+    ds : xarray.Dataset | Any
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+    Any
+        The computed index.
+    """
+    return xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index(
+        wb=wb,
+        freq=freq,
+        window=window,
+        dist=dist,
+        method=method,
+        fitkwargs=fitkwargs,
+        cal_start=cal_start,
+        cal_end=cal_end,
+        params=params,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
+# @metadata_handler(xclim.indicators.atmos.standardized_precipitation_index)
+def standardized_precipitation_index(
+    pr: xarray.DataArray | str = "pr",
+    ds: xarray.Dataset | Any = None,
+    *,
+    freq: str | None = "MS",
+    window: int = 1,
+    dist: str | Any = "gamma",
+    method: str = "ML",
+    fitkwargs: dict | None = None,
+    cal_start: str | None = None,
+    cal_end: str | None = None,
+    params: Any | None = None,
+    **kwargs: Any,
+) -> Any:
+    """
+    Standardized precipitation index (spi).
+
+    Precipitation over a moving window, normalized such that SPI averages to 0 for the
+    calibration data. The window unit `X` is the minimal time period defined by the
+    resampling frequency.
+
+    **Units:**
+
+    - spi: dimensionless
+
+    This function wraps `xclim.indicators.atmos.standardized_precipitation_index
+        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.standardized_precipitation_index>`_.
+
+    Parameters
+    ----------
+    pr : xarray.DataArray | str
+        Daily precipitation.
+    freq : str | None
+        Resampling frequency. A monthly or daily frequency is expected. Option `None`
+        assumes that the desired resampling has already been applied input dataset and will
+        skip the resampling step.
+    window : int
+        Averaging window length relative to the resampling frequency. For example, if
+        `freq="MS"`, i.e. a monthly resampling, the window is an integer number of months.
+    dist : str | Any
+        Name of the univariate distribution, or a callable `rv_continuous` (see
+        :py:mod:`scipy.stats`).
+    method : str
+        Name of the fitting method, such as `ML` (maximum likelihood), `APP` (approximate).
+        The approximate method uses a deterministic function that does not involve any
+        optimization, which can be sensitive to noise. `PWM` should be used with a
+        `lmoments3` distribution.
+    fitkwargs : dict | None
+        Kwargs passed to ``xclim.indices.stats.fit`` used to impose values of certains
+        parameters (`floc`, `fscale`). If method is `PWM`, `fitkwargs` should be empty,
+        except for `floc` with `dist`=`gamma` which is allowed.
+    cal_start : str | None
+        Start date of the calibration period. A `DateStr` is expected, that is a `str` in
+        format `"YYYY-MM-DD"`. Default option `None` means that the calibration period
+        begins at the start of the input dataset.
+    cal_end : str | None
+        End date of the calibration period. A `DateStr` is expected, that is a `str` in
+        format `"YYYY-MM-DD"`. Default option `None` means that the calibration period
+        finishes at the end of the input dataset.
+    params : Any | None
+        Fit parameters. The `params` can be computed using
+        ``xclim.indices.stats.standardized_index_fit_params`` in advance. The output can be
+        given here as input, and it overrides other options.
+    ds : xarray.Dataset | Any
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+    Any
+        The computed index.
+    """
+    return xclim.indicators.atmos.standardized_precipitation_index(
+        pr=pr,
+        freq=freq,
+        window=window,
+        dist=dist,
+        method=method,
+        fitkwargs=fitkwargs,
+        cal_start=cal_start,
+        cal_end=cal_end,
+        params=params,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
 # @metadata_handler(xclim.indicators.atmos.warm_and_dry_days)
 def warm_and_dry_days(
     tas: xarray.DataArray | str = "tas",
@@ -2668,7 +2848,7 @@ def wet_spell_frequency(
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
-    op: Literal["sum", "min", "max", "mean"] = "sum",
+    op: Literal['sum', 'min', 'max', 'mean'] = "sum",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2735,7 +2915,7 @@ def wet_spell_max_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 1,
-    op: Literal["min", "sum", "max", "mean"] = "sum",
+    op: Literal['min', 'sum', 'max', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -2802,7 +2982,7 @@ def wet_spell_total_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 3,
-    op: Literal["min", "sum", "max", "mean"] = "sum",
+    op: Literal['min', 'sum', 'max', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -2869,7 +3049,7 @@ def wetdays(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2922,7 +3102,7 @@ def wetdays_prop(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
