@@ -12,7 +12,7 @@ import pytest
 import xarray
 from pytest_mock import MockerFixture
 
-from earthkit.climate.indicators import precipitation
+from earthkit.climate.indicators.atmos import precipitation
 
 INDICATORS = [
     (precipitation.antecedent_precipitation_index, "antecedent_precipitation_index", {"val": "test"}),

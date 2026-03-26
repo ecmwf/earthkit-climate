@@ -8,7 +8,7 @@
 
 """Synoptic indices."""
 
-from typing import Any
+from typing import Any, Literal
 
 import xarray
 import xclim.indicators.atmos

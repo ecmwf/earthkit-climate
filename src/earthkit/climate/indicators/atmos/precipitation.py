@@ -409,7 +409,7 @@ def days_over_precip_doy_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -477,7 +477,7 @@ def days_over_precip_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -818,7 +818,7 @@ def dry_days(
     *,
     thresh: Any = "0.2 mm/d",
     freq: str = "YS",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -873,7 +873,7 @@ def dry_spell_frequency(
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
-    op: Literal["sum", "max", "min", "mean"] = "sum",
+    op: Literal['sum', 'max', 'min', 'mean'] = "sum",
     **kwargs: Any,
 ) -> Any:
     """
@@ -939,7 +939,7 @@ def dry_spell_max_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 1,
-    op: Literal["max", "sum"] = "sum",
+    op: Literal['max', 'sum'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1002,7 +1002,7 @@ def dry_spell_total_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 3,
-    op: Literal["sum", "max", "min", "mean"] = "sum",
+    op: Literal['sum', 'max', 'min', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1070,7 +1070,7 @@ def dryness_index(
     ds: xarray.Dataset | Any = None,
     *,
     wo: Any = "200 mm",
-    freq: Literal["YS", "YS-JAN"] = "YS",
+    freq: Literal['YS', 'YS-JAN'] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1243,7 +1243,7 @@ def fraction_over_precip_doy_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1312,7 +1312,7 @@ def fraction_over_precip_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2086,7 +2086,7 @@ def rprctot(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2188,7 +2188,7 @@ def daily_pr_intensity(
     *,
     thresh: Any = "1 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2848,7 +2848,7 @@ def wet_spell_frequency(
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
-    op: Literal["sum", "min", "max", "mean"] = "sum",
+    op: Literal['sum', 'min', 'max', 'mean'] = "sum",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2915,7 +2915,7 @@ def wet_spell_max_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 1,
-    op: Literal["min", "sum", "max", "mean"] = "sum",
+    op: Literal['min', 'sum', 'max', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -2982,7 +2982,7 @@ def wet_spell_total_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 3,
-    op: Literal["min", "sum", "max", "mean"] = "sum",
+    op: Literal['min', 'sum', 'max', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -3049,7 +3049,7 @@ def wetdays(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3102,7 +3102,7 @@ def wetdays_prop(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """

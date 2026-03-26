@@ -13,7 +13,7 @@ import inspect
 import textwrap
 from typing import Any, List
 
-import xclim.indicators.atmos
+import xclim.indicators
 
 MODULE_TEMPLATE = """# (C) Copyright 2025 - ECMWF and individual contributors.
 
@@ -28,7 +28,7 @@ MODULE_TEMPLATE = """# (C) Copyright 2025 - ECMWF and individual contributors.
 from typing import Any, Literal
 
 import xarray
-import xclim.indicators.atmos
+import xclim.indicators.{module_name}
 from earthkit.utils.decorators.format_handlers import format_handler
 
 # from earthkit.climate.utils.decorators import metadata_handler
@@ -77,15 +77,17 @@ def simplify_type(type_obj: Any) -> str:
     return type_str
 
 
-def generate_docstring(indicator: Any, xclim_func_name: str) -> str:
+def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -> str:
     """Generate a docstring for the wrapper function based on the xclim indicator.
 
     Parameters
     ----------
     indicator : xclim.core.indicator.Indicator
         The xclim indicator object.
+    module_name : str
+        The xclim module name (e.g. 'atmos', 'land').
     xclim_func_name : str
-         The name of the function in xclim.indicators.atmos.
+         The name of the function in xclim.indicators.<module_name>.
 
     Returns
     -------
@@ -145,10 +147,8 @@ def generate_docstring(indicator: Any, xclim_func_name: str) -> str:
     if units_section:
         sections.append(units_section)
 
-    link_prefix = f"This function wraps `xclim.indicators.atmos.{xclim_func_name}"
-    link_url = (
-        f"<https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.{xclim_func_name}>`_."
-    )
+    link_prefix = f"This function wraps `xclim.indicators.{module_name}.{xclim_func_name}"
+    link_url = f"<https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.{module_name}.{xclim_func_name}>`_."
     sections.append(f"{link_prefix}\n    {link_url}")
 
     # Parameters section
@@ -286,13 +286,15 @@ def format_call_params(indicator: Any) -> str:
         return "ds=ds, **kwargs"
 
 
-def generate_module_content(category: str, indicators: List[Any]) -> str:
+def generate_module_content(category: str, module_name: str, indicators: List[Any]) -> str:
     """Generate the content for a python module containing wrapper functions.
 
     Parameters
     ----------
     category : str
         The category of indicators (e.g. 'precipitation', 'temperature').
+    module_name : str
+        The xclim module name (e.g. 'atmos', 'land').
     indicators : list
         List of xclim indicator objects to generate wrappers for.
 
@@ -306,10 +308,13 @@ def generate_module_content(category: str, indicators: List[Any]) -> str:
     # Sort indicators by name for consistent output
     indicators.sort(key=lambda x: x.identifier)
 
+    # Get the xclim module to find function names
+    xclim_module = getattr(xclim.indicators, module_name)
+
     for ind in indicators:
-        # We need the name of the attribute in xclim.indicators.atmos to generate the call
+        # We need the name of the attribute in xclim.indicators.<module_name> to generate the call
         xclim_func_name = None
-        for name, obj in inspect.getmembers(xclim.indicators.atmos):
+        for name, obj in inspect.getmembers(xclim_module):
             if obj is ind:
                 xclim_func_name = name
                 break
@@ -321,7 +326,7 @@ def generate_module_content(category: str, indicators: List[Any]) -> str:
         # Use the xclim variable name as the function name to match existing conventions
         func_name = xclim_func_name
 
-        docstring = generate_docstring(ind, xclim_func_name)
+        docstring = generate_docstring(ind, module_name, xclim_func_name)
 
         # Indent the docstring correctly
         lines = docstring.split("\n")
@@ -329,7 +334,7 @@ def generate_module_content(category: str, indicators: List[Any]) -> str:
 
         signature_params = format_signature_params(ind)
         call_params = format_call_params(ind)
-        xclim_obj_ref = f"xclim.indicators.atmos.{xclim_func_name}"
+        xclim_obj_ref = f"xclim.indicators.{module_name}.{xclim_func_name}"
 
         code = FUNCTION_TEMPLATE.format(
             func_name=func_name,
@@ -341,15 +346,25 @@ def generate_module_content(category: str, indicators: List[Any]) -> str:
         functions_code.append(code)
 
     return (
-        MODULE_TEMPLATE.format(category_title=category.capitalize(), functions_code="\n".join(functions_code)).rstrip()
+        MODULE_TEMPLATE.format(
+            category_title=category.capitalize(),
+            module_name=module_name,
+            functions_code="\n".join(functions_code),
+        ).rstrip()
         + "\n"
     )
 
 
-def main():
-    output_dir = importlib.resources.files("earthkit.climate.indicators")
-    # Discovery
-    module = xclim.indicators.atmos
+def generate_for_module(module_name: str, output_base_dir: Any):
+    """Generate wrappers for a specific xclim indicator module."""
+    try:
+        module = importlib.import_module(f"xclim.indicators.{module_name}")
+    except ImportError:
+        print(f"Skipping xclim.indicators.{module_name} (not found)")
+        return
+
+    output_dir = output_base_dir / module_name
+    output_dir.mkdir(exist_ok=True, parents=True)
 
     # Get all potential indicators from __all__ if present
     if hasattr(module, "__all__"):
@@ -359,6 +374,7 @@ def main():
         names = [n for n, o in inspect.getmembers(module) if not n.startswith("_")]
 
     # Map internal xclim module names to our category names
+    # This mapping is mostly for 'atmos' where indicators are split
     module_to_category = {
         "_precip": "precipitation",
         "_temperature": "temperature",
@@ -367,9 +383,7 @@ def main():
         "_conversion": "precipitation",  # Snow depth/water equivalent conversions
     }
 
-    indicators_map = {cat: [] for cat in module_to_category.values()}
-    # We'll use this for anything that doesn't fit the above
-    indicators_map["other"] = []
+    indicators_map = {}
 
     for name in names:
         # We need the object to check type/attributes and pass to generation
@@ -382,28 +396,38 @@ def main():
         if not hasattr(obj, "identifier"):
             continue
 
+        # For non-atmos modules, we might just use one category
+        if module_name != "atmos":
+            category = module_name
+            if category not in indicators_map:
+                indicators_map[category] = []
+            indicators_map[category].append(obj)
+            continue
+
         # Check which module it comes from
         # e.g. xclim.indicators.atmos._precip
         obj_module = getattr(obj, "__module__", "")
         # Extract the last part of the module path
-        module_name = obj_module.split(".")[-1]
+        submodule_name = obj_module.split(".")[-1]
 
-        if module_name in module_to_category:
-            category = module_to_category[module_name]
+        if submodule_name in module_to_category:
+            category = module_to_category[submodule_name]
+            if category not in indicators_map:
+                indicators_map[category] = []
             indicators_map[category].append(obj)
         else:
             # Fallback based on keywords or other attributes
             keywords = getattr(obj, "keywords", "")
             if "precipitation" in keywords or "snow" in keywords or "rain" in keywords:
-                indicators_map["precipitation"].append(obj)
+                category = "precipitation"
             elif "temperature" in keywords or "heat" in keywords or "cold" in keywords:
-                indicators_map["temperature"].append(obj)
-            elif "wind" in keywords:
-                indicators_map["wind"].append(obj)
-            elif "synoptic" in keywords:
-                indicators_map["synoptic"].append(obj)
+                category = "temperature"
             else:
-                indicators_map["other"].append(obj)
+                category = "other"
+
+            if category not in indicators_map:
+                indicators_map[category] = []
+            indicators_map[category].append(obj)
 
     for category, indicators in indicators_map.items():
         if not indicators:
@@ -413,11 +437,35 @@ def main():
         filepath = output_dir / filename
 
         print(f"Generating {filepath} with {len(indicators)} indicators...")
-        content = generate_module_content(category, indicators)
+        content = generate_module_content(category, module_name, indicators)
 
         with open(filepath, "w") as f:
             f.write(content)
         print(f"Written {filepath}")
+
+    # Create __init__.py for the module if it doesn't exist or needs update
+    init_path = output_dir / "__init__.py"
+    if module_name == "atmos":
+        # For atmos, we want to expose all submodules
+        categories = sorted(indicators_map.keys())
+        init_content = "# (C) Copyright 2025 - ECMWF and individual contributors.\n\n"
+        init_content += '"""Atmospheric indicators."""\n\n'
+        for cat in categories:
+            init_content += f"from .{cat} import *  # noqa\n"
+
+        with open(init_path, "w") as f:
+            f.write(init_content)
+
+
+def main():
+    output_base_dir = importlib.resources.files("earthkit.climate.indicators")
+
+    # Categories to generate
+    # atmos covers most current ones
+    xclim_modules = ["atmos"]
+
+    for module_name in xclim_modules:
+        generate_for_module(module_name, output_base_dir)
 
 
 if __name__ == "__main__":

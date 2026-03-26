@@ -12,3 +12,18 @@
 the input and include attributes for CF metadata (cell methods), references,
 keywords, and more.
 """
+
+from . import atmos, land, seaIce
+
+# Backward compatibility (to be removed in future versions)
+from .atmos import precipitation, synoptic, temperature, wind
+
+__all__ = [
+    "atmos",
+    "land",
+    "seaIce",
+    "precipitation",
+    "synoptic",
+    "temperature",
+    "wind",
+]
