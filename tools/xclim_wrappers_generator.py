@@ -363,7 +363,12 @@ def generate_for_module(module_name: str, output_base_dir: Any):
         print(f"Skipping xclim.indicators.{module_name} (not found)")
         return
 
-    output_dir = output_base_dir / module_name
+    # Use snake_case for directory names
+    dir_name = module_name
+    if module_name == "seaIce":
+        dir_name = "sea_ice"
+
+    output_dir = output_base_dir / dir_name
     output_dir.mkdir(exist_ok=True, parents=True)
 
     # Get all potential indicators from __all__ if present
@@ -381,6 +386,9 @@ def generate_for_module(module_name: str, output_base_dir: Any):
         "_wind": "wind",
         "_synoptic": "synoptic",
         "_conversion": "precipitation",  # Snow depth/water equivalent conversions
+        "_snow": "snow",
+        "_streamflow": "hydrology",
+        "_seaice": "seaice",
     }
 
     indicators_map = {}
@@ -396,25 +404,14 @@ def generate_for_module(module_name: str, output_base_dir: Any):
         if not hasattr(obj, "identifier"):
             continue
 
-        # For non-atmos modules, we might just use one category
-        if module_name != "atmos":
-            category = module_name
-            if category not in indicators_map:
-                indicators_map[category] = []
-            indicators_map[category].append(obj)
-            continue
-
-        # Check which module it comes from
-        # e.g. xclim.indicators.atmos._precip
+        # Check which submodule/category it comes from
+        # e.g. xclim.indicators.atmos._precip or xclim.indicators.land._snow
         obj_module = getattr(obj, "__module__", "")
         # Extract the last part of the module path
         submodule_name = obj_module.split(".")[-1]
 
         if submodule_name in module_to_category:
             category = module_to_category[submodule_name]
-            if category not in indicators_map:
-                indicators_map[category] = []
-            indicators_map[category].append(obj)
         else:
             # Fallback based on keywords or other attributes
             keywords = getattr(obj, "keywords", "")
@@ -423,11 +420,11 @@ def generate_for_module(module_name: str, output_base_dir: Any):
             elif "temperature" in keywords or "heat" in keywords or "cold" in keywords:
                 category = "temperature"
             else:
-                category = "other"
+                category = module_name  # Use module name as fallback category
 
-            if category not in indicators_map:
-                indicators_map[category] = []
-            indicators_map[category].append(obj)
+        if category not in indicators_map:
+            indicators_map[category] = []
+        indicators_map[category].append(obj)
 
     for category, indicators in indicators_map.items():
         if not indicators:
@@ -445,24 +442,28 @@ def generate_for_module(module_name: str, output_base_dir: Any):
 
     # Create __init__.py for the module if it doesn't exist or needs update
     init_path = output_dir / "__init__.py"
-    if module_name == "atmos":
-        # For atmos, we want to expose all submodules
-        categories = sorted(indicators_map.keys())
-        init_content = "# (C) Copyright 2025 - ECMWF and individual contributors.\n\n"
-        init_content += '"""Atmospheric indicators."""\n\n'
-        for cat in categories:
-            init_content += f"from .{cat} import *  # noqa\n"
+    # For all modules, we want to expose all submodules
+    categories = sorted(indicators_map.keys())
+    init_content = "# (C) Copyright 2025 - ECMWF and individual contributors.\n\n"
 
-        with open(init_path, "w") as f:
-            f.write(init_content)
+    title = module_name.capitalize()
+    if module_name == "seaIce":
+        title = "Sea ice"
+    init_content += f'"""{title} indicators."""\n\n'
+
+    for cat in categories:
+        init_content += f"from .{cat} import *  # noqa\n"
+
+    with open(init_path, "w") as f:
+        f.write(init_content)
 
 
 def main():
     output_base_dir = importlib.resources.files("earthkit.climate.indicators")
 
     # Categories to generate
-    # atmos covers most current ones
-    xclim_modules = ["atmos"]
+    # atmos covers most current ones, adding land and seaIce
+    xclim_modules = ["atmos", "land", "seaIce"]
 
     for module_name in xclim_modules:
         generate_for_module(module_name, output_base_dir)

@@ -1,6 +1,6 @@
 # (C) Copyright 2025 - ECMWF and individual contributors.
 
-"""Atmospheric indicators."""
+"""Atmos indicators."""
 
 from .precipitation import *  # noqa
 from .synoptic import *  # noqa
