@@ -77,3 +77,43 @@ def dummy_synoptic_ds() -> xr.Dataset:
     )
     ds["ua"].attrs["units"] = "m s-1"
     return ds
+
+
+@pytest.fixture
+def dummy_snow_ds() -> xr.Dataset:
+    """Simple snow dataset."""
+    time = pd.date_range("2000-01-01", periods=3)
+    ds = xr.Dataset(
+        {
+            "snw": ("time", [10.0, 15.0, 12.0]),
+            "snd": ("time", [0.1, 0.15, 0.12]),
+        },
+        coords={"time": time},
+    )
+    ds["snw"].attrs["units"] = "kg m-2"
+    ds["snd"].attrs["units"] = "m"
+    return ds
+
+
+@pytest.fixture
+def dummy_discharge_ds() -> xr.Dataset:
+    """Simple discharge dataset."""
+    time = pd.date_range("2000-01-01", periods=3)
+    ds = xr.Dataset(
+        {"q": ("time", [100.0, 120.0, 110.0])},
+        coords={"time": time},
+    )
+    ds["q"].attrs["units"] = "m3 s-1"
+    return ds
+
+
+@pytest.fixture
+def dummy_sea_ice_ds() -> xr.Dataset:
+    """Simple sea ice dataset."""
+    time = pd.date_range("2000-01-01", periods=3)
+    ds = xr.Dataset(
+        {"sic": ("time", [0.8, 0.75, 0.85])},
+        coords={"time": time},
+    )
+    ds["sic"].attrs["units"] = "1"
+    return ds
