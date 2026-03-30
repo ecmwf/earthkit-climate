@@ -88,8 +88,8 @@ def holiday_snow_and_snowfall_days(
     *,
     snd_thresh: Any = "20 mm",
     prsn_thresh: Any = "1 mm",
-    snd_op: Literal['>', 'gt', '>=', 'ge'] = ">=",
-    prsn_op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    snd_op: Literal[">", "gt", ">=", "ge"] = ">=",
+    prsn_op: Literal[">", "gt", ">=", "ge"] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS-JUL",
@@ -161,7 +161,7 @@ def holiday_snow_days(
     ds: xarray.Dataset | Any = None,
     *,
     snd_thresh: Any = "20 mm",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS",
@@ -225,7 +225,7 @@ def snd_days_above(
     *,
     thresh: Any = "2 cm",
     freq: str = "YS-JUL",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -630,7 +630,7 @@ def snw_days_above(
     *,
     thresh: Any = "4 kg m-2",
     freq: str = "YS-JUL",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
