@@ -200,11 +200,11 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/4e/ef/79a463eb0fff7f96afa04c1d4c51f8fc85426f918db467854bfb6a569ce3/charset_normalizer-3.4.6-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b1/fa/fcdfc620b391039951c9155e4ab70e5163db1c8e8acf661cbf48e3187b50/eccodeslib-2.46.0.13-cp312-cp312-manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/2d/c6/aadc3089439ac556e37f00bd1877a5f5861915019cccae7f3a549db32042/eckitlib-2.0.1.13-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
@@ -420,11 +420,11 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/e5/62/c0815c992c9545347aeea7859b50dc9044d147e2e7278329c6e02ac9a616/charset_normalizer-3.4.6-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d4/e6/efb5a3e09966a71ec1410771a16fe24a07d3c0485e6e46e2a82421eb795f/eccodeslib-2.46.0.13-cp312-cp312-macosx_13_0_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/df/67/84e9659ebe191d94189c42f0078d6abc08791994dc1b344e35cb6e36cae7/eckitlib-2.0.1.13-cp312-cp312-macosx_13_0_x86_64.whl
@@ -640,11 +640,11 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/e5/62/c0815c992c9545347aeea7859b50dc9044d147e2e7278329c6e02ac9a616/charset_normalizer-3.4.6-cp312-cp312-macosx_10_13_universal2.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/cf/2c/4d7148f9028479f69414fee99087d74e37adc4af53411708fefe97b791c1/eccodeslib-2.45.1.9-cp312-cp312-macosx_13_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/46/d9/85e31f5f1232400ddc5a3b2fc9288f02a32c497c7c228b84828b09097d92/eckitlib-1.32.4.9-cp312-cp312-macosx_13_0_arm64.whl
@@ -856,11 +856,11 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/ab/20/0567efb3a8fd481b8f34f739ebddc098ed062a59fed41a8d193a61939e8f/charset_normalizer-3.4.6-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d4/cd/8066cbb2c20ef2e158e6fb1212a34ac1fc7865dcdc6d166cc4b5a6f6961e/eccodes-2.46.0-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/35/a8/365059bbcd4572cbc41de17fd5b682be5868b218c3c5479071865cab9078/entrypoints-0.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/2f/ff/76dd547e129206899e4e26446c3ca7aeaff948c31b05250e9b8690e76883/findlibs-0.1.2-py3-none-any.whl
@@ -1156,12 +1156,12 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/6d/e8/16c58c57c9ce1474dd1e50090ebd78b008c70fc4f06793da65f9a0aba391/cfgrib-0.9.15.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c5/87/e019223fef300e66b3b69802f3ce4f90c90b1efc6f8a087d15e7f671996a/earthkit_transforms-0.5.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b1/fa/fcdfc620b391039951c9155e4ab70e5163db1c8e8acf661cbf48e3187b50/eccodeslib-2.46.0.13-cp312-cp312-manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/2d/c6/aadc3089439ac556e37f00bd1877a5f5861915019cccae7f3a549db32042/eckitlib-2.0.1.13-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
@@ -1439,12 +1439,12 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/6d/e8/16c58c57c9ce1474dd1e50090ebd78b008c70fc4f06793da65f9a0aba391/cfgrib-0.9.15.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c5/87/e019223fef300e66b3b69802f3ce4f90c90b1efc6f8a087d15e7f671996a/earthkit_transforms-0.5.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d4/e6/efb5a3e09966a71ec1410771a16fe24a07d3c0485e6e46e2a82421eb795f/eccodeslib-2.46.0.13-cp312-cp312-macosx_13_0_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/df/67/84e9659ebe191d94189c42f0078d6abc08791994dc1b344e35cb6e36cae7/eckitlib-2.0.1.13-cp312-cp312-macosx_13_0_x86_64.whl
@@ -1722,12 +1722,12 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/6d/e8/16c58c57c9ce1474dd1e50090ebd78b008c70fc4f06793da65f9a0aba391/cfgrib-0.9.15.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c5/87/e019223fef300e66b3b69802f3ce4f90c90b1efc6f8a087d15e7f671996a/earthkit_transforms-0.5.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/cf/2c/4d7148f9028479f69414fee99087d74e37adc4af53411708fefe97b791c1/eccodeslib-2.45.1.9-cp312-cp312-macosx_13_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/46/d9/85e31f5f1232400ddc5a3b2fc9288f02a32c497c7c228b84828b09097d92/eckitlib-1.32.4.9-cp312-cp312-macosx_13_0_arm64.whl
@@ -1998,12 +1998,12 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/6d/e8/16c58c57c9ce1474dd1e50090ebd78b008c70fc4f06793da65f9a0aba391/cfgrib-0.9.15.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/c5/87/e019223fef300e66b3b69802f3ce4f90c90b1efc6f8a087d15e7f671996a/earthkit_transforms-0.5.3.1-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d4/cd/8066cbb2c20ef2e158e6fb1212a34ac1fc7865dcdc6d166cc4b5a6f6961e/eccodes-2.46.0-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/35/a8/365059bbcd4572cbc41de17fd5b682be5868b218c3c5479071865cab9078/entrypoints-0.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/2f/ff/76dd547e129206899e4e26446c3ca7aeaff948c31b05250e9b8690e76883/findlibs-0.1.2-py3-none-any.whl
@@ -2279,11 +2279,11 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/6d/e8/16c58c57c9ce1474dd1e50090ebd78b008c70fc4f06793da65f9a0aba391/cfgrib-0.9.15.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b1/fa/fcdfc620b391039951c9155e4ab70e5163db1c8e8acf661cbf48e3187b50/eccodeslib-2.46.0.13-cp312-cp312-manylinux_2_28_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/2d/c6/aadc3089439ac556e37f00bd1877a5f5861915019cccae7f3a549db32042/eckitlib-2.0.1.13-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl
@@ -2550,11 +2550,11 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/6d/e8/16c58c57c9ce1474dd1e50090ebd78b008c70fc4f06793da65f9a0aba391/cfgrib-0.9.15.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d4/e6/efb5a3e09966a71ec1410771a16fe24a07d3c0485e6e46e2a82421eb795f/eccodeslib-2.46.0.13-cp312-cp312-macosx_13_0_x86_64.whl
       - pypi: https://files.pythonhosted.org/packages/df/67/84e9659ebe191d94189c42f0078d6abc08791994dc1b344e35cb6e36cae7/eckitlib-2.0.1.13-cp312-cp312-macosx_13_0_x86_64.whl
@@ -2821,11 +2821,11 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/6d/e8/16c58c57c9ce1474dd1e50090ebd78b008c70fc4f06793da65f9a0aba391/cfgrib-0.9.15.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/ae/80/81d98622ebcb57b8fd6b6b5cd0f1083ac1b767706c612d20035d5d056069/eccodes-2.46.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/cf/2c/4d7148f9028479f69414fee99087d74e37adc4af53411708fefe97b791c1/eccodeslib-2.45.1.9-cp312-cp312-macosx_13_0_arm64.whl
       - pypi: https://files.pythonhosted.org/packages/46/d9/85e31f5f1232400ddc5a3b2fc9288f02a32c497c7c228b84828b09097d92/eckitlib-1.32.4.9-cp312-cp312-macosx_13_0_arm64.whl
@@ -3088,11 +3088,11 @@ environments:
       - pypi: https://files.pythonhosted.org/packages/6d/e8/16c58c57c9ce1474dd1e50090ebd78b008c70fc4f06793da65f9a0aba391/cfgrib-0.9.15.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/02/c3/253a89ee03fc9b9682f1541728eb66db7db22148cd94f89ab22528cd1e1b/deprecation-2.1.0-py2.py3-none-any.whl
-      - pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
       - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/34/eb/c10deda542516f679a20f1cb641a13094fc9e80bc13e54f4cebcfb9f8173/earthkit_meteo-0.6.1-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/b9/de/d4453d754be718d06a393344dca41fb62be4e2d72bbf84b8be559870061c/earthkit_plots-0.5.2-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/e9/67/5569a994dfd47ff02af9c64b666e33c9cf7c1bbfee1292b99c5d61bb9fc2/earthkit_plots_default_styles-0.1.3-py3-none-any.whl
+      - pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/d4/cd/8066cbb2c20ef2e158e6fb1212a34ac1fc7865dcdc6d166cc4b5a6f6961e/eccodes-2.46.0-cp312-cp312-win_amd64.whl
       - pypi: https://files.pythonhosted.org/packages/35/a8/365059bbcd4572cbc41de17fd5b682be5868b218c3c5479071865cab9078/entrypoints-0.4-py3-none-any.whl
       - pypi: https://files.pythonhosted.org/packages/2f/ff/76dd547e129206899e4e26446c3ca7aeaff948c31b05250e9b8690e76883/findlibs-0.1.2-py3-none-any.whl
@@ -5548,11 +5548,11 @@ packages:
   timestamp: 1733217860944
 - pypi: ./
   name: earthkit-climate
-  version: 0.2.1.dev52
-  sha256: a83a3b314604c965876814879016c79ea88afb025c834f9567dc60c89ad7fdf4
+  version: 0.3.2.dev5
+  sha256: 84f7569eba847b174978ed981ee52479812092b7ea85be0ba5afcdf77f067305
   requires_dist:
-  - earthkit-data>=0.17
-  - earthkit-utils @ git+https://github.com/ecmwf/earthkit-utils.git@develop
+  - earthkit-data>=0.17,<1
+  - earthkit-utils>=0.3
   - flox>=0.11
   - numpy>=1.22
   - xarray>=2023.1
@@ -5574,7 +5574,6 @@ packages:
   - sphinx ; extra == 'docs'
   - sphinx-autoapi ; extra == 'docs'
   requires_python: '>=3.11'
-  editable: true
 - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
   name: earthkit-data
   version: 0.19.1
@@ -5696,9 +5695,10 @@ packages:
   - geopandas
   - rasterio ; extra == 'all'
   - rasterio ; extra == 'rasterio'
-- pypi: git+https://github.com/ecmwf/earthkit-utils.git?rev=develop#184ff8438adc32fd42503ac648dd8c96e55e842c
+- pypi: https://files.pythonhosted.org/packages/eb/cb/0c9f59b0ca2a5ed941b65c52a4a005a7e16511f52fc3965eb45c53565b76/earthkit_utils-0.3.0-py3-none-any.whl
   name: earthkit-utils
-  version: 0.2.2.dev10
+  version: 0.3.0
+  sha256: 167e0385e062800d6c9f2d25a2a3075d7d91b67c3a02af52d772175b2313aa89
   requires_dist:
   - array-api-compat
   - pint

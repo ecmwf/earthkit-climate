@@ -7,7 +7,7 @@ authors = [
   {name = "European Centre for Medium-Range Weather Forecasts (ECMWF)", email = "software.support@ecmwf.int"}
 ]
 classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
+  "Development Status :: 3 - Alpha",
   "Intended Audience :: Science/Research",
   "License :: OSI Approved :: Apache Software License",
   "Operating System :: OS Independent",
@@ -17,11 +17,12 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "Topic :: Scientific/Engineering"
 ]
 dependencies = [
-  "earthkit-data>=0.17",
-  "earthkit-utils @ git+https://github.com/ecmwf/earthkit-utils.git@develop",
+  "earthkit-data>=0.17,<1",
+  "earthkit-utils>=0.3",
   "flox>=0.11",
   "numpy>=1.22",
   "xarray>=2023.1",
