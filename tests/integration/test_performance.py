@@ -25,12 +25,12 @@ import warnings
 from contextlib import nullcontext
 from typing import Any
 
-import earthkit.climate.indicators.precipitation as ek_pr
-import earthkit.climate.indicators.temperature as ek_temp
 import earthkit.data
 import pytest
 import xarray as xr
 
+import earthkit.climate.indicators.atmos.precipitation as ek_pr
+import earthkit.climate.indicators.atmos.temperature as ek_temp
 from earthkit.climate.utils.percentile import percentile_doy
 
 warnings.filterwarnings("ignore")

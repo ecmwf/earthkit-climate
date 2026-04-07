@@ -5548,7 +5548,7 @@ packages:
   timestamp: 1733217860944
 - pypi: ./
   name: earthkit-climate
-  version: 0.3.2.dev5
+  version: 0.3.2.dev15
   sha256: 84f7569eba847b174978ed981ee52479812092b7ea85be0ba5afcdf77f067305
   requires_dist:
   - earthkit-data>=0.17,<1
@@ -5574,6 +5574,7 @@ packages:
   - sphinx ; extra == 'docs'
   - sphinx-autoapi ; extra == 'docs'
   requires_python: '>=3.11'
+  editable: true
 - pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
   name: earthkit-data
   version: 0.19.1
