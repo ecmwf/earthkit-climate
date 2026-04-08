@@ -147,9 +147,9 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     if units_section:
         sections.append(units_section)
 
-    link_prefix = f"This function wraps `xclim.indicators.{module_name}.{xclim_func_name}"
-    link_url = f"<https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.{module_name}.{xclim_func_name}>`_."
-    sections.append(f"{link_prefix}\n    {link_url}")
+    link_text = f"xclim.indicators.{module_name}.{xclim_func_name}"
+    link_url = f"https://xclim.readthedocs.io/en/stable/api_indicators.html#{link_text}"
+    sections.append(f"This function wraps `{link_text} <{link_url}>`_.")
 
     # Parameters section
     params_lines = [

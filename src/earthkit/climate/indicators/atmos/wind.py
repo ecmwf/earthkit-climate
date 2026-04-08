@@ -8,7 +8,7 @@
 
 """Wind indices."""
 
-from typing import Any
+from typing import Any, Literal
 
 import xarray
 import xclim.indicators.atmos
@@ -36,8 +36,7 @@ def calm_days(
 
     - calm_days: days
 
-    This function wraps `xclim.indicators.atmos.calm_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.calm_days>`_.
+    This function wraps `xclim.indicators.atmos.calm_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.calm_days>`_.
 
     Parameters
     ----------
@@ -84,8 +83,7 @@ def sfcWind_max(
 
     - sfcWind_max: m s-1
 
-    This function wraps `xclim.indicators.atmos.sfcWind_max
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWind_max>`_.
+    This function wraps `xclim.indicators.atmos.sfcWind_max <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWind_max>`_.
 
     Parameters
     ----------
@@ -129,8 +127,7 @@ def sfcWind_mean(
 
     - sfcWind_mean: m s-1
 
-    This function wraps `xclim.indicators.atmos.sfcWind_mean
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWind_mean>`_.
+    This function wraps `xclim.indicators.atmos.sfcWind_mean <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWind_mean>`_.
 
     Parameters
     ----------
@@ -174,8 +171,7 @@ def sfcWind_min(
 
     - sfcWind_min: m s-1
 
-    This function wraps `xclim.indicators.atmos.sfcWind_min
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWind_min>`_.
+    This function wraps `xclim.indicators.atmos.sfcWind_min <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWind_min>`_.
 
     Parameters
     ----------
@@ -219,8 +215,7 @@ def sfcWindmax_max(
 
     - sfcWindmax_max: m s-1
 
-    This function wraps `xclim.indicators.atmos.sfcWindmax_max
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWindmax_max>`_.
+    This function wraps `xclim.indicators.atmos.sfcWindmax_max <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWindmax_max>`_.
 
     Parameters
     ----------
@@ -264,8 +259,7 @@ def sfcWindmax_mean(
 
     - sfcWindmax_mean: m s-1
 
-    This function wraps `xclim.indicators.atmos.sfcWindmax_mean
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWindmax_mean>`_.
+    This function wraps `xclim.indicators.atmos.sfcWindmax_mean <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWindmax_mean>`_.
 
     Parameters
     ----------
@@ -309,8 +303,7 @@ def sfcWindmax_min(
 
     - sfcWindmax_min: m s-1
 
-    This function wraps `xclim.indicators.atmos.sfcWindmax_min
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWindmax_min>`_.
+    This function wraps `xclim.indicators.atmos.sfcWindmax_min <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.sfcWindmax_min>`_.
 
     Parameters
     ----------
@@ -355,8 +348,7 @@ def windy_days(
 
     - windy_days: days
 
-    This function wraps `xclim.indicators.atmos.windy_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.windy_days>`_.
+    This function wraps `xclim.indicators.atmos.windy_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.windy_days>`_.
 
     Parameters
     ----------

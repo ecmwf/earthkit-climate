@@ -40,8 +40,7 @@ def blowing_snow(
 
     - {freq}_blowing_snow: days
 
-    This function wraps `xclim.indicators.land.blowing_snow
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.blowing_snow>`_.
+    This function wraps `xclim.indicators.land.blowing_snow <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.blowing_snow>`_.
 
     Parameters
     ----------
@@ -88,8 +87,8 @@ def holiday_snow_and_snowfall_days(
     *,
     snd_thresh: Any = "20 mm",
     prsn_thresh: Any = "1 mm",
-    snd_op: Literal[">", "gt", ">=", "ge"] = ">=",
-    prsn_op: Literal[">", "gt", ">=", "ge"] = ">=",
+    snd_op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    prsn_op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS-JUL",
@@ -105,8 +104,7 @@ def holiday_snow_and_snowfall_days(
 
     - holiday_snow_and_snowfall_days: days
 
-    This function wraps `xclim.indicators.land.holiday_snow_and_snowfall_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.holiday_snow_and_snowfall_days>`_.
+    This function wraps `xclim.indicators.land.holiday_snow_and_snowfall_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.holiday_snow_and_snowfall_days>`_.
 
     Parameters
     ----------
@@ -161,7 +159,7 @@ def holiday_snow_days(
     ds: xarray.Dataset | Any = None,
     *,
     snd_thresh: Any = "20 mm",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS",
@@ -177,8 +175,7 @@ def holiday_snow_days(
 
     - holiday_snow_days: days
 
-    This function wraps `xclim.indicators.land.holiday_snow_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.holiday_snow_days>`_.
+    This function wraps `xclim.indicators.land.holiday_snow_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.holiday_snow_days>`_.
 
     Parameters
     ----------
@@ -225,7 +222,7 @@ def snd_days_above(
     *,
     thresh: Any = "2 cm",
     freq: str = "YS-JUL",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -237,8 +234,7 @@ def snd_days_above(
 
     - snd_days_above: days
 
-    This function wraps `xclim.indicators.land.snd_days_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_days_above>`_.
+    This function wraps `xclim.indicators.land.snd_days_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_days_above>`_.
 
     Parameters
     ----------
@@ -288,8 +284,7 @@ def snd_max_doy(
 
     - {freq}_snd_max_doy: dimensionless
 
-    This function wraps `xclim.indicators.land.snd_max_doy
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_max_doy>`_.
+    This function wraps `xclim.indicators.land.snd_max_doy <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_max_doy>`_.
 
     Parameters
     ----------
@@ -336,8 +331,7 @@ def snd_season_end(
 
     - snd_season_end: dimensionless
 
-    This function wraps `xclim.indicators.land.snd_season_end
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_season_end>`_.
+    This function wraps `xclim.indicators.land.snd_season_end <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_season_end>`_.
 
     Parameters
     ----------
@@ -391,8 +385,7 @@ def snd_season_length(
 
     - snd_season_length: days
 
-    This function wraps `xclim.indicators.land.snd_season_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_season_length>`_.
+    This function wraps `xclim.indicators.land.snd_season_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_season_length>`_.
 
     Parameters
     ----------
@@ -445,8 +438,7 @@ def snd_season_start(
 
     - snd_season_start: dimensionless
 
-    This function wraps `xclim.indicators.land.snd_season_start
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_season_start>`_.
+    This function wraps `xclim.indicators.land.snd_season_start <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_season_start>`_.
 
     Parameters
     ----------
@@ -498,8 +490,7 @@ def snd_storm_days(
 
     - {freq}_snd_storm_days: days
 
-    This function wraps `xclim.indicators.land.snd_storm_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_storm_days>`_.
+    This function wraps `xclim.indicators.land.snd_storm_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snd_storm_days>`_.
 
     Parameters
     ----------
@@ -546,8 +537,7 @@ def snow_depth(
 
     - snow_depth: cm
 
-    This function wraps `xclim.indicators.land.snow_depth
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snow_depth>`_.
+    This function wraps `xclim.indicators.land.snow_depth <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snow_depth>`_.
 
     Parameters
     ----------
@@ -592,8 +582,7 @@ def snow_melt_we_max(
 
     - {freq}_snow_melt_we_max: kg m-2
 
-    This function wraps `xclim.indicators.land.snow_melt_we_max
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snow_melt_we_max>`_.
+    This function wraps `xclim.indicators.land.snow_melt_we_max <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snow_melt_we_max>`_.
 
     Parameters
     ----------
@@ -630,7 +619,7 @@ def snw_days_above(
     *,
     thresh: Any = "4 kg m-2",
     freq: str = "YS-JUL",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -642,8 +631,7 @@ def snw_days_above(
 
     - snw_days_above: days
 
-    This function wraps `xclim.indicators.land.snw_days_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_days_above>`_.
+    This function wraps `xclim.indicators.land.snw_days_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_days_above>`_.
 
     Parameters
     ----------
@@ -693,8 +681,7 @@ def snw_max(
 
     - {freq}_snw_max: kg m-2
 
-    This function wraps `xclim.indicators.land.snw_max
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_max>`_.
+    This function wraps `xclim.indicators.land.snw_max <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_max>`_.
 
     Parameters
     ----------
@@ -738,8 +725,7 @@ def snw_max_doy(
 
     - {freq}_snw_max_doy: dimensionless
 
-    This function wraps `xclim.indicators.land.snw_max_doy
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_max_doy>`_.
+    This function wraps `xclim.indicators.land.snw_max_doy <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_max_doy>`_.
 
     Parameters
     ----------
@@ -786,8 +772,7 @@ def snw_season_end(
 
     - snw_season_end: dimensionless
 
-    This function wraps `xclim.indicators.land.snw_season_end
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_season_end>`_.
+    This function wraps `xclim.indicators.land.snw_season_end <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_season_end>`_.
 
     Parameters
     ----------
@@ -840,8 +825,7 @@ def snw_season_length(
 
     - snw_season_length: days
 
-    This function wraps `xclim.indicators.land.snw_season_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_season_length>`_.
+    This function wraps `xclim.indicators.land.snw_season_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_season_length>`_.
 
     Parameters
     ----------
@@ -894,8 +878,7 @@ def snw_season_start(
 
     - snw_season_start: dimensionless
 
-    This function wraps `xclim.indicators.land.snw_season_start
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_season_start>`_.
+    This function wraps `xclim.indicators.land.snw_season_start <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_season_start>`_.
 
     Parameters
     ----------
@@ -947,8 +930,7 @@ def snw_storm_days(
 
     - {freq}_snw_storm_days: days
 
-    This function wraps `xclim.indicators.land.snw_storm_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_storm_days>`_.
+    This function wraps `xclim.indicators.land.snw_storm_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.snw_storm_days>`_.
 
     Parameters
     ----------

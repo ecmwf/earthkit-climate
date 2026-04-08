@@ -8,7 +8,7 @@
 
 """Land indices."""
 
-from typing import Any
+from typing import Any, Literal
 
 import xarray
 import xclim.indicators.land
@@ -35,8 +35,7 @@ def flow_index(
 
     - q_flow_index: 1
 
-    This function wraps `xclim.indicators.land.flow_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.flow_index>`_.
+    This function wraps `xclim.indicators.land.flow_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.flow_index>`_.
 
     Parameters
     ----------
@@ -90,8 +89,7 @@ def standardized_groundwater_index(
 
     - sgi: dimensionless
 
-    This function wraps `xclim.indicators.land.standardized_groundwater_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.standardized_groundwater_index>`_.
+    This function wraps `xclim.indicators.land.standardized_groundwater_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.standardized_groundwater_index>`_.
 
     Parameters
     ----------
@@ -178,8 +176,7 @@ def standardized_streamflow_index(
 
     - ssi: dimensionless
 
-    This function wraps `xclim.indicators.land.standardized_streamflow_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.standardized_streamflow_index>`_.
+    This function wraps `xclim.indicators.land.standardized_streamflow_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.standardized_streamflow_index>`_.
 
     Parameters
     ----------

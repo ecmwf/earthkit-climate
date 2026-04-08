@@ -8,7 +8,7 @@
 
 """Synoptic indices."""
 
-from typing import Any
+from typing import Any, Literal
 
 import xarray
 import xclim.indicators.atmos
@@ -37,8 +37,7 @@ def jetstream_metric_woollings(
     - jetlat: degrees_north
     - jetstr: m s-1
 
-    This function wraps `xclim.indicators.atmos.jetstream_metric_woollings
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.jetstream_metric_woollings>`_.
+    This function wraps `xclim.indicators.atmos.jetstream_metric_woollings <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.jetstream_metric_woollings>`_.
 
     Parameters
     ----------

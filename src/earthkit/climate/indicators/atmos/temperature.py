@@ -40,8 +40,7 @@ def australian_hardiness_zones(
 
     - hz: dimensionless
 
-    This function wraps `xclim.indicators.atmos.australian_hardiness_zones
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.australian_hardiness_zones>`_.
+    This function wraps `xclim.indicators.atmos.australian_hardiness_zones <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.australian_hardiness_zones>`_.
 
     Parameters
     ----------
@@ -79,7 +78,7 @@ def biologically_effective_degree_days(
     ds: xarray.Dataset | Any = None,
     *,
     thresh_tasmin: Any = "10 degC",
-    method: Literal["gladstones", "icclim", "jones", "smoothed", "stepwise"] = "gladstones",
+    method: Literal['gladstones', 'icclim', 'jones', 'smoothed', 'stepwise'] = "gladstones",
     cap_value: float = 1.0,
     low_dtr: Any = "10 degC",
     high_dtr: Any = "13 degC",
@@ -102,8 +101,7 @@ def biologically_effective_degree_days(
 
     - bedd: K days
 
-    This function wraps `xclim.indicators.atmos.biologically_effective_degree_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.biologically_effective_degree_days>`_.
+    This function wraps `xclim.indicators.atmos.biologically_effective_degree_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.biologically_effective_degree_days>`_.
 
     Parameters
     ----------
@@ -184,7 +182,7 @@ def cold_spell_days(
     thresh: Any = "-10 degC",
     window: int = 5,
     freq: str = "YS-JUL",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -198,8 +196,7 @@ def cold_spell_days(
 
     - cold_spell_days: days
 
-    This function wraps `xclim.indicators.atmos.cold_spell_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_days>`_.
+    This function wraps `xclim.indicators.atmos.cold_spell_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_days>`_.
 
     Parameters
     ----------
@@ -250,7 +247,7 @@ def cold_spell_duration_index(
     freq: str = "YS",
     resample_before_rl: bool = True,
     bootstrap: bool = False,
-    op: Literal["<", "<=", "lt", "le"] = "<",
+    op: Literal['<', '<=', 'lt', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -264,8 +261,7 @@ def cold_spell_duration_index(
 
     - csdi_{window}: days
 
-    This function wraps `xclim.indicators.atmos.cold_spell_duration_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_duration_index>`_.
+    This function wraps `xclim.indicators.atmos.cold_spell_duration_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_duration_index>`_.
 
     Parameters
     ----------
@@ -321,7 +317,7 @@ def cold_spell_frequency(
     thresh: Any = "-10 degC",
     window: int = 5,
     freq: str = "YS-JUL",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -335,8 +331,7 @@ def cold_spell_frequency(
 
     - cold_spell_frequency: dimensionless
 
-    This function wraps `xclim.indicators.atmos.cold_spell_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_frequency>`_.
+    This function wraps `xclim.indicators.atmos.cold_spell_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_frequency>`_.
 
     Parameters
     ----------
@@ -384,7 +379,7 @@ def cold_spell_max_length(
     thresh: Any = "-10 degC",
     window: int = 1,
     freq: str = "YS-JUL",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -398,8 +393,7 @@ def cold_spell_max_length(
 
     - cold_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.cold_spell_max_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.cold_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_max_length>`_.
 
     Parameters
     ----------
@@ -448,7 +442,7 @@ def cold_spell_total_length(
     thresh: Any = "-10 degC",
     window: int = 3,
     freq: str = "YS-JUL",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -462,8 +456,7 @@ def cold_spell_total_length(
 
     - cold_spell_total_length: days
 
-    This function wraps `xclim.indicators.atmos.cold_spell_total_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_total_length>`_.
+    This function wraps `xclim.indicators.atmos.cold_spell_total_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_spell_total_length>`_.
 
     Parameters
     ----------
@@ -523,8 +516,7 @@ def consecutive_frost_days(
 
     - consecutive_frost_days: days
 
-    This function wraps `xclim.indicators.atmos.consecutive_frost_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.consecutive_frost_days>`_.
+    This function wraps `xclim.indicators.atmos.consecutive_frost_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.consecutive_frost_days>`_.
 
     Parameters
     ----------
@@ -578,8 +570,7 @@ def maximum_consecutive_frost_free_days(
 
     - consecutive_frost_free_days: days
 
-    This function wraps `xclim.indicators.atmos.maximum_consecutive_frost_free_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_frost_free_days>`_.
+    This function wraps `xclim.indicators.atmos.maximum_consecutive_frost_free_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_frost_free_days>`_.
 
     Parameters
     ----------
@@ -619,7 +610,7 @@ def cool_night_index(
     lat: xarray.DataArray | str | None = None,
     ds: xarray.Dataset | Any = None,
     *,
-    freq: Literal["YS", "YS-JAN"] = "YS",
+    freq: Literal['YS', 'YS-JAN'] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -632,8 +623,7 @@ def cool_night_index(
 
     - cool_night_index: degC
 
-    This function wraps `xclim.indicators.atmos.cool_night_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cool_night_index>`_.
+    This function wraps `xclim.indicators.atmos.cool_night_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cool_night_index>`_.
 
     Parameters
     ----------
@@ -683,8 +673,7 @@ def cooling_degree_days(
 
     - cooling_degree_days: K days
 
-    This function wraps `xclim.indicators.atmos.cooling_degree_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cooling_degree_days>`_.
+    This function wraps `xclim.indicators.atmos.cooling_degree_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cooling_degree_days>`_.
 
     Parameters
     ----------
@@ -737,8 +726,7 @@ def cooling_degree_days_approximation(
 
     - cooling_degree_days_approximation: K days
 
-    This function wraps `xclim.indicators.atmos.cooling_degree_days_approximation
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cooling_degree_days_approximation>`_.
+    This function wraps `xclim.indicators.atmos.cooling_degree_days_approximation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cooling_degree_days_approximation>`_.
 
     Parameters
     ----------
@@ -794,8 +782,7 @@ def corn_heat_units(
 
     - chu: dimensionless
 
-    This function wraps `xclim.indicators.atmos.corn_heat_units
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.corn_heat_units>`_.
+    This function wraps `xclim.indicators.atmos.corn_heat_units <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.corn_heat_units>`_.
 
     Parameters
     ----------
@@ -853,8 +840,7 @@ def chill_portions(
 
     - cp: dimensionless
 
-    This function wraps `xclim.indicators.atmos.chill_portions
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.chill_portions>`_.
+    This function wraps `xclim.indicators.atmos.chill_portions <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.chill_portions>`_.
 
     Parameters
     ----------
@@ -903,8 +889,7 @@ def chill_units(
 
     - cu: dimensionless
 
-    This function wraps `xclim.indicators.atmos.chill_units
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.chill_units>`_.
+    This function wraps `xclim.indicators.atmos.chill_units <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.chill_units>`_.
 
     Parameters
     ----------
@@ -941,7 +926,7 @@ def degree_days_exceedance_date(
     *,
     thresh: Any = "0 degC",
     sum_thresh: Any = "25 K days",
-    op: Literal[">", "gt", "<", "lt", ">=", "ge", "<=", "le"] = ">",
+    op: Literal['>', 'gt', '<', 'lt', '>=', 'ge', '<=', 'le'] = ">",
     after_date: str | None = None,
     never_reached: str | int | None = None,
     freq: str = "YS",
@@ -957,8 +942,7 @@ def degree_days_exceedance_date(
 
     - degree_days_exceedance_date: dimensionless
 
-    This function wraps `xclim.indicators.atmos.degree_days_exceedance_date
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.degree_days_exceedance_date>`_.
+    This function wraps `xclim.indicators.atmos.degree_days_exceedance_date <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.degree_days_exceedance_date>`_.
 
     Parameters
     ----------
@@ -1012,8 +996,8 @@ def daily_freezethaw_cycles(
     *,
     thresh_tasmin: Any = "0 degC",
     thresh_tasmax: Any = "0 degC",
-    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
-    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
+    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
+    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1029,8 +1013,7 @@ def daily_freezethaw_cycles(
 
     - dlyfrzthw: days
 
-    This function wraps `xclim.indicators.atmos.daily_freezethaw_cycles
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_freezethaw_cycles>`_.
+    This function wraps `xclim.indicators.atmos.daily_freezethaw_cycles <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_freezethaw_cycles>`_.
 
     Parameters
     ----------
@@ -1094,8 +1077,7 @@ def daily_temperature_range(
 
     - dtr: K
 
-    This function wraps `xclim.indicators.atmos.daily_temperature_range
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_temperature_range>`_.
+    This function wraps `xclim.indicators.atmos.daily_temperature_range <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_temperature_range>`_.
 
     Parameters
     ----------
@@ -1143,8 +1125,7 @@ def max_daily_temperature_range(
 
     - dtrmax: K
 
-    This function wraps `xclim.indicators.atmos.max_daily_temperature_range
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_daily_temperature_range>`_.
+    This function wraps `xclim.indicators.atmos.max_daily_temperature_range <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_daily_temperature_range>`_.
 
     Parameters
     ----------
@@ -1192,8 +1173,7 @@ def daily_temperature_range_variability(
 
     - dtrvar: K
 
-    This function wraps `xclim.indicators.atmos.daily_temperature_range_variability
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_temperature_range_variability>`_.
+    This function wraps `xclim.indicators.atmos.daily_temperature_range_variability <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_temperature_range_variability>`_.
 
     Parameters
     ----------
@@ -1241,8 +1221,7 @@ def extreme_temperature_range(
 
     - etr: K
 
-    This function wraps `xclim.indicators.atmos.extreme_temperature_range
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.extreme_temperature_range>`_.
+    This function wraps `xclim.indicators.atmos.extreme_temperature_range <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.extreme_temperature_range>`_.
 
     Parameters
     ----------
@@ -1297,8 +1276,7 @@ def fire_season(
 
     - fire_season: dimensionless
 
-    This function wraps `xclim.indicators.atmos.fire_season
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fire_season>`_.
+    This function wraps `xclim.indicators.atmos.fire_season <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fire_season>`_.
 
     Parameters
     ----------
@@ -1357,7 +1335,7 @@ def first_day_tg_above(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -1373,8 +1351,7 @@ def first_day_tg_above(
 
     - first_day_tg_above: dimensionless
 
-    This function wraps `xclim.indicators.atmos.first_day_tg_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tg_above>`_.
+    This function wraps `xclim.indicators.atmos.first_day_tg_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tg_above>`_.
 
     Parameters
     ----------
@@ -1420,7 +1397,7 @@ def first_day_tg_below(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -1436,8 +1413,7 @@ def first_day_tg_below(
 
     - first_day_tg_below: dimensionless
 
-    This function wraps `xclim.indicators.atmos.first_day_tg_below
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tg_below>`_.
+    This function wraps `xclim.indicators.atmos.first_day_tg_below <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tg_below>`_.
 
     Parameters
     ----------
@@ -1483,7 +1459,7 @@ def first_day_tn_above(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -1499,8 +1475,7 @@ def first_day_tn_above(
 
     - first_day_tn_above: dimensionless
 
-    This function wraps `xclim.indicators.atmos.first_day_tn_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tn_above>`_.
+    This function wraps `xclim.indicators.atmos.first_day_tn_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tn_above>`_.
 
     Parameters
     ----------
@@ -1546,7 +1521,7 @@ def first_day_tn_below(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -1562,8 +1537,7 @@ def first_day_tn_below(
 
     - first_day_tn_below: dimensionless
 
-    This function wraps `xclim.indicators.atmos.first_day_tn_below
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tn_below>`_.
+    This function wraps `xclim.indicators.atmos.first_day_tn_below <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tn_below>`_.
 
     Parameters
     ----------
@@ -1609,7 +1583,7 @@ def first_day_tx_above(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -1625,8 +1599,7 @@ def first_day_tx_above(
 
     - first_day_tx_above: dimensionless
 
-    This function wraps `xclim.indicators.atmos.first_day_tx_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tx_above>`_.
+    This function wraps `xclim.indicators.atmos.first_day_tx_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tx_above>`_.
 
     Parameters
     ----------
@@ -1672,7 +1645,7 @@ def first_day_tx_below(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -1688,8 +1661,7 @@ def first_day_tx_below(
 
     - first_day_tx_below: dimensionless
 
-    This function wraps `xclim.indicators.atmos.first_day_tx_below
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tx_below>`_.
+    This function wraps `xclim.indicators.atmos.first_day_tx_below <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_day_tx_below>`_.
 
     Parameters
     ----------
@@ -1738,8 +1710,8 @@ def freezethaw_spell_frequency(
     thresh_tasmin: Any = "0 degC",
     thresh_tasmax: Any = "0 degC",
     window: int = 1,
-    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
-    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
+    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
+    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1755,8 +1727,7 @@ def freezethaw_spell_frequency(
 
     - freezethaw_spell_frequency: days
 
-    This function wraps `xclim.indicators.atmos.freezethaw_spell_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freezethaw_spell_frequency>`_.
+    This function wraps `xclim.indicators.atmos.freezethaw_spell_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freezethaw_spell_frequency>`_.
 
     Parameters
     ----------
@@ -1814,8 +1785,8 @@ def freezethaw_spell_max_length(
     thresh_tasmin: Any = "0 degC",
     thresh_tasmax: Any = "0 degC",
     window: int = 1,
-    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
-    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
+    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
+    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1831,8 +1802,7 @@ def freezethaw_spell_max_length(
 
     - freezethaw_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.freezethaw_spell_max_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freezethaw_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.freezethaw_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freezethaw_spell_max_length>`_.
 
     Parameters
     ----------
@@ -1905,8 +1875,7 @@ def freezethaw_spell_mean_length(
 
     - freezethaw_spell_mean_length: days
 
-    This function wraps `xclim.indicators.atmos.freezethaw_spell_mean_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freezethaw_spell_mean_length>`_.
+    This function wraps `xclim.indicators.atmos.freezethaw_spell_mean_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freezethaw_spell_mean_length>`_.
 
     Parameters
     ----------
@@ -1968,8 +1937,7 @@ def freezing_degree_days(
 
     - freezing_degree_days: K days
 
-    This function wraps `xclim.indicators.atmos.freezing_degree_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freezing_degree_days>`_.
+    This function wraps `xclim.indicators.atmos.freezing_degree_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freezing_degree_days>`_.
 
     Parameters
     ----------
@@ -2005,7 +1973,7 @@ def freshet_start(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     after_date: str = "01-01",
     window: int = 5,
     freq: str = "YS",
@@ -2021,8 +1989,7 @@ def freshet_start(
 
     - freshet_start: dimensionless
 
-    This function wraps `xclim.indicators.atmos.freshet_start
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freshet_start>`_.
+    This function wraps `xclim.indicators.atmos.freshet_start <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.freshet_start>`_.
 
     Parameters
     ----------
@@ -2080,8 +2047,7 @@ def frost_days(
 
     - frost_days: days
 
-    This function wraps `xclim.indicators.atmos.frost_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_days>`_.
+    This function wraps `xclim.indicators.atmos.frost_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_days>`_.
 
     Parameters
     ----------
@@ -2119,7 +2085,7 @@ def frost_free_season_end(
     thresh: Any = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
@@ -2133,8 +2099,7 @@ def frost_free_season_end(
 
     - frost_free_season_end: dimensionless
 
-    This function wraps `xclim.indicators.atmos.frost_free_season_end
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_free_season_end>`_.
+    This function wraps `xclim.indicators.atmos.frost_free_season_end <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_free_season_end>`_.
 
     Parameters
     ----------
@@ -2182,7 +2147,7 @@ def frost_free_season_length(
     thresh: Any = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
@@ -2197,8 +2162,7 @@ def frost_free_season_length(
 
     - frost_free_season_length: days
 
-    This function wraps `xclim.indicators.atmos.frost_free_season_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_free_season_length>`_.
+    This function wraps `xclim.indicators.atmos.frost_free_season_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_free_season_length>`_.
 
     Parameters
     ----------
@@ -2246,7 +2210,7 @@ def frost_free_season_start(
     thresh: Any = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
@@ -2260,8 +2224,7 @@ def frost_free_season_start(
 
     - frost_free_season_start: dimensionless
 
-    This function wraps `xclim.indicators.atmos.frost_free_season_start
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_free_season_start>`_.
+    This function wraps `xclim.indicators.atmos.frost_free_season_start <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_free_season_start>`_.
 
     Parameters
     ----------
@@ -2309,7 +2272,7 @@ def frost_free_spell_max_length(
     thresh: Any = "0.0 degC",
     window: int = 1,
     freq: str = "YS-JUL",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -2323,8 +2286,7 @@ def frost_free_spell_max_length(
 
     - frost_free_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.frost_free_spell_max_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_free_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.frost_free_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_free_spell_max_length>`_.
 
     Parameters
     ----------
@@ -2374,7 +2336,7 @@ def frost_season_length(
     mid_date: str | None = "01-01",
     thresh: Any = "0 degC",
     freq: str = "YS-JUL",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2388,8 +2350,7 @@ def frost_season_length(
 
     - frost_season_length: days
 
-    This function wraps `xclim.indicators.atmos.frost_season_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_season_length>`_.
+    This function wraps `xclim.indicators.atmos.frost_season_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.frost_season_length>`_.
 
     Parameters
     ----------
@@ -2449,8 +2410,7 @@ def growing_degree_days(
 
     - growing_degree_days: K days
 
-    This function wraps `xclim.indicators.atmos.growing_degree_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.growing_degree_days>`_.
+    This function wraps `xclim.indicators.atmos.growing_degree_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.growing_degree_days>`_.
 
     Parameters
     ----------
@@ -2489,7 +2449,7 @@ def growing_season_end(
     mid_date: str | None = "07-01",
     window: int = 5,
     freq: str = "YS",
-    op: Literal[">", ">=", "lt", "le"] = ">=",
+    op: Literal['>', '>=', 'lt', 'le'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2502,8 +2462,7 @@ def growing_season_end(
 
     - growing_season_end: dimensionless
 
-    This function wraps `xclim.indicators.atmos.growing_season_end
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.growing_season_end>`_.
+    This function wraps `xclim.indicators.atmos.growing_season_end <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.growing_season_end>`_.
 
     Parameters
     ----------
@@ -2554,7 +2513,7 @@ def growing_season_length(
     window: int = 6,
     mid_date: str | None = "07-01",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2568,8 +2527,7 @@ def growing_season_length(
 
     - growing_season_length: days
 
-    This function wraps `xclim.indicators.atmos.growing_season_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.growing_season_length>`_.
+    This function wraps `xclim.indicators.atmos.growing_season_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.growing_season_length>`_.
 
     Parameters
     ----------
@@ -2619,7 +2577,7 @@ def growing_season_start(
     mid_date: str | None = "07-01",
     window: int = 5,
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2632,8 +2590,7 @@ def growing_season_start(
 
     - growing_season_start: dimensionless
 
-    This function wraps `xclim.indicators.atmos.growing_season_start
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.growing_season_start>`_.
+    This function wraps `xclim.indicators.atmos.growing_season_start <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.growing_season_start>`_.
 
     Parameters
     ----------
@@ -2680,7 +2637,7 @@ def heat_spell_frequency(
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
+    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -2698,8 +2655,7 @@ def heat_spell_frequency(
 
     - heat_spell_frequency: dimensionless
 
-    This function wraps `xclim.indicators.atmos.heat_spell_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_spell_frequency>`_.
+    This function wraps `xclim.indicators.atmos.heat_spell_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_spell_frequency>`_.
 
     Parameters
     ----------
@@ -2757,7 +2713,7 @@ def heat_spell_max_length(
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
+    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -2775,8 +2731,7 @@ def heat_spell_max_length(
 
     - heat_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.heat_spell_max_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.heat_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_spell_max_length>`_.
 
     Parameters
     ----------
@@ -2834,7 +2789,7 @@ def heat_spell_total_length(
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
+    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -2852,8 +2807,7 @@ def heat_spell_total_length(
 
     - heat_spell_total_length: days
 
-    This function wraps `xclim.indicators.atmos.heat_spell_total_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_spell_total_length>`_.
+    This function wraps `xclim.indicators.atmos.heat_spell_total_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_spell_total_length>`_.
 
     Parameters
     ----------
@@ -2914,7 +2868,7 @@ def heat_wave_frequency(
     thresh_tasmax: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -2928,8 +2882,7 @@ def heat_wave_frequency(
 
     - heat_wave_frequency: dimensionless
 
-    This function wraps `xclim.indicators.atmos.heat_wave_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_wave_frequency>`_.
+    This function wraps `xclim.indicators.atmos.heat_wave_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_wave_frequency>`_.
 
     Parameters
     ----------
@@ -2983,7 +2936,7 @@ def heat_wave_index(
     thresh: Any = "25 degC",
     window: int = 5,
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -2997,8 +2950,7 @@ def heat_wave_index(
 
     - heat_wave_index: days
 
-    This function wraps `xclim.indicators.atmos.heat_wave_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_wave_index>`_.
+    This function wraps `xclim.indicators.atmos.heat_wave_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_wave_index>`_.
 
     Parameters
     ----------
@@ -3049,7 +3001,7 @@ def heat_wave_max_length(
     thresh_tasmax: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3063,8 +3015,7 @@ def heat_wave_max_length(
 
     - heat_wave_max_length: days
 
-    This function wraps `xclim.indicators.atmos.heat_wave_max_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_wave_max_length>`_.
+    This function wraps `xclim.indicators.atmos.heat_wave_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_wave_max_length>`_.
 
     Parameters
     ----------
@@ -3120,7 +3071,7 @@ def heat_wave_total_length(
     thresh_tasmax: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3134,8 +3085,7 @@ def heat_wave_total_length(
 
     - heat_wave_total_length: days
 
-    This function wraps `xclim.indicators.atmos.heat_wave_total_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_wave_total_length>`_.
+    This function wraps `xclim.indicators.atmos.heat_wave_total_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heat_wave_total_length>`_.
 
     Parameters
     ----------
@@ -3200,8 +3150,7 @@ def heating_degree_days(
 
     - heating_degree_days: K days
 
-    This function wraps `xclim.indicators.atmos.heating_degree_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heating_degree_days>`_.
+    This function wraps `xclim.indicators.atmos.heating_degree_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heating_degree_days>`_.
 
     Parameters
     ----------
@@ -3254,8 +3203,7 @@ def heating_degree_days_approximation(
 
     - heating_degree_days_approximation: K days
 
-    This function wraps `xclim.indicators.atmos.heating_degree_days_approximation
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heating_degree_days_approximation>`_.
+    This function wraps `xclim.indicators.atmos.heating_degree_days_approximation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.heating_degree_days_approximation>`_.
 
     Parameters
     ----------
@@ -3309,8 +3257,7 @@ def hot_days(
 
     - hot_days: days
 
-    This function wraps `xclim.indicators.atmos.hot_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_days>`_.
+    This function wraps `xclim.indicators.atmos.hot_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_days>`_.
 
     Parameters
     ----------
@@ -3348,7 +3295,7 @@ def hot_spell_frequency(
     thresh: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3362,8 +3309,7 @@ def hot_spell_frequency(
 
     - hot_spell_frequency: dimensionless
 
-    This function wraps `xclim.indicators.atmos.hot_spell_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_spell_frequency>`_.
+    This function wraps `xclim.indicators.atmos.hot_spell_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_spell_frequency>`_.
 
     Parameters
     ----------
@@ -3411,7 +3357,7 @@ def hot_spell_max_length(
     thresh: Any = "30 degC",
     window: int = 1,
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3425,8 +3371,7 @@ def hot_spell_max_length(
 
     - hot_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.hot_spell_max_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.hot_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_spell_max_length>`_.
 
     Parameters
     ----------
@@ -3487,8 +3432,7 @@ def hot_spell_max_magnitude(
 
     - hot_spell_max_magnitude: K d
 
-    This function wraps `xclim.indicators.atmos.hot_spell_max_magnitude
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_spell_max_magnitude>`_.
+    This function wraps `xclim.indicators.atmos.hot_spell_max_magnitude <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_spell_max_magnitude>`_.
 
     Parameters
     ----------
@@ -3534,7 +3478,7 @@ def hot_spell_total_length(
     thresh: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3548,8 +3492,7 @@ def hot_spell_total_length(
 
     - hot_spell_total_length: days
 
-    This function wraps `xclim.indicators.atmos.hot_spell_total_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_spell_total_length>`_.
+    This function wraps `xclim.indicators.atmos.hot_spell_total_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.hot_spell_total_length>`_.
 
     Parameters
     ----------
@@ -3602,7 +3545,7 @@ def huglin_index(
     cap_value: float = 1.0,
     start_date: str | str = "04-01",
     end_date: str | str = "10-01",
-    freq: Literal["YS", "YS-JAN", "YS-JUL"] = "YS",
+    freq: Literal['YS', 'YS-JAN', 'YS-JUL'] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3618,8 +3561,7 @@ def huglin_index(
 
     - hi: dimensionless
 
-    This function wraps `xclim.indicators.atmos.huglin_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.huglin_index>`_.
+    This function wraps `xclim.indicators.atmos.huglin_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.huglin_index>`_.
 
     Parameters
     ----------
@@ -3695,8 +3637,7 @@ def ice_days(
 
     - ice_days: days
 
-    This function wraps `xclim.indicators.atmos.ice_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.ice_days>`_.
+    This function wraps `xclim.indicators.atmos.ice_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.ice_days>`_.
 
     Parameters
     ----------
@@ -3732,7 +3673,7 @@ def last_spring_frost(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     before_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -3748,8 +3689,7 @@ def last_spring_frost(
 
     - last_spring_frost: dimensionless
 
-    This function wraps `xclim.indicators.atmos.last_spring_frost
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.last_spring_frost>`_.
+    This function wraps `xclim.indicators.atmos.last_spring_frost <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.last_spring_frost>`_.
 
     Parameters
     ----------
@@ -3808,8 +3748,7 @@ def late_frost_days(
 
     - late_frost_days: days
 
-    This function wraps `xclim.indicators.atmos.late_frost_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.late_frost_days>`_.
+    This function wraps `xclim.indicators.atmos.late_frost_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.late_frost_days>`_.
 
     Parameters
     ----------
@@ -3861,8 +3800,7 @@ def latitude_temperature_index(
 
     - lti: dimensionless
 
-    This function wraps `xclim.indicators.atmos.latitude_temperature_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.latitude_temperature_index>`_.
+    This function wraps `xclim.indicators.atmos.latitude_temperature_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.latitude_temperature_index>`_.
 
     Parameters
     ----------
@@ -3913,8 +3851,7 @@ def maximum_consecutive_warm_days(
 
     - maximum_consecutive_warm_days: days
 
-    This function wraps `xclim.indicators.atmos.maximum_consecutive_warm_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_warm_days>`_.
+    This function wraps `xclim.indicators.atmos.maximum_consecutive_warm_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_warm_days>`_.
 
     Parameters
     ----------
@@ -3956,7 +3893,7 @@ def tg10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = "<",
+    op: Literal['>', '>=', 'gt', 'ge'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3968,8 +3905,7 @@ def tg10p(
 
     - tg10p: days
 
-    This function wraps `xclim.indicators.atmos.tg10p
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg10p>`_.
+    This function wraps `xclim.indicators.atmos.tg10p <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg10p>`_.
 
     Parameters
     ----------
@@ -4018,7 +3954,7 @@ def tg90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4030,8 +3966,7 @@ def tg90p(
 
     - tg90p: days
 
-    This function wraps `xclim.indicators.atmos.tg90p
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg90p>`_.
+    This function wraps `xclim.indicators.atmos.tg90p <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg90p>`_.
 
     Parameters
     ----------
@@ -4079,7 +4014,7 @@ def tg_days_above(
     *,
     thresh: Any = "10.0 degC",
     freq: str = "YS",
-    op: Literal["<", "lt", "<=", "le"] = ">",
+    op: Literal['<', 'lt', '<=', 'le'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4091,8 +4026,7 @@ def tg_days_above(
 
     - tg_days_above: days
 
-    This function wraps `xclim.indicators.atmos.tg_days_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_days_above>`_.
+    This function wraps `xclim.indicators.atmos.tg_days_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_days_above>`_.
 
     Parameters
     ----------
@@ -4132,7 +4066,7 @@ def tg_days_below(
     *,
     thresh: Any = "10.0 degC",
     freq: str = "YS",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4144,8 +4078,7 @@ def tg_days_below(
 
     - tg_days_below: days
 
-    This function wraps `xclim.indicators.atmos.tg_days_below
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_days_below>`_.
+    This function wraps `xclim.indicators.atmos.tg_days_below <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_days_below>`_.
 
     Parameters
     ----------
@@ -4195,8 +4128,7 @@ def tg_max(
 
     - tg_max: K
 
-    This function wraps `xclim.indicators.atmos.tg_max
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_max>`_.
+    This function wraps `xclim.indicators.atmos.tg_max <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_max>`_.
 
     Parameters
     ----------
@@ -4240,8 +4172,7 @@ def tg_mean(
 
     - tg_mean: K
 
-    This function wraps `xclim.indicators.atmos.tg_mean
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_mean>`_.
+    This function wraps `xclim.indicators.atmos.tg_mean <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_mean>`_.
 
     Parameters
     ----------
@@ -4285,8 +4216,7 @@ def tg_min(
 
     - tg_min: K
 
-    This function wraps `xclim.indicators.atmos.tg_min
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_min>`_.
+    This function wraps `xclim.indicators.atmos.tg_min <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tg_min>`_.
 
     Parameters
     ----------
@@ -4332,8 +4262,7 @@ def thawing_degree_days(
 
     - thawing_degree_days: K days
 
-    This function wraps `xclim.indicators.atmos.thawing_degree_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.thawing_degree_days>`_.
+    This function wraps `xclim.indicators.atmos.thawing_degree_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.thawing_degree_days>`_.
 
     Parameters
     ----------
@@ -4371,7 +4300,7 @@ def tn10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal["<", "<=", "lt", "le"] = "<",
+    op: Literal['<', '<=', 'lt', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4383,8 +4312,7 @@ def tn10p(
 
     - tn10p: days
 
-    This function wraps `xclim.indicators.atmos.tn10p
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn10p>`_.
+    This function wraps `xclim.indicators.atmos.tn10p <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn10p>`_.
 
     Parameters
     ----------
@@ -4433,7 +4361,7 @@ def tn90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4445,8 +4373,7 @@ def tn90p(
 
     - tn90p: days
 
-    This function wraps `xclim.indicators.atmos.tn90p
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn90p>`_.
+    This function wraps `xclim.indicators.atmos.tn90p <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn90p>`_.
 
     Parameters
     ----------
@@ -4494,7 +4421,7 @@ def tn_days_above(
     *,
     thresh: Any = "20.0 degC",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4506,8 +4433,7 @@ def tn_days_above(
 
     - tn_days_above: days
 
-    This function wraps `xclim.indicators.atmos.tn_days_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_days_above>`_.
+    This function wraps `xclim.indicators.atmos.tn_days_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_days_above>`_.
 
     Parameters
     ----------
@@ -4547,7 +4473,7 @@ def tn_days_below(
     *,
     thresh: Any = "-10.0 degC",
     freq: str = "YS",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4559,8 +4485,7 @@ def tn_days_below(
 
     - tn_days_below: days
 
-    This function wraps `xclim.indicators.atmos.tn_days_below
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_days_below>`_.
+    This function wraps `xclim.indicators.atmos.tn_days_below <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_days_below>`_.
 
     Parameters
     ----------
@@ -4610,8 +4535,7 @@ def tn_max(
 
     - tn_max: K
 
-    This function wraps `xclim.indicators.atmos.tn_max
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_max>`_.
+    This function wraps `xclim.indicators.atmos.tn_max <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_max>`_.
 
     Parameters
     ----------
@@ -4655,8 +4579,7 @@ def tn_mean(
 
     - tn_mean: K
 
-    This function wraps `xclim.indicators.atmos.tn_mean
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_mean>`_.
+    This function wraps `xclim.indicators.atmos.tn_mean <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_mean>`_.
 
     Parameters
     ----------
@@ -4700,8 +4623,7 @@ def tn_min(
 
     - tn_min: K
 
-    This function wraps `xclim.indicators.atmos.tn_min
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_min>`_.
+    This function wraps `xclim.indicators.atmos.tn_min <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tn_min>`_.
 
     Parameters
     ----------
@@ -4735,7 +4657,7 @@ def tropical_nights(
     *,
     thresh: Any = "20.0 degC",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4747,8 +4669,7 @@ def tropical_nights(
 
     - tropical_nights: days
 
-    This function wraps `xclim.indicators.atmos.tropical_nights
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tropical_nights>`_.
+    This function wraps `xclim.indicators.atmos.tropical_nights <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tropical_nights>`_.
 
     Parameters
     ----------
@@ -4789,7 +4710,7 @@ def tx10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal["<", "<=", "lt", "le"] = "<",
+    op: Literal['<', '<=', 'lt', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4801,8 +4722,7 @@ def tx10p(
 
     - tx10p: days
 
-    This function wraps `xclim.indicators.atmos.tx10p
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx10p>`_.
+    This function wraps `xclim.indicators.atmos.tx10p <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx10p>`_.
 
     Parameters
     ----------
@@ -4851,7 +4771,7 @@ def tx90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal["<", "<=", "lt", "le"] = ">",
+    op: Literal['<', '<=', 'lt', 'le'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4863,8 +4783,7 @@ def tx90p(
 
     - tx90p: days
 
-    This function wraps `xclim.indicators.atmos.tx90p
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx90p>`_.
+    This function wraps `xclim.indicators.atmos.tx90p <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx90p>`_.
 
     Parameters
     ----------
@@ -4912,7 +4831,7 @@ def tx_days_above(
     *,
     thresh: Any = "25.0 degC",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4924,8 +4843,7 @@ def tx_days_above(
 
     - tx_days_above: days
 
-    This function wraps `xclim.indicators.atmos.tx_days_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_days_above>`_.
+    This function wraps `xclim.indicators.atmos.tx_days_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_days_above>`_.
 
     Parameters
     ----------
@@ -4965,7 +4883,7 @@ def tx_days_below(
     *,
     thresh: Any = "25.0 degC",
     freq: str = "YS",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4977,8 +4895,7 @@ def tx_days_below(
 
     - tx_days_below: days
 
-    This function wraps `xclim.indicators.atmos.tx_days_below
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_days_below>`_.
+    This function wraps `xclim.indicators.atmos.tx_days_below <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_days_below>`_.
 
     Parameters
     ----------
@@ -5028,8 +4945,7 @@ def tx_max(
 
     - tx_max: K
 
-    This function wraps `xclim.indicators.atmos.tx_max
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_max>`_.
+    This function wraps `xclim.indicators.atmos.tx_max <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_max>`_.
 
     Parameters
     ----------
@@ -5073,8 +4989,7 @@ def tx_mean(
 
     - tx_mean: K
 
-    This function wraps `xclim.indicators.atmos.tx_mean
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_mean>`_.
+    This function wraps `xclim.indicators.atmos.tx_mean <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_mean>`_.
 
     Parameters
     ----------
@@ -5118,8 +5033,7 @@ def tx_min(
 
     - tx_min: K
 
-    This function wraps `xclim.indicators.atmos.tx_min
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_min>`_.
+    This function wraps `xclim.indicators.atmos.tx_min <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_min>`_.
 
     Parameters
     ----------
@@ -5155,7 +5069,7 @@ def tx_tn_days_above(
     thresh_tasmin: Any = "22 degC",
     thresh_tasmax: Any = "30 degC",
     freq: str = "YS",
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5167,8 +5081,7 @@ def tx_tn_days_above(
 
     - tx_tn_days_above: days
 
-    This function wraps `xclim.indicators.atmos.tx_tn_days_above
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_tn_days_above>`_.
+    This function wraps `xclim.indicators.atmos.tx_tn_days_above <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.tx_tn_days_above>`_.
 
     Parameters
     ----------
@@ -5229,8 +5142,7 @@ def usda_hardiness_zones(
 
     - hz: dimensionless
 
-    This function wraps `xclim.indicators.atmos.usda_hardiness_zones
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.usda_hardiness_zones>`_.
+    This function wraps `xclim.indicators.atmos.usda_hardiness_zones <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.usda_hardiness_zones>`_.
 
     Parameters
     ----------
@@ -5270,7 +5182,7 @@ def warm_spell_duration_index(
     freq: str = "YS",
     resample_before_rl: bool = True,
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5284,8 +5196,7 @@ def warm_spell_duration_index(
 
     - warm_spell_duration_index: days
 
-    This function wraps `xclim.indicators.atmos.warm_spell_duration_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_spell_duration_index>`_.
+    This function wraps `xclim.indicators.atmos.warm_spell_duration_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_spell_duration_index>`_.
 
     Parameters
     ----------

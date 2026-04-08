@@ -8,7 +8,7 @@
 
 """Hydrology indices."""
 
-from typing import Any
+from typing import Any, Literal
 
 import xarray
 import xclim.indicators.land
@@ -35,8 +35,7 @@ def base_flow_index(
 
     - base_flow_index: dimensionless
 
-    This function wraps `xclim.indicators.land.base_flow_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.base_flow_index>`_.
+    This function wraps `xclim.indicators.land.base_flow_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.base_flow_index>`_.
 
     Parameters
     ----------
@@ -80,8 +79,7 @@ def doy_qmax(
 
     - q{indexer}_doy_qmax: dimensionless
 
-    This function wraps `xclim.indicators.land.doy_qmax
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.doy_qmax>`_.
+    This function wraps `xclim.indicators.land.doy_qmax <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.doy_qmax>`_.
 
     Parameters
     ----------
@@ -126,8 +124,7 @@ def doy_qmin(
 
     - q{indexer}_doy_qmin: dimensionless
 
-    This function wraps `xclim.indicators.land.doy_qmin
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.doy_qmin>`_.
+    This function wraps `xclim.indicators.land.doy_qmin <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.doy_qmin>`_.
 
     Parameters
     ----------
@@ -176,8 +173,7 @@ def high_flow_frequency(
 
     - q_high_flow_frequency: days
 
-    This function wraps `xclim.indicators.land.high_flow_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.high_flow_frequency>`_.
+    This function wraps `xclim.indicators.land.high_flow_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.high_flow_frequency>`_.
 
     Parameters
     ----------
@@ -230,8 +226,7 @@ def low_flow_frequency(
 
     - q_low_flow_frequency: days
 
-    This function wraps `xclim.indicators.land.low_flow_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.low_flow_frequency>`_.
+    This function wraps `xclim.indicators.land.low_flow_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.low_flow_frequency>`_.
 
     Parameters
     ----------
@@ -281,8 +276,7 @@ def rb_flashiness_index(
 
     - rbi: dimensionless
 
-    This function wraps `xclim.indicators.land.rb_flashiness_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.rb_flashiness_index>`_.
+    This function wraps `xclim.indicators.land.rb_flashiness_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.rb_flashiness_index>`_.
 
     Parameters
     ----------

@@ -37,8 +37,7 @@ def antecedent_precipitation_index(
 
     - api: mm
 
-    This function wraps `xclim.indicators.atmos.antecedent_precipitation_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.antecedent_precipitation_index>`_.
+    This function wraps `xclim.indicators.atmos.antecedent_precipitation_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.antecedent_precipitation_index>`_.
 
     Parameters
     ----------
@@ -88,8 +87,7 @@ def maximum_consecutive_dry_days(
 
     - cdd: days
 
-    This function wraps `xclim.indicators.atmos.maximum_consecutive_dry_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_dry_days>`_.
+    This function wraps `xclim.indicators.atmos.maximum_consecutive_dry_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_dry_days>`_.
 
     Parameters
     ----------
@@ -159,8 +157,7 @@ def cffwis_indices(
     - bui: dimensionless
     - fwi: dimensionless
 
-    This function wraps `xclim.indicators.atmos.cffwis_indices
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cffwis_indices>`_.
+    This function wraps `xclim.indicators.atmos.cffwis_indices <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cffwis_indices>`_.
 
     Parameters
     ----------
@@ -250,8 +247,7 @@ def cold_and_dry_days(
 
     - cold_and_dry_days: days
 
-    This function wraps `xclim.indicators.atmos.cold_and_dry_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_and_dry_days>`_.
+    This function wraps `xclim.indicators.atmos.cold_and_dry_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_and_dry_days>`_.
 
     Parameters
     ----------
@@ -308,8 +304,7 @@ def cold_and_wet_days(
 
     - cold_and_wet_days: days
 
-    This function wraps `xclim.indicators.atmos.cold_and_wet_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_and_wet_days>`_.
+    This function wraps `xclim.indicators.atmos.cold_and_wet_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.cold_and_wet_days>`_.
 
     Parameters
     ----------
@@ -365,8 +360,7 @@ def maximum_consecutive_wet_days(
 
     - cwd: days
 
-    This function wraps `xclim.indicators.atmos.maximum_consecutive_wet_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_wet_days>`_.
+    This function wraps `xclim.indicators.atmos.maximum_consecutive_wet_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.maximum_consecutive_wet_days>`_.
 
     Parameters
     ----------
@@ -409,7 +403,7 @@ def days_over_precip_doy_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -422,8 +416,7 @@ def days_over_precip_doy_thresh(
 
     - days_over_precip_doy_thresh: days
 
-    This function wraps `xclim.indicators.atmos.days_over_precip_doy_thresh
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_over_precip_doy_thresh>`_.
+    This function wraps `xclim.indicators.atmos.days_over_precip_doy_thresh <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_over_precip_doy_thresh>`_.
 
     Parameters
     ----------
@@ -477,7 +470,7 @@ def days_over_precip_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -490,8 +483,7 @@ def days_over_precip_thresh(
 
     - days_over_precip_thresh: days
 
-    This function wraps `xclim.indicators.atmos.days_over_precip_thresh
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_over_precip_thresh>`_.
+    This function wraps `xclim.indicators.atmos.days_over_precip_thresh <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_over_precip_thresh>`_.
 
     Parameters
     ----------
@@ -555,8 +547,7 @@ def days_with_snow(
 
     - days_with_snow: days
 
-    This function wraps `xclim.indicators.atmos.days_with_snow
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_with_snow>`_.
+    This function wraps `xclim.indicators.atmos.days_with_snow <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.days_with_snow>`_.
 
     Parameters
     ----------
@@ -615,8 +606,7 @@ def drought_code(
 
     - dc: dimensionless
 
-    This function wraps `xclim.indicators.atmos.drought_code
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.drought_code>`_.
+    This function wraps `xclim.indicators.atmos.drought_code <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.drought_code>`_.
 
     Parameters
     ----------
@@ -693,8 +683,7 @@ def griffiths_drought_factor(
 
     - df: dimensionless
 
-    This function wraps `xclim.indicators.atmos.griffiths_drought_factor
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.griffiths_drought_factor>`_.
+    This function wraps `xclim.indicators.atmos.griffiths_drought_factor <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.griffiths_drought_factor>`_.
 
     Parameters
     ----------
@@ -754,8 +743,7 @@ def duff_moisture_code(
 
     - dmc: dimensionless
 
-    This function wraps `xclim.indicators.atmos.duff_moisture_code
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.duff_moisture_code>`_.
+    This function wraps `xclim.indicators.atmos.duff_moisture_code <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.duff_moisture_code>`_.
 
     Parameters
     ----------
@@ -818,7 +806,7 @@ def dry_days(
     *,
     thresh: Any = "0.2 mm/d",
     freq: str = "YS",
-    op: Literal["<", "lt", "<=", "le"] = "<",
+    op: Literal['<', 'lt', '<=', 'le'] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -830,8 +818,7 @@ def dry_days(
 
     - dry_days: days
 
-    This function wraps `xclim.indicators.atmos.dry_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_days>`_.
+    This function wraps `xclim.indicators.atmos.dry_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_days>`_.
 
     Parameters
     ----------
@@ -873,7 +860,7 @@ def dry_spell_frequency(
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
-    op: Literal["sum", "max", "min", "mean"] = "sum",
+    op: Literal['sum', 'max', 'min', 'mean'] = "sum",
     **kwargs: Any,
 ) -> Any:
     """
@@ -886,8 +873,7 @@ def dry_spell_frequency(
 
     - dry_spell_frequency: dimensionless
 
-    This function wraps `xclim.indicators.atmos.dry_spell_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_frequency>`_.
+    This function wraps `xclim.indicators.atmos.dry_spell_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_frequency>`_.
 
     Parameters
     ----------
@@ -939,7 +925,7 @@ def dry_spell_max_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 1,
-    op: Literal["max", "sum"] = "sum",
+    op: Literal['max', 'sum'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -954,8 +940,7 @@ def dry_spell_max_length(
 
     - dry_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.dry_spell_max_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.dry_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_max_length>`_.
 
     Parameters
     ----------
@@ -1002,7 +987,7 @@ def dry_spell_total_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 3,
-    op: Literal["sum", "max", "min", "mean"] = "sum",
+    op: Literal['sum', 'max', 'min', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1017,8 +1002,7 @@ def dry_spell_total_length(
 
     - dry_spell_total_length: days
 
-    This function wraps `xclim.indicators.atmos.dry_spell_total_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_total_length>`_.
+    This function wraps `xclim.indicators.atmos.dry_spell_total_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dry_spell_total_length>`_.
 
     Parameters
     ----------
@@ -1070,7 +1054,7 @@ def dryness_index(
     ds: xarray.Dataset | Any = None,
     *,
     wo: Any = "200 mm",
-    freq: Literal["YS", "YS-JAN"] = "YS",
+    freq: Literal['YS', 'YS-JAN'] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1084,8 +1068,7 @@ def dryness_index(
 
     - dryness_index: mm
 
-    This function wraps `xclim.indicators.atmos.dryness_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dryness_index>`_.
+    This function wraps `xclim.indicators.atmos.dryness_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.dryness_index>`_.
 
     Parameters
     ----------
@@ -1140,8 +1123,7 @@ def mcarthur_forest_fire_danger_index(
 
     - ffdi: dimensionless
 
-    This function wraps `xclim.indicators.atmos.mcarthur_forest_fire_danger_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.mcarthur_forest_fire_danger_index>`_.
+    This function wraps `xclim.indicators.atmos.mcarthur_forest_fire_danger_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.mcarthur_forest_fire_danger_index>`_.
 
     Parameters
     ----------
@@ -1202,8 +1184,7 @@ def first_snowfall(
 
     - first_snowfall: dimensionless
 
-    This function wraps `xclim.indicators.atmos.first_snowfall
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_snowfall>`_.
+    This function wraps `xclim.indicators.atmos.first_snowfall <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.first_snowfall>`_.
 
     Parameters
     ----------
@@ -1243,7 +1224,7 @@ def fraction_over_precip_doy_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1257,8 +1238,7 @@ def fraction_over_precip_doy_thresh(
 
     - fraction_over_precip_doy_thresh: dimensionless
 
-    This function wraps `xclim.indicators.atmos.fraction_over_precip_doy_thresh
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fraction_over_precip_doy_thresh>`_.
+    This function wraps `xclim.indicators.atmos.fraction_over_precip_doy_thresh <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fraction_over_precip_doy_thresh>`_.
 
     Parameters
     ----------
@@ -1312,7 +1292,7 @@ def fraction_over_precip_thresh(
     thresh: Any = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal[">", ">=", "gt", "ge"] = ">",
+    op: Literal['>', '>=', 'gt', 'ge'] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -1326,8 +1306,7 @@ def fraction_over_precip_thresh(
 
     - fraction_over_precip_thresh: dimensionless
 
-    This function wraps `xclim.indicators.atmos.fraction_over_precip_thresh
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fraction_over_precip_thresh>`_.
+    This function wraps `xclim.indicators.atmos.fraction_over_precip_thresh <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.fraction_over_precip_thresh>`_.
 
     Parameters
     ----------
@@ -1393,8 +1372,7 @@ def high_precip_low_temp(
 
     - high_precip_low_temp: days
 
-    This function wraps `xclim.indicators.atmos.high_precip_low_temp
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.high_precip_low_temp>`_.
+    This function wraps `xclim.indicators.atmos.high_precip_low_temp <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.high_precip_low_temp>`_.
 
     Parameters
     ----------
@@ -1452,8 +1430,7 @@ def keetch_byram_drought_index(
 
     - kbdi: mm/day
 
-    This function wraps `xclim.indicators.atmos.keetch_byram_drought_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.keetch_byram_drought_index>`_.
+    This function wraps `xclim.indicators.atmos.keetch_byram_drought_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.keetch_byram_drought_index>`_.
 
     Parameters
     ----------
@@ -1506,8 +1483,7 @@ def last_snowfall(
 
     - last_snowfall: dimensionless
 
-    This function wraps `xclim.indicators.atmos.last_snowfall
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.last_snowfall>`_.
+    This function wraps `xclim.indicators.atmos.last_snowfall <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.last_snowfall>`_.
 
     Parameters
     ----------
@@ -1559,8 +1535,7 @@ def liquid_precip_ratio(
 
     - liquid_precip_ratio: dimensionless
 
-    This function wraps `xclim.indicators.atmos.liquid_precip_ratio
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_ratio>`_.
+    This function wraps `xclim.indicators.atmos.liquid_precip_ratio <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_ratio>`_.
 
     Parameters
     ----------
@@ -1613,8 +1588,7 @@ def liquid_precip_average(
 
     - liquidprcpavg: mm
 
-    This function wraps `xclim.indicators.atmos.liquid_precip_average
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_average>`_.
+    This function wraps `xclim.indicators.atmos.liquid_precip_average <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_average>`_.
 
     Parameters
     ----------
@@ -1667,8 +1641,7 @@ def liquid_precip_accumulation(
 
     - liquidprcptot: mm
 
-    This function wraps `xclim.indicators.atmos.liquid_precip_accumulation
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_accumulation>`_.
+    This function wraps `xclim.indicators.atmos.liquid_precip_accumulation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.liquid_precip_accumulation>`_.
 
     Parameters
     ----------
@@ -1719,8 +1692,7 @@ def max_n_day_precipitation_amount(
 
     - rx{window}day: mm
 
-    This function wraps `xclim.indicators.atmos.max_n_day_precipitation_amount
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_n_day_precipitation_amount>`_.
+    This function wraps `xclim.indicators.atmos.max_n_day_precipitation_amount <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_n_day_precipitation_amount>`_.
 
     Parameters
     ----------
@@ -1768,8 +1740,7 @@ def max_pr_intensity(
 
     - max_pr_intensity: mm h-1
 
-    This function wraps `xclim.indicators.atmos.max_pr_intensity
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_pr_intensity>`_.
+    This function wraps `xclim.indicators.atmos.max_pr_intensity <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_pr_intensity>`_.
 
     Parameters
     ----------
@@ -1820,8 +1791,7 @@ def precip_average(
 
     - prcpavg: mm
 
-    This function wraps `xclim.indicators.atmos.precip_average
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.precip_average>`_.
+    This function wraps `xclim.indicators.atmos.precip_average <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.precip_average>`_.
 
     Parameters
     ----------
@@ -1871,8 +1841,7 @@ def precip_accumulation(
 
     - prcptot: mm
 
-    This function wraps `xclim.indicators.atmos.precip_accumulation
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.precip_accumulation>`_.
+    This function wraps `xclim.indicators.atmos.precip_accumulation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.precip_accumulation>`_.
 
     Parameters
     ----------
@@ -1921,8 +1890,7 @@ def rain_on_frozen_ground_days(
 
     - rain_frzgr: days
 
-    This function wraps `xclim.indicators.atmos.rain_on_frozen_ground_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rain_on_frozen_ground_days>`_.
+    This function wraps `xclim.indicators.atmos.rain_on_frozen_ground_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rain_on_frozen_ground_days>`_.
 
     Parameters
     ----------
@@ -1994,8 +1962,7 @@ def rain_season(
     - rain_season_end: dimensionless
     - rain_season_length: days
 
-    This function wraps `xclim.indicators.atmos.rain_season
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rain_season>`_.
+    This function wraps `xclim.indicators.atmos.rain_season <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rain_season>`_.
 
     Parameters
     ----------
@@ -2086,7 +2053,7 @@ def rprctot(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2099,8 +2066,7 @@ def rprctot(
 
     - rprctot: dimensionless
 
-    This function wraps `xclim.indicators.atmos.rprctot
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rprctot>`_.
+    This function wraps `xclim.indicators.atmos.rprctot <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.rprctot>`_.
 
     Parameters
     ----------
@@ -2153,8 +2119,7 @@ def max_1day_precipitation_amount(
 
     - rx1day: mm/day
 
-    This function wraps `xclim.indicators.atmos.max_1day_precipitation_amount
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_1day_precipitation_amount>`_.
+    This function wraps `xclim.indicators.atmos.max_1day_precipitation_amount <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.max_1day_precipitation_amount>`_.
 
     Parameters
     ----------
@@ -2188,7 +2153,7 @@ def daily_pr_intensity(
     *,
     thresh: Any = "1 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2200,8 +2165,7 @@ def daily_pr_intensity(
 
     - sdii: mm d-1
 
-    This function wraps `xclim.indicators.atmos.daily_pr_intensity
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_pr_intensity>`_.
+    This function wraps `xclim.indicators.atmos.daily_pr_intensity <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.daily_pr_intensity>`_.
 
     Parameters
     ----------
@@ -2253,8 +2217,7 @@ def snowfall_frequency(
 
     - snowfall_frequency: %
 
-    This function wraps `xclim.indicators.atmos.snowfall_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.snowfall_frequency>`_.
+    This function wraps `xclim.indicators.atmos.snowfall_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.snowfall_frequency>`_.
 
     Parameters
     ----------
@@ -2304,8 +2267,7 @@ def snowfall_intensity(
 
     - snowfall_intensity: mm/day
 
-    This function wraps `xclim.indicators.atmos.snowfall_intensity
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.snowfall_intensity>`_.
+    This function wraps `xclim.indicators.atmos.snowfall_intensity <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.snowfall_intensity>`_.
 
     Parameters
     ----------
@@ -2356,8 +2318,7 @@ def solid_precip_average(
 
     - solidprcpavg: mm
 
-    This function wraps `xclim.indicators.atmos.solid_precip_average
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.solid_precip_average>`_.
+    This function wraps `xclim.indicators.atmos.solid_precip_average <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.solid_precip_average>`_.
 
     Parameters
     ----------
@@ -2410,8 +2371,7 @@ def solid_precip_accumulation(
 
     - solidprcptot: mm
 
-    This function wraps `xclim.indicators.atmos.solid_precip_accumulation
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.solid_precip_accumulation>`_.
+    This function wraps `xclim.indicators.atmos.solid_precip_accumulation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.solid_precip_accumulation>`_.
 
     Parameters
     ----------
@@ -2470,8 +2430,7 @@ def standardized_precipitation_evapotranspiration_index(
 
     - spei: dimensionless
 
-    This function wraps `xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index>`_.
+    This function wraps `xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index>`_.
 
     Parameters
     ----------
@@ -2560,8 +2519,7 @@ def standardized_precipitation_index(
 
     - spi: dimensionless
 
-    This function wraps `xclim.indicators.atmos.standardized_precipitation_index
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.standardized_precipitation_index>`_.
+    This function wraps `xclim.indicators.atmos.standardized_precipitation_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.standardized_precipitation_index>`_.
 
     Parameters
     ----------
@@ -2645,8 +2603,7 @@ def warm_and_dry_days(
 
     - warm_and_dry_days: days
 
-    This function wraps `xclim.indicators.atmos.warm_and_dry_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_and_dry_days>`_.
+    This function wraps `xclim.indicators.atmos.warm_and_dry_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_and_dry_days>`_.
 
     Parameters
     ----------
@@ -2703,8 +2660,7 @@ def warm_and_wet_days(
 
     - warm_and_wet_days: days
 
-    This function wraps `xclim.indicators.atmos.warm_and_wet_days
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_and_wet_days>`_.
+    This function wraps `xclim.indicators.atmos.warm_and_wet_days <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.warm_and_wet_days>`_.
 
     Parameters
     ----------
@@ -2758,8 +2714,7 @@ def water_cycle_intensity(
 
     - water_cycle_intensity: mm
 
-    This function wraps `xclim.indicators.atmos.water_cycle_intensity
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.water_cycle_intensity>`_.
+    This function wraps `xclim.indicators.atmos.water_cycle_intensity <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.water_cycle_intensity>`_.
 
     Parameters
     ----------
@@ -2808,8 +2763,7 @@ def wet_precip_accumulation(
 
     - wet_prcptot: mm
 
-    This function wraps `xclim.indicators.atmos.wet_precip_accumulation
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_precip_accumulation>`_.
+    This function wraps `xclim.indicators.atmos.wet_precip_accumulation <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_precip_accumulation>`_.
 
     Parameters
     ----------
@@ -2848,7 +2802,7 @@ def wet_spell_frequency(
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
-    op: Literal["sum", "min", "max", "mean"] = "sum",
+    op: Literal['sum', 'min', 'max', 'mean'] = "sum",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2862,8 +2816,7 @@ def wet_spell_frequency(
 
     - wet_spell_frequency: dimensionless
 
-    This function wraps `xclim.indicators.atmos.wet_spell_frequency
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_frequency>`_.
+    This function wraps `xclim.indicators.atmos.wet_spell_frequency <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_frequency>`_.
 
     Parameters
     ----------
@@ -2915,7 +2868,7 @@ def wet_spell_max_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 1,
-    op: Literal["min", "sum", "max", "mean"] = "sum",
+    op: Literal['min', 'sum', 'max', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -2931,8 +2884,7 @@ def wet_spell_max_length(
 
     - wet_spell_max_length: days
 
-    This function wraps `xclim.indicators.atmos.wet_spell_max_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_max_length>`_.
+    This function wraps `xclim.indicators.atmos.wet_spell_max_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_max_length>`_.
 
     Parameters
     ----------
@@ -2982,7 +2934,7 @@ def wet_spell_total_length(
     *,
     thresh: Any = "1.0 mm",
     window: int = 3,
-    op: Literal["min", "sum", "max", "mean"] = "sum",
+    op: Literal['min', 'sum', 'max', 'mean'] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -2998,8 +2950,7 @@ def wet_spell_total_length(
 
     - wet_spell_total_length: days
 
-    This function wraps `xclim.indicators.atmos.wet_spell_total_length
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_total_length>`_.
+    This function wraps `xclim.indicators.atmos.wet_spell_total_length <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wet_spell_total_length>`_.
 
     Parameters
     ----------
@@ -3049,7 +3000,7 @@ def wetdays(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3061,8 +3012,7 @@ def wetdays(
 
     - wetdays: days
 
-    This function wraps `xclim.indicators.atmos.wetdays
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wetdays>`_.
+    This function wraps `xclim.indicators.atmos.wetdays <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wetdays>`_.
 
     Parameters
     ----------
@@ -3102,7 +3052,7 @@ def wetdays_prop(
     *,
     thresh: Any = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3114,8 +3064,7 @@ def wetdays_prop(
 
     - wetdays_prop: 1
 
-    This function wraps `xclim.indicators.atmos.wetdays_prop
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wetdays_prop>`_.
+    This function wraps `xclim.indicators.atmos.wetdays_prop <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.wetdays_prop>`_.
 
     Parameters
     ----------

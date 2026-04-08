@@ -8,7 +8,7 @@
 
 """Sea_ice indices."""
 
-from typing import Any
+from typing import Any, Literal
 
 import xarray
 import xclim.indicators.seaIce
@@ -36,8 +36,7 @@ def sea_ice_area(
 
     - sea_ice_area: m2
 
-    This function wraps `xclim.indicators.seaIce.sea_ice_area
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.seaIce.sea_ice_area>`_.
+    This function wraps `xclim.indicators.seaIce.sea_ice_area <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.seaIce.sea_ice_area>`_.
 
     Parameters
     ----------
@@ -85,8 +84,7 @@ def sea_ice_extent(
 
     - sea_ice_extent: m2
 
-    This function wraps `xclim.indicators.seaIce.sea_ice_extent
-        <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.seaIce.sea_ice_extent>`_.
+    This function wraps `xclim.indicators.seaIce.sea_ice_extent <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.seaIce.sea_ice_extent>`_.
 
     Parameters
     ----------
