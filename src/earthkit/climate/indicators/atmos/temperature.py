@@ -78,7 +78,7 @@ def biologically_effective_degree_days(
     ds: xarray.Dataset | Any = None,
     *,
     thresh_tasmin: Any = "10 degC",
-    method: Literal['gladstones', 'icclim', 'jones', 'smoothed', 'stepwise'] = "gladstones",
+    method: Literal["gladstones", "icclim", "jones", "smoothed", "stepwise"] = "gladstones",
     cap_value: float = 1.0,
     low_dtr: Any = "10 degC",
     high_dtr: Any = "13 degC",
@@ -182,7 +182,7 @@ def cold_spell_days(
     thresh: Any = "-10 degC",
     window: int = 5,
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -247,7 +247,7 @@ def cold_spell_duration_index(
     freq: str = "YS",
     resample_before_rl: bool = True,
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = "<",
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -317,7 +317,7 @@ def cold_spell_frequency(
     thresh: Any = "-10 degC",
     window: int = 5,
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -379,7 +379,7 @@ def cold_spell_max_length(
     thresh: Any = "-10 degC",
     window: int = 1,
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -442,7 +442,7 @@ def cold_spell_total_length(
     thresh: Any = "-10 degC",
     window: int = 3,
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -610,7 +610,7 @@ def cool_night_index(
     lat: xarray.DataArray | str | None = None,
     ds: xarray.Dataset | Any = None,
     *,
-    freq: Literal['YS', 'YS-JAN'] = "YS",
+    freq: Literal["YS", "YS-JAN"] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -926,7 +926,7 @@ def degree_days_exceedance_date(
     *,
     thresh: Any = "0 degC",
     sum_thresh: Any = "25 K days",
-    op: Literal['>', 'gt', '<', 'lt', '>=', 'ge', '<=', 'le'] = ">",
+    op: Literal[">", "gt", "<", "lt", ">=", "ge", "<=", "le"] = ">",
     after_date: str | None = None,
     never_reached: str | int | None = None,
     freq: str = "YS",
@@ -996,8 +996,8 @@ def daily_freezethaw_cycles(
     *,
     thresh_tasmin: Any = "0 degC",
     thresh_tasmax: Any = "0 degC",
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1335,7 +1335,7 @@ def first_day_tg_above(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -1397,7 +1397,7 @@ def first_day_tg_below(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -1459,7 +1459,7 @@ def first_day_tn_above(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -1521,7 +1521,7 @@ def first_day_tn_below(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -1583,7 +1583,7 @@ def first_day_tx_above(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -1645,7 +1645,7 @@ def first_day_tx_below(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -1710,8 +1710,8 @@ def freezethaw_spell_frequency(
     thresh_tasmin: Any = "0 degC",
     thresh_tasmax: Any = "0 degC",
     window: int = 1,
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1785,8 +1785,8 @@ def freezethaw_spell_max_length(
     thresh_tasmin: Any = "0 degC",
     thresh_tasmax: Any = "0 degC",
     window: int = 1,
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1973,7 +1973,7 @@ def freshet_start(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 5,
     freq: str = "YS",
@@ -2085,7 +2085,7 @@ def frost_free_season_end(
     thresh: Any = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
@@ -2147,7 +2147,7 @@ def frost_free_season_length(
     thresh: Any = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
@@ -2210,7 +2210,7 @@ def frost_free_season_start(
     thresh: Any = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> Any:
@@ -2272,7 +2272,7 @@ def frost_free_spell_max_length(
     thresh: Any = "0.0 degC",
     window: int = 1,
     freq: str = "YS-JUL",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -2336,7 +2336,7 @@ def frost_season_length(
     mid_date: str | None = "01-01",
     thresh: Any = "0 degC",
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2449,7 +2449,7 @@ def growing_season_end(
     mid_date: str | None = "07-01",
     window: int = 5,
     freq: str = "YS",
-    op: Literal['>', '>=', 'lt', 'le'] = ">=",
+    op: Literal[">", ">=", "lt", "le"] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2513,7 +2513,7 @@ def growing_season_length(
     window: int = 6,
     mid_date: str | None = "07-01",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2577,7 +2577,7 @@ def growing_season_start(
     mid_date: str | None = "07-01",
     window: int = 5,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> Any:
     """
@@ -2637,7 +2637,7 @@ def heat_spell_frequency(
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -2713,7 +2713,7 @@ def heat_spell_max_length(
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -2789,7 +2789,7 @@ def heat_spell_total_length(
     ds: xarray.Dataset | Any = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -2868,7 +2868,7 @@ def heat_wave_frequency(
     thresh_tasmax: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -2936,7 +2936,7 @@ def heat_wave_index(
     thresh: Any = "25 degC",
     window: int = 5,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3001,7 +3001,7 @@ def heat_wave_max_length(
     thresh_tasmax: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3071,7 +3071,7 @@ def heat_wave_total_length(
     thresh_tasmax: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3295,7 +3295,7 @@ def hot_spell_frequency(
     thresh: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3357,7 +3357,7 @@ def hot_spell_max_length(
     thresh: Any = "30 degC",
     window: int = 1,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3478,7 +3478,7 @@ def hot_spell_total_length(
     thresh: Any = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> Any:
@@ -3545,7 +3545,7 @@ def huglin_index(
     cap_value: float = 1.0,
     start_date: str | str = "04-01",
     end_date: str | str = "10-01",
-    freq: Literal['YS', 'YS-JAN', 'YS-JUL'] = "YS",
+    freq: Literal["YS", "YS-JAN", "YS-JUL"] = "YS",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3673,7 +3673,7 @@ def last_spring_frost(
     ds: xarray.Dataset | Any = None,
     *,
     thresh: Any = "0 degC",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     before_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -3893,7 +3893,7 @@ def tg10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = "<",
+    op: Literal[">", ">=", "gt", "ge"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -3954,7 +3954,7 @@ def tg90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4014,7 +4014,7 @@ def tg_days_above(
     *,
     thresh: Any = "10.0 degC",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = ">",
+    op: Literal["<", "lt", "<=", "le"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4066,7 +4066,7 @@ def tg_days_below(
     *,
     thresh: Any = "10.0 degC",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4300,7 +4300,7 @@ def tn10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = "<",
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4361,7 +4361,7 @@ def tn90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4421,7 +4421,7 @@ def tn_days_above(
     *,
     thresh: Any = "20.0 degC",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4473,7 +4473,7 @@ def tn_days_below(
     *,
     thresh: Any = "-10.0 degC",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4657,7 +4657,7 @@ def tropical_nights(
     *,
     thresh: Any = "20.0 degC",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4710,7 +4710,7 @@ def tx10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = "<",
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4771,7 +4771,7 @@ def tx90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = ">",
+    op: Literal["<", "<=", "lt", "le"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4831,7 +4831,7 @@ def tx_days_above(
     *,
     thresh: Any = "25.0 degC",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -4883,7 +4883,7 @@ def tx_days_below(
     *,
     thresh: Any = "25.0 degC",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5069,7 +5069,7 @@ def tx_tn_days_above(
     thresh_tasmin: Any = "22 degC",
     thresh_tasmax: Any = "30 degC",
     freq: str = "YS",
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
@@ -5182,7 +5182,7 @@ def warm_spell_duration_index(
     freq: str = "YS",
     resample_before_rl: bool = True,
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> Any:
     """
