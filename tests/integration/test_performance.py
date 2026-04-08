@@ -131,8 +131,8 @@ def _run_indicator(
 
 
 @pytest.fixture(
-    params=["WSDI", "CWD", "DTR", "HDD", "SDII"],
-    ids=["WSDI", "CWD", "DTR", "HDD", "SDII"],
+    params=["TX90P", "PRCPTOT", "DTR", "HDD", "SDII"],
+    ids=["TX90P", "PRCPTOT", "DTR", "HDD", "SDII"],
 )
 def indicator_config(
     request: pytest.FixtureRequest,
@@ -171,13 +171,13 @@ def indicator_config(
     tasmin_opt = tasmin_ssp.chunk({"time": -1})
     pr_opt = pr_ssp.chunk({"time": -1})
 
-    if name == "WSDI":
+    if name == "TX90P":
         per_90 = percentile_doy(data_cache["tasmax_hist"]["tasmax"], per=90)
         per_90.name = "tasmax_per"
         return {
             "name": name,
-            "ek_func": ek_temp.warm_spell_duration_index,
-            "xi_func": xclim.indicators.atmos.warm_spell_duration_index,
+            "ek_func": ek_temp.tx90p,
+            "xi_func": xclim.indicators.atmos.tx90p,
             "ek_args": {
                 "ds": xr.merge([tasmax_opt, per_90]).chunk({"time": -1}),
                 "freq": "MS",
@@ -189,11 +189,11 @@ def indicator_config(
             },
         }
 
-    if name == "CWD":
+    if name == "PRCPTOT":
         return {
             "name": name,
-            "ek_func": ek_pr.maximum_consecutive_wet_days,
-            "xi_func": xclim.indicators.atmos.maximum_consecutive_wet_days,
+            "ek_func": ek_pr.precip_accumulation,
+            "xi_func": xclim.indicators.atmos.precip_accumulation,
             "ek_args": {"ds": pr_opt, "freq": "MS"},
             "xi_args": {"pr": pr_opt, "freq": "MS"},
         }

@@ -24,6 +24,8 @@ pytest-cov = "*"
 pytest-mock = "*"
 pytest-xdist = "*"
 ruff = "*"
+seaborn = ">=0.13.2,<0.14"
+matplotlib = "*"
 
 [feature.dev.pypi-dependencies]
 earthkit-transforms = ">=0.5.3.1, <0.6"

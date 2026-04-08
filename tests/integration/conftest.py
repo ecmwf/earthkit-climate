@@ -80,9 +80,9 @@ def get_indicator_configs(
 
     return [
         {
-            "name": "WSDI",
-            "ek_func": ek_temp.warm_spell_duration_index,
-            "xi_func": xclim.indicators.atmos.warm_spell_duration_index,
+            "name": "TX90P",
+            "ek_func": ek_temp.tx90p,
+            "xi_func": xclim.indicators.atmos.tx90p,
             "ek_args": {
                 "lazy": {"ds": xr.merge([tasmax_ssp, per_90]), "freq": "MS"},
                 "optimized": {
@@ -100,9 +100,9 @@ def get_indicator_configs(
             },
         },
         {
-            "name": "CWD",
-            "ek_func": ek_pr.maximum_consecutive_wet_days,
-            "xi_func": xclim.indicators.atmos.maximum_consecutive_wet_days,
+            "name": "PRCPTOT",
+            "ek_func": ek_pr.precip_accumulation,
+            "xi_func": xclim.indicators.atmos.precip_accumulation,
             "ek_args": {
                 "lazy": {"ds": pr_ssp, "freq": "MS"},
                 "optimized": {"ds": pr_opt, "freq": "MS"},
@@ -174,8 +174,8 @@ def data_cache() -> dict[str, xr.Dataset]:
 
 
 @pytest.fixture(
-    params=["WSDI", "CWD", "DTR", "HDD", "SDII"],
-    ids=["WSDI", "CWD", "DTR", "HDD", "SDII"],
+    params=["TX90P", "PRCPTOT", "DTR", "HDD", "SDII"],
+    ids=["TX90P", "PRCPTOT", "DTR", "HDD", "SDII"],
 )
 def indicator_config(
     request: pytest.FixtureRequest,
