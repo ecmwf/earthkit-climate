@@ -12,7 +12,7 @@ import pytest
 import xarray
 from pytest_mock import MockerFixture
 
-from earthkit.climate.indicators.atmos import synoptic
+from earthkit.climate.indicators import synoptic
 
 INDICATORS = [
     (synoptic.jetstream_metric_woollings, "jetstream_metric_woollings"),

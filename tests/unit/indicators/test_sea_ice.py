@@ -12,11 +12,11 @@ import pytest
 import xarray
 from pytest_mock import MockerFixture
 
-from earthkit.climate.indicators.sea_ice import seaice
+from earthkit.climate.indicators import sea_ice
 
 INDICATORS = [
-    (seaice.sea_ice_area, "sea_ice_area", {"val": "test"}),
-    (seaice.sea_ice_extent, "sea_ice_extent", {"val": "test"}),
+    (sea_ice.sea_ice_area, "sea_ice_area", {"val": "test"}),
+    (sea_ice.sea_ice_extent, "sea_ice_extent", {"val": "test"}),
 ]
 
 

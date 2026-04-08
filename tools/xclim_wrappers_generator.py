@@ -366,7 +366,7 @@ def generate_for_module(module_name: str, output_base_dir: Any):
     # Use snake_case for directory names
     dir_name = module_name
     if module_name == "seaIce":
-        dir_name = "sea_ice"
+        dir_name = "ocean"
 
     output_dir = output_base_dir / dir_name
     output_dir.mkdir(exist_ok=True, parents=True)
@@ -388,7 +388,7 @@ def generate_for_module(module_name: str, output_base_dir: Any):
         "_conversion": "precipitation",  # Snow depth/water equivalent conversions
         "_snow": "snow",
         "_streamflow": "hydrology",
-        "_seaice": "seaice",
+        "_seaice": "sea_ice",
     }
 
     indicators_map = {}

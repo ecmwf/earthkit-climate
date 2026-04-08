@@ -6,7 +6,7 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 
-"""Seaice indices."""
+"""Sea_ice indices."""
 
 from typing import Any
 

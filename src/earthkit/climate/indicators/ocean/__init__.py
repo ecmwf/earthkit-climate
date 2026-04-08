@@ -2,4 +2,4 @@
 
 """Sea ice indicators."""
 
-from .seaice import *  # noqa
+from .sea_ice import *  # noqa
