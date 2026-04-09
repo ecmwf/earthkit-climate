@@ -5915,7 +5915,7 @@ packages:
   - sphinx-autoapi ; extra == 'docs'
   requires_python: '>=3.11'
   editable: true
-- pypi: https://files.pythonhosted.org/packages/2c/92/0ee07f57a52d5ec34b86c7d96a6ed76ac693e6cb7612eb138b9fd13836f9/earthkit_data-0.19.3-py3-none-any.whl
+- pypi: https://files.pythonhosted.org/packages/88/54/75305f9ba797d039b700bc5f10999f8d1de642f4f3839dfc3d7df4ffbe99/earthkit_data-0.19.1-py3-none-any.whl
   name: earthkit-data
   version: 0.19.3
   sha256: 7d319d12355ffbcf443acf7e568470a4e0dce297c0160bf11f3f96a46a1dfc04
