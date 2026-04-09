@@ -25,6 +25,52 @@ warnings.filterwarnings("ignore")
 
 
 # ---------------------------------------------------------------------------
+# Hardware & Resource Detection
+# ---------------------------------------------------------------------------
+
+
+def get_cpu_info() -> str:
+    """
+    Extract the CPU model name from the system resources.
+
+    Returns
+    -------
+    str
+        The name of the CPU model.
+    """
+    try:
+        if os.path.exists("/proc/cpuinfo"):
+            with open("/proc/cpuinfo", "r") as f:
+                for line in f:
+                    if "model name" in line:
+                        return line.split(":")[1].strip()
+    except Exception:
+        return "Unknown CPU"
+    return "Unknown CPU"
+
+
+def get_ram_info() -> str:
+    """
+    Extract the total system RAM from /proc/meminfo.
+
+    Returns
+    -------
+    str
+        A formatted string representing total RAM in GB.
+    """
+    try:
+        if os.path.exists("/proc/meminfo"):
+            with open("/proc/meminfo", "r") as f:
+                for line in f:
+                    if "MemTotal" in line:
+                        total_kb = int(line.split()[1])
+                        return f"{total_kb / 1024 / 1024:.1f} GB"
+    except Exception:
+        return "Unknown RAM"
+    return "Unknown RAM"
+
+
+# ---------------------------------------------------------------------------
 # Resource Monitor
 # ---------------------------------------------------------------------------
 
@@ -114,6 +160,8 @@ def benchmark_function(
             res: Any = func(**kwargs)
             if hasattr(res, "compute"):
                 res.compute()
+            elif hasattr(res, "to_xarray"):
+                res.to_xarray().compute()
         except Exception as e:
             tqdm.write(f"  [Warm-up] FAILED for {label}: {e}")
         gc.collect()
@@ -133,6 +181,8 @@ def benchmark_function(
             res = func(**kwargs)
             if hasattr(res, "compute"):
                 res.compute()
+            elif hasattr(res, "to_xarray"):
+                res.to_xarray().compute()
         except Exception as e:
             tqdm.write(f"    - Repeat {i + 1}/{n_repeats}: FAILED: {e}")
             monitor.stop()
@@ -157,6 +207,7 @@ def benchmark_function(
         "median_time": float(np.median(times)),
         "std_time": float(np.std(times)),
         "max_mem": float(np.max(mem_peaks)),
+        "mean_mem": float(np.mean(mem_peaks)),
     }
 
 
@@ -165,9 +216,7 @@ def benchmark_function(
 # ---------------------------------------------------------------------------
 
 
-def plot_results(
-    df: pd.DataFrame, output_dir: str = "tests/integration/benchmark_results"
-) -> None:
+def plot_results(df: pd.DataFrame, output_dir: str = "tests/integration/benchmark_results") -> None:
     """
     Generate and save benchmark performance plots using Seaborn.
 
@@ -189,15 +238,14 @@ def plot_results(
     plot_df = df.copy()
     plot_df["Configuration"] = plot_df["Library"] + ": " + plot_df["Mode"]
 
-    # Use a consistent color palette similar to the provided screenshots
-    # Earthkit: blues/greens, Xclim: reds/pinks
+    # Use a consistent color palette matching the documentation/notebooks
     palette = {
-        "Earthkit: 1. No Flox (Lazy)": "#A2C4E4",
-        "Earthkit: 2. Flox (Lazy)": "#3B719F",
-        "Earthkit: 3. Flox + Opt": "#9ECB8A",
-        "Xclim: 1. No Flox (Lazy)": "#4B8F4B",
-        "Xclim: 2. Flox (Lazy)": "#ECA4A6",
-        "Xclim: 3. Flox + Opt": "#C9302C",
+        "Earthkit: 1. No Flox (Standard)": "#A2C4E4",
+        "Earthkit: 2. Flox (Standard)": "#3B719F",
+        "Earthkit: 3. Flox + Opt (Manual)": "#9ECB8A",
+        "Xclim: 1. No Flox (Standard)": "#4B8F4B",
+        "Xclim: 2. Flox (Standard)": "#ECA4A6",
+        "Xclim: 3. Flox + Opt (Manual)": "#C9302C",
     }
 
     sns.set_theme(style="whitegrid")
@@ -214,7 +262,7 @@ def plot_results(
     ax1.axhline(1.0, ls="--", color="gray", alpha=0.7)
 
     plt.title(
-        "Figure 1: Relative Speedup (via Median Time)\n(Baseline: Xclim 1. No Flox (Standard))",
+        "Figure 1: Relative Speedup (via Median Time)\n(Baseline: Xclim: 1. No Flox (Standard))",
         fontsize=14,
         pad=15,
     )
@@ -272,24 +320,25 @@ def run_benchmarks(
     print("\n" + "=" * 80)
     print(" STARTING CLIMATE INDICATOR PERFORMANCE BENCHMARK")
     print("=" * 80)
-    print(f" - Repeats: {n_repeats}")
-    print(f" - Python: {sys.version.split()[0]}")
+    print(f" - Physics: {get_cpu_info()} | {get_ram_info()}")
+    print(f" - Runtime: Python {sys.version.split()[0]}")
     print("-" * 80)
 
-    print("\n[1/3] Loading sample datasets via earthkit-data...")
+    print("\n[1/3] Loading and Inspecting Sample Datasets...")
     data_cache: dict[str, xr.Dataset] = load_sample_datasets()
-    print(f"      - Loaded {len(data_cache)} datasets.")
+
+    print(f"\n{'Dataset Identifier':<40} | {'Size':<10} | {'Dimensions'}")
+    print("-" * 80)
     for key, ds in data_cache.items():
-        mem: float = ds.nbytes / (1024 * 1024)
-        print(f"      - {key}: {mem:.2f} MiB ({len(ds.time)} time steps)")
+        mem: str = f"{ds.nbytes / (1024 * 1024):.1f} MiB"
+        dims: str = str(dict(ds.dims))
+        print(f"{key:<40} | {mem:<10} | {dims}")
 
     print("\n[2/3] Configuring indicator benchmarks...")
     all_benchmarks: list[dict[str, Any]] = get_indicator_configs(data_cache)
 
     if indicators:
-        benchmarks: list[dict[str, Any]] = [
-            b for b in all_benchmarks if b["name"] in indicators
-        ]
+        benchmarks: list[dict[str, Any]] = [b for b in all_benchmarks if b["name"] in indicators]
         print(f"      - Filtering for: {', '.join(indicators)}")
     else:
         benchmarks = all_benchmarks
@@ -305,42 +354,42 @@ def run_benchmarks(
         configs: list[dict[str, Any]] = [
             {
                 "lib": "Earthkit",
-                "mode": "1. No Flox (Lazy)",
+                "mode": "1. No Flox (Standard)",
                 "func": b["ek_func"],
                 "args": b["ek_args"]["lazy"],
                 "use_flox": False,
             },
             {
                 "lib": "Earthkit",
-                "mode": "2. Flox (Lazy)",
+                "mode": "2. Flox (Standard)",
                 "func": b["ek_func"],
                 "args": b["ek_args"]["lazy"],
                 "use_flox": True,
             },
             {
                 "lib": "Earthkit",
-                "mode": "3. Flox + Opt",
+                "mode": "3. Flox + Opt (Manual)",
                 "func": b["ek_func"],
                 "args": b["ek_args"]["optimized"],
                 "use_flox": True,
             },
             {
                 "lib": "Xclim",
-                "mode": "1. No Flox (Lazy)",
+                "mode": "1. No Flox (Standard)",
                 "func": b["xi_func"],
                 "args": b["xi_args"]["lazy"],
                 "use_flox": False,
             },
             {
                 "lib": "Xclim",
-                "mode": "2. Flox (Lazy)",
+                "mode": "2. Flox (Standard)",
                 "func": b["xi_func"],
                 "args": b["xi_args"]["lazy"],
                 "use_flox": True,
             },
             {
                 "lib": "Xclim",
-                "mode": "3. Flox + Opt",
+                "mode": "3. Flox + Opt (Manual)",
                 "func": b["xi_func"],
                 "args": b["xi_args"]["optimized"],
                 "use_flox": True,
@@ -366,17 +415,15 @@ def run_benchmarks(
     # Summarize with Pandas
     df: pd.DataFrame = pd.DataFrame(results)
 
-    # Add speedup relative to Xclim No Flox for each indicator
+    # Add speedup relative to Xclim No Flox (Standard) for each indicator
     try:
         reference_times = (
-            df[(df["Library"] == "Xclim") & (df["Mode"] == "1. No Flox (Lazy)")]
+            df[(df["Library"] == "Xclim") & (df["Mode"] == "1. No Flox (Standard)")]
             .set_index("Indicator")["mean_time"]
             .to_dict()
         )
         df["Speedup"] = df.apply(
-            lambda row: reference_times.get(row["Indicator"], 1.0) / row["mean_time"]
-            if row["mean_time"] > 0
-            else 1.0,
+            lambda row: reference_times.get(row["Indicator"], 1.0) / row["mean_time"] if row["mean_time"] > 0 else 1.0,
             axis=1,
         )
     except Exception as e:
