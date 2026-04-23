@@ -9,7 +9,12 @@ body {
   font-family: "Nunito", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: "Nunito", sans-serif;
 }
 
@@ -94,19 +99,23 @@ body[data-theme="dark"] {
     color: rgba(255, 255, 255, 0.87);
     border-color: #555;
   }
+
   body:not([data-theme="light"]) table.dataframe th {
     background-color: var(--color-background-secondary, #1a1c1e);
     color: rgba(255, 255, 255, 0.87);
     border-color: #555;
   }
+
   body:not([data-theme="light"]) table.dataframe td {
     background-color: var(--color-background-primary, #131416);
     color: rgba(255, 255, 255, 0.87);
     border-color: #555;
   }
+
   body:not([data-theme="light"]) table.dataframe tbody tr:nth-child(odd) td {
     background-color: var(--color-background-hover, #1e2124);
   }
+
   body:not([data-theme="light"]) table.dataframe tbody tr:hover td {
     background-color: #2a2d31;
   }
@@ -116,35 +125,68 @@ body[data-theme="dark"] table.dataframe {
   color: rgba(255, 255, 255, 0.87);
   border-color: #555;
 }
+
 body[data-theme="dark"] table.dataframe th {
   background-color: var(--color-background-secondary, #1a1c1e);
   color: rgba(255, 255, 255, 0.87);
   border-color: #555;
 }
+
 body[data-theme="dark"] table.dataframe td {
   background-color: var(--color-background-primary, #131416);
   color: rgba(255, 255, 255, 0.87);
   border-color: #555;
 }
+
 body[data-theme="dark"] table.dataframe tbody tr:nth-child(odd) td {
   background-color: var(--color-background-hover, #1e2124);
 }
+
 body[data-theme="dark"] table.dataframe tbody tr:hover td {
   background-color: #2a2d31;
 }
 
 /* (to be checked) remove error output in a notebook cell */
 .nboutput .stderr {
-    display: none;
+  display: none;
 }
 
 /* (to be checked) allows the use of multi-line text cells in a list-table */
 .wy-table-responsive table td,
 .wy-table-responsive table th {
-    white-space: inherit;
+  white-space: inherit;
 }
 
 /* More space for long function names */
 .article-container {
   font-size: 90%;
+}
+
+
+/* ── Survey Admonition ─────────────────────────────────────────────────── */
+
+.survey-button {
+  display: inline-block;
+  background-color: #262640;
+  color: white !important;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-top: 10px;
+}
+
+.survey-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(38, 38, 64, 0.2);
+  text-decoration: none;
+}
+
+div.admonition.survey>.admonition-title::before {
+  margin-right: 8px;
+}
+
+div.admonition.survey>.admonition-title svg {
+  display: none;
 }
