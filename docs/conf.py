@@ -7,59 +7,126 @@
 # -- Import and path setup ---------------------------------------------------
 
 import datetime
+import json
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("./"))
-sys.path.insert(0, os.path.abspath("../"))
+import yaml
+
+on_rtd = os.environ.get("READTHEDOCS") == "True"
+
+if on_rtd:
+    version = os.environ.get("READTHEDOCS_VERSION", "latest")
+    release = version
+else:
+    version = "dev"
+    release = "dev"
+
+rtd_version = version if version != "latest" else "develop"
+rtd_version_type = os.environ.get("READTHEDOCS_VERSION_TYPE", "branch")
+
+if rtd_version_type in ("branch", "tag"):
+    source_branch = rtd_version
+else:
+    source_branch = "main"
+
+src_path = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "src"))
+sys.path.insert(0, src_path)
 
 # -- Project information -----------------------------------------------------
 
 project = "earthkit-climate"
+module_prefix = project.replace("-", ".")
+autodocs_dir = "autodocs"
+
+copyright = f"{datetime.datetime.now().year}, European Centre for Medium-Range Weather Forecasts (ECMWF)"
 author = "European Centre for Medium Range Weather Forecasts"
 
-year = datetime.datetime.now().year
-years = "2022-%s" % (year,)
-copyright = "%s, European Centre for Medium-Range Weather Forecasts (ECMWF)" % (years,)
-
-
 # -- General configuration ---------------------------------------------------
+# https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
 extensions = [
-    "autoapi.extension",
+    # Automatically extracts documentation from your Python docstrings
     "sphinx.ext.autodoc",
+    # Supports Google-style and NumPy-style docstrings
     "sphinx.ext.napoleon",
-    "sphinx.ext.intersphinx",
+    # Renders LaTeX math in HTML using MathJax
     "sphinx.ext.mathjax",
+    # Option to click viewcode
     "sphinx.ext.viewcode",
+    # Links to the documentation of other projects via cross-references (see list below)
+    "sphinx.ext.intersphinx",
+    # Generates summary tables for modules/classes/functions
+    "sphinx.ext.autosummary",
+    # Allows citing BibTeX bibliographic entries in reStructuredText
+    # "sphinxcontrib.bibtex",
+    # Tests snippets in documentation by running embedded Python examples
+    # "sphinx.ext.doctest",
+    # Checks documentation coverage of the codebase
+    # "sphinx.ext.coverage",
+    # Adds .nojekyll file and helps configure docs for GitHub Pages hosting
+    # "sphinx.ext.githubpages",
+    # Adds "Edit on GitHub" links to documentation pages
+    # "edit_on_github",
+    # Adds "Edit on GitHub" links to documentation pages
+    # "sphinx_github_style",
+    # Option to link to code
+    # "sphinx.ext.linkcode",
+    # Automatically includes type hints from function signatures into the documentation
+    # "sphinx_autodoc_typehints",
+    # Integrates Jupyter Notebooks into Sphinx
     "nbsphinx",
+    # Simplifies linking to external resources with short aliases
+    "sphinx.ext.extlinks",
+    # Enables responsive grid layouts and card components
+    "sphinx_design",
+    # Generate API documentation
+    "autoapi.extension",
 ]
-
-# autodoc configuration
-autodoc_typehints = "none"
+autodoc_inherit_docstrings = True
+autodoc_default_options = {
+    "members": True,
+    "imported-members": True,
+    "undoc-members": False,
+    "show-inheritance": True,
+}
+# Modules to hide from autodocs (relative to earthkit.transforms)
+# These modules will not appear in the API documentation sidebar
+autodocs_hidden_modules = ["aggregate", "version"]
 
 # autoapi configuration
-autoapi_dirs = ["../src/earthkit/climate"]
+autoapi_dirs = ["../src/earthkit"]
 autoapi_ignore = ["*/version.py"]
 autoapi_options = [
     "members",
-    "inherited-members",
     "undoc-members",
     "show-inheritance",
-    # "show-module-summary",
+    "show-module-summary",
     "imported-members",
+    "inherited-members",
 ]
-autoapi_root = "_api"
-# autoapi_own_page_level = "function"
+autoapi_root = "autoapi"
+autoapi_member_order = "alphabetical"
+autoapi_add_toctree_entry = False
+autoapi_own_page_level = "function"
+autoapi_python_use_implicit_namespaces = True
 
 # napoleon configuration
 napoleon_google_docstring = False
 napoleon_numpy_docstring = True
 napoleon_preprocess_types = True
 
+autosummary_generate = True
+autosummary_generate_overwrite = True
+autosummary_imported_members = False
+
+# GitHub links configuration
+extlinks = {
+    "pr": ("https://github.com/ecmwf/earthkit-climate/pull/%s", "PR #%s"),
+    "issue": ("https://github.com/ecmwf/earthkit-climate/issues/%s", "Issue #%s"),
+}
+
+# intersphinx configuration, to automatically link to upstream documentation.
 intersphinx_mapping = {
     "xarray": ("https://docs.xarray.dev/en/stable/", None),
 }
@@ -72,6 +139,9 @@ templates_path = ["_templates"]
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
+# The suffix of source filenames.
+source_suffix = ".rst"
+
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -79,15 +149,19 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # a list of builtin themes.
 #
 html_theme = "furo"
-# html_logo = "_static/earthkit-climate-light.svg"
 
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
 html_css_files = [
     "custom.css",
 ]
+
+html_js_files = [
+    "earthkit-packages.js",  # generated from earthkit-packages.yml at build time
+    "custom.js",
+]
+
+html_favicon = "./_static/earthkit-climate-notext.svg"
 
 html_theme_options = {
     "announcement": 'Help us improve <strong>earthkit-climate</strong>! Share your experience and needs: <a href="https://ec.europa.eu/eusurvey/runner/user_feedback_integration">3-5 minutes survey</a>',
@@ -116,8 +190,8 @@ html_theme_options = {
     "light_logo": "earthkit-climate-dark.svg",
     "dark_logo": "earthkit-climate-dark.svg",
     "source_repository": "https://github.com/ecmwf/earthkit-climate/",
-    # "source_branch": source_branch,
-    "source_directory": "docs/source",
+    "source_branch": source_branch,
+    "source_directory": "docs",
     "footer_icons": [
         {
             "name": "GitHub",
@@ -131,3 +205,20 @@ html_theme_options = {
         },
     ],
 }
+
+
+def _write_earthkit_packages_js(app):
+    """Read earthkit-packages.yml and write a JS data file into the output _static dir."""
+    config_path = os.path.join(os.path.dirname(__file__), "earthkit-packages.yml")
+    with open(config_path, encoding="utf-8") as fh:
+        config = yaml.safe_load(fh)
+    packages = config.get("packages", [])
+    static_dir = os.path.join(app.outdir, "_static")
+    os.makedirs(static_dir, exist_ok=True)
+    js_path = os.path.join(static_dir, "earthkit-packages.js")
+    with open(js_path, "w", encoding="utf-8") as fh:
+        fh.write(f"window.earthkitPackages = {json.dumps(packages)};\n")
+
+
+def setup(app):
+    app.connect("builder-inited", _write_earthkit_packages_js)

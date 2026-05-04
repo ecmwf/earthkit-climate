@@ -1,7 +1,8 @@
 Development
 ===========
 
-The code is hosted on GitHub: `ecmwf/earthkit-climate <https://github.com/ecmwf/earthkit-climate>`_
+The code is hosted on GitHub: `ecmwf/earthkit-climate <https://github.com/ecmwf/earthkit-climate>`_.
+Testing, bug reports and contributions are highly welcomed and appreciated. Feel free to fork and submit your PRs against the **develop** branch.
 
 
 Environment

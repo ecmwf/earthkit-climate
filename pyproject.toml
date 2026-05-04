@@ -51,7 +51,8 @@ optional-dependencies.docs = [
   "nbsphinx",
   "roman-numerals-py>=3.1,<4",
   "sphinx",
-  "sphinx-autoapi"
+  "sphinx-autoapi",
+  "sphinx_design"
 ]
 
 [tool.coverage.run]
