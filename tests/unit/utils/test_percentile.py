@@ -7,33 +7,18 @@
 # does it submit to any jurisdiction.
 
 import numpy as np
-import pytest
 
-from earthkit.climate.utils.percentile import get_percentile, pandas_offset2time_component
-
-
-@pytest.mark.parametrize(
-    "alias,component",
-    [
-        ("YS", None),
-        ("MS", "month"),
-        ("QS-DEC", "season"),
-    ],
-)
-def test_pandas_offset2time_component_supported(alias: str, component: str) -> None:
-    """Test that supported pandas offset aliases map to the expected time components."""
-    assert pandas_offset2time_component(alias) == component
+from earthkit.climate.utils.percentile import get_percentile
 
 
 def test_get_percentile_yearly_expands_to_dayofyear(daily_temperature_ds) -> None:
     """
     Test that yearly percentile calculation expands to a daily (dayofyear) climatology.
 
-    When frequency is 'YS', the percentile is computed over each full year, so
-    the resulting array should have one value per day of the year that is constant
-    within that year.
+    When frequency is None, the percentile is computed over the total timeseries, so
+    the resulting array should be filled with a single constant value.
     """
-    out = get_percentile(daily_temperature_ds, "tas", percentile=90, freq="YS")
+    out = get_percentile(daily_temperature_ds, "tas", percentile=90, frequency=None)
 
     # Expect only dayofyear dimension (1..365 for non-leap year 2001)
     assert set(out.dims) == {"dayofyear"}
@@ -54,7 +39,7 @@ def test_get_percentile_monthly_constant_within_months(daily_temperature_ds) -> 
     The output keeps a daily dayofyear coordinate, but percentile values are
     constant for all days belonging to the same calendar month.
     """
-    out = get_percentile(daily_temperature_ds, "tas", percentile=50, freq="MS")
+    out = get_percentile(daily_temperature_ds, "tas", percentile=50, frequency="month")
 
     # Still daily resolution with dayofyear coordinate
     assert set(out.dims) == {"dayofyear"}
@@ -71,12 +56,12 @@ def test_get_percentile_monthly_constant_within_months(daily_temperature_ds) -> 
 
 def test_get_percentile_seasonal_qs_dec(daily_temperature_ds) -> None:
     """
-    Test that seasonal percentile (QS-DEC) is constant within a season.
+    Test that seasonal percentile is constant within a season.
 
     For example, January and February belong to DJF, so their percentile
     values should be identical, while other seasons (e.g., April) differ.
     """
-    out = get_percentile(daily_temperature_ds, "tas", percentile=75, freq="QS-DEC")
+    out = get_percentile(daily_temperature_ds, "tas", percentile=75, frequency="season")
 
     assert set(out.dims) == {"dayofyear"}
 

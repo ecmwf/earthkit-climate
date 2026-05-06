@@ -6,6 +6,8 @@
 # granted to it by virtue of its status as an intergovernmental organisation nor
 # does it submit to any jurisdiction.
 
+from typing import Literal
+
 import numpy as np
 import xarray as xr
 from xclim.core.calendar import percentile_doy
@@ -19,15 +21,16 @@ _CLIM_FREQ_AS_DOY = {
 
 
 def as_doy_climatology(da, fallback_axis=None):
-    for freq, mapping in _CLIM_FREQ_AS_DOY.items():
-        if freq in da.coords:
+    for frequency, mapping in _CLIM_FREQ_AS_DOY.items():
+        if frequency in da.coords:
             return (
                 da
-                .sel({freq: mapping})
-                .assign_coords({"dayofyear": (freq, np.arange(1, 366))})
-                .swap_dims({freq: "dayofyear"})
-                .drop_vars(freq)
+                .sel({frequency: mapping})
+                .assign_coords({"dayofyear": (frequency, np.arange(1, 366))})
+                .swap_dims({frequency: "dayofyear"})
+                .drop_vars(frequency)
             )
+    assert fallback_axis is not None, "temporal frequency not recognised, need to supply fallback_axis"
     # Insert day of year dimension where time dimension was before aggregation
     return da.expand_dims({"dayofyear": np.arange(1, 366)}, axis=fallback_axis)
 
@@ -36,7 +39,7 @@ def get_percentile(
     baseline_dataset: xr.Dataset,
     varname: str,
     percentile: float,
-    freq: str = "YS",
+    frequency: None | Literal["month", "season"] = None,
 ) -> xr.Dataset:
     """
     Compute a regular percentile (e.g. 90th) of a variable over time,
@@ -52,8 +55,9 @@ def get_percentile(
         Name of the variable within the dataset.
     percentile : float
         Percentile value (e.g., 90 for 90th percentile).
-    freq : str, optional
-        Frequency for grouping (e.g. 'YS', 'MS', 'QS'). Default is yearly.
+    frequency : str, optional
+        Frequency for grouping. If not provided, the percentile is calculated
+        over the entire period.
 
     Returns
     -------
@@ -64,48 +68,15 @@ def get_percentile(
     da = baseline_dataset[varname]
     q = percentile / 100.0
 
-    time_axis = da.get_axis_num("time")
-    time_component = pandas_offset2time_component(freq)
-
-    if time_component is not None:
-        da = da.groupby(f"time.{time_component}")
+    if frequency is not None:
+        da = da.groupby(f"time.{frequency}")
+        time_axis = None
+    else:
+        time_axis = da.get_axis_num("time")
 
     out = da.quantile(q=q, dim="time")
     out = as_doy_climatology(out, fallback_axis=time_axis)
     return out.to_dataset(name=varname)
-
-
-def pandas_offset2time_component(aggregation: str) -> str:
-    """
-    Map a pandas-style frequency string to a corresponding time component.
-
-    Parameters
-    ----------
-    aggregation : str
-        Frequency alias following pandas conventions (e.g., 'YS', 'QS-DEC', 'MS').
-
-    Returns
-    -------
-    str
-        Time component corresponding to the given frequency:
-        - 'YS' → 'year'
-        - 'QS-DEC' → 'season'
-        - 'MS' → 'month'
-
-    Raises
-    ------
-    NotImplementedError
-        If the provided frequency alias is not supported.
-    """
-    if aggregation == "YS":
-        resolution = None
-    elif aggregation == "QS-DEC":
-        resolution = "season"
-    elif aggregation == "MS":
-        resolution = "month"
-    else:
-        raise NotImplementedError(f"Unsupported aggregation: {aggregation}")
-    return resolution
 
 
 def calculate_percentile_doy(
