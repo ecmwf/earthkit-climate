@@ -5,7 +5,7 @@ numpy = ">=1.22"
 python = "3.12.*"
 seaborn = ">=0.13.2,<0.14"
 xarray = ">=2023.1"
-xclim = ">=0.59.1"
+xclim = ">=0.59.1,<1"
 xsdba = ">=0.5,<0.6"
 
 [environments]
