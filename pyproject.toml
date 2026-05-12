@@ -34,6 +34,8 @@ dynamic = ["readme", "version"]
 license = {file = "LICENSE"}
 name = "earthkit-climate"
 requires-python = ">=3.11"
+# Test data source plugin for earthkit-data
+entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate.sample_source:SampleSource"
 optional-dependencies.dev = [
   "cdsapi",
   "ipykernel",
