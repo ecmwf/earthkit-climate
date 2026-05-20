@@ -11,12 +11,12 @@
 from contextlib import nullcontext
 from typing import Any, Callable, Optional
 
+import earthkit.data as ekd
 import pytest
 import xarray as xr
 
 import earthkit.climate.indicators.atmos.precipitation as ek_pr
 import earthkit.climate.indicators.atmos.temperature as ek_temp
-from earthkit.climate.datasets import load_sample_datasets
 from earthkit.climate.utils import percentile_doy
 
 
@@ -168,7 +168,15 @@ def data_cache() -> dict[str, xr.Dataset]:
     dict[str, xr.Dataset]
         Mapping from short name to xarray Dataset.
     """
-    return load_sample_datasets()
+    fs = [
+        "tasmax_ACCESS-CM2_historical_reference",
+        "tasmin_ACCESS-CM2_historical_reference",
+        "tasmax_ACCESS-CM2_ssp585_far_future",
+        "tasmin_ACCESS-CM2_ssp585_far_future",
+        "pr_ACCESS-CM2_historical_reference",
+        "pr_ACCESS-CM2_ssp585_far_future",
+    ]
+    return {f: ekd.from_source("earthkit-climate-sample", f).to_xarray() for f in fs}
 
 
 @pytest.fixture(

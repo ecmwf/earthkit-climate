@@ -6,6 +6,7 @@ import time
 import warnings
 from typing import Any, Callable, Optional
 
+import earthkit.data as ekd
 import fire
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,8 +19,6 @@ from tqdm import tqdm
 # Add current directory to path for imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from conftest import _run_indicator, get_indicator_configs
-
-from earthkit.climate.datasets import load_sample_datasets
 
 warnings.filterwarnings("ignore")
 
@@ -325,7 +324,15 @@ def run_benchmarks(
     print("-" * 80)
 
     print("\n[1/3] Loading and Inspecting Sample Datasets...")
-    data_cache: dict[str, xr.Dataset] = load_sample_datasets()
+    _fs = [
+        "tasmax_ACCESS-CM2_historical_reference",
+        "tasmin_ACCESS-CM2_historical_reference",
+        "tasmax_ACCESS-CM2_ssp585_far_future",
+        "tasmin_ACCESS-CM2_ssp585_far_future",
+        "pr_ACCESS-CM2_historical_reference",
+        "pr_ACCESS-CM2_ssp585_far_future",
+    ]
+    data_cache: dict[str, xr.Dataset] = {f: ekd.from_source("earthkit-climate-sample", f).to_xarray() for f in _fs}
 
     print(f"\n{'Dataset Identifier':<40} | {'Size':<10} | {'Dimensions'}")
     print("-" * 80)
