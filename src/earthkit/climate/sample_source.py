@@ -10,7 +10,7 @@
 
 import warnings
 
-from earthkit.data.sources import Source, from_source_internal
+from earthkit.data.sources import Source, _from_source_internal
 
 # ---------------------------------------------------------------------------
 # Dataset URLs
@@ -49,7 +49,7 @@ class SampleSource(Source):
             )
 
     def mutate(self):
-        return from_source_internal("url", _SAMPLE_DATA_URLS[self._name], **self._kwargs)
+        return _from_source_internal("url", _SAMPLE_DATA_URLS[self._name], **self._kwargs)
 
 
 source = SampleSource
