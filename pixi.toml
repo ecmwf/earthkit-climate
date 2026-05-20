@@ -3,7 +3,7 @@ flox = ">=0.11.0,<0.12"
 numpy = ">=1.22"
 python = "3.12.*"
 xarray = ">=2023.1"
-xclim = ">=0.59.1"
+xclim = ">=0.59.1,<1"
 xsdba = ">=0.5,<0.6"
 
 [environments]

@@ -16,4 +16,4 @@ jobs:
     uses: ecmwf/reusable-workflows/.github/workflows/qa-pytest-pyproject.yml@v2
     with:
       python-version: ${{ matrix.python-version }}
-      optional-dependencies: "dev"
+      optional-dependencies: "test"

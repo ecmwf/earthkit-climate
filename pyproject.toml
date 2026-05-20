@@ -13,7 +13,6 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
@@ -21,12 +20,12 @@ classifiers = [
   "Topic :: Scientific/Engineering"
 ]
 dependencies = [
-  "earthkit-data>=0.17,<1",
-  "earthkit-utils>=0.3",
+  "earthkit-data>=1.0rc0",
+  "earthkit-utils>=1.0rc0",
   "flox>=0.11",
   "numpy>=1.22",
   "xarray>=2023.1",
-  "xclim>=0.59.1",
+  "xclim>=0.59.1,<1",
   "xsdba>=0.5,<0.6"
 ]
 description = "Tools for calculating climate indicies, climate change analysis and attribution."
@@ -34,27 +33,43 @@ dynamic = ["readme", "version"]
 license = {file = "LICENSE"}
 name = "earthkit-climate"
 requires-python = ">=3.11"
-# Test data source plugin for earthkit-data
+# Sample data source plugin for earthkit-data
 entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate.sample_source:SampleSource"
-optional-dependencies.dev = [
-  "cdsapi",
-  "ipykernel",
-  "ipython",
-  "mypy",
-  "pre-commit",
-  "pytest",
-  "pytest-cov",
-  "pytest-mock",
-  "pytest-xdist",
-  "ruff"
+
+[project.optional-dependencies]
+dev = [
+  "earthkit-climate[docs,docs-notebooks,test,test-benchmark]",
+  "pre-commit"
 ]
-optional-dependencies.docs = [
+docs = [
   "furo",
   "nbsphinx",
   "roman-numerals-py>=3.1,<4",
   "sphinx",
   "sphinx-autoapi",
   "sphinx_design"
+]
+docs-notebooks = [
+  "cdsapi",
+  "ipykernel",
+  "ipython",
+  "earthkit-plots>=1.0rc0",
+  "earthkit-transforms>=1.0rc0"
+]
+test = [
+  "pytest",
+  "pytest-cov",
+  "pytest-mock",
+  "pytest-xdist"
+]
+test-benchmark = [
+  "earthkit-climate[test]",
+  "fire",
+  "matplotlib",
+  "seaborn",
+  "pandas",
+  "tqdm",
+  "psutil"
 ]
 
 [tool.coverage.run]
