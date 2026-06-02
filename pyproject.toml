@@ -42,6 +42,7 @@ dev = [
   "pre-commit"
 ]
 docs = [
+  "ipython",
   "furo",
   "nbsphinx",
   "roman-numerals-py>=3.1,<4",
@@ -52,7 +53,6 @@ docs = [
 docs-notebooks = [
   "cdsapi",
   "ipykernel",
-  "ipython",
   "earthkit-plots>=1.0rc0",
   "earthkit-transforms>=1.0rc0"
 ]
