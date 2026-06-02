@@ -506,14 +506,15 @@ def generate_for_module(module_name: str, output_base_dir: Any) -> None:
 def main() -> None:
     """Run the wrapper generator to generate climate index modules.
 
-    This function locates the target package directory using importlib
+    This function locates the target package directory using pathlib
     and triggers the generation for atmos, land, and seaIce indicators.
 
     Returns
     -------
     None
     """
-    output_base_dir = importlib.resources.files("earthkit.climate")
+    import pathlib
+    output_base_dir = pathlib.Path(__file__).parent.parent / "src" / "earthkit" / "climate"
 
     # Categories to generate
     # atmos covers most current ones, adding land and seaIce

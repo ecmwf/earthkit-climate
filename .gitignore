@@ -350,3 +350,6 @@ tags
 
 notebooks/dev-notebook.ipynb
 tests/integration/benchmark_results/
+
+# Package manager lock files
+uv.lock

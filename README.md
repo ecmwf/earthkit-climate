@@ -42,7 +42,7 @@ pip install earthkit-climate
 Example usage:
 
 ```python
-from earthkit.climate.indicators import precipitation, temperature
+from earthkit.climate.atmos import precipitation, temperature
 from earthkit.climate.utils import conversions
 
 # Example: compute a precipitation index
@@ -67,7 +67,9 @@ earthkit-climate/
 ├── docs/                      # Sphinx-based documentation
 ├── src/earthkit/
 │   ├── climate/
-│   │   ├── indicators/        # Climate indices (precipitation, temperature, etc.)
+│   │   ├── atmos/             # Atmospheric indices (precipitation, temperature, etc.)
+│   │   ├── land/              # Land indices (hydrology, snow, etc.)
+│   │   ├── ocean/             # Ocean indices (sea ice, etc.)
 │   │   └── utils/             # Type conversions, percentiles, provenance
 ├── tests/
 │   ├── unit/                  # Unit tests
