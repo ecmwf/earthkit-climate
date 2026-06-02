@@ -50,7 +50,18 @@ def {func_name}(
 
 
 def simplify_type(type_obj: Any) -> str:
-    """Simplify complex types to strings that can be used in the generated code."""
+    """Simplify complex types to strings that can be used in the generated code.
+
+    Parameters
+    ----------
+    type_obj : Any
+        The type object to simplify.
+
+    Returns
+    -------
+    str
+        The simplified type representation as a string.
+    """
     if type_obj == inspect.Parameter.empty:
         return "Any"
 
@@ -203,7 +214,18 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
 
 
 def format_signature_params(indicator: Any) -> str:
-    """Format the parameters for the function signature."""
+    """Format the parameters for the function signature.
+
+    Parameters
+    ----------
+    indicator : Any
+        The xclim indicator object.
+
+    Returns
+    -------
+    str
+        The formatted signature parameters.
+    """
     params = []
 
     try:
@@ -263,7 +285,18 @@ def format_signature_params(indicator: Any) -> str:
 
 
 def format_call_params(indicator: Any) -> str:
-    """Format the parameters for the xclim call."""
+    """Format the parameters for the xclim call.
+
+    Parameters
+    ----------
+    indicator : Any
+        The xclim indicator object.
+
+    Returns
+    -------
+    str
+        The formatted call parameters.
+    """
     try:
         sig = inspect.signature(indicator)
         call_args = []
@@ -355,8 +388,20 @@ def generate_module_content(category: str, module_name: str, indicators: List[An
     )
 
 
-def generate_for_module(module_name: str, output_base_dir: Any):
-    """Generate wrappers for a specific xclim indicator module."""
+def generate_for_module(module_name: str, output_base_dir: Any) -> None:
+    """Generate wrappers for a specific xclim indicator module.
+
+    Parameters
+    ----------
+    module_name : str
+        The xclim module name (e.g. 'atmos', 'land', 'seaIce').
+    output_base_dir : Any
+        The path-like directory where submodules should be written.
+
+    Returns
+    -------
+    None
+    """
     try:
         module = importlib.import_module(f"xclim.indicators.{module_name}")
     except ImportError:
@@ -458,8 +503,17 @@ def generate_for_module(module_name: str, output_base_dir: Any):
         f.write(init_content)
 
 
-def main():
-    output_base_dir = importlib.resources.files("earthkit.climate.indicators")
+def main() -> None:
+    """Run the wrapper generator to generate climate index modules.
+
+    This function locates the target package directory using importlib
+    and triggers the generation for atmos, land, and seaIce indicators.
+
+    Returns
+    -------
+    None
+    """
+    output_base_dir = importlib.resources.files("earthkit.climate")
 
     # Categories to generate
     # atmos covers most current ones, adding land and seaIce

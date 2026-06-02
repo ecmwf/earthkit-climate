@@ -29,8 +29,8 @@ import earthkit.data
 import pytest
 import xarray as xr
 
-import earthkit.climate.indicators.atmos.precipitation as ek_pr
-import earthkit.climate.indicators.atmos.temperature as ek_temp
+import earthkit.climate.atmos.precipitation as ek_pr
+import earthkit.climate.atmos.temperature as ek_temp
 from earthkit.climate.utils.percentile import percentile_doy
 
 warnings.filterwarnings("ignore")

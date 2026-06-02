@@ -5,7 +5,7 @@ Example usage:
 
 .. code-block:: python
 
-   from earthkit.climate.indicators import precipitation, temperature
+   from earthkit.climate.atmos import precipitation, temperature
    from earthkit.climate.utils import conversions
 
    # Example: compute a precipitation index

@@ -15,4 +15,11 @@ except ImportError:  # pragma: no cover
     __version__ = "999"
 
 
-__all__ = [__version__]
+from . import atmos, land, ocean
+
+__all__ = [
+    "__version__",
+    "atmos",
+    "land",
+    "ocean",
+]
