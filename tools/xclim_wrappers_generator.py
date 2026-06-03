@@ -514,6 +514,7 @@ def main() -> None:
     None
     """
     import pathlib
+
     output_base_dir = pathlib.Path(__file__).parent.parent / "src" / "earthkit" / "climate"
 
     # Categories to generate
