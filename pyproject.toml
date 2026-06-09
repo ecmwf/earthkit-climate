@@ -39,7 +39,10 @@ entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate
 [project.optional-dependencies]
 dev = [
   "earthkit-climate[docs,docs-notebooks,test,test-benchmark]",
-  "pre-commit"
+  "pre-commit",
+  "mypy",
+  "pandas-stubs",
+  "ruff"
 ]
 docs = [
   "ipython",
@@ -78,8 +81,22 @@ source = ["src/earthkit/climate"]
 
 [tool.mypy]
 exclude = ["build", "dist"]
-files = ["src"]
+explicit_package_bases = true
+files = ["src", "tests"]
 namespace_packages = true
+
+[[tool.mypy.overrides]]
+ignore_missing_imports = true
+module = [
+  "earthkit",
+  "earthkit.data",
+  "earthkit.data.*",
+  "earthkit.utils.decorators",
+  "xclim",
+  "xclim.*",
+  "xsdba",
+  "xsdba.*"
+]
 
 [tool.pytest.ini_options]
 addopts = "-vv --cov --cov-report=html --doctest-glob='*.md' --doctest-glob='*.rst' -m 'not integration' -n auto"
@@ -119,14 +136,17 @@ lint.per-file-ignores."docs/conf.py" = [
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"], content-type = "text/markdown"}
 
+[tool.setuptools.package-data]
+"earthkit.climate" = ["py.typed"]
+
 # ---- Namespace package configuration ----
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools_scm]
 local_scheme = "no-local-version"
-write_to = "src/earthkit/climate/version.py"
-write_to_template = '''
+version_file = "src/earthkit/climate/version.py"
+version_file_template = '''
 # Do not change! Do not track in version control!
 __version__ = "{version}"
 '''
