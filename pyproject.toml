@@ -39,9 +39,9 @@ entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate
 [project.optional-dependencies]
 dev = [
   "earthkit-climate[docs,docs-notebooks,test,test-benchmark]",
-  "pre-commit",
   "mypy",
   "pandas-stubs",
+  "pre-commit",
   "ruff"
 ]
 docs = [
