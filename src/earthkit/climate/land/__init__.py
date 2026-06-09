@@ -2,6 +2,6 @@
 
 """Land indicators."""
 
-from .hydrology import *  # noqa
-from .land import *  # noqa
-from .snow import *  # noqa
+from earthkit.climate.land.hydrology import *  # noqa
+from earthkit.climate.land.land import *  # noqa
+from earthkit.climate.land.snow import *  # noqa

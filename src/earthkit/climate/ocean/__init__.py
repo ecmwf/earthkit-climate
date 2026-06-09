@@ -2,4 +2,4 @@
 
 """Sea ice indicators."""
 
-from .sea_ice import *  # noqa
+from earthkit.climate.ocean.sea_ice import *  # noqa
