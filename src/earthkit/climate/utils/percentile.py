@@ -62,9 +62,9 @@ def get_percentile(
     # Use a single reference year (e.g. the first one in the dataset)
     ref_year = int(da.time.dt.year[0])
 
-    ref_time = xr.cftime_range(
-        start=f"{ref_year}-01-01", end=f"{ref_year}-12-31", freq="D", calendar="noleap"
-    ).to_datetimeindex()
+    ref_time = xr.date_range(
+        start=f"{ref_year}-01-01", end=f"{ref_year}-12-31", freq="D", calendar="noleap", use_cftime=True
+    ).to_datetimeindex(time_unit="us")
 
     ref_da = xr.DataArray(ref_time, dims="time", name="time")
 

@@ -37,7 +37,7 @@ def test_get_percentile_yearly_expands_to_dayofyear(daily_temperature_ds) -> Non
 
     # Expect only dayofyear dimension (1..365 for non-leap year 2001)
     assert set(out.dims) == {"dayofyear"}
-    assert out.dims["dayofyear"] == 365
+    assert out.sizes["dayofyear"] == 365
     assert "tas" in out
 
     # Values should be constant per year since YS groups whole time
