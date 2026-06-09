@@ -32,6 +32,10 @@ Run the suite of **integration tests**::
 
    pytest tests/integration -m integration
 
+Run the **type checker**::
+
+   MYPYPATH=src python -m mypy src tests/unit/
+
 Run the **pre-commit** hooks::
 
    pre-commit run --all-files
