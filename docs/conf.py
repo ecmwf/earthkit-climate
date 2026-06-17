@@ -164,7 +164,6 @@ html_js_files = [
 html_favicon = "./_static/earthkit-climate-notext.svg"
 
 html_theme_options = {
-    "announcement": 'Help us improve <strong>earthkit-climate</strong>! Share your experience and needs: <a href="https://ec.europa.eu/eusurvey/runner/user_feedback_integration">3-5 minutes survey</a>',
     "light_css_variables": {
         "color-sidebar-background": "#131320",
         # "color-background-primary": "", # leave as default to avoid overriding the light theme background
