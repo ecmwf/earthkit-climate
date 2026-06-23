@@ -8,9 +8,28 @@
 
 import numpy as np
 import xarray as xr
-from xarray import DataArray
 from xclim.core.calendar import percentile_doy
-from xsdba.nbutils import quantile
+
+# 365-day calendar
+_CLIM_FREQ_AS_DOY = {
+    "dayofyear": None,
+    "month": np.repeat([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]),
+    "season": np.repeat(["DJF", "MAM", "JJA", "SON", "DJF"], [59, 92, 92, 91, 31]),
+}
+
+
+def as_doy_climatology(da, fallback_axis=None):
+    for freq, mapping in _CLIM_FREQ_AS_DOY.items():
+        if freq in da.coords:
+            return (
+                da
+                .sel({freq: mapping})
+                .assign_coords({"dayofyear": (freq, np.arange(1, 366))})
+                .swap_dims({freq: "dayofyear"})
+                .drop_vars(freq)
+            )
+    # Insert day of year dimension where time dimension was before aggregation
+    return da.expand_dims({"dayofyear": np.arange(1, 366)}, axis=fallback_axis)
 
 
 def get_percentile(
@@ -45,47 +64,15 @@ def get_percentile(
     da = baseline_dataset[varname]
     q = percentile / 100.0
 
-    def custom_percentile(group: DataArray) -> DataArray:
-        return quantile(group, q=np.array([q]), dim="time")
-
+    time_axis = da.get_axis_num("time")
     time_component = pandas_offset2time_component(freq)
 
-    # Compute percentile by period
-    if time_component == "year":
-        ds_percentile = custom_percentile(da).to_dataset(name=varname)
-    else:
-        ds_percentile = da.groupby(f"time.{time_component}").map(custom_percentile).to_dataset(name=varname)
+    if time_component is not None:
+        da = da.groupby(f"time.{time_component}")
 
-    ds_percentile = ds_percentile.squeeze().drop_vars("quantiles", errors="ignore")
-
-    # --- Expand to daily resolution: assign same percentile to all days of the same period
-    # Use a single reference year (e.g. the first one in the dataset)
-    ref_year = int(da.time.dt.year[0])
-
-    ref_time = xr.date_range(
-        start=f"{ref_year}-01-01", end=f"{ref_year}-12-31", freq="D", calendar="noleap", use_cftime=True
-    ).to_datetimeindex(time_unit="us")
-
-    ref_da = xr.DataArray(ref_time, dims="time", name="time")
-
-    # --- Expand to daily resolution: assign same percentile to all days of the same period
-    if time_component == "year":
-        expanded = xr.full_like(ref_da, ds_percentile[varname].item(), dtype=float)
-    else:
-        expanded = ref_da.groupby(f"time.{time_component}").map(
-            lambda group: xr.full_like(
-                group,
-                ds_percentile[varname].sel({time_component: getattr(group.time.dt, time_component)[0].item()}),
-                float,
-            )
-        )
-
-    # Add dayofyear coordinate and drop time
-    expanded_ds = expanded.to_dataset(name=varname)
-    expanded_ds = expanded_ds.assign_coords(dayofyear=expanded_ds["time"].dt.dayofyear)
-    expanded_ds = expanded_ds.swap_dims({"time": "dayofyear"}).drop_vars("time")
-
-    return expanded_ds
+    out = da.quantile(q=q, dim="time")
+    out = as_doy_climatology(out, fallback_axis=time_axis)
+    return out.to_dataset(name=varname)
 
 
 def pandas_offset2time_component(aggregation: str) -> str:
@@ -111,7 +98,7 @@ def pandas_offset2time_component(aggregation: str) -> str:
         If the provided frequency alias is not supported.
     """
     if aggregation == "YS":
-        resolution = "year"
+        resolution = None
     elif aggregation == "QS-DEC":
         resolution = "season"
     elif aggregation == "MS":

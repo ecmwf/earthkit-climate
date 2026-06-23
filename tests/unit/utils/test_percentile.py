@@ -15,7 +15,7 @@ from earthkit.climate.utils.percentile import get_percentile, pandas_offset2time
 @pytest.mark.parametrize(
     "alias,component",
     [
-        ("YS", "year"),
+        ("YS", None),
         ("MS", "month"),
         ("QS-DEC", "season"),
     ],
