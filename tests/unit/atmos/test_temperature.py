@@ -14,7 +14,7 @@ import pytest
 import xarray
 from pytest_mock import MockerFixture
 
-from earthkit.climate.atmos import temperature
+from earthkit.climate.indicators import temperature
 
 INDICATORS = [
     (temperature.australian_hardiness_zones, "australian_hardiness_zones"),

@@ -42,7 +42,7 @@ pip install earthkit-climate
 Example usage:
 
 ```python
-from earthkit.climate.atmos import precipitation, temperature
+from earthkit.climate.indicators import precipitation, temperature
 from earthkit.climate.utils import conversions
 
 # Example: compute a precipitation index

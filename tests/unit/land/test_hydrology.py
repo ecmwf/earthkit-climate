@@ -14,7 +14,7 @@ import pytest
 import xarray
 from pytest_mock import MockerFixture
 
-from earthkit.climate.land import hydrology
+from earthkit.climate.indicators import hydrology
 
 INDICATORS = [
     (hydrology.base_flow_index, "base_flow_index", {"val": "test"}),

@@ -14,7 +14,7 @@ import pytest
 import xarray
 from pytest_mock import MockerFixture
 
-from earthkit.climate.atmos import wind
+from earthkit.climate.indicators import wind
 
 INDICATORS = [
     (wind.calm_days, "calm_days"),

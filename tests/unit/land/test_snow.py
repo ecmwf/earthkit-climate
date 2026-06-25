@@ -14,7 +14,7 @@ import pytest
 import xarray
 from pytest_mock import MockerFixture
 
-from earthkit.climate.land import snow
+from earthkit.climate.indicators import snow
 
 INDICATORS = [
     (snow.blowing_snow, "blowing_snow", {"val": "test"}),

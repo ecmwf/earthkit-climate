@@ -15,13 +15,9 @@ except ImportError:  # pragma: no cover
     __version__ = "999"
 
 
-import earthkit.climate.atmos as atmos
-import earthkit.climate.land as land
-import earthkit.climate.ocean as ocean
+import earthkit.climate.indicators as indicators  # noqa
 
 __all__ = [
     "__version__",
-    "atmos",
-    "land",
-    "ocean",
+    "indicators",
 ]
