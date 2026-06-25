@@ -388,126 +388,120 @@ def generate_module_content(category: str, module_name: str, indicators: List[An
     )
 
 
-def generate_for_module(module_name: str, output_base_dir: Any) -> None:
-    """Generate wrappers for a specific xclim indicator module.
+def _collect_categories(module_name: str) -> dict[str, list[Any]]:
+    """Collect indicators by category from an xclim indicator module.
 
     Parameters
     ----------
     module_name : str
         The xclim module name (e.g. 'atmos', 'land', 'seaIce').
-    output_base_dir : Any
-        The path-like directory where submodules should be written.
 
     Returns
     -------
-    None
+    dict[str, list[Any]]
+        Mapping from category name to list of xclim indicator objects.
     """
     try:
         module = importlib.import_module(f"xclim.indicators.{module_name}")
     except ImportError:
         print(f"Skipping xclim.indicators.{module_name} (not found)")
-        return
+        return {}
 
-    # Use snake_case for directory names
-    dir_name = module_name
-    if module_name == "seaIce":
-        dir_name = "ocean"
-
-    output_dir = output_base_dir / dir_name
-    output_dir.mkdir(exist_ok=True, parents=True)
-
-    # Get all potential indicators from __all__ if present
     if hasattr(module, "__all__"):
         names = module.__all__
     else:
-        # Fallback to public members
         names = [n for n, o in inspect.getmembers(module) if not n.startswith("_")]
 
-    # Map internal xclim module names to our category names
-    # This mapping is mostly for 'atmos' where indicators are split
     module_to_category = {
         "_precip": "precipitation",
         "_temperature": "temperature",
         "_wind": "wind",
         "_synoptic": "synoptic",
-        "_conversion": "precipitation",  # Snow depth/water equivalent conversions
+        "_conversion": "precipitation",
         "_snow": "snow",
         "_streamflow": "hydrology",
         "_seaice": "sea_ice",
     }
 
-    indicators_map = {}
+    indicators_map: dict[str, list[Any]] = {}
 
     for name in names:
-        # We need the object to check type/attributes and pass to generation
         try:
             obj = getattr(module, name)
         except AttributeError:
             continue
 
-        # Basic check if it is likely an indicator (has identifier)
         if not hasattr(obj, "identifier"):
             continue
 
-        # Check which submodule/category it comes from
-        # e.g. xclim.indicators.atmos._precip or xclim.indicators.land._snow
         obj_module = getattr(obj, "__module__", "")
-        # Extract the last part of the module path
         submodule_name = obj_module.split(".")[-1]
 
         if submodule_name in module_to_category:
             category = module_to_category[submodule_name]
         else:
-            # Fallback based on keywords or other attributes
             keywords = getattr(obj, "keywords", "")
             if "precipitation" in keywords or "snow" in keywords or "rain" in keywords:
                 category = "precipitation"
             elif "temperature" in keywords or "heat" in keywords or "cold" in keywords:
                 category = "temperature"
             else:
-                category = module_name  # Use module name as fallback category
+                category = module_name
 
         if category not in indicators_map:
             indicators_map[category] = []
         indicators_map[category].append(obj)
 
+    return indicators_map
+
+
+def generate_for_module(
+    module_name: str, output_dir: Any, all_categories: set[str] | None = None
+) -> set[str]:
+    """Generate category .py files in a single indicators directory.
+
+    Parameters
+    ----------
+    module_name : str
+        The xclim module name (e.g. 'atmos', 'land', 'seaIce').
+    output_dir : Any
+        The path-like directory where category .py files are written.
+    all_categories : set[str] | None
+        Accumulator for all categories generated across modules.
+
+    Returns
+    -------
+    set[str]
+        Updated set of all category names produced.
+    """
+    if all_categories is None:
+        all_categories = set()
+
+    indicators_map = _collect_categories(module_name)
+    if not indicators_map:
+        return all_categories
+
     for category, indicators in indicators_map.items():
-        if not indicators:
-            continue
+        all_categories.add(category)
 
         filename = f"{category}.py"
         filepath = output_dir / filename
 
         print(f"Generating {filepath} with {len(indicators)} indicators...")
         content = generate_module_content(category, module_name, indicators)
-
         with open(filepath, "w") as f:
             f.write(content)
         print(f"Written {filepath}")
 
-    # Create __init__.py for the module if it doesn't exist or needs update
-    init_path = output_dir / "__init__.py"
-    # For all modules, we want to expose all submodules
-    categories = sorted(indicators_map.keys())
-    init_content = "# (C) Copyright 2025 - ECMWF and individual contributors.\n\n"
-
-    title = module_name.capitalize()
-    if module_name == "seaIce":
-        title = "Sea ice"
-    init_content += f'"""{title} indicators."""\n\n'
-
-    for cat in categories:
-        init_content += f"from .{cat} import *  # noqa\n"
-
-    with open(init_path, "w") as f:
-        f.write(init_content)
+    return all_categories
 
 
 def main() -> None:
     """Run the wrapper generator to generate climate index modules.
 
-    This function locates the target package directory using pathlib
-    and triggers the generation for atmos, land, and seaIce indicators.
+    This function locates the target indicators package directory using
+    pathlib and triggers the generation for atmos, land, and seaIce
+    indicators, writing everything flat into indicators/.
 
     Returns
     -------
@@ -515,14 +509,26 @@ def main() -> None:
     """
     import pathlib
 
-    output_base_dir = pathlib.Path(__file__).parent.parent / "src" / "earthkit" / "climate"
+    output_dir = pathlib.Path(__file__).parent.parent / "src" / "earthkit" / "climate" / "indicators"
+    output_dir.mkdir(exist_ok=True, parents=True)
 
-    # Categories to generate
-    # atmos covers most current ones, adding land and seaIce
     xclim_modules = ["atmos", "land", "seaIce"]
 
+    all_categories: set[str] = set()
     for module_name in xclim_modules:
-        generate_for_module(module_name, output_base_dir)
+        all_categories = generate_for_module(module_name, output_dir, all_categories)
+
+    # Generate single __init__.py that imports all category modules
+    init_path = output_dir / "__init__.py"
+    categories = sorted(all_categories)
+    init_content = "# (C) Copyright 2025 - ECMWF and individual contributors.\n\n"
+    init_content += '"""Climate indicators."""\n\n'
+    for cat in categories:
+        init_content += f"from earthkit.climate.indicators.{cat} import *  # noqa\n"
+
+    with open(init_path, "w") as f:
+        f.write(init_content)
+    print(f"Generated {init_path} with {len(categories)} modules")
 
 
 if __name__ == "__main__":
