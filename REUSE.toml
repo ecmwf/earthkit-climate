@@ -11,5 +11,5 @@ precedence = "closest"
 [[annotations]]
 SPDX-FileCopyrightText = "2026 European Centre for Medium-Range Weather Forecasts (ECMWF)"
 SPDX-License-Identifier = "Apache-2.0"
-path = ["docs/_static/**"]
+path = ["docs/_static/**", "docs/how-tos/*.ipynb", "docs/tutorials/*.ipynb"]
 precedence = "closest"
