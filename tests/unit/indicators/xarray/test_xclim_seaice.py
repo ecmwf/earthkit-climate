@@ -1,32 +1,26 @@
-# (C) Copyright 2025 - ECMWF and individual contributors.
+# SPDX-FileCopyrightText: 2025 European Centre for Medium-Range Weather Forecasts (ECMWF)
+# SPDX-License-Identifier: Apache-2.0
 
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation nor
-# does it submit to any jurisdiction.
-
-"""Tests for land indicators."""
+"""Tests for sea ice indicators."""
 
 from typing import Any, Callable
 
 import pytest
-import xarray
+import xarray as xr
 from pytest_mock import MockerFixture
 
-from earthkit.climate.land import land
+from earthkit.climate.indicators import xarray as indicators
 
 INDICATORS = [
-    (land.flow_index, "flow_index", {"val": "test"}),
-    (land.standardized_groundwater_index, "standardized_groundwater_index", {"val": "test"}),
-    (land.standardized_streamflow_index, "standardized_streamflow_index", {"val": "test"}),
+    (indicators.sea_ice_area, "sea_ice_area", {"val": "test"}),
+    (indicators.sea_ice_extent, "sea_ice_extent", {"val": "test"}),
 ]
 
 
 @pytest.mark.parametrize("earthkit_fn, xclim_name, kwargs", INDICATORS)
-def test_land_indicator(
+def test_seaice_indicator(
     mocker: MockerFixture,
-    dummy_discharge_ds: xarray.Dataset,
+    dummy_sea_ice_ds: xr.Dataset,
     earthkit_fn: Callable[..., Any],
     xclim_name: str,
     kwargs: dict[str, Any],
@@ -37,8 +31,8 @@ def test_land_indicator(
     ----------
     mocker : MockerFixture
         Mocking utility from pytest-mock.
-    dummy_discharge_ds : xarray.Dataset
-        A dummy dataset containing discharge variables.
+    dummy_sea_ice_ds : xarray.Dataset
+        A dummy dataset containing sea ice variables.
     earthkit_fn : Callable[..., Any]
         The earthkit wrapper function being tested.
     xclim_name : str
@@ -52,11 +46,11 @@ def test_land_indicator(
     """
     xclim_func_name = xclim_name
 
-    mock_path = f"xclim.indicators.land.{xclim_func_name}"
+    mock_path = f"xclim.indicators.seaIce.{xclim_func_name}"
 
     mock_fn = mocker.patch(mock_path)
 
-    ds_in = dummy_discharge_ds
+    ds_in = dummy_sea_ice_ds
 
     # Call the earthkit function
     earthkit_fn(ds=ds_in, **kwargs)

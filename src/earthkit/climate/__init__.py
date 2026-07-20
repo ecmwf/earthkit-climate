@@ -1,10 +1,5 @@
-# (C) Copyright 2022 - ECMWF and individual contributors.
-
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation nor
-# does it submit to any jurisdiction.
+# SPDX-FileCopyrightText: 2022 European Centre for Medium-Range Weather Forecasts (ECMWF)
+# SPDX-License-Identifier: Apache-2.0
 
 try:
     # NOTE: the `version.py` file must not be present in the git repository
@@ -15,13 +10,9 @@ except ImportError:  # pragma: no cover
     __version__ = "999"
 
 
-import earthkit.climate.atmos as atmos
-import earthkit.climate.land as land
-import earthkit.climate.ocean as ocean
+import earthkit.climate.indicators as indicators  # noqa
 
 __all__ = [
     "__version__",
-    "atmos",
-    "land",
-    "ocean",
+    "indicators",
 ]

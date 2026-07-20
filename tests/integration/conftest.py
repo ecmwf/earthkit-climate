@@ -1,10 +1,5 @@
-# (C) Copyright 2025 - ECMWF and individual contributors.
-
-# This software is licensed under the terms of the Apache Licence Version 2.0
-# which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-# In applying this licence, ECMWF does not waive the privileges and immunities
-# granted to it by virtue of its status as an intergovernmental organisation nor
-# does it submit to any jurisdiction.
+# SPDX-FileCopyrightText: 2025 European Centre for Medium-Range Weather Forecasts (ECMWF)
+# SPDX-License-Identifier: Apache-2.0
 
 """Shared Pytest fixtures for integration tests."""
 
@@ -15,8 +10,7 @@ import earthkit.data as ekd
 import pytest
 import xarray as xr
 
-import earthkit.climate.atmos.precipitation as ek_pr
-import earthkit.climate.atmos.temperature as ek_temp
+import earthkit.climate as ekc
 from earthkit.climate.utils import percentile_doy
 
 
@@ -79,7 +73,7 @@ def get_indicator_configs(
     return [
         {
             "name": "TX90P",
-            "ek_func": ek_temp.tx90p,
+            "ek_func": ekc.indicators.tx90p,
             "xi_func": xclim.indicators.atmos.tx90p,
             "ek_args": {
                 "lazy": {"ds": xr.merge([tasmax_ssp, per_90]), "freq": "MS"},
@@ -99,7 +93,7 @@ def get_indicator_configs(
         },
         {
             "name": "PRCPTOT",
-            "ek_func": ek_pr.precip_accumulation,
+            "ek_func": ekc.indicators.precip_accumulation,
             "xi_func": xclim.indicators.atmos.precip_accumulation,
             "ek_args": {
                 "lazy": {"ds": pr_ssp, "freq": "MS"},
@@ -112,7 +106,7 @@ def get_indicator_configs(
         },
         {
             "name": "DTR",
-            "ek_func": ek_temp.daily_temperature_range,
+            "ek_func": ekc.indicators.daily_temperature_range,
             "xi_func": xclim.indicators.atmos.daily_temperature_range,
             "ek_args": {
                 "lazy": {"ds": xr.merge([tasmax_ssp, tasmin_ssp]), "freq": "MS"},
@@ -125,7 +119,7 @@ def get_indicator_configs(
         },
         {
             "name": "HDD",
-            "ek_func": ek_temp.heating_degree_days,
+            "ek_func": ekc.indicators.heating_degree_days,
             "xi_func": xclim.indicators.atmos.heating_degree_days,
             "ek_args": {
                 "lazy": {
@@ -144,7 +138,7 @@ def get_indicator_configs(
         },
         {
             "name": "SDII",
-            "ek_func": ek_pr.daily_pr_intensity,
+            "ek_func": ekc.indicators.daily_pr_intensity,
             "xi_func": xclim.indicators.atmos.daily_pr_intensity,
             "ek_args": {
                 "lazy": {"ds": pr_ssp, "freq": "MS"},

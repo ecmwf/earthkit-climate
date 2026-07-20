@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2022 European Centre for Medium-Range Weather Forecasts (ECMWF)
+# SPDX-License-Identifier: Apache-2.0
+
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = ["setuptools>=65", "setuptools-scm>=8", "wheel"]
@@ -20,8 +23,8 @@ classifiers = [
   "Topic :: Scientific/Engineering"
 ]
 dependencies = [
-  "earthkit-data>=1.0rc0",
-  "earthkit-utils>=1.0rc0",
+  "earthkit-data>=1",
+  "earthkit-utils>=1",
   "flox>=0.11",
   "numpy>=1.22",
   "xarray>=2023.1",
@@ -56,8 +59,8 @@ docs = [
 docs-notebooks = [
   "cdsapi",
   "ipykernel",
-  "earthkit-plots>=1.0rc0",
-  "earthkit-transforms>=1.0rc0"
+  "earthkit-plots>=1",
+  "earthkit-transforms>=1"
 ]
 test = [
   "pytest",

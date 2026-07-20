@@ -1,3 +1,6 @@
+.. SPDX-FileCopyrightText: 2026 European Centre for Medium-Range Weather Forecasts (ECMWF)
+.. SPDX-License-Identifier: Apache-2.0
+
 Installation and Getting Started
 ================================
 
@@ -18,5 +21,5 @@ Compute a precipitation indicator from xclim:
 
 .. code-block:: python
 
-   from earthkit.climate.atmos import precipitation
+   from earthkit.climate.indicators import precipitation
    pr = precipitation.simple_daily_intensity(precip_data, freq="monthly")

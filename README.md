@@ -1,3 +1,8 @@
+<!--
+SPDX-FileCopyrightText: 2022 European Centre for Medium-Range Weather Forecasts (ECMWF)
+SPDX-License-Identifier: Apache-2.0
+-->
+
 <p align="center">
   <picture>
     <source srcset="https://github.com/ecmwf/logos/raw/refs/heads/main/logos/earthkit/earthkit-climate-dark.svg" media="(prefers-color-scheme: dark)">
@@ -42,7 +47,7 @@ pip install earthkit-climate
 Example usage:
 
 ```python
-from earthkit.climate.atmos import precipitation, temperature
+from earthkit.climate.indicators import precipitation, temperature
 from earthkit.climate.utils import conversions
 
 # Example: compute a precipitation index
@@ -67,9 +72,8 @@ earthkit-climate/
 ├── docs/                      # Sphinx-based documentation
 ├── src/earthkit/
 │   ├── climate/
-│   │   ├── atmos/             # Atmospheric indices (precipitation, temperature, etc.)
-│   │   ├── land/              # Land indices (hydrology, snow, etc.)
-│   │   ├── ocean/             # Ocean indices (sea ice, etc.)
+│   │   ├── indicators/        # Climate indicators
+│   │   │   ├── xarray/        # xarray-based implementations
 │   │   └── utils/             # Type conversions, percentiles, provenance
 ├── tests/
 │   ├── unit/                  # Unit tests
