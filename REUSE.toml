@@ -2,14 +2,14 @@ version = 1
 
 # Cover the human-facing LICENSE and NOTICE files, which live outside LICENSES/.
 [[annotations]]
-SPDX-FileCopyrightText = "<YEAR> European Centre for Medium-Range Weather Forecasts (ECMWF)"
+SPDX-FileCopyrightText = "2026 European Centre for Medium-Range Weather Forecasts (ECMWF)"
 SPDX-License-Identifier = "Apache-2.0"
 path = ["LICENSE", "NOTICE"]
 precedence = "closest"
 
 # Cover files that cannot carry a comment (adapt paths per repository).
 [[annotations]]
-SPDX-FileCopyrightText = "<YEAR> European Centre for Medium-Range Weather Forecasts (ECMWF)"
+SPDX-FileCopyrightText = "2026 European Centre for Medium-Range Weather Forecasts (ECMWF)"
 SPDX-License-Identifier = "Apache-2.0"
-path = ["docs/_static/**", "tests/data/**"]
+path = ["docs/_static/**"]
 precedence = "closest"

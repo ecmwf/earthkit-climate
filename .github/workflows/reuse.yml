@@ -1,5 +1,9 @@
 name: REUSE Compliance
-on: [push, pull_request]
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   reuse:
     runs-on: ubuntu-latest
