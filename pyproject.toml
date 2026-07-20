@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2022 European Centre for Medium-Range Weather Forecasts (ECMWF)
+# SPDX-License-Identifier: Apache-2.0
+
 [build-system]
 build-backend = "setuptools.build_meta"
 requires = ["setuptools>=65", "setuptools-scm>=8", "wheel"]
