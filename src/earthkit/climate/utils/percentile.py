@@ -13,6 +13,7 @@ import xarray as xr
 from xclim.core.calendar import percentile_doy
 
 # 365-day calendar
+_CLIM_DOY_NDAYS = 365
 _CLIM_FREQ_AS_DOY = {
     "dayofyear": None,
     "month": np.repeat([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]),
@@ -22,17 +23,17 @@ _CLIM_FREQ_AS_DOY = {
 
 def as_doy_climatology(da, fallback_axis=None):
     for frequency, mapping in _CLIM_FREQ_AS_DOY.items():
-        if frequency in da.coords:
+        if frequency in da.dims:
             return (
                 da
                 .sel({frequency: mapping})
-                .assign_coords({"dayofyear": (frequency, np.arange(1, 366))})
+                .assign_coords({"dayofyear": (frequency, np.arange(1, _CLIM_DOY_NDAYS + 1))})
                 .swap_dims({frequency: "dayofyear"})
                 .drop_vars(frequency)
             )
     assert fallback_axis is not None, "temporal frequency not recognised, need to supply fallback_axis"
     # Insert day of year dimension where time dimension was before aggregation
-    return da.expand_dims({"dayofyear": np.arange(1, 366)}, axis=fallback_axis)
+    return da.expand_dims({"dayofyear": np.arange(1, _CLIM_DOY_NDAYS + 1)}, axis=fallback_axis)
 
 
 def get_percentile(
@@ -68,9 +69,10 @@ def get_percentile(
     da = baseline_dataset[varname]
     q = percentile / 100.0
 
+    time_axis = None
     if frequency is not None:
         da = da.groupby(f"time.{frequency}")
-        time_axis = None
+        # Rely on auto-detection for time_axis downstream
     else:
         time_axis = da.get_axis_num("time")
 
