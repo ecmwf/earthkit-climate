@@ -126,6 +126,7 @@ extlinks = {
 # intersphinx configuration, to automatically link to upstream documentation.
 intersphinx_mapping = {
     "xarray": ("https://docs.xarray.dev/en/stable/", None),
+    "earthkit-transforms": ("https://earthkit-transforms.readthedocs.io/en/stable/", None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
