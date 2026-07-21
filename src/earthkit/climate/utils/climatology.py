@@ -7,7 +7,7 @@
 """
 
 from dataclasses import dataclass
-from typing import Literal
+from typing import Literal, Optional
 
 import numpy as np
 import xarray as xr
@@ -15,7 +15,7 @@ import xarray as xr
 
 @dataclass
 class _UpsamplerParameters:
-    coords: list
+    coords: list | np.ndarray
     repeats: dict
 
 
@@ -38,8 +38,10 @@ _UPSAMPLER_PARAMS = {
 
 
 def upsample(
-    da: xr.DataArray, frequency: Literal["dayofyear", "month", "season"] = "dayofyear", fallback_axis: int = None
-):
+    da: xr.DataArray,
+    frequency: Literal["dayofyear", "month", "season"] = "dayofyear",
+    fallback_axis: Optional[int] = None,
+) -> xr.DataArray:
     """Upsample a climatology by repetition of values.
 
     .. warning:: Experimental API. This function may change or be removed without notice.
@@ -62,12 +64,11 @@ def upsample(
     """
     if frequency in da.dims:
         return da
-
+    # Load upsample parameters for the given target frequency
     try:
         upsampler = _UPSAMPLER_PARAMS[frequency]
     except KeyError:
         raise NotImplementedError(f"unable to upsample to frequency {frequency!r}")
-
     # Find a compatible climatology time dim in the input climatology
     for source_frequency, repeat_args in upsampler.repeats.items():
         if source_frequency in da.dims:
@@ -77,7 +78,6 @@ def upsample(
                 .assign_coords({frequency: (source_frequency, upsampler.coords)})
                 .swap_dims({source_frequency: frequency})
             )
-
     # Insert new climatology time dim if no suitable input (also catches downsampling attempts)
     if fallback_axis is None:
         raise ValueError(
@@ -87,8 +87,12 @@ def upsample(
 
 
 def percentiles_rolling(
-    dataarray: xr.DataArray, p: float, frequency: Literal["dayofyear"] = "dayofyear", window_width: int = 5, **kwargs
-):
+    dataarray: xr.DataArray,
+    p: float | list,
+    frequency: Literal["dayofyear"] = "dayofyear",
+    window_width: int = 5,
+    **reduce_kwargs,
+) -> xr.DataArray:
     """Calculate a set of climatological percentiles in a rolling window.
 
     .. warning:: Experimental API. This function may change or be removed without notice.
@@ -99,7 +103,7 @@ def percentiles_rolling(
         The DataArray over which to calculate the climatological percentiles.
         Must contain a time dimension.
     p : float | list
-        The pecentile, or list of percentiles, to calculate the climatology.
+        The percentile, or list of percentiles, to calculate the climatology.
     frequency : "dayofyear"
         Only `dayofyear` is currently supported.
     window_width : int
@@ -124,7 +128,7 @@ def percentiles_rolling(
         from xclim.core.calendar import percentile_doy
 
         return (
-            percentile_doy(dataarray, window=window_width, per=p, **kwargs)
+            percentile_doy(dataarray, window=window_width, per=p, **reduce_kwargs)
             # Adopt conventions of earthkit-transforms (except dim-order)
             .rename({"percentiles": "percentile"})
             .rename(dataarray.name)

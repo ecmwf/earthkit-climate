@@ -7,10 +7,6 @@ Integration tests for climate indicator correctness.
 These tests verify that the earthkit-climate indicators produce results that are
 consistent with their xclim counterparts when applied to real CMIP6 datasets.
 They run in optimized mode (flox enabled, time axis rechunked to -1).
-
-Run with:
-    export PYTHONPATH="."
-    pixi run -e dev python -m pytest tests/integration/test_correctness.py -vv
 """
 
 from typing import Any

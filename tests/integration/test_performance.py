@@ -9,10 +9,6 @@ consistent with their xclim counterparts when applied to real CMIP6 datasets
 downloaded via earthkit-data. They run in the optimised mode (flox enabled,
 time axis rechunked to -1) which avoids the multi-minute timing runs from the
 original notebook.
-
-Run with:
-    export PYTHONPATH="."
-    pixi run -e dev python -m pytest tests/integration/test_performance.py -vv
 """
 
 import os
@@ -25,7 +21,6 @@ import pytest
 import xarray as xr
 
 import earthkit.climate as ekc
-from earthkit.climate.utils.percentile import percentile_doy
 
 warnings.filterwarnings("ignore")
 
@@ -166,7 +161,8 @@ def indicator_config(
     pr_opt = pr_ssp.chunk({"time": -1})
 
     if name == "TX90P":
-        per_90 = percentile_doy(data_cache["tasmax_hist"]["tasmax"], per=90)
+        per_90 = data_cache["tasmax_hist"]["tasmax"].quantile(q=0.9, dim="time")
+        per_90 = ekc.utils.climatology.upsample(per_90, frequency="dayofyear", fallback_axis=0)
         per_90.name = "tasmax_per"
         return {
             "name": name,

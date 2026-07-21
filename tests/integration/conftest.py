@@ -11,7 +11,6 @@ import pytest
 import xarray as xr
 
 import earthkit.climate as ekc
-from earthkit.climate.utils import percentile_doy
 
 
 def _run_indicator(
@@ -64,7 +63,10 @@ def get_indicator_configs(
     pr_ssp = data_cache["pr_ACCESS-CM2_ssp585_far_future"]["pr"]
 
     # Pre-calculate percentile for WSDI
-    per_90: xr.DataArray = percentile_doy(data_cache["tasmax_ACCESS-CM2_historical_reference"]["tasmax"], per=90)
+    per_90: xr.DataArray = (
+        data_cache["tasmax_ACCESS-CM2_historical_reference"]["tasmax"].quantile(0.90, dim="time").squeeze()
+    )
+    per_90 = ekc.utils.climatology.upsample(per_90, frequency="dayofyear", fallback_axis=0)
     per_90.name = "tasmax_per"
 
     # Optimized views (Chunk -1)
