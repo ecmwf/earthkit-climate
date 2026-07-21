@@ -11,6 +11,7 @@ except ImportError:  # pragma: no cover
 
 
 import earthkit.climate.indicators as indicators  # noqa
+import earthkit.climate.utils as utils  # noqa
 
 __all__ = [
     "__version__",
