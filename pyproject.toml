@@ -78,6 +78,11 @@ test-benchmark = [
   "tqdm",
   "psutil"
 ]
+test-docs = [
+  "earthkit-climate[test,docs-notebooks]",
+  "nbformat",
+  "nbconvert"
+]
 
 [tool.coverage.run]
 branch = true

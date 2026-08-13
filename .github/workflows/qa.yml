@@ -12,7 +12,7 @@ jobs:
     uses: ecmwf/reusable-workflows/.github/workflows/qa-precommit-run.yml@v2
     with:
       skip-hooks: "no-commit-to-branch"
-  tests:
+  unit-tests:
     strategy:
       matrix:
         python-version: ["3.11", "3.12", "3.13", "3.14"]
@@ -20,3 +20,9 @@ jobs:
     with:
       python-version: ${{ matrix.python-version }}
       optional-dependencies: "test"
+  docs-tests:
+    uses: ecmwf/reusable-workflows/.github/workflows/qa-pytest-pyproject.yml@v2
+    with:
+      python-version: "3.14"
+      optional-dependencies: "test-docs"
+      custom-pytest: "pytest tests/docs"
