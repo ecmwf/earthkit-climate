@@ -89,10 +89,10 @@ def test_upsample_season_to_dayofyear_constant_within_season(daily_temperature_d
     assert not np.isclose(out.sel(dayofyear=d1).item(), out.sel(dayofyear=d3).item())
 
 
-def test_percentiles_rolling_dayofyear_quacks_like_ekt_percentiles(daily_temperature_ds) -> None:
+def test_rolling_percentiles_dayofyear_quacks_like_ekt_percentiles(daily_temperature_ds) -> None:
     ekt = pytest.importorskip("earthkit.transforms")
     ref = ekt.climatology.percentiles(daily_temperature_ds["tas"], p=50.0, frequency="dayofyear")
-    out = ekc.utils.climatology.percentiles_rolling(daily_temperature_ds["tas"], p=50.0, frequency="dayofyear")
+    out = ekc.utils.climatology.rolling_percentiles(daily_temperature_ds["tas"], p=50.0, frequency="dayofyear")
     assert out.name == ref.name
     # Same dimension names, no requirement on order (for now)
     assert set(out.dims) == set(ref.dims)

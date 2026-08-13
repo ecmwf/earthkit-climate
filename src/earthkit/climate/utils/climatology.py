@@ -86,7 +86,7 @@ def upsample(
     return da.expand_dims({frequency: upsampler.coords}, axis=fallback_axis)
 
 
-def percentiles_rolling(
+def rolling_percentiles(
     dataarray: xr.DataArray,
     p: float | list,
     frequency: Literal["dayofyear"] = "dayofyear",
