@@ -30,7 +30,7 @@ Spatial vs. temporal chunking
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * **Time-reduction indices** (e.g. annual maximum temperature, consecutive dry days, percentiles): These operations require full unchunked time series for each grid point.
-  
+
   * **Recommended chunking**: Keep the time dimension **unchunked** (or chunked by full years/decades, e.g., :code:`chunks={'time': -1, 'latitude': 50, 'longitude': 50}`).
   * **Why?**: Resampling across time boundary chunks forces Dask to perform expensive cross-worker shuffling.
 
@@ -45,13 +45,13 @@ When transitioning from disk layout (which is often time-slice chunked, e.g. 1 d
 Dask offers two primary rechunking engines:
 
 1. **Task-based rechunking (`method='task'`)**:
-   
+
    * Standard Dask task graph construction.
    * Efficient for small to medium datasets.
    * Can lead to massive task graph overhead (million+ tasks) on large datasets.
 
 2. **Peer-to-peer rechunking (`method='p2p'`)**:
-   
+
    * Distributed shuffle engine using direct worker-to-worker memory transfer.
    * Highly recommended for large multi-GB or TB rechunking operations on Dask Distributed clusters.
    * Reduces task graph size and prevents scheduler bottlenecks.
