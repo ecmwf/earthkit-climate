@@ -10,10 +10,12 @@ except ImportError:  # pragma: no cover
     __version__ = "999"
 
 
+import earthkit.climate.dask as dask  # noqa
 import earthkit.climate.indicators as indicators  # noqa
 import earthkit.climate.utils as utils  # noqa
 
 __all__ = [
     "__version__",
+    "dask",
     "indicators",
 ]

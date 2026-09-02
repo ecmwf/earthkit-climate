@@ -23,6 +23,7 @@ classifiers = [
   "Topic :: Scientific/Engineering"
 ]
 dependencies = [
+  "dask",
   "earthkit-data>=1",
   "earthkit-utils>=1",
   "flox>=0.11",
@@ -41,11 +42,14 @@ entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate
 
 [project.optional-dependencies]
 dev = [
-  "earthkit-climate[docs,docs-notebooks,test,test-benchmark]",
+  "earthkit-climate[distributed,docs,docs-notebooks,test,test-benchmark]",
   "mypy",
   "pandas-stubs",
   "pre-commit",
   "ruff"
+]
+distributed = [
+  "distributed"
 ]
 docs = [
   "ipython",
@@ -70,7 +74,7 @@ test = [
   "earthkit-transforms>=1"
 ]
 test-benchmark = [
-  "earthkit-climate[test]",
+  "earthkit-climate[distributed,test]",
   "fire",
   "matplotlib",
   "seaborn",
