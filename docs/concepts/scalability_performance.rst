@@ -14,7 +14,22 @@ Core principles of scalable execution
 
 Computing climate indices over long time series (e.g. 50+ years of hourly or daily ERA5 reanalysis) or high-resolution spatial grids (e.g. CORDEX / CMIP6) requires parallel processing and memory-efficient out-of-core evaluation.
 
-When loading large datasets using **earthkit-data** (e.g. from GRIB/NetCDF files via a :code:`FieldList`), calling :code:`.to_xarray(chunks=...)` loads the data lazily backed by Dask arrays:
+When working with large datasets from **earthkit-data** (e.g. GRIB/NetCDF files loaded as a :code:`FieldList`), **earthkit-climate** indicators accept these objects directly—automatically converting them to xarray objects behind the scenes via the :code:`@format_handler` decorator.
+
+While automatic conversion handles standard loading behind the scenes, custom Dask chunking can also be explicitly specified prior to calculation (e.g. via :code:`data.to_xarray(chunks=...)` or :code:`ds.chunk(...)`):
+
+.. code-block:: python
+
+   import earthkit.climate as ekc
+   import earthkit.data as ekd
+
+   # Automatic conversion via @format_handler
+   data = ekd.from_source("file", "temperature.grib")
+   hot_days = ekc.indicators.tx_days_above(data, thresh="30 degC")
+
+   # Explicit Dask chunking for large-scale datasets
+   ds_chunked = data.to_xarray(chunks={"time": -1, "latitude": 50, "longitude": 50})
+   hot_days_lazy = ekc.indicators.tx_days_above(ds_chunked, thresh="30 degC")
 
 1. **Lazy operations**: Index calculations construct a task graph without loading entire datasets into RAM.
 2. **Chunking**: Data is split into smaller rectangular blocks (chunks) processed independently or in parallel across Dask workers.

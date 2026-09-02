@@ -15,4 +15,3 @@ This section provides background explanations of key concepts, architectural cho
    climate_indicators
    missing_values
    scalability_performance
-   ecosystem

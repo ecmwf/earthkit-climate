@@ -21,7 +21,7 @@ Examples of climate indicators include:
 * **Percentile-based indices**: Warm days (:code:`tx90p`), wet days (:code:`r95p`), relative to a historical baseline period.
 * **Complex multi-variable indices**: Heatwave magnitude index, drought indicators (SPI, SPEI), or wildfire danger metrics.
 
-In **earthkit-climate**, indicators are standardized functions that take :py:class:`xarray.DataArray`, :py:class:`xarray.Dataset`, or **earthkit-data** objects and return indicator DataArrays with enriched CF-compliant metadata (e.g., standard names, cell methods, and updated units).
+In **earthkit-climate**, indicators are standardized functions that process both multidimensional gridded datasets (e.g., ERA5, CMIP6, CORDEX) and 1D in-situ / station time series. They accept :py:class:`xarray.DataArray`, :py:class:`xarray.Dataset`, or **earthkit-data** objects and return indicator DataArrays with enriched CF-compliant metadata (e.g., standard names, cell methods, and updated units).
 
 
 Where to start in the earthkit ecosystem
