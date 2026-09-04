@@ -12,7 +12,7 @@ This page explains what **earthkit-climate** understands as a climate indicator 
 What is a climate indicator?
 ----------------------------
 
-In climate science, raw meteorological variables (such as 2-metre temperature, precipitation, or surface wind speed) describe instantaneous or high-frequency atmospheric states. A **climate indicator** (or climate index) transforms these raw variables into meaningful metrics that characterize climate variability, extremes, and long-term trends.
+In climate science, raw meteorological variables (such as 2-metre temperature, precipitation, or surface wind speed) describe instantaneous or high-frequency atmospheric states. A **climate indicator** (or climate index) transforms these raw variables into meaningful metrics that characterize climate variability, extremes, and long-term trends, as well as their potential impacts. Many indicators are designed to quantify climate conditions relevant to specific impacts in sectors such as health, agriculture, ecosystems, energy, and water resources.
 
 Examples of climate indicators include:
 
@@ -24,29 +24,10 @@ Examples of climate indicators include:
 In **earthkit-climate**, indicators are standardized functions that process both multidimensional gridded datasets (e.g., ERA5, CMIP6, CORDEX) and 1D in-situ / station time series. They accept :py:class:`xarray.DataArray`, :py:class:`xarray.Dataset`, or **earthkit-data** objects and return indicator DataArrays with enriched CF-compliant metadata (e.g., standard names, cell methods, and updated units).
 
 
-Where to start in the earthkit ecosystem
-----------------------------------------
-
-The **earthkit** suite of libraries provides a modular end-to-end pipeline for climate data processing. Each package handles a specific stage of the workflow:
-
-.. list-table::
-   :header-rows: 1
-   :widths: 25 75
-
-   * - Package
-     - Role in climate indicator workflows
-   * - **earthkit-data**
-     - Data retrieval and ingestion from CDS, MARS, URL, or local GRIB/NetCDF files as `Field` or `FieldList` objects.
-   * - **earthkit-transforms**
-     - General spatial and temporal operations, including baseline climatology calculations and percentile estimation.
-   * - **earthkit-climate**
-     - Domain-specific climate indicators (temperature, precipitation, land, ocean, sea ice) and attribution utilities, wrapping `xclim <https://xclim.readthedocs.io/>`_ with sensible defaults and automatic format handling.
-   * - **earthkit-plots**
-     - Production-ready visualization of indicator maps, time series, and spatial figures.
-
-
 Native format handling with @format_handler
 -------------------------------------------
+
+See also :doc:`format_handling` for more details on how this works.
 
 In **earthkit-data**, retrieved data is represented as **Field** (a single 2D spatial slice) and **FieldList** (a sequence or collection of 2D fields) objects.
 
