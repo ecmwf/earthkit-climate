@@ -81,7 +81,8 @@ test-benchmark = [
 test-docs = [
   "earthkit-climate[test,docs-notebooks]",
   "nbformat",
-  "nbconvert"
+  "nbconvert",
+  "sphinxcontrib-bibtex"
 ]
 
 [tool.coverage.run]

@@ -37,7 +37,7 @@ The **earthkit** framework is a modular suite of open-source Python components d
 Relationship to xclim
 ---------------------
 
-Rather than replacing existing climate index engines, **earthkit-climate leverages `xclim <https://xclim.readthedocs.io/en/stable/>`_ as its underlying calculation engine.**
+Rather than replacing existing climate index engines, **earthkit-climate** leverages `xclim <https://xclim.readthedocs.io/en/stable/>`_ as its underlying calculation engine.
 
-* **xclim** provides 100+ robust, unit-aware climate indicator algorithms and calendar check utilities based on xarray and Pint.
+* **xclim**  :cite:p:`bourgault2023xclim` provides 100+ robust, unit-aware climate indicator algorithms and calendar check utilities based on xarray and Pint.
 * **earthkit-climate** wraps xclim indicators with :code:`@format_handler` and ECMWF data model mappings, providing seamless compatibility with ECMWF/C3S data structures, GRIB files, and earthkit workflows without requiring users to write manual conversion boilerplate.
