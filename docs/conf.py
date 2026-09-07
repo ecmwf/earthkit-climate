@@ -9,6 +9,9 @@ import os
 import sys
 
 import yaml
+from pybtex.plugin import register_plugin  # noqa
+from pybtex.style.formatting.alpha import Style as AlphaStyle  # noqa
+from pybtex.style.labels import BaseLabelStyle  # noqa
 
 on_rtd = os.environ.get("READTHEDOCS") == "True"
 
@@ -56,7 +59,7 @@ extensions = [
     # Generates summary tables for modules/classes/functions
     "sphinx.ext.autosummary",
     # Allows citing BibTeX bibliographic entries in reStructuredText
-    # "sphinxcontrib.bibtex",
+    "sphinxcontrib.bibtex",
     # Tests snippets in documentation by running embedded Python examples
     # "sphinx.ext.doctest",
     # Checks documentation coverage of the codebase
@@ -107,6 +110,7 @@ autoapi_member_order = "alphabetical"
 autoapi_add_toctree_entry = False
 autoapi_own_page_level = "function"
 autoapi_python_use_implicit_namespaces = True
+suppress_warnings = ["autoapi.python_import_resolution"]
 
 # napoleon configuration
 napoleon_google_docstring = False
@@ -202,6 +206,21 @@ html_theme_options = {
         },
     ],
 }
+# Configure bibtex after xclim configuration
+# class XCLabelStyle(BaseLabelStyle):
+#     def format_labels(self, sorted_entries):
+#         for entry in sorted_entries:
+#             yield entry.key
+#
+# class XCStyle(AlphaStyle):
+#     default_label_style = XCLabelStyle
+
+# see: https://sphinxcontrib-bibtex.readthedocs.io/en/latest/usage.html#unknown-target-name-when-using-footnote-citations-with-numpydoc
+numpydoc_class_members_toctree = False
+# register_plugin("pybtex.style.formatting", "xcstyle", XCStyle)
+bibtex_bibfiles = ["references.bib"]
+# bibtex_default_style = "xcstyle"
+bibtex_reference_style = "author_year"
 
 
 def _write_earthkit_packages_js(app):
