@@ -3,14 +3,14 @@
 
 .. _concept_format_handling:
 
-Format handling with @format_handler
-====================================
+Native format handling
+======================
 
 In **earthkit-data**, retrieved data is represented as **Field** (a single 2D spatial slice) and **FieldList** (a sequence or collection of 2D fields) objects.
 
-Users do **not** need to manually convert `Field` or `FieldList` objects to xarray DataArrays before calling **earthkit-climate** indicators. All indicator functions in **earthkit-climate** are decorated with `@format_handler` from `earthkit.utils.decorators`.
+Users do **not** need to manually convert `Field` or `FieldList` objects to xarray DataArrays before calling **earthkit-climate** indicators.
 
-The `@format_handler` decorator automatically inspects and converts input types behind the scenes:
+**earthkit-climate** automatically inspects and converts input types behind the scenes:
 
 * **Direct Field / FieldList inputs**: You can pass an `earthkit-data` `FieldList` directly into any indicator function.
 * **Seamless xarray and NumPy support**: Accepts `xarray.DataArray`, `xarray.Dataset`, or `FieldList` interchangeably.

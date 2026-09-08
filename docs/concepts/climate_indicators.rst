@@ -24,16 +24,16 @@ Examples of climate indicators include:
 In **earthkit-climate**, indicators are standardized functions that process both multidimensional gridded datasets (e.g., ERA5, CMIP6, CORDEX) and 1D in-situ / station time series. They accept :py:class:`xarray.DataArray`, :py:class:`xarray.Dataset`, or **earthkit-data** objects and return indicator DataArrays with enriched CF-compliant metadata (e.g., standard names, cell methods, and updated units).
 
 
-Native format handling with @format_handler
--------------------------------------------
+Native format handling
+----------------------
 
 See also :doc:`format_handling` for more details on how this works.
 
 In **earthkit-data**, retrieved data is represented as **Field** (a single 2D spatial slice) and **FieldList** (a sequence or collection of 2D fields) objects.
 
-Users do **not** need to manually convert `Field` or `FieldList` objects to xarray DataArrays before calling **earthkit-climate** indicators. All indicator functions in **earthkit-climate** are decorated with `@format_handler` from `earthkit.utils.decorators`.
+Users do **not** need to manually convert `Field` or `FieldList` objects to xarray DataArrays before calling **earthkit-climate** indicators.
 
-The `@format_handler` decorator automatically inspects and converts input types behind the scenes:
+**earthkit-climate** automatically inspects and converts input types behind the scenes:
 
 * **Direct Field / FieldList inputs**: You can pass an `earthkit-data` `FieldList` directly into any indicator function.
 * **Seamless xarray and NumPy support**: Accepts `xarray.DataArray`, `xarray.Dataset`, or `FieldList` interchangeably.
@@ -59,9 +59,10 @@ Recommended workflow
 A typical climate indicator calculation follows a 4-step pipeline:
 
 1. **Fetch and load**: Retrieve raw input fields via :py:mod:`earthkit.data` as a :code:`FieldList` or :code:`Field`.
-2. **Compute indicator**: Pass the :code:`FieldList` directly to :py:mod:`earthkit.climate.indicators` (e.g. :py:func:`earthkit.climate.indicators.tx_days_above`). The `@format_handler` decorator handles conversion automatically.
+2. **Compute indicator**: Pass the :code:`FieldList` directly to :py:mod:`earthkit.climate.indicators` (e.g. :py:func:`earthkit.climate.indicators.tx_days_above`). Format conversion is handled automatically.
 3. **Preprocess / transform**: If working with percentiles or climatologies, apply :py:mod:`earthkit-transforms`.
 4. **Visualize and export**: Plot the resulting index maps or time series using :py:mod:`earthkit.plots` or export to NetCDF/Zarr.
+
 
 .. seealso::
 
