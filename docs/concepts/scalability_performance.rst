@@ -14,7 +14,7 @@ Core principles of scalable execution
 
 Computing climate indices over long time series (e.g. 50+ years of hourly or daily ERA5 reanalysis) or high-resolution spatial grids (e.g. CORDEX / CMIP6) requires parallel processing and memory-efficient out-of-core evaluation.
 
-When working with large datasets from **earthkit-data** (e.g. GRIB/NetCDF files loaded as a :code:`FieldList`), **earthkit-climate** indicators accept these objects directly—automatically converting them to xarray objects behind the scenes via the :code:`@format_handler` decorator.
+When working with large datasets from **earthkit-data** (e.g. GRIB/NetCDF files loaded as a :code:`FieldList`), **earthkit-climate** indicators accept these objects directly—automatically converting them to xarray objects behind the scenes.
 
 While automatic conversion handles standard loading behind the scenes, custom Dask chunking can also be explicitly specified prior to calculation (e.g. via :code:`data.to_xarray(chunks=...)` or :code:`ds.chunk(...)`):
 
@@ -23,9 +23,10 @@ While automatic conversion handles standard loading behind the scenes, custom Da
    import earthkit.climate as ekc
    import earthkit.data as ekd
 
-   # Automatic conversion via @format_handler
+   # Automatic format conversion
    data = ekd.from_source("file", "temperature.grib")
    hot_days = ekc.indicators.tx_days_above(data, thresh="30 degC")
+
 
    # Explicit Dask chunking for large-scale datasets
    ds_chunked = data.to_xarray(chunks={"time": -1, "latitude": 50, "longitude": 50})
