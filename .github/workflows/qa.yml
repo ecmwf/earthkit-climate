@@ -1,9 +1,11 @@
 # SPDX-FileCopyrightText: 2025 European Centre for Medium-Range Weather Forecasts (ECMWF)
 # SPDX-License-Identifier: Apache-2.0
 
-name: Quality assurance
+name: QA
 on:
   push:
+  pull_request:
+    types: [opened, synchronize, reopened]
 jobs:
   pre-commit:
     uses: ecmwf/reusable-workflows/.github/workflows/qa-precommit-run.yml@v2
