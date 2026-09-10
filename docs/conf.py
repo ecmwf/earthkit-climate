@@ -9,9 +9,6 @@ import os
 import sys
 
 import yaml
-from pybtex.plugin import register_plugin  # noqa
-from pybtex.style.formatting.alpha import Style as AlphaStyle  # noqa
-from pybtex.style.labels import BaseLabelStyle  # noqa
 
 on_rtd = os.environ.get("READTHEDOCS") == "True"
 
@@ -206,18 +203,9 @@ html_theme_options = {
         },
     ],
 }
-# Configure bibtex after xclim configuration
-# class XCLabelStyle(BaseLabelStyle):
-#     def format_labels(self, sorted_entries):
-#         for entry in sorted_entries:
-#             yield entry.key
-#
-# class XCStyle(AlphaStyle):
-#     default_label_style = XCLabelStyle
 
 # see: https://sphinxcontrib-bibtex.readthedocs.io/en/latest/usage.html#unknown-target-name-when-using-footnote-citations-with-numpydoc
 numpydoc_class_members_toctree = False
-# register_plugin("pybtex.style.formatting", "xcstyle", XCStyle)
 bibtex_bibfiles = ["references.bib"]
 # bibtex_default_style = "xcstyle"
 bibtex_reference_style = "author_year"
