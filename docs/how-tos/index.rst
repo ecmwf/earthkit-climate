@@ -3,11 +3,10 @@
 
 .. _how-tos:
 
-How-to Guides
-=============
+How-tos and case studies
+========================
 
-A collection of practical examples for working with earthkit-climate.
-Each example is an interactive Jupyter notebook.
+How-to guides provide task-oriented recipes and practical case studies for solving specific real-world problems with **earthkit-climate**.
 
 
 .. toctree::
@@ -15,3 +14,7 @@ Each example is an interactive Jupyter notebook.
 
    intro_precipitation_indices.ipynb
    intro_temperature_indices.ipynb
+   frost_days_pyrenees.ipynb
+   heatwave_evolution.ipynb
+   tropical_nights_cooling_demand.ipynb
+   era5_decadal_warming.ipynb
