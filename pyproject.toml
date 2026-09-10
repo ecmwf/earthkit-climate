@@ -54,7 +54,8 @@ docs = [
   "roman-numerals-py>=3.1,<4",
   "sphinx",
   "sphinx-autoapi",
-  "sphinx_design"
+  "sphinx_design",
+  "sphinxcontrib-bibtex"
 ]
 docs-notebooks = [
   "cdsapi",
