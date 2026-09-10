@@ -67,7 +67,7 @@ test = [
   "pytest-cov",
   "pytest-mock",
   "pytest-xdist",
-  "earthkit-transforms>=1"
+  "earthkit-transforms[all]>=1"
 ]
 test-benchmark = [
   "earthkit-climate[test]",
