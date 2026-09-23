@@ -18,3 +18,4 @@ How-to guides provide task-oriented recipes and practical case studies for solvi
    heatwave_evolution.ipynb
    tropical_nights_cooling_demand.ipynb
    era5_decadal_warming.ipynb
+   station_data_indicators.ipynb

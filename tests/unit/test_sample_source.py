@@ -64,3 +64,26 @@ def test_sample_source_synthetic_daily_dask_temperature() -> None:
     assert da.attrs["units"] == "K"
     assert da.attrs["standard_name"] == "air_temperature"
     assert da.attrs["cell_methods"] == "time: maximum"
+
+
+def test_sample_source_synthetic_daily_station_temperature() -> None:
+    """
+    Test SampleSource with synthetic station daily temperature dataset.
+
+    Returns
+    -------
+    None
+    """
+    src = SampleSource("synthetic-daily-station-temperature")
+    da = src.to_xarray()
+    assert isinstance(da, xr.DataArray)
+    assert da.name == "tasmax"
+    assert "station_id" in da.dims
+    assert "time" in da.dims
+    assert "lat" in da.coords
+    assert "lon" in da.coords
+    assert "height" in da.coords
+    assert len(da.coords["station_id"]) == 5
+    assert da.attrs["units"] == "K"
+    assert da.attrs["standard_name"] == "air_temperature"
+    assert da.attrs["cell_methods"] == "time: maximum"

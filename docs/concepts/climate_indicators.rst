@@ -12,45 +12,48 @@ This page explains what **earthkit-climate** understands as a climate indicator 
 What is a climate indicator?
 ----------------------------
 
-In climate science, raw meteorological variables (such as 2-metre temperature, precipitation, or surface wind speed) describe instantaneous or high-frequency atmospheric states. A **climate indicator** (or climate index) transforms these raw variables into meaningful metrics that characterize climate variability, extremes, and long-term trends, as well as their potential impacts. Many indicators are designed to quantify climate conditions relevant to specific impacts in sectors such as health, agriculture, ecosystems, energy, and water resources.
+In climate science, meteorological variables (such as 2-metre temperature, precipitation, or surface wind speed) describe instantaneous or high-frequency atmospheric states. A **climate indicator** transforms these variables into meaningful metrics that characterize climate variability, extremes, and long-term trends, as well as their potential impacts. Many indicators are designed to quantify climate conditions relevant to specific impacts in sectors such as health, agriculture, ecosystems, energy, and water resources.
 
-Examples of climate indicators include:
-
-* **Threshold counts**: Number of hot days (:code:`tx_days_above`), frost days (:code:`frost_days`), or tropical nights (:code:`tropical_nights`).
-* **Cumulative metrics**: Growing degree days (:code:`growing_degree_days`), heating/cooling degree days.
-* **Percentile-based indices**: Warm days (:code:`tx90p`), wet days (:code:`r95p`), relative to a historical baseline period.
-* **Complex multi-variable indices**: Heatwave magnitude index, drought indicators (SPI, SPEI), or wildfire danger metrics.
-
-In **earthkit-climate**, indicators are standardized functions that process both multidimensional gridded datasets (e.g., ERA5, CMIP6, CORDEX) and 1D in-situ / station time series. They accept :py:class:`xarray.DataArray`, :py:class:`xarray.Dataset`, or **earthkit-data** objects and return indicator DataArrays with enriched CF-compliant metadata (e.g., standard names, cell methods, and updated units).
+In **earthkit-climate**, indicators follow standardized definitions (e.g., WMO/ETCCDI) and provide a unified interface for processing both multidimensional gridded datasets (e.g., ERA5, CMIP6, CORDEX) and 1D in-situ / station time series. They accept :py:class:`xarray.DataArray`, :py:class:`xarray.Dataset`, or **earthkit-data** objects and return indicator DataArrays with enriched CF-compliant metadata (e.g., standard names, cell methods, and updated units).
 
 
-Native format handling
-----------------------
+Anatomy of a climate indicator
+------------------------------
 
-See also :doc:`format_handling` for more details on how this works.
+Rather than rigid output categories, a climate indicator is best understood in terms of the fundamental **ingredients** that compose it:
 
-In **earthkit-data**, retrieved data is represented as **Field** (a single 2D spatial slice) and **FieldList** (a sequence or collection of 2D fields) objects.
+* **Input variables**:
+  * *Single-variable*: Process a single meteorological field (e.g., daily maximum temperature for :code:`tx_days_above`).
+  * *Multi-variable*: Combine multiple fields (e.g., temperature and precipitation/evapotranspiration for drought indicators like SPEI, or wind and temperature for wildfire or heat-stress metrics).
 
-Users do **not** need to manually convert `Field` or `FieldList` objects to xarray DataArrays before calling **earthkit-climate** indicators.
+* **Thresholds and conditions**:
+  * *Fixed thresholds*: Constant physical values (e.g., frost days with :code:`thresh="0 degC"` or hot days with :code:`thresh="300 K"`).
+  * *Adaptive / climatological thresholds*: Percentile-based values calculated relative to a baseline reference period (e.g., warm days :code:`tx90p` counting days exceeding the 90th percentile).
+  * *Sequence and duration conditions*: Multi-day persistent conditions (e.g., heatwave duration indices).
 
-**earthkit-climate** automatically inspects and converts input types behind the scenes:
+* **Reduction and aggregation**:
+  * *Threshold counts*: Counting the number of days or events meeting a specified condition within a target period (e.g., annual, seasonal, monthly).
+  * *Cumulative metrics*: Accumulation of values over time (e.g., growing degree days, heating/cooling degree days).
+  * *Extremes and statistics*: Extracting maximum, minimum, or percentile values over temporal windows (e.g., maximum 5-day precipitation :code:`rx5day`).
 
-* **Direct Field / FieldList inputs**: You can pass an `earthkit-data` `FieldList` directly into any indicator function.
-* **Seamless xarray and NumPy support**: Accepts `xarray.DataArray`, `xarray.Dataset`, or `FieldList` interchangeably.
-* **Output format preservation**: Returns appropriately formatted outputs with complete CF metadata.
 
-Example passing an earthkit `FieldList` directly to an indicator:
+Building blocks vs. domain indicators
+-------------------------------------
 
-.. code-block:: python
+Understanding these ingredients helps clarify how functionality is divided across the **earthkit** ecosystem:
 
-   import earthkit.data as ekd
-   import earthkit.climate as ekc
+* **earthkit-transforms** provides generic, low-level building blocks and operations (e.g., computing climatological baselines, percentiles, or generic spatial and temporal aggregations).
+* **earthkit-climate** provides domain-specific, preconfigured, and standardized climate indicators (such as ETCCDI or WMO indices) with rich CF-compliant metadata out of the box.
 
-   # Retrieve temperature fields as an earthkit FieldList
-   fields = ekd.from_source("cds", "reanalysis-era5-single-levels", ...)  # returns FieldList
+Use **earthkit-transforms** when building custom calculation pipelines from low-level generic steps, and use **earthkit-climate** when you need standardized, domain-specific climate indicator functions.
 
-   # Compute climate indicator directly on the FieldList (no manual .to_xarray() required!)
-   hot_days = ekc.indicators.tx_days_above(fields, thresh="300 K")
+
+Format handling
+---------------
+
+**earthkit-climate** indicators seamlessly handle native **earthkit-data** objects (such as :code:`Field` and :code:`FieldList`) alongside :py:class:`xarray.DataArray` and :py:class:`xarray.Dataset`, performing automatic type inspection and format conversion behind the scenes.
+
+For detailed information and code examples, see :doc:`format_handling`.
 
 
 Recommended workflow
@@ -67,4 +70,5 @@ A typical climate indicator calculation follows a 4-step pipeline:
 .. seealso::
 
    * :doc:`../tutorials/quickstart_climate_indicators`
+   * :doc:`../how-tos/station_data_indicators`
    * `earthkit-transforms Climatology Concept <https://earthkit-transforms.readthedocs.io/en/latest/concepts/climatology.html>`_
