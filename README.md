@@ -48,6 +48,7 @@ Example usage:
 
 ```python
 import earthkit.climate as ekc
+
 # Example: compute a precipitation indicator
 sdii = ekc.indicators.daily_pr_intensity(precip_data)
 ```

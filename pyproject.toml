@@ -7,7 +7,7 @@ requires = ["setuptools>=65", "setuptools-scm>=8", "wheel"]
 
 [project]
 authors = [
-  {name = "European Centre for Medium-Range Weather Forecasts (ECMWF)", email = "software.support@ecmwf.int"}
+  { name = "European Centre for Medium-Range Weather Forecasts (ECMWF)", email = "software.support@ecmwf.int" }
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -33,11 +33,11 @@ dependencies = [
 ]
 description = "Tools for calculating climate indicies, climate change analysis and attribution."
 dynamic = ["readme", "version"]
-license = {file = "LICENSE"}
-name = "earthkit-climate"
-requires-python = ">=3.11"
 # Sample data source plugin for earthkit-data
 entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate.sample_source:SampleSource"
+license = { file = "LICENSE" }
+name = "earthkit-climate"
+requires-python = ">=3.11"
 
 [project.optional-dependencies]
 dev = [
@@ -116,7 +116,6 @@ testpaths = ["tests/unit"]
 
 [tool.ruff]
 line-length = 120
-preview = true
 lint.ignore = [
   "D1",  # pydocstyle: Missing Docstrings
   "D107",  # pydocstyle: numpy convention
@@ -131,6 +130,9 @@ lint.ignore = [
   "D416",
   "D417"
 ]
+lint.per-file-ignores."docs/conf.py" = [
+  "E501"  # line too long
+]
 lint.select = [
   "D",  # pydocstyle
   "E",  # pycodestyle
@@ -138,12 +140,10 @@ lint.select = [
   "I",  # isort
   "W"  # pycodestyle warnings
 ]
-lint.per-file-ignores."docs/conf.py" = [
-  "E501"  # line too long
-]
+preview = true
 
 [tool.setuptools.dynamic]
-readme = {file = ["README.md"], content-type = "text/markdown"}
+readme = { file = ["README.md"], content-type = "text/markdown" }
 
 [tool.setuptools.package-data]
 "earthkit.climate" = ["py.typed"]
