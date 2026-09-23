@@ -9,7 +9,7 @@ import pytest
 import xarray as xr
 from pytest_mock import MockerFixture
 
-from earthkit.climate.indicators import xarray as indicators
+from earthkit.climate.indicators import _xarray as indicators
 
 INDICATORS = [
     (indicators.sea_ice_area, "sea_ice_area", {"val": "test"}),

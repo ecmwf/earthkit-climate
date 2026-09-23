@@ -2,6 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from earthkit.climate.indicators.xarray._xclim_atmos import *  # noqa
-from earthkit.climate.indicators.xarray._xclim_land import *  # noqa
-from earthkit.climate.indicators.xarray._xclim_seaice import *  # noqa
+from earthkit.climate.indicators._xarray._xclim_atmos import *  # noqa
+from earthkit.climate.indicators._xarray._xclim_land import *  # noqa
+from earthkit.climate.indicators._xarray._xclim_seaice import *  # noqa

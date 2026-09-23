@@ -4,7 +4,7 @@
 Why earthkit-climate?
 =====================
 
-**earthkit-climate** is the primary ECMWF Python package responsible for climate indicator calculations and climate change analysis workflows within the **earthkit** ecosystem.
+**earthkit-climate** is the primary ECMWF Python package responsible for climate indicator calculations and climate change analysis workflows within the **earthkit** `ecosystem <https://earthkit.ecmwf.int/>`_.
 
 
 What earthkit-climate provides

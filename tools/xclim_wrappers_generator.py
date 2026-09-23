@@ -20,6 +20,7 @@ from typing import Any, Literal
 
 import xarray as xr
 import xclim.indicators.{module_name}
+from earthkit.data import FieldList
 from earthkit.utils.decorators import format_handler
 
 # from earthkit.climate.utils.decorators import metadata_handler
@@ -32,7 +33,7 @@ FUNCTION_TEMPLATE = """
 # @metadata_handler({xclim_obj_ref})
 def {func_name}(
 {signature_params}
-) -> Any:
+) -> {return_type}:
     \"\"\"
     {docstring}
     \"\"\"
@@ -40,13 +41,15 @@ def {func_name}(
 """
 
 
-def simplify_type(type_obj: Any) -> str:
+def simplify_type(type_obj: Any, is_docstring: bool = False) -> str:
     """Simplify complex types to strings that can be used in the generated code.
 
     Parameters
     ----------
     type_obj : Any
         The type object to simplify.
+    is_docstring : bool
+        If True, format type for docstrings (e.g. 'xarray.DataArray' instead of 'xr.DataArray').
 
     Returns
     -------
@@ -54,20 +57,28 @@ def simplify_type(type_obj: Any) -> str:
         The simplified type representation as a string.
     """
     if type_obj == inspect.Parameter.empty:
-        return "Any"
+        type_str = "dict[str, Any] | None"
+    elif isinstance(type_obj, type):
+        type_str = f"{type_obj.__module__}.{type_obj.__qualname__}"
+    else:
+        type_str = str(type_obj)
 
-    type_str = str(type_obj)
+    da = "xarray.DataArray" if is_docstring else "xr.DataArray"
+    fl = "earthkit.data.FieldList" if is_docstring else "FieldList"
+    ds = "xarray.Dataset" if is_docstring else "xr.Dataset"
 
     # Common replacements
     replacements = {
-        "xarray.core.dataarray.DataArray": "xr.DataArray",
-        "xarray.core.dataset.Dataset": "xr.Dataset",
-        "xarray.core.datatree.DataTree": "Any",
-        "Quantified": "Any",  # xclim specific, hard to import reliably
+        "<class 'xarray.core.dataarray.DataArray'>": f"{da} | {fl}",
+        "<class 'xarray.core.dataset.Dataset'>": f"{ds} | {fl}",
+        "xarray.core.dataarray.DataArray": f"{da} | {fl}",
+        "xarray.core.dataset.Dataset": f"{ds} | {fl}",
+        "xarray.core.datatree.DataTree": f"xr.DataTree | {fl}" if not is_docstring else f"xarray.DataTree | {fl}",
+        "Quantified": f"str | float | int | {da} | {fl}",
         "DayOfYearStr": "str",
         "DateStr": "str",
         "rv_continuous": "Any",
-        "Indexer": "Any",
+        "Indexer": "dict[str, Any]",
     }
 
     for old, new in replacements.items():
@@ -75,6 +86,9 @@ def simplify_type(type_obj: Any) -> str:
 
     # Remove quotes
     type_str = type_str.strip("'")
+
+    if is_docstring:
+        type_str = type_str.replace("xr.", "xarray.")
 
     return type_str
 
@@ -159,8 +173,16 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
         "----------",
     ]
 
+    return_doc_type = "xarray.DataArray | FieldList"
     try:
         sig = inspect.signature(indicator)
+        return_doc_type = simplify_type(sig.return_annotation, is_docstring=True)
+        if return_doc_type in ("dict[str, Any] | None", "Any"):
+            return_doc_type = "xarray.DataArray | xarray.Dataset | FieldList | tuple[xarray.DataArray | FieldList, ...]"
+        if len(return_doc_type) > 80 and return_doc_type.startswith("tuple[") and return_doc_type.endswith("]"):
+            elements = return_doc_type[6:-1].split(", ")
+            return_doc_type = "tuple[\n        " + ",\n        ".join(elements) + ",\n    ]"
+
         for name, param in sig.parameters.items():
             if name == "ds":
                 continue
@@ -173,10 +195,7 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
             param_meta = indicator.parameters.get(name)
             description = getattr(param_meta, "description", "") if param_meta else ""
 
-            type_hint = simplify_type(param.annotation)
-            # Use "xarray" instead of "xr" in docstrings
-            if type_hint.startswith("xr."):
-                type_hint = "xarray." + type_hint[3:]
+            type_hint = simplify_type(param.annotation, is_docstring=True)
 
             params_lines.append(f"{name} : {type_hint}")
             if description:
@@ -189,7 +208,7 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
         pass
 
     # Again: use "xarray" instead of "xr" in docstrings
-    params_lines.append("ds : xarray.Dataset | Any")
+    params_lines.append("ds : xarray.Dataset | None")
     params_lines.append("    Input dataset.")
     params_lines.append("**kwargs : Any")
     params_lines.append("    Additional keyword arguments.")
@@ -197,10 +216,10 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     sections.append("\n".join(params_lines))
 
     # Returns section
-    returns_section = inspect.cleandoc("""
+    returns_section = inspect.cleandoc(f"""
         Returns
         -------
-        Any
+        {return_doc_type}
             The computed index.
     """)
     sections.append(returns_section)
@@ -257,7 +276,7 @@ def format_signature_params(indicator: Any) -> str:
             params.append(f"    {p.name}: {type_hint} = {default_val},")
 
         # Add ds here
-        params.append("    ds: xr.Dataset | Any = None,")
+        params.append("    ds: xr.Dataset | None = None,")
 
         if kw_only:
             params.append("    *,")
@@ -362,12 +381,25 @@ def generate_module_content(module_name: str, indicators: List[Any]) -> str:
         call_params = format_call_params(ind)
         xclim_obj_ref = f"xclim.indicators.{module_name}.{xclim_func_name}"
 
+        return_type = "xr.DataArray | FieldList"
+        try:
+            sig = inspect.signature(ind)
+            return_type = simplify_type(sig.return_annotation)
+            if return_type in ("dict[str, Any] | None", "Any"):
+                return_type = "xr.DataArray | xr.Dataset | FieldList | tuple[xr.DataArray | FieldList, ...]"
+            if len(return_type) > 80 and return_type.startswith("tuple[") and return_type.endswith("]"):
+                elements = return_type[6:-1].split(", ")
+                return_type = "tuple[\n    " + ",\n    ".join(elements) + ",\n]"
+        except Exception:
+            pass
+
         code = FUNCTION_TEMPLATE.format(
             func_name=func_name,
             signature_params=signature_params,
             call_params=call_params,
             xclim_obj_ref=xclim_obj_ref,
             docstring=indented_doc,
+            return_type=return_type,
         )
         functions_code.append(code)
 
@@ -452,7 +484,7 @@ def main() -> None:
     """
     import pathlib
 
-    output_dir = pathlib.Path(__file__).parent.parent / "src" / "earthkit" / "climate" / "indicators" / "xarray"
+    output_dir = pathlib.Path(__file__).parent.parent / "src" / "earthkit" / "climate" / "indicators" / "_xarray"
     output_dir.mkdir(exist_ok=True, parents=True)
 
     xclim_modules = ["atmos", "land", "seaIce"]
@@ -467,7 +499,7 @@ def main() -> None:
     # init_content = "# (C) Copyright 2025 - ECMWF and individual contributors.\n\n"
     # init_content += '"""Climate indicators."""\n\n'
     # for cat in categories:
-    #    init_content += f"from earthkit.climate.indicators.{cat} import *  # noqa\n"
+    #    init_content += f"from earthkit.climate.indicators.{cat} import *\n"
 
     # with open(init_path, "w") as f:
     #    f.write(init_content)

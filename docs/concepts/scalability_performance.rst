@@ -72,11 +72,17 @@ Dask offers two primary rechunking engines:
    * Highly recommended for large multi-GB or TB rechunking operations on Dask Distributed clusters.
    * Reduces task graph size and prevents scheduler bottlenecks.
 
+.. note::
+
+   **Recommendation**:
+   * For **local execution or small/medium datasets**: Default task-based rechunking (:code:`method='task'`) is fast and sufficient.
+   * For **distributed or large-scale workloads (multi-GB/TB)**: Explicitly specify peer-to-peer rechunking (e.g., :code:`ds.chunk(..., method='p2p')`) when using a Dask Distributed cluster to prevent task graph explosion and scheduler bottlenecks.
+
 
 Worker memory management
 ------------------------
 
-During complex indicator calculations (such as rolling percentile thresholds across 30-year baselines):
+To ensure efficient memory usage and maintain performance during Dask calculations:
 
 * **Avoid overly small chunks**: Chunks smaller than 10–50 MB lead to excessive task overhead. Target chunk sizes between **100 MB and 500 MB**.
 * **Avoid overly large chunks**: Chunks exceeding worker memory limits cause spill-to-disk or out-of-memory (OOM) worker kills.
