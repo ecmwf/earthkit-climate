@@ -6,14 +6,11 @@
 Tutorials
 =========
 
-This section contains notebooks that show how to use the various features of earthkit-climate.
-The notebooks are designed to be used as a starting point for users to learn how to use the library.
+Tutorials are step-by-step, hands-on lessons designed to help newcomers learn **earthkit-climate** from the ground up.
 
 
 .. toctree::
    :maxdepth: 1
 
-   frost_days_pyrenees.ipynb
-   heatwave_evolution.ipynb
-   tropical_nights_cooling_demand.ipynb
-   era5_decadal_warming.ipynb
+   quickstart_climate_indicators.ipynb
+   dask_large_datasets.ipynb

@@ -56,7 +56,7 @@ extensions = [
     # Generates summary tables for modules/classes/functions
     "sphinx.ext.autosummary",
     # Allows citing BibTeX bibliographic entries in reStructuredText
-    # "sphinxcontrib.bibtex",
+    "sphinxcontrib.bibtex",
     # Tests snippets in documentation by running embedded Python examples
     # "sphinx.ext.doctest",
     # Checks documentation coverage of the codebase
@@ -107,6 +107,7 @@ autoapi_member_order = "alphabetical"
 autoapi_add_toctree_entry = False
 autoapi_own_page_level = "function"
 autoapi_python_use_implicit_namespaces = True
+suppress_warnings = ["autoapi.python_import_resolution"]
 
 # napoleon configuration
 napoleon_google_docstring = False
@@ -202,6 +203,12 @@ html_theme_options = {
         },
     ],
 }
+
+# see: https://sphinxcontrib-bibtex.readthedocs.io/en/latest/usage.html#unknown-target-name-when-using-footnote-citations-with-numpydoc
+numpydoc_class_members_toctree = False
+bibtex_bibfiles = ["references.bib"]
+# bibtex_default_style = "xcstyle"
+bibtex_reference_style = "author_year"
 
 
 def _write_earthkit_packages_js(app):

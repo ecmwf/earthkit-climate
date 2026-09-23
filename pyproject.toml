@@ -54,7 +54,8 @@ docs = [
   "roman-numerals-py>=3.1,<4",
   "sphinx",
   "sphinx-autoapi",
-  "sphinx_design"
+  "sphinx_design",
+  "sphinxcontrib-bibtex"
 ]
 docs-notebooks = [
   "cdsapi",
@@ -67,7 +68,7 @@ test = [
   "pytest-cov",
   "pytest-mock",
   "pytest-xdist",
-  "earthkit-transforms>=1"
+  "earthkit-transforms[all]>=1"
 ]
 test-benchmark = [
   "earthkit-climate[test]",
@@ -81,7 +82,8 @@ test-benchmark = [
 test-docs = [
   "earthkit-climate[test,docs-notebooks]",
   "nbformat",
-  "nbconvert"
+  "nbconvert",
+  "sphinxcontrib-bibtex"
 ]
 
 [tool.coverage.run]
