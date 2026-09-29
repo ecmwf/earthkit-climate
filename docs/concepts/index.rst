@@ -12,8 +12,6 @@ This section provides background explanations of key concepts, architectural cho
 .. toctree::
    :maxdepth: 1
 
-   earthkit_ecosystem
    climate_indicators
-   format_handling
    missing_values
    scalability_performance
