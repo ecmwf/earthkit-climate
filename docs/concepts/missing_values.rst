@@ -36,7 +36,7 @@ The missing data behavior is controlled using **xclim's options context** via :c
    ):
        hot_days = ekc.indicators.tx_days_above(tasmax, thresh="30 degC")
 
-Available strategies for :code:`check_missing`:
+Available strategies for :code:`check_missing` (see the `xclim missing value documentation <https://xclim.readthedocs.io/en/stable/apidoc/xclim.core.html#module-xclim.core.missing>`_):
 
 * **'any'** (default for many indices): If *any* NaN value occurs within an aggregation period, the output for that period is marked as :code:`NaN`.
 * **'wmo'**: Follows World Meteorological Organization guidelines. By default, a period is marked missing if 11 or more days are missing, or if 5 or more consecutive days are missing in a month.
@@ -72,7 +72,7 @@ In **earthkit-climate** (and standard xarray/pandas datetime conventions on the 
 
 When computing daily climatologies or rolling percentiles over time series containing both leap and non-leap years:
 
-* **Percentile calculation** (:code:`percentile_doy`): :code:`xclim` handles day-of-year alignment over leap years by applying rolling time windows (e.g. 5-day window centered on each day) and interpolating percentile thresholds to guarantee continuous daily coverage.
+* **Rolling percentile calculation** (:py:func:`earthkit.climate.utils.climatology.rolling_percentiles`): **earthkit-climate** handles day-of-year alignment over leap years by applying rolling time windows (e.g. 5-day window centered on each day) and interpolating percentile thresholds to guarantee continuous daily coverage.
 * **Non-standard calendars**: For 360-day or `noleap` (365-day) calendars common in climate model outputs (CMIP), xarray and xclim preserve the native calendar without forcing a 366-day axis unless explicitly converted.
 
 

@@ -14,7 +14,7 @@ What is a climate indicator?
 
 In climate science, meteorological variables (such as 2-metre temperature, precipitation, or surface wind speed) describe instantaneous or high-frequency atmospheric states. A **climate indicator** transforms these variables into meaningful metrics that characterize climate variability, extremes, and long-term trends, as well as their potential impacts. Many indicators are designed to quantify climate conditions relevant to specific impacts in sectors such as health, agriculture, ecosystems, energy, and water resources.
 
-In **earthkit-climate**, indicators follow standardized definitions (e.g., WMO/ETCCDI) and provide a unified interface for processing both multidimensional gridded datasets (e.g., ERA5, CMIP6, CORDEX) and 1D in-situ / station time series. They accept :py:class:`xarray.DataArray`, :py:class:`xarray.Dataset`, or **earthkit-data** objects and return indicator DataArrays with enriched CF-compliant metadata (e.g., standard names, cell methods, and updated units).
+In **earthkit-climate**, indicators follow standardized definitions (e.g., WMO/ETCCDI) and provide a unified interface for processing both multidimensional gridded datasets (e.g., ERA5, CMIP6, CORDEX) and 1D in-situ / station time series. They accept **earthkit-data** or **xarray** objects and return indicator datasets with enriched CF-compliant metadata (e.g., standard names, cell methods, and updated units).
 
 
 Anatomy of a climate indicator
@@ -51,9 +51,7 @@ Use **earthkit-transforms** when building custom calculation pipelines from low-
 Format handling
 ---------------
 
-**earthkit-climate** indicators seamlessly handle native **earthkit-data** objects (such as :code:`Field` and :code:`FieldList`) alongside :py:class:`xarray.DataArray` and :py:class:`xarray.Dataset`, performing automatic type inspection and format conversion behind the scenes.
-
-For detailed information and code examples, see :doc:`format_handling`.
+**earthkit-climate** indicators seamlessly handle native **earthkit-data** objects alongside **xarray** objects, performing automatic type inspection and format conversion behind the scenes.
 
 
 Recommended workflow
@@ -61,14 +59,14 @@ Recommended workflow
 
 A typical climate indicator calculation follows a 4-step pipeline:
 
-1. **Fetch and load**: Retrieve raw input fields via :py:mod:`earthkit.data` as a :code:`FieldList` or :code:`Field`.
-2. **Compute indicator**: Pass the :code:`FieldList` directly to :py:mod:`earthkit.climate.indicators` (e.g. :py:func:`earthkit.climate.indicators.tx_days_above`). Format conversion is handled automatically.
-3. **Preprocess / transform**: If working with percentiles or climatologies, apply :py:mod:`earthkit-transforms`.
-4. **Visualize and export**: Plot the resulting index maps or time series using :py:mod:`earthkit.plots` or export to NetCDF/Zarr.
+1. **Fetch and load**: Retrieve raw input data via :py:mod:`earthkit.data`.
+2. **Preprocess / transform**: If working with percentiles or climatologies, apply :py:mod:`earthkit-transforms`.
+3. **Compute indicator**: Pass the data directly to :py:mod:`earthkit.climate.indicators` (e.g. :py:func:`earthkit.climate.indicators.tx_days_above`). Format conversion is handled automatically.
+4. **Visualize and export**: Plot the resulting index maps or time series using :py:mod:`earthkit.plots` or export the results.
 
 
 .. seealso::
 
    * :doc:`../tutorials/quickstart_climate_indicators`
    * :doc:`../how-tos/station_data_indicators`
-   * `earthkit-transforms Climatology Concept <https://earthkit-transforms.readthedocs.io/en/latest/concepts/climatology.html>`_
+   * `earthkit-transforms Documentation <https://earthkit-transforms.readthedocs.io/en/latest/>`_
