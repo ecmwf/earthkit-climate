@@ -30,7 +30,7 @@ The **earthkit** framework is a modular suite of open-source Python components d
 
 1. **earthkit-data**: Ingests data from CDS, MARS, local GRIB/NetCDF/Zarr files as :code:`FieldList` objects.
 2. **earthkit-transforms**: Handles general spatial/temporal transformations, baseline period slicing, and climatology computations.
-3. **earthkit-climate**: Computes climate indicator metrics (e.g. heatwave duration, heavy precipitation, drought indices). 
+3. **earthkit-climate**: Computes climate indicator metrics (e.g. heatwave duration, heavy precipitation, drought indices).
 4. **earthkit-plots**: Produces publication-ready maps, charts, and geospatial figures.
 
 
