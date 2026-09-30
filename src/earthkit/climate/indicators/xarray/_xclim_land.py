@@ -58,6 +58,63 @@ def base_flow_index(
 
 
 @format_handler()
+# @metadata_handler(xclim.indicators.land.base_flow_index_seasonal_ratio)
+def base_flow_index_seasonal_ratio(
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
+    *,
+    freq: str = "QS-DEC",
+    numerator: str = "DJF",
+    denominator: str = "JJA",
+    **kwargs: Any,
+) -> tuple[xr.DataArray | FieldList, xr.DataArray | FieldList]:
+    """
+    Seasonal base flow index (bfi) and {numerator} to {denominator} bfi ratio.
+
+    Yearly base flow index per season, defined as the minimum 7-day average flow divided by
+    the mean flowas well as yearly  {numerator} to {denominator} bfi ratio.
+
+    **Units:**
+
+    - bfi: dimensionless
+    - bfi_ratio: dimensionless
+
+    This function wraps `xclim.indicators.land.base_flow_index_seasonal_ratio <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.base_flow_index_seasonal_ratio>`_.
+
+    Parameters
+    ----------
+    q : xarray.DataArray | earthkit.data.FieldList | str
+        Rate of river discharge.
+    freq : str
+        Resampling frequency.
+    numerator : str
+        String indicating the season in the numerator of the ratio.
+    denominator : str
+        String indicating the season in the denominator of the ratio.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+        Returns
+        -------
+        tuple[
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+    ]
+            The computed index.
+    """
+    return xclim.indicators.land.base_flow_index_seasonal_ratio(
+        q=q,
+        freq=freq,
+        numerator=numerator,
+        denominator=denominator,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
 # @metadata_handler(xclim.indicators.land.blowing_snow)
 def blowing_snow(
     snd: xr.DataArray | FieldList | str = "snd",
@@ -143,8 +200,8 @@ def doy_qmax(
     da : xarray.DataArray | earthkit.data.FieldList | str
         Input data.
     freq : str
-        Resampling frequency defining the periods as defined in
-        :ref:`timeseries.resampling`.
+        Resampling frequency defining the periods as defined in `xclim time handling
+        <https://xclim.readthedocs.io/en/stable/time_handling.html>`_.
     ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
@@ -188,8 +245,8 @@ def doy_qmin(
     da : xarray.DataArray | earthkit.data.FieldList | str
         Input data.
     freq : str
-        Resampling frequency defining the periods as defined in
-        :ref:`timeseries.resampling`.
+        Resampling frequency defining the periods as defined in `xclim time handling
+        <https://xclim.readthedocs.io/en/stable/time_handling.html>`_.
     ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
@@ -315,8 +372,8 @@ def holiday_snow_and_snowfall_days(
     *,
     snd_thresh: str | float | int | xr.DataArray | FieldList = "20 mm",
     prsn_thresh: str | float | int | xr.DataArray | FieldList = "1 mm",
-    snd_op: Literal[">", "gt", ">=", "ge"] = ">=",
-    prsn_op: Literal[">", "gt", ">=", "ge"] = ">=",
+    snd_op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    prsn_op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS-JUL",
@@ -387,7 +444,7 @@ def holiday_snow_days(
     ds: xr.Dataset | None = None,
     *,
     snd_thresh: str | float | int | xr.DataArray | FieldList = "20 mm",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS",
@@ -437,6 +494,62 @@ def holiday_snow_days(
         date_start=date_start,
         date_end=date_end,
         freq=freq,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
+# @metadata_handler(xclim.indicators.land.lag_snowpack_flow_peaks)
+def lag_snowpack_flow_peaks(
+    snw: xr.DataArray | FieldList | str = "snw",
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
+    *,
+    freq: str = "YS-OCT",
+    p: float = 0.9,
+    **kwargs: Any,
+) -> xr.DataArray | FieldList:
+    """
+    Time lag between maximum snowpack and river high flows.
+
+    Number of days between the annual maximum snowpack, measured by the surface snow amount,
+    and the mean date when river flow exceeds a percentile threshold during a given year. If
+    the time lag between maximum snowpack and river high flows is ≤ 50 days, the watershed
+    is likely in a nival regime.
+
+    **Units:**
+
+    - lag_snowpack_flow_peaks: days
+
+    This function wraps `xclim.indicators.land.lag_snowpack_flow_peaks <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.lag_snowpack_flow_peaks>`_.
+
+    Parameters
+    ----------
+    snw : xarray.DataArray | earthkit.data.FieldList | str
+        Surface snow amount.
+    q : xarray.DataArray | earthkit.data.FieldList | str
+        Streamflow.
+    freq : str
+        Resampling frequency. Defaults to the water year starting on the 1st of October.
+    p : float
+        Percentile for calculating the flow index, between 0 and 1. Default of 0.9 is for
+        high flows.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+    xarray.DataArray | earthkit.data.FieldList
+        The computed index.
+    """
+    return xclim.indicators.land.lag_snowpack_flow_peaks(
+        snw=snw,
+        q=q,
+        freq=freq,
+        p=p,
         ds=ds,
         **kwargs,
     )
@@ -541,6 +654,108 @@ def rb_flashiness_index(
 
 
 @format_handler()
+# @metadata_handler(xclim.indicators.land.runoff_ratio)
+def runoff_ratio(
+    q: xr.DataArray | FieldList | str = "q",
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
+    *,
+    area: str | float | int | xr.DataArray | FieldList,
+    freq: str = "YS",
+    **kwargs: Any,
+) -> xr.DataArray | FieldList:
+    """
+    Runoff ratio.
+
+    Ratio of runoff volume measured at the stream to the total precipitation volume over the
+    watershed.
+
+    **Units:**
+
+    - runoff_ratio: dimensionless
+
+    This function wraps `xclim.indicators.land.runoff_ratio <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.runoff_ratio>`_.
+
+    Parameters
+    ----------
+    q : xarray.DataArray | earthkit.data.FieldList | str
+        Streamflow in discharge units.
+    pr : xarray.DataArray | earthkit.data.FieldList | str
+        Mean daily precipitation in precipitation units.
+    area : str | float | int | xarray.DataArray | earthkit.data.FieldList
+        Watershed area in area units.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+    xarray.DataArray | earthkit.data.FieldList
+        The computed index.
+    """
+    return xclim.indicators.land.runoff_ratio(
+        q=q,
+        pr=pr,
+        area=area,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
+# @metadata_handler(xclim.indicators.land.sen_slope)
+def sen_slope(
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
+    *,
+    freq: str = "YS",
+    **kwargs: Any,
+) -> tuple[xr.DataArray | FieldList, xr.DataArray | FieldList]:
+    """
+    Sen slope : temporal robustness analysis of streamflow.
+
+    Computes Theil-Sen slope estimators and performs the Mann-Kendall test for trend
+    evaluation.
+
+    **Units:**
+
+    - sen_slope: dimensionless
+    - p_value: dimensionless
+
+    This function wraps `xclim.indicators.land.sen_slope <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.sen_slope>`_.
+
+    Parameters
+    ----------
+    q : xarray.DataArray | earthkit.data.FieldList | str
+        Observed streamflow vector.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+        Returns
+        -------
+        tuple[
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+    ]
+            The computed index.
+    """
+    return xclim.indicators.land.sen_slope(
+        q=q,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
 # @metadata_handler(xclim.indicators.land.standardized_groundwater_index)
 def standardized_groundwater_index(
     gwl: xr.DataArray | FieldList | str = "gwl",
@@ -582,12 +797,11 @@ def standardized_groundwater_index(
         `freq="MS"`, i.e. a monthly resampling, the window is an integer number of months.
     dist : str | Any
         Name of the univariate distribution, or a callable `rv_continuous` (see
-        :py:mod:`scipy.stats`).
+        ``scipy.stats``).
     method : str
         Name of the fitting method, such as `ML` (maximum likelihood), `APP` (approximate).
         The approximate method uses a deterministic function that does not involve any
-        optimization, which can be sensitive to noise. `PWM` should be used with a
-        `lmoments3` distribution.
+        optimization. `PWM` should be used with a `lmoments3` distribution.
     fitkwargs : dict | None
         Kwargs passed to ``xclim.indices.stats.fit`` used to impose values of certain
         parameters (`floc`, `fscale`).
@@ -636,7 +850,7 @@ def snd_days_above(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "2 cm",
     freq: str = "YS-JUL",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -1033,7 +1247,7 @@ def snw_days_above(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "4 kg m-2",
     freq: str = "YS-JUL",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
+    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -1415,12 +1629,11 @@ def standardized_streamflow_index(
         `freq="MS"`, i.e. a monthly resampling, the window is an integer number of months.
     dist : str | Any
         Name of the univariate distribution, or a callable `rv_continuous` (see
-        :py:mod:`scipy.stats`).
+        ``scipy.stats``).
     method : str
         Name of the fitting method, such as `ML` (maximum likelihood), `APP` (approximate).
         The approximate method uses a deterministic function that does not involve any
-        optimization, which can be sensitive to noise. `PWM` should be used with a
-        `lmoments3` distribution.
+        optimization. `PWM` should be used with a `lmoments3` distribution.
     fitkwargs : dict | None
         Kwargs passed to ``xclim.indices.stats.fit`` used to impose values of certain
         parameters (`floc`, `fscale`).
