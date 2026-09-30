@@ -172,7 +172,7 @@ def biologically_effective_degree_days(
     ds: xr.Dataset | None = None,
     *,
     thresh_tasmin: str | float | int | xr.DataArray | FieldList = "10 degC",
-    method: Literal['gladstones', 'icclim', 'jones', 'smoothed', 'stepwise'] = "gladstones",
+    method: Literal["gladstones", "icclim", "jones", "smoothed", "stepwise"] = "gladstones",
     cap_value: float = 1.0,
     low_dtr: str | float | int | xr.DataArray | FieldList = "10 degC",
     high_dtr: str | float | int | xr.DataArray | FieldList = "13 degC",
@@ -321,7 +321,7 @@ def maximum_consecutive_dry_days(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -459,8 +459,8 @@ def cffwis_indices(
     **kwargs : Any
         Additional keyword arguments.
 
-        Returns
-        -------
+    Returns
+    -------
         tuple[
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
@@ -614,7 +614,7 @@ def cold_spell_days(
     thresh: str | float | int | xr.DataArray | FieldList = "-10 degC",
     window: int = 5,
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -679,7 +679,7 @@ def cold_spell_duration_index(
     freq: str = "YS",
     resample_before_rl: bool = True,
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = "<",
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -749,7 +749,7 @@ def cold_spell_frequency(
     thresh: str | float | int | xr.DataArray | FieldList = "-10 degC",
     window: int = 5,
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -811,7 +811,7 @@ def cold_spell_max_length(
     thresh: str | float | int | xr.DataArray | FieldList = "-10 degC",
     window: int = 1,
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -874,7 +874,7 @@ def cold_spell_total_length(
     thresh: str | float | int | xr.DataArray | FieldList = "-10 degC",
     window: int = 3,
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -936,7 +936,7 @@ def consecutive_frost_days(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -994,7 +994,7 @@ def maximum_consecutive_frost_free_days(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -1051,7 +1051,7 @@ def cool_night_index(
     lat: xr.DataArray | FieldList | str | None = None,
     ds: xr.Dataset | None = None,
     *,
-    freq: Literal['YS', 'YS-JAN'] = "YS",
+    freq: Literal["YS", "YS-JAN"] = "YS",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -1366,7 +1366,7 @@ def maximum_consecutive_wet_days(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1427,7 +1427,7 @@ def days_over_precip_doy_thresh(
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -1494,7 +1494,7 @@ def days_over_precip_thresh(
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -1694,7 +1694,7 @@ def degree_days_exceedance_date(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     sum_thresh: str | float | int | xr.DataArray | FieldList = "25 K days",
-    op: Literal['>', 'gt', '<', 'lt', '>=', 'ge', '<=', 'le'] = ">",
+    op: Literal[">", "gt", "<", "lt", ">=", "ge", "<=", "le"] = ">",
     after_date: str | None = None,
     never_reached: str | int | None = None,
     freq: str = "YS",
@@ -1817,8 +1817,8 @@ def daily_freezethaw_cycles(
     *,
     thresh_tasmin: str | float | int | xr.DataArray | FieldList = "0 degC",
     thresh_tasmax: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1970,7 +1970,7 @@ def dry_days(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0.2 mm/d",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -2024,7 +2024,7 @@ def dry_spell_frequency(
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
-    op: Literal['sum', 'max', 'min', 'mean'] = "sum",
+    op: Literal["sum", "max", "min", "mean"] = "sum",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -2089,7 +2089,7 @@ def dry_spell_max_length(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 1,
-    op: Literal['max', 'sum'] = "sum",
+    op: Literal["max", "sum"] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -2151,7 +2151,7 @@ def dry_spell_total_length(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 3,
-    op: Literal['sum', 'max', 'min', 'mean'] = "sum",
+    op: Literal["sum", "max", "min", "mean"] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -2218,7 +2218,7 @@ def dryness_index(
     ds: xr.Dataset | None = None,
     *,
     wo: str | float | int | xr.DataArray | FieldList = "200 mm",
-    freq: Literal['YS', 'YS-JAN'] = "YS",
+    freq: Literal["YS", "YS-JAN"] = "YS",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -2605,7 +2605,7 @@ def first_day_tg_above(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -2667,7 +2667,7 @@ def first_day_tg_below(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -2729,7 +2729,7 @@ def first_day_tn_above(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -2791,7 +2791,7 @@ def first_day_tn_below(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -2853,7 +2853,7 @@ def first_day_tx_above(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
@@ -2915,7 +2915,7 @@ def first_day_tx_below(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -3030,7 +3030,7 @@ def fraction_over_precip_doy_thresh(
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -3098,7 +3098,7 @@ def fraction_over_precip_thresh(
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -3166,8 +3166,8 @@ def freezethaw_spell_frequency(
     thresh_tasmin: str | float | int | xr.DataArray | FieldList = "0 degC",
     thresh_tasmax: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 1,
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -3241,8 +3241,8 @@ def freezethaw_spell_max_length(
     thresh_tasmin: str | float | int | xr.DataArray | FieldList = "0 degC",
     thresh_tasmax: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 1,
-    op_tasmin: Literal['<', '<=', 'lt', 'le'] = "<=",
-    op_tasmax: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
+    op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -3429,7 +3429,7 @@ def freshet_start(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 5,
     freq: str = "YS",
@@ -3541,7 +3541,7 @@ def frost_free_season_end(
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -3603,7 +3603,7 @@ def frost_free_season_length(
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -3666,7 +3666,7 @@ def frost_free_season_start(
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -3728,7 +3728,7 @@ def frost_free_spell_max_length(
     thresh: str | float | int | xr.DataArray | FieldList = "0.0 degC",
     window: int = 1,
     freq: str = "YS-JUL",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -3792,7 +3792,7 @@ def frost_season_length(
     mid_date: str | None = "01-01",
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS-JUL",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -3905,7 +3905,7 @@ def growing_season_end(
     mid_date: str | None = "07-01",
     window: int = 5,
     freq: str = "YS",
-    op: Literal['>', '>=', 'lt', 'le'] = ">=",
+    op: Literal[">", ">=", "lt", "le"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -3969,7 +3969,7 @@ def growing_season_length(
     window: int = 6,
     mid_date: str | None = "07-01",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -4033,7 +4033,7 @@ def growing_season_start(
     mid_date: str | None = "07-01",
     window: int = 5,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -4093,7 +4093,7 @@ def heat_spell_frequency(
     ds: xr.Dataset | None = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -4169,7 +4169,7 @@ def heat_spell_max_length(
     ds: xr.Dataset | None = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -4245,7 +4245,7 @@ def heat_spell_total_length(
     ds: xr.Dataset | None = None,
     *,
     window: int = 3,
-    win_reducer: Literal['min', 'max', 'sum', 'mean'] = "mean",
+    win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
@@ -4324,7 +4324,7 @@ def heat_wave_frequency(
     thresh_tasmax: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -4392,7 +4392,7 @@ def heat_wave_index(
     thresh: str | float | int | xr.DataArray | FieldList = "25 degC",
     window: int = 5,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -4457,7 +4457,7 @@ def heat_wave_max_length(
     thresh_tasmax: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -4527,7 +4527,7 @@ def heat_wave_total_length(
     thresh_tasmax: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -4808,7 +4808,7 @@ def hot_spell_frequency(
     thresh: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -4870,7 +4870,7 @@ def hot_spell_max_length(
     thresh: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 1,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -4991,7 +4991,7 @@ def hot_spell_total_length(
     thresh: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -5058,7 +5058,7 @@ def huglin_index(
     cap_value: float = 1.0,
     start_date: str | str = "04-01",
     end_date: str | str = "10-01",
-    freq: Literal['YS', 'YS-JAN', 'YS-JUL'] = "YS",
+    freq: Literal["YS", "YS-JAN", "YS-JUL"] = "YS",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -5209,8 +5209,8 @@ def jetstream_metric_woollings(
     **kwargs : Any
         Additional keyword arguments.
 
-        Returns
-        -------
+    Returns
+    -------
         tuple[
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
@@ -5333,7 +5333,7 @@ def last_spring_frost(
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     before_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
@@ -5754,7 +5754,7 @@ def maximum_consecutive_warm_days(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "25 °C",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -6057,8 +6057,8 @@ def rain_season(
     **kwargs : Any
         Additional keyword arguments.
 
-        Returns
-        -------
+    Returns
+    -------
         tuple[
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
@@ -6096,7 +6096,7 @@ def rprctot(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -6196,7 +6196,7 @@ def daily_pr_intensity(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -6918,7 +6918,7 @@ def tg10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = "<",
+    op: Literal[">", ">=", "gt", "ge"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -6979,7 +6979,7 @@ def tg90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7039,7 +7039,7 @@ def tg_days_above(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "10.0 degC",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = ">",
+    op: Literal["<", "lt", "<=", "le"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7091,7 +7091,7 @@ def tg_days_below(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "10.0 degC",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7325,7 +7325,7 @@ def tn10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = "<",
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7386,7 +7386,7 @@ def tn90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7446,7 +7446,7 @@ def tn_days_above(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "20.0 degC",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7498,7 +7498,7 @@ def tn_days_below(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "-10.0 degC",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7682,7 +7682,7 @@ def tropical_nights(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "20.0 degC",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7735,7 +7735,7 @@ def tx10p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = "<",
+    op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7796,7 +7796,7 @@ def tx90p(
     *,
     freq: str = "YS",
     bootstrap: bool = False,
-    op: Literal['<', '<=', 'lt', 'le'] = ">",
+    op: Literal["<", "<=", "lt", "le"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7856,7 +7856,7 @@ def tx_days_above(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "25.0 degC",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -7908,7 +7908,7 @@ def tx_days_below(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "25.0 degC",
     freq: str = "YS",
-    op: Literal['<', 'lt', '<=', 'le'] = "<",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -8094,7 +8094,7 @@ def tx_tn_days_above(
     thresh_tasmin: str | float | int | xr.DataArray | FieldList = "22 degC",
     thresh_tasmax: str | float | int | xr.DataArray | FieldList = "30 degC",
     freq: str = "YS",
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -8321,7 +8321,7 @@ def warm_spell_duration_index(
     freq: str = "YS",
     resample_before_rl: bool = True,
     bootstrap: bool = False,
-    op: Literal['>', '>=', 'gt', 'ge'] = ">",
+    op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -8489,7 +8489,7 @@ def wet_spell_frequency(
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
-    op: Literal['sum', 'min', 'max', 'mean'] = "sum",
+    op: Literal["sum", "min", "max", "mean"] = "sum",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -8555,7 +8555,7 @@ def wet_spell_max_length(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 1,
-    op: Literal['min', 'sum', 'max', 'mean'] = "sum",
+    op: Literal["min", "sum", "max", "mean"] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -8621,7 +8621,7 @@ def wet_spell_total_length(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 3,
-    op: Literal['min', 'sum', 'max', 'mean'] = "sum",
+    op: Literal["min", "sum", "max", "mean"] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -8687,7 +8687,7 @@ def wetdays(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -8739,7 +8739,7 @@ def wetdays_prop(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm/day",
     freq: str = "YS",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """

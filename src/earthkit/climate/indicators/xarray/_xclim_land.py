@@ -96,8 +96,8 @@ def base_flow_index_seasonal_ratio(
     **kwargs : Any
         Additional keyword arguments.
 
-        Returns
-        -------
+    Returns
+    -------
         tuple[
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
@@ -372,8 +372,8 @@ def holiday_snow_and_snowfall_days(
     *,
     snd_thresh: str | float | int | xr.DataArray | FieldList = "20 mm",
     prsn_thresh: str | float | int | xr.DataArray | FieldList = "1 mm",
-    snd_op: Literal['>', 'gt', '>=', 'ge'] = ">=",
-    prsn_op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    snd_op: Literal[">", "gt", ">=", "ge"] = ">=",
+    prsn_op: Literal[">", "gt", ">=", "ge"] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS-JUL",
@@ -444,7 +444,7 @@ def holiday_snow_days(
     ds: xr.Dataset | None = None,
     *,
     snd_thresh: str | float | int | xr.DataArray | FieldList = "20 mm",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS",
@@ -739,8 +739,8 @@ def sen_slope(
     **kwargs : Any
         Additional keyword arguments.
 
-        Returns
-        -------
+    Returns
+    -------
         tuple[
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
@@ -850,7 +850,7 @@ def snd_days_above(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "2 cm",
     freq: str = "YS-JUL",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
@@ -1247,7 +1247,7 @@ def snw_days_above(
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "4 kg m-2",
     freq: str = "YS-JUL",
-    op: Literal['>', 'gt', '>=', 'ge'] = ">=",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """

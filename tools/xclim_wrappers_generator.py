@@ -137,9 +137,7 @@ def simplify_type(type_obj: Any, is_docstring: bool = False) -> str:
         "<class 'xarray.core.dataset.Dataset'>": f"{ds} | {fl}",
         "xarray.core.dataarray.DataArray": f"{da} | {fl}",
         "xarray.core.dataset.Dataset": f"{ds} | {fl}",
-        "xarray.core.datatree.DataTree": (
-            f"xr.DataTree | {fl}" if not is_docstring else f"xarray.DataTree | {fl}"
-        ),
+        "xarray.core.datatree.DataTree": (f"xr.DataTree | {fl}" if not is_docstring else f"xarray.DataTree | {fl}"),
         "Quantified": f"str | float | int | {da} | {fl}",
         "DayOfYearStr": "str",
         "DateStr": "str",
@@ -190,9 +188,7 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     if not summary.endswith("."):
         summary += "."
 
-    description = getattr(indicator, "abstract", "") or getattr(
-        indicator, "description", ""
-    )
+    description = getattr(indicator, "abstract", "") or getattr(indicator, "description", "")
     units = getattr(indicator, "units", "")
     outputs = getattr(indicator, "var_name", None)
 
@@ -249,15 +245,9 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
         return_doc_type = simplify_type(sig.return_annotation, is_docstring=True)
         if return_doc_type in ("dict[str, Any] | None", "Any"):
             return_doc_type = "xarray.DataArray | xarray.Dataset | FieldList | tuple[xarray.DataArray | FieldList, ...]"
-        if (
-            len(return_doc_type) > 80
-            and return_doc_type.startswith("tuple[")
-            and return_doc_type.endswith("]")
-        ):
+        if len(return_doc_type) > 80 and return_doc_type.startswith("tuple[") and return_doc_type.endswith("]"):
             elements = return_doc_type[6:-1].split(", ")
-            return_doc_type = (
-                "tuple[\n        " + ",\n        ".join(elements) + ",\n    ]"
-            )
+            return_doc_type = "tuple[\n        " + ",\n        ".join(elements) + ",\n    ]"
 
         for name, param in sig.parameters.items():
             if name == "ds":
@@ -360,11 +350,7 @@ def format_signature_params(indicator: Any) -> str:
         for p in pos_with_default:
             type_hint = simplify_type(p.annotation)
             default_val = repr(p.default)
-            if (
-                isinstance(p.default, str)
-                and "'" in default_val
-                and '"' not in default_val
-            ):
+            if isinstance(p.default, str) and "'" in default_val and '"' not in default_val:
                 default_val = f'"{p.default}"'
             params.append(f"    {p.name}: {type_hint} = {default_val},")
 
@@ -377,11 +363,7 @@ def format_signature_params(indicator: Any) -> str:
                 type_hint = simplify_type(p.annotation)
                 if p.default != inspect.Parameter.empty:
                     default_val = repr(p.default)
-                    if (
-                        isinstance(p.default, str)
-                        and "'" in default_val
-                        and '"' not in default_val
-                    ):
+                    if isinstance(p.default, str) and "'" in default_val and '"' not in default_val:
                         default_val = f'"{p.default}"'
                     params.append(f"    {p.name}: {type_hint} = {default_val},")
                 else:
@@ -424,9 +406,7 @@ def format_call_params(indicator: Any) -> str:
         call_args.append("**kwargs")
 
         # If the total length is likely to exceed 88 chars (indent=4 + total), or many parameters
-        total_len = (
-            sum(len(arg) for arg in call_args) + 2 * len(call_args) + 30
-        )  # 30 for the 'return xclim...' part
+        total_len = sum(len(arg) for arg in call_args) + 2 * len(call_args) + 30  # 30 for the 'return xclim...' part
         if len(call_args) > 3 or total_len > 80:
             return "\n        " + ",\n        ".join(call_args) + ",\n    "
 
@@ -477,11 +457,7 @@ def generate_module_content(module_name: str, indicators: List[Any]) -> str:
 
         # Indent the docstring correctly
         lines = docstring.split("\n")
-        indented_doc = (
-            lines[0]
-            + "\n"
-            + "\n".join([("    " + line if line.strip() else "") for line in lines[1:]])
-        )
+        indented_doc = lines[0] + "\n" + "\n".join([("    " + line if line.strip() else "") for line in lines[1:]])
 
         signature_params = format_signature_params(ind)
         call_params = format_call_params(ind)
@@ -493,11 +469,7 @@ def generate_module_content(module_name: str, indicators: List[Any]) -> str:
             return_type = simplify_type(sig.return_annotation)
             if return_type in ("dict[str, Any] | None", "Any"):
                 return_type = "xr.DataArray | xr.Dataset | FieldList | tuple[xr.DataArray | FieldList, ...]"
-            if (
-                len(return_type) > 80
-                and return_type.startswith("tuple[")
-                and return_type.endswith("]")
-            ):
+            if len(return_type) > 80 and return_type.startswith("tuple[") and return_type.endswith("]"):
                 elements = return_type[6:-1].split(", ")
                 return_type = "tuple[\n    " + ",\n    ".join(elements) + ",\n]"
         except Exception:
@@ -594,14 +566,7 @@ def main() -> None:
     """
     import pathlib
 
-    output_dir = (
-        pathlib.Path(__file__).parent.parent
-        / "src"
-        / "earthkit"
-        / "climate"
-        / "indicators"
-        / "xarray"
-    )
+    output_dir = pathlib.Path(__file__).parent.parent / "src" / "earthkit" / "climate" / "indicators" / "xarray"
     output_dir.mkdir(exist_ok=True, parents=True)
 
     xclim_modules = ["atmos", "land", "seaIce"]
