@@ -92,6 +92,7 @@ autodoc_default_options = {
 autodocs_hidden_modules = ["aggregate", "version"]
 
 # autoapi configuration
+add_module_names = False
 autoapi_dirs = ["../src/earthkit"]
 autoapi_ignore = ["*/version.py", "*/sample_source.py"]
 autoapi_options = [
@@ -105,7 +106,7 @@ autoapi_options = [
 autoapi_root = "autoapi"
 autoapi_member_order = "alphabetical"
 autoapi_add_toctree_entry = False
-autoapi_own_page_level = "function"
+autoapi_own_page_level = "module"
 autoapi_python_use_implicit_namespaces = True
 suppress_warnings = ["autoapi.python_import_resolution"]
 
@@ -224,5 +225,12 @@ def _write_earthkit_packages_js(app):
         fh.write(f"window.earthkitPackages = {json.dumps(packages)};\n")
 
 
+def autoapi_skip_member(app, what, name, obj, skip, options):
+    if what == "module" and "_xclim_" in name:
+        return True
+    return skip
+
+
 def setup(app):
     app.connect("builder-inited", _write_earthkit_packages_js)
+    app.connect("autoapi-skip-member", autoapi_skip_member)

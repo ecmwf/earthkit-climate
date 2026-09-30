@@ -6,6 +6,7 @@
 
 import importlib
 import inspect
+import re
 import textwrap
 from typing import Any, List
 
@@ -41,6 +42,69 @@ def {func_name}(
 """
 
 
+_XCLIM_BASE_URL = "https://xclim.readthedocs.io/en/stable"
+
+# Map of known xclim :ref: labels that are NOT in objects.inv to their direct URLs.
+# These are internal RST labels used in xclim's own narrative docs that do not
+# appear in the Sphinx inventory and therefore cannot be resolved via intersphinx.
+_XCLIM_REF_URL_MAP: dict[str, tuple[str, str]] = {
+    # label -> (display_text, URL)
+    "timeseries.resampling": (
+        "xclim time handling",
+        f"{_XCLIM_BASE_URL}/time_handling.html",
+    ),
+    "indexing": (
+        "xclim indexing",
+        f"{_XCLIM_BASE_URL}/notebooks/index.html",
+    ),
+    "missing_values": (
+        "xclim missing values",
+        f"{_XCLIM_BASE_URL}/notebooks/missing_values.html",
+    ),
+}
+
+
+def clean_xclim_refs(text: str) -> str:
+    """Replace xclim-internal RST cross-references with external hyperlinks or plain text.
+
+    Sphinx cross-reference roles like ``:ref:`label``` that point to labels
+    internal to xclim's documentation are not resolvable in earthkit-climate's
+    Sphinx build and produce ``ref.ref`` warnings.  This function converts them
+    to either a proper external hyperlink (for known labels listed in
+    ``_XCLIM_REF_URL_MAP``) or a plain-text inline code literal as a fallback.
+
+    ``:py:*`` roles are converted to inline code literals so that they render
+    cleanly without requiring intersphinx to resolve them.
+
+    Parameters
+    ----------
+    text : str
+        Raw docstring text potentially containing xclim RST cross-references.
+
+    Returns
+    -------
+    str
+        Text with all recognised cross-reference roles replaced by hyperlinks
+        or plain-text equivalents.
+    """
+
+    def _replace_ref(match: re.Match) -> str:
+        label = match.group(1)
+        if label in _XCLIM_REF_URL_MAP:
+            display, url = _XCLIM_REF_URL_MAP[label]
+            return f"`{display} <{url}>`_"
+        # Unknown label: fall back to plain inline code
+        return f"``{label}``"
+
+    # :ref:`label` -> external hyperlink or plain text
+    text = re.sub(r":ref:`([^`]+)`", _replace_ref, text)
+    # :py:mod/func/class/attr:`name` -> ``name``
+    text = re.sub(r":py:[a-z]+:`([^`]+)`", r"``\1``", text)
+    # generic :role:`text` fallback
+    text = re.sub(r":[a-z:]+:`([^`]+)`", r"``\1``", text)
+    return text
+
+
 def simplify_type(type_obj: Any, is_docstring: bool = False) -> str:
     """Simplify complex types to strings that can be used in the generated code.
 
@@ -73,7 +137,9 @@ def simplify_type(type_obj: Any, is_docstring: bool = False) -> str:
         "<class 'xarray.core.dataset.Dataset'>": f"{ds} | {fl}",
         "xarray.core.dataarray.DataArray": f"{da} | {fl}",
         "xarray.core.dataset.Dataset": f"{ds} | {fl}",
-        "xarray.core.datatree.DataTree": f"xr.DataTree | {fl}" if not is_docstring else f"xarray.DataTree | {fl}",
+        "xarray.core.datatree.DataTree": (
+            f"xr.DataTree | {fl}" if not is_docstring else f"xarray.DataTree | {fl}"
+        ),
         "Quantified": f"str | float | int | {da} | {fl}",
         "DayOfYearStr": "str",
         "DateStr": "str",
@@ -124,13 +190,17 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     if not summary.endswith("."):
         summary += "."
 
-    description = getattr(indicator, "abstract", "") or getattr(indicator, "description", "")
+    description = getattr(indicator, "abstract", "") or getattr(
+        indicator, "description", ""
+    )
     units = getattr(indicator, "units", "")
     outputs = getattr(indicator, "var_name", None)
 
     sections = [summary]
 
     if description:
+        # Clean xclim-internal RST cross-references before wrapping
+        description = clean_xclim_refs(description)
         # Wrap the description to avoid long lines
         # We target a width of 88 to allow for indentation (4 spaces) and staying well under 110
         sections.append(textwrap.fill(description, width=88))
@@ -179,16 +249,25 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
         return_doc_type = simplify_type(sig.return_annotation, is_docstring=True)
         if return_doc_type in ("dict[str, Any] | None", "Any"):
             return_doc_type = "xarray.DataArray | xarray.Dataset | FieldList | tuple[xarray.DataArray | FieldList, ...]"
-        if len(return_doc_type) > 80 and return_doc_type.startswith("tuple[") and return_doc_type.endswith("]"):
+        if (
+            len(return_doc_type) > 80
+            and return_doc_type.startswith("tuple[")
+            and return_doc_type.endswith("]")
+        ):
             elements = return_doc_type[6:-1].split(", ")
-            return_doc_type = "tuple[\n        " + ",\n        ".join(elements) + ",\n    ]"
+            return_doc_type = (
+                "tuple[\n        " + ",\n        ".join(elements) + ",\n    ]"
+            )
 
         for name, param in sig.parameters.items():
             if name == "ds":
                 continue
 
             # Skip VAR parameters as they are handled by docstring **kwargs
-            if param.kind in (inspect.Parameter.VAR_KEYWORD, inspect.Parameter.VAR_POSITIONAL):
+            if param.kind in (
+                inspect.Parameter.VAR_KEYWORD,
+                inspect.Parameter.VAR_POSITIONAL,
+            ):
                 continue
 
             # Try to get description from indicator.parameters
@@ -199,9 +278,14 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
 
             params_lines.append(f"{name} : {type_hint}")
             if description:
+                # Clean xclim-internal RST cross-references before wrapping
+                description = clean_xclim_refs(description)
                 # Wrap description with hanging indent
                 wrapped_description = textwrap.fill(
-                    description, width=88, initial_indent="    ", subsequent_indent="    "
+                    description,
+                    width=88,
+                    initial_indent="    ",
+                    subsequent_indent="    ",
                 )
                 params_lines.append(wrapped_description)
     except Exception:
@@ -216,12 +300,14 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     sections.append("\n".join(params_lines))
 
     # Returns section
-    returns_section = inspect.cleandoc(f"""
+    returns_section = inspect.cleandoc(
+        f"""
         Returns
         -------
         {return_doc_type}
             The computed index.
-    """)
+    """
+    )
     sections.append(returns_section)
 
     return "\n\n".join(sections)
@@ -255,7 +341,10 @@ def format_signature_params(indicator: Any) -> str:
             if p.name == "ds":
                 continue
 
-            if p.kind in (inspect.Parameter.POSITIONAL_OR_KEYWORD, inspect.Parameter.POSITIONAL_ONLY):
+            if p.kind in (
+                inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                inspect.Parameter.POSITIONAL_ONLY,
+            ):
                 if p.default == inspect.Parameter.empty:
                     pos_no_default.append(p)
                 else:
@@ -271,7 +360,11 @@ def format_signature_params(indicator: Any) -> str:
         for p in pos_with_default:
             type_hint = simplify_type(p.annotation)
             default_val = repr(p.default)
-            if isinstance(p.default, str) and "'" in default_val and '"' not in default_val:
+            if (
+                isinstance(p.default, str)
+                and "'" in default_val
+                and '"' not in default_val
+            ):
                 default_val = f'"{p.default}"'
             params.append(f"    {p.name}: {type_hint} = {default_val},")
 
@@ -284,7 +377,11 @@ def format_signature_params(indicator: Any) -> str:
                 type_hint = simplify_type(p.annotation)
                 if p.default != inspect.Parameter.empty:
                     default_val = repr(p.default)
-                    if isinstance(p.default, str) and "'" in default_val and '"' not in default_val:
+                    if (
+                        isinstance(p.default, str)
+                        and "'" in default_val
+                        and '"' not in default_val
+                    ):
                         default_val = f'"{p.default}"'
                     params.append(f"    {p.name}: {type_hint} = {default_val},")
                 else:
@@ -317,14 +414,19 @@ def format_call_params(indicator: Any) -> str:
         for name, param in sig.parameters.items():
             if name == "ds":
                 call_args.append("ds=ds")
-            elif param.kind in (inspect.Parameter.VAR_KEYWORD, inspect.Parameter.VAR_POSITIONAL):
+            elif param.kind in (
+                inspect.Parameter.VAR_KEYWORD,
+                inspect.Parameter.VAR_POSITIONAL,
+            ):
                 continue  # Skip VAR parameters, they are covered by **kwargs
             else:
                 call_args.append(f"{name}={name}")
         call_args.append("**kwargs")
 
         # If the total length is likely to exceed 88 chars (indent=4 + total), or many parameters
-        total_len = sum(len(arg) for arg in call_args) + 2 * len(call_args) + 30  # 30 for the 'return xclim...' part
+        total_len = (
+            sum(len(arg) for arg in call_args) + 2 * len(call_args) + 30
+        )  # 30 for the 'return xclim...' part
         if len(call_args) > 3 or total_len > 80:
             return "\n        " + ",\n        ".join(call_args) + ",\n    "
 
@@ -375,7 +477,11 @@ def generate_module_content(module_name: str, indicators: List[Any]) -> str:
 
         # Indent the docstring correctly
         lines = docstring.split("\n")
-        indented_doc = lines[0] + "\n" + "\n".join([("    " + line if line.strip() else "") for line in lines[1:]])
+        indented_doc = (
+            lines[0]
+            + "\n"
+            + "\n".join([("    " + line if line.strip() else "") for line in lines[1:]])
+        )
 
         signature_params = format_signature_params(ind)
         call_params = format_call_params(ind)
@@ -387,7 +493,11 @@ def generate_module_content(module_name: str, indicators: List[Any]) -> str:
             return_type = simplify_type(sig.return_annotation)
             if return_type in ("dict[str, Any] | None", "Any"):
                 return_type = "xr.DataArray | xr.Dataset | FieldList | tuple[xr.DataArray | FieldList, ...]"
-            if len(return_type) > 80 and return_type.startswith("tuple[") and return_type.endswith("]"):
+            if (
+                len(return_type) > 80
+                and return_type.startswith("tuple[")
+                and return_type.endswith("]")
+            ):
                 elements = return_type[6:-1].split(", ")
                 return_type = "tuple[\n    " + ",\n    ".join(elements) + ",\n]"
         except Exception:
@@ -484,7 +594,14 @@ def main() -> None:
     """
     import pathlib
 
-    output_dir = pathlib.Path(__file__).parent.parent / "src" / "earthkit" / "climate" / "indicators" / "_xarray"
+    output_dir = (
+        pathlib.Path(__file__).parent.parent
+        / "src"
+        / "earthkit"
+        / "climate"
+        / "indicators"
+        / "xarray"
+    )
     output_dir.mkdir(exist_ok=True, parents=True)
 
     xclim_modules = ["atmos", "land", "seaIce"]
