@@ -6,6 +6,7 @@
 
 import importlib
 import inspect
+import re
 import textwrap
 from typing import Any, List
 
@@ -20,6 +21,7 @@ from typing import Any, Literal
 
 import xarray as xr
 import xclim.indicators.{module_name}
+from earthkit.data import FieldList
 from earthkit.utils.decorators import format_handler
 
 # from earthkit.climate.utils.decorators import metadata_handler
@@ -32,7 +34,7 @@ FUNCTION_TEMPLATE = """
 # @metadata_handler({xclim_obj_ref})
 def {func_name}(
 {signature_params}
-) -> Any:
+) -> {return_type}:
     \"\"\"
     {docstring}
     \"\"\"
@@ -40,13 +42,78 @@ def {func_name}(
 """
 
 
-def simplify_type(type_obj: Any) -> str:
+_XCLIM_BASE_URL = "https://xclim.readthedocs.io/en/stable"
+
+# Map of known xclim :ref: labels that are NOT in objects.inv to their direct URLs.
+# These are internal RST labels used in xclim's own narrative docs that do not
+# appear in the Sphinx inventory and therefore cannot be resolved via intersphinx.
+_XCLIM_REF_URL_MAP: dict[str, tuple[str, str]] = {
+    # label -> (display_text, URL)
+    "timeseries.resampling": (
+        "xclim time handling",
+        f"{_XCLIM_BASE_URL}/time_handling.html",
+    ),
+    "indexing": (
+        "xclim indexing",
+        f"{_XCLIM_BASE_URL}/notebooks/index.html",
+    ),
+    "missing_values": (
+        "xclim missing values",
+        f"{_XCLIM_BASE_URL}/notebooks/missing_values.html",
+    ),
+}
+
+
+def clean_xclim_refs(text: str) -> str:
+    """Replace xclim-internal RST cross-references with external hyperlinks or plain text.
+
+    Sphinx cross-reference roles like ``:ref:`label``` that point to labels
+    internal to xclim's documentation are not resolvable in earthkit-climate's
+    Sphinx build and produce ``ref.ref`` warnings.  This function converts them
+    to either a proper external hyperlink (for known labels listed in
+    ``_XCLIM_REF_URL_MAP``) or a plain-text inline code literal as a fallback.
+
+    ``:py:*`` roles are converted to inline code literals so that they render
+    cleanly without requiring intersphinx to resolve them.
+
+    Parameters
+    ----------
+    text : str
+        Raw docstring text potentially containing xclim RST cross-references.
+
+    Returns
+    -------
+    str
+        Text with all recognised cross-reference roles replaced by hyperlinks
+        or plain-text equivalents.
+    """
+
+    def _replace_ref(match: re.Match) -> str:
+        label = match.group(1)
+        if label in _XCLIM_REF_URL_MAP:
+            display, url = _XCLIM_REF_URL_MAP[label]
+            return f"`{display} <{url}>`_"
+        # Unknown label: fall back to plain inline code
+        return f"``{label}``"
+
+    # :ref:`label` -> external hyperlink or plain text
+    text = re.sub(r":ref:`([^`]+)`", _replace_ref, text)
+    # :py:mod/func/class/attr:`name` -> ``name``
+    text = re.sub(r":py:[a-z]+:`([^`]+)`", r"``\1``", text)
+    # generic :role:`text` fallback
+    text = re.sub(r":[a-z:]+:`([^`]+)`", r"``\1``", text)
+    return text
+
+
+def simplify_type(type_obj: Any, is_docstring: bool = False) -> str:
     """Simplify complex types to strings that can be used in the generated code.
 
     Parameters
     ----------
     type_obj : Any
         The type object to simplify.
+    is_docstring : bool
+        If True, format type for docstrings (e.g. 'xarray.DataArray' instead of 'xr.DataArray').
 
     Returns
     -------
@@ -54,20 +121,28 @@ def simplify_type(type_obj: Any) -> str:
         The simplified type representation as a string.
     """
     if type_obj == inspect.Parameter.empty:
-        return "Any"
+        type_str = "dict[str, Any] | None"
+    elif isinstance(type_obj, type):
+        type_str = f"{type_obj.__module__}.{type_obj.__qualname__}"
+    else:
+        type_str = str(type_obj)
 
-    type_str = str(type_obj)
+    da = "xarray.DataArray" if is_docstring else "xr.DataArray"
+    fl = "earthkit.data.FieldList" if is_docstring else "FieldList"
+    ds = "xarray.Dataset" if is_docstring else "xr.Dataset"
 
     # Common replacements
     replacements = {
-        "xarray.core.dataarray.DataArray": "xr.DataArray",
-        "xarray.core.dataset.Dataset": "xr.Dataset",
-        "xarray.core.datatree.DataTree": "Any",
-        "Quantified": "Any",  # xclim specific, hard to import reliably
+        "<class 'xarray.core.dataarray.DataArray'>": f"{da} | {fl}",
+        "<class 'xarray.core.dataset.Dataset'>": f"{ds} | {fl}",
+        "xarray.core.dataarray.DataArray": f"{da} | {fl}",
+        "xarray.core.dataset.Dataset": f"{ds} | {fl}",
+        "xarray.core.datatree.DataTree": (f"xr.DataTree | {fl}" if not is_docstring else f"xarray.DataTree | {fl}"),
+        "Quantified": f"str | float | int | {da} | {fl}",
         "DayOfYearStr": "str",
         "DateStr": "str",
         "rv_continuous": "Any",
-        "Indexer": "Any",
+        "Indexer": "dict[str, Any]",
     }
 
     for old, new in replacements.items():
@@ -75,6 +150,9 @@ def simplify_type(type_obj: Any) -> str:
 
     # Remove quotes
     type_str = type_str.strip("'")
+
+    if is_docstring:
+        type_str = type_str.replace("xr.", "xarray.")
 
     return type_str
 
@@ -117,6 +195,8 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     sections = [summary]
 
     if description:
+        # Clean xclim-internal RST cross-references before wrapping
+        description = clean_xclim_refs(description)
         # Wrap the description to avoid long lines
         # We target a width of 88 to allow for indentation (4 spaces) and staying well under 110
         sections.append(textwrap.fill(description, width=88))
@@ -159,37 +239,50 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
         "----------",
     ]
 
+    return_doc_type = "xarray.DataArray | FieldList"
     try:
         sig = inspect.signature(indicator)
+        return_doc_type = simplify_type(sig.return_annotation, is_docstring=True)
+        if return_doc_type in ("dict[str, Any] | None", "Any"):
+            return_doc_type = "xarray.DataArray | xarray.Dataset | FieldList | tuple[xarray.DataArray | FieldList, ...]"
+        if len(return_doc_type) > 80 and return_doc_type.startswith("tuple[") and return_doc_type.endswith("]"):
+            elements = return_doc_type[6:-1].split(", ")
+            return_doc_type = "tuple[\n        " + ",\n        ".join(elements) + ",\n    ]"
+
         for name, param in sig.parameters.items():
             if name == "ds":
                 continue
 
             # Skip VAR parameters as they are handled by docstring **kwargs
-            if param.kind in (inspect.Parameter.VAR_KEYWORD, inspect.Parameter.VAR_POSITIONAL):
+            if param.kind in (
+                inspect.Parameter.VAR_KEYWORD,
+                inspect.Parameter.VAR_POSITIONAL,
+            ):
                 continue
 
             # Try to get description from indicator.parameters
             param_meta = indicator.parameters.get(name)
             description = getattr(param_meta, "description", "") if param_meta else ""
 
-            type_hint = simplify_type(param.annotation)
-            # Use "xarray" instead of "xr" in docstrings
-            if type_hint.startswith("xr."):
-                type_hint = "xarray." + type_hint[3:]
+            type_hint = simplify_type(param.annotation, is_docstring=True)
 
             params_lines.append(f"{name} : {type_hint}")
             if description:
+                # Clean xclim-internal RST cross-references before wrapping
+                description = clean_xclim_refs(description)
                 # Wrap description with hanging indent
                 wrapped_description = textwrap.fill(
-                    description, width=88, initial_indent="    ", subsequent_indent="    "
+                    description,
+                    width=88,
+                    initial_indent="    ",
+                    subsequent_indent="    ",
                 )
                 params_lines.append(wrapped_description)
     except Exception:
         pass
 
     # Again: use "xarray" instead of "xr" in docstrings
-    params_lines.append("ds : xarray.Dataset | Any")
+    params_lines.append("ds : xarray.Dataset | None")
     params_lines.append("    Input dataset.")
     params_lines.append("**kwargs : Any")
     params_lines.append("    Additional keyword arguments.")
@@ -197,12 +290,14 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     sections.append("\n".join(params_lines))
 
     # Returns section
-    returns_section = inspect.cleandoc("""
+    returns_section = inspect.cleandoc(
+        f"""
         Returns
         -------
-        Any
+        {return_doc_type}
             The computed index.
-    """)
+    """
+    )
     sections.append(returns_section)
 
     return "\n\n".join(sections)
@@ -236,7 +331,10 @@ def format_signature_params(indicator: Any) -> str:
             if p.name == "ds":
                 continue
 
-            if p.kind in (inspect.Parameter.POSITIONAL_OR_KEYWORD, inspect.Parameter.POSITIONAL_ONLY):
+            if p.kind in (
+                inspect.Parameter.POSITIONAL_OR_KEYWORD,
+                inspect.Parameter.POSITIONAL_ONLY,
+            ):
                 if p.default == inspect.Parameter.empty:
                     pos_no_default.append(p)
                 else:
@@ -257,7 +355,7 @@ def format_signature_params(indicator: Any) -> str:
             params.append(f"    {p.name}: {type_hint} = {default_val},")
 
         # Add ds here
-        params.append("    ds: xr.Dataset | Any = None,")
+        params.append("    ds: xr.Dataset | None = None,")
 
         if kw_only:
             params.append("    *,")
@@ -298,7 +396,10 @@ def format_call_params(indicator: Any) -> str:
         for name, param in sig.parameters.items():
             if name == "ds":
                 call_args.append("ds=ds")
-            elif param.kind in (inspect.Parameter.VAR_KEYWORD, inspect.Parameter.VAR_POSITIONAL):
+            elif param.kind in (
+                inspect.Parameter.VAR_KEYWORD,
+                inspect.Parameter.VAR_POSITIONAL,
+            ):
                 continue  # Skip VAR parameters, they are covered by **kwargs
             else:
                 call_args.append(f"{name}={name}")
@@ -362,12 +463,25 @@ def generate_module_content(module_name: str, indicators: List[Any]) -> str:
         call_params = format_call_params(ind)
         xclim_obj_ref = f"xclim.indicators.{module_name}.{xclim_func_name}"
 
+        return_type = "xr.DataArray | FieldList"
+        try:
+            sig = inspect.signature(ind)
+            return_type = simplify_type(sig.return_annotation)
+            if return_type in ("dict[str, Any] | None", "Any"):
+                return_type = "xr.DataArray | xr.Dataset | FieldList | tuple[xr.DataArray | FieldList, ...]"
+            if len(return_type) > 80 and return_type.startswith("tuple[") and return_type.endswith("]"):
+                elements = return_type[6:-1].split(", ")
+                return_type = "tuple[\n    " + ",\n    ".join(elements) + ",\n]"
+        except Exception:
+            pass
+
         code = FUNCTION_TEMPLATE.format(
             func_name=func_name,
             signature_params=signature_params,
             call_params=call_params,
             xclim_obj_ref=xclim_obj_ref,
             docstring=indented_doc,
+            return_type=return_type,
         )
         functions_code.append(code)
 
@@ -467,7 +581,7 @@ def main() -> None:
     # init_content = "# (C) Copyright 2025 - ECMWF and individual contributors.\n\n"
     # init_content += '"""Climate indicators."""\n\n'
     # for cat in categories:
-    #    init_content += f"from earthkit.climate.indicators.{cat} import *  # noqa\n"
+    #    init_content += f"from earthkit.climate.indicators.{cat} import *\n"
 
     # with open(init_path, "w") as f:
     #    f.write(init_content)
