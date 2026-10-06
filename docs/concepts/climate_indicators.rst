@@ -23,15 +23,18 @@ Anatomy of a climate indicator
 Rather than rigid output categories, a climate indicator is best understood in terms of the fundamental **ingredients** that compose it:
 
 * **Input variables**:
+
   * *Single-variable*: Process a single meteorological field (e.g., daily maximum temperature for :code:`tx_days_above`).
   * *Multi-variable*: Combine multiple fields (e.g., temperature and precipitation/evapotranspiration for drought indicators like SPEI, or wind and temperature for wildfire or heat-stress metrics).
 
 * **Thresholds and conditions**:
+
   * *Fixed thresholds*: Constant physical values (e.g., frost days with :code:`thresh="0 degC"` or hot days with :code:`thresh="300 K"`).
   * *Adaptive / climatological thresholds*: Percentile-based values calculated relative to a baseline reference period (e.g., warm days :code:`tx90p` counting days exceeding the 90th percentile).
   * *Sequence and duration conditions*: Multi-day persistent conditions (e.g., heatwave duration indices).
 
 * **Reduction and aggregation**:
+
   * *Threshold counts*: Counting the number of days or events meeting a specified condition within a target period (e.g., annual, seasonal, monthly).
   * *Cumulative metrics*: Accumulation of values over time (e.g., growing degree days, heating/cooling degree days).
   * *Extremes and statistics*: Extracting maximum, minimum, or percentile values over temporal windows (e.g., maximum 5-day precipitation :code:`rx5day`).
