@@ -24,7 +24,7 @@ classifiers = [
 ]
 dependencies = [
   "earthkit-data>=1",
-  "earthkit-utils>=1",
+  "earthkit-utils",
   "flox>=0.11",
   "numpy>=1.22",
   "xarray>=2023.1",
@@ -33,11 +33,16 @@ dependencies = [
 ]
 description = "Tools for calculating climate indicies, climate change analysis and attribution."
 dynamic = ["readme", "version"]
-# Sample data source plugin for earthkit-data
-entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate.sample_source:SampleSource"
 license = { file = "LICENSE" }
 name = "earthkit-climate"
 requires-python = ">=3.11"
+
+[project.entry-points."earthkit.cli"]
+climate = "earthkit.climate.cli:COMMANDS"
+
+[project.entry-points."earthkit.data.sources"]
+# Sample data source plugin for earthkit-data
+earthkit-climate-sample = "earthkit.climate.sample_source:SampleSource"
 
 [project.optional-dependencies]
 dev = [
@@ -159,3 +164,6 @@ version_file_template = '''
 # Do not change! Do not track in version control!
 __version__ = "{version}"
 '''
+
+[tool.uv.sources]
+earthkit-utils = { git = "https://github.com/ecmwf/earthkit-utils/", branch = "feature/cli" }
