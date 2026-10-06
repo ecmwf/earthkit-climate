@@ -8,10 +8,10 @@ from nbconvert.preprocessors import ExecutePreprocessor
 NOTEBOOK_PATHS = [
     "docs/how-tos/intro_precipitation_indices.ipynb",
     "docs/how-tos/intro_temperature_indices.ipynb",
-    # "docs/tutorials/frost_days_pyrenees.ipynb",  # data from CDS
-    # "docs/tutorials/era5_decadal_warming.ipynb",  # data from CDS
-    "docs/tutorials/tropical_nights_cooling_demand.ipynb",
-    "docs/tutorials/heatwave_evolution.ipynb",
+    # "docs/how-tos/frost_days_pyrenees.ipynb",  # data from CDS
+    # "docs/how-tos/era5_decadal_warming.ipynb",  # data from CDS
+    "docs/how-tos/tropical_nights_cooling_demand.ipynb",
+    "docs/how-tos/heatwave_evolution.ipynb",
 ]
 
 
