@@ -210,9 +210,12 @@ body[data-theme="dark"] table.dataframe tbody tr:hover td {
   font-size: 90%;
 }
 
-/* array repr font size in xarray reprs */
-.xr-array-data pre {
-  font-size: var(--code-font-size);
+/* Reduce array repr font sizes in notebooks */
+.xr-wrap {
+    font-size: var(--font-size--small);
+}
+.xr-wrap pre {
+    font-size: 90%;
 }
 
 /* ── Survey Admonition ─────────────────────────────────────────────────── */
