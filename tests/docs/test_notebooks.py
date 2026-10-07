@@ -6,6 +6,7 @@ import pytest
 from nbconvert.preprocessors import ExecutePreprocessor
 
 NOTEBOOK_PATHS = [
+    "docs/tutorials/computing_indicators.ipynb",
     "docs/how-tos/intro_precipitation_indices.ipynb",
     "docs/how-tos/intro_temperature_indices.ipynb",
     # "docs/how-tos/frost_days_pyrenees.ipynb",  # data from CDS
