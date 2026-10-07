@@ -12,4 +12,4 @@ Tutorials are step-by-step, hands-on lessons designed to help newcomers learn **
 .. toctree::
    :maxdepth: 1
 
-   quickstart_climate_indicators.ipynb
+   computing_indicators.ipynb
