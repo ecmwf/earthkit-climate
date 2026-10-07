@@ -13,3 +13,4 @@ Tutorials are step-by-step, hands-on lessons designed to help newcomers learn **
    :maxdepth: 1
 
    computing_indicators.ipynb
+   dask_large_datasets.ipynb
