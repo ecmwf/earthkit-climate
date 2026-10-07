@@ -56,7 +56,7 @@ extensions = [
     # Generates summary tables for modules/classes/functions
     "sphinx.ext.autosummary",
     # Allows citing BibTeX bibliographic entries in reStructuredText
-    # "sphinxcontrib.bibtex",
+    "sphinxcontrib.bibtex",
     # Tests snippets in documentation by running embedded Python examples
     # "sphinx.ext.doctest",
     # Checks documentation coverage of the codebase
@@ -92,8 +92,9 @@ autodoc_default_options = {
 autodocs_hidden_modules = ["aggregate", "version"]
 
 # autoapi configuration
+add_module_names = False
 autoapi_dirs = ["../src/earthkit"]
-autoapi_ignore = ["*/version.py"]
+autoapi_ignore = ["*/version.py", "*/sample_source.py"]
 autoapi_options = [
     "members",
     "undoc-members",
@@ -105,8 +106,9 @@ autoapi_options = [
 autoapi_root = "autoapi"
 autoapi_member_order = "alphabetical"
 autoapi_add_toctree_entry = False
-autoapi_own_page_level = "function"
+autoapi_own_page_level = "module"
 autoapi_python_use_implicit_namespaces = True
+suppress_warnings = ["autoapi.python_import_resolution"]
 
 # napoleon configuration
 napoleon_google_docstring = False
@@ -203,6 +205,12 @@ html_theme_options = {
     ],
 }
 
+# see: https://sphinxcontrib-bibtex.readthedocs.io/en/latest/usage.html#unknown-target-name-when-using-footnote-citations-with-numpydoc
+numpydoc_class_members_toctree = False
+bibtex_bibfiles = ["references.bib"]
+# bibtex_default_style = "xcstyle"
+bibtex_reference_style = "author_year"
+
 
 def _write_earthkit_packages_js(app):
     """Read earthkit-packages.yml and write a JS data file into the output _static dir."""
@@ -217,5 +225,12 @@ def _write_earthkit_packages_js(app):
         fh.write(f"window.earthkitPackages = {json.dumps(packages)};\n")
 
 
+def autoapi_skip_member(app, what, name, obj, skip, options):
+    if what == "module" and "_xclim_" in name:
+        return True
+    return skip
+
+
 def setup(app):
     app.connect("builder-inited", _write_earthkit_packages_js)
+    app.connect("autoapi-skip-member", autoapi_skip_member)
