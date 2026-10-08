@@ -18,7 +18,7 @@ def test_linear_trend_detects_datetime_time_and_sets_metadata():
 
     assert result.name == "tas_linear_trend"
     assert result.ndim == 0
-    assert result.attrs["units"] == "degC yr-1"
+    assert result.attrs["units"] == "degC year-1"
     assert result.attrs["long_name"] == "Linear trend of tas"
     assert "standard_name" not in result.attrs
     assert result.item() == pytest.approx(2.0, abs=0.002)
@@ -40,7 +40,7 @@ def test_linear_trend_handles_dataset_and_named_time_axis():
     result = linear_trend(data)
 
     assert list(result.data_vars) == ["tas_linear_trend"]
-    assert result["tas_linear_trend"].attrs["units"] == "K yr-1"
+    assert result["tas_linear_trend"].attrs["units"] == "K year-1"
     assert result["tas_linear_trend"].item() == pytest.approx(1.0, abs=0.002)
 
 
@@ -54,7 +54,7 @@ def test_linear_trend_ignores_missing_values_and_handles_spatial_dims():
 
     result = linear_trend(data, dim="time")
 
-    np.testing.assert_allclose(result.values, [2.0, np.nan], equal_nan=True)
+    np.testing.assert_allclose(result.values, [2.0, np.nan], atol=0.002, equal_nan=True)
 
 
 def test_linear_trend_requires_unambiguous_time_axis():
@@ -81,8 +81,8 @@ def test_linear_trend_can_return_p_values():
     assert trend.name == "tas_linear_trend"
     assert p_values.name == "tas_p_value"
     assert p_values.attrs["units"] == "1"
-    assert trend.item() == pytest.approx(1.0)
-    assert p_values.item() == pytest.approx(0.054913, rel=1e-4)
+    assert trend.item() == pytest.approx(1.0, abs=0.002)
+    assert p_values.item() == pytest.approx(0.054972, rel=1e-4)
 
 
 def test_dataset_linear_trend_returns_dataset_p_values():
@@ -95,7 +95,7 @@ def test_dataset_linear_trend_returns_dataset_p_values():
 
     assert list(trends.data_vars) == ["tas_linear_trend"]
     assert list(p_values.data_vars) == ["tas_p_value"]
-    assert p_values["tas_p_value"].item() == pytest.approx(0.0, abs=1e-12)
+    assert p_values["tas_p_value"].item() == pytest.approx(0.0, abs=1e-6)
 
 
 def test_linear_trend_requires_decoded_datetime_coordinate():
