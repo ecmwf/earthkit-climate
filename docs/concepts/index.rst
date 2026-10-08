@@ -13,3 +13,5 @@ This section provides background explanations of key concepts, architectural cho
    :maxdepth: 1
 
    climate_indicators
+   missing_values
+   calendars
