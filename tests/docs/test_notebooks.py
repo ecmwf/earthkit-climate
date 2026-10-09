@@ -12,8 +12,6 @@ NOTEBOOK_PATHS = [
     "docs/tutorials/custom_indicator_example.ipynb",
     # "docs/tutorials/frost_days_pyrenees.ipynb",  # data from CDS
     # "docs/tutorials/era5_decadal_warming.ipynb",  # data from CDS
-    "docs/tutorials/tropical_nights_cooling_demand.ipynb",
-    "docs/tutorials/heatwave_evolution.ipynb",
     # "docs/tutorials/cases/frost_days_pyrenees.ipynb",  # data from CDS
     # "docs/tutorials/cases/era5_decadal_warming.ipynb",  # data from CDS
     "docs/tutorials/cases/tropical_nights_cooling_demand.ipynb",
