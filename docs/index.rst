@@ -51,7 +51,7 @@ Earthkit-climate documentation
 
       Step-by-step guides to learn earthkit-climate.
 
-   .. grid-item-card:: How-tos
+   .. grid-item-card:: How-to Guides
       :img-top: _static/tool.svg
       :link: how-tos/index
       :link-type: doc
