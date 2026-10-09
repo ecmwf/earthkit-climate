@@ -96,8 +96,8 @@ def generate_sample_dataset(
     )
 
     return xr.Dataset({"tas": tas, "hurs": hurs, "pr": pr})
-  
-  
+
+
 def _generate_synthetic_daily_temperature() -> xr.DataArray:
     """
     Generate synthetic 1D daily maximum temperature DataArray.
