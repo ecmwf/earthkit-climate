@@ -9,6 +9,9 @@ NOTEBOOK_PATHS = [
     "docs/tutorials/computing_indicators.ipynb",
     "docs/how-tos/intro_precipitation_indices.ipynb",
     "docs/how-tos/intro_temperature_indices.ipynb",
+    "docs/tutorials/custom_indicator_example.ipynb",
+    # "docs/tutorials/frost_days_pyrenees.ipynb",  # data from CDS
+    # "docs/tutorials/era5_decadal_warming.ipynb",  # data from CDS
     # "docs/tutorials/cases/frost_days_pyrenees.ipynb",  # data from CDS
     # "docs/tutorials/cases/era5_decadal_warming.ipynb",  # data from CDS
     "docs/tutorials/cases/tropical_nights_cooling_demand.ipynb",
