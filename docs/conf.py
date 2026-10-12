@@ -9,6 +9,7 @@ import os
 import sys
 
 import yaml
+from docutils import nodes
 
 on_rtd = os.environ.get("READTHEDOCS") == "True"
 
@@ -92,7 +93,6 @@ autodoc_default_options = {
 autodocs_hidden_modules = ["aggregate", "version"]
 
 # autoapi configuration
-add_module_names = False
 autoapi_dirs = ["../src/earthkit"]
 autoapi_ignore = ["*/version.py"]
 autoapi_options = [
@@ -106,9 +106,23 @@ autoapi_options = [
 autoapi_root = "autoapi"
 autoapi_member_order = "alphabetical"
 autoapi_add_toctree_entry = False
-autoapi_own_page_level = "module"
+autoapi_own_page_level = "function"
 autoapi_python_use_implicit_namespaces = True
 suppress_warnings = ["autoapi.python_import_resolution"]
+
+
+def shorten_api_page_titles(app, doctree):
+    docname = app.env.docname
+    if not docname.startswith("autoapi/"):
+        return
+    title = next(doctree.findall(nodes.title), None)  # first title = page title
+    if title is None:
+        return
+    full = title.astext()
+    short = full.rsplit(".", 1)[-1]
+    if short != full and full != "earthkit.climate":
+        title.children = [nodes.Text(short)]
+
 
 # napoleon configuration
 napoleon_google_docstring = False
@@ -225,12 +239,8 @@ def _write_earthkit_packages_js(app):
         fh.write(f"window.earthkitPackages = {json.dumps(packages)};\n")
 
 
-def autoapi_skip_member(app, what, name, obj, skip, options):
-    if what == "module" and "_xclim_" in name:
-        return True
-    return skip
-
-
 def setup(app):
     app.connect("builder-inited", _write_earthkit_packages_js)
-    app.connect("autoapi-skip-member", autoapi_skip_member)
+    app.connect(
+        "doctree-read", shorten_api_page_titles, priority=100
+    )  # priority < 500 to run before Sphinx's TitleCollector/TocTreeCollector
