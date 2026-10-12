@@ -49,7 +49,7 @@ def sea_ice_area(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.seaIce.sea_ice_area(
         siconc=siconc,
@@ -96,7 +96,7 @@ def sea_ice_extent(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.seaIce.sea_ice_extent(
         siconc=siconc,

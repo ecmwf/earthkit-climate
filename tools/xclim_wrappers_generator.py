@@ -245,7 +245,8 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
             return_doc_type = "xarray.DataArray | xarray.Dataset | FieldList | tuple[xarray.DataArray | FieldList, ...]"
         if len(return_doc_type) > 80 and return_doc_type.startswith("tuple[") and return_doc_type.endswith("]"):
             elements = return_doc_type[6:-1].split(", ")
-            return_doc_type = "tuple[\n    " + ",\n    ".join(elements) + ",\n]"
+            # TODO add names and descriptions of the elements
+            return_doc_type = "\n            The computed indicator.\n        ".join(elements)
 
         for name, param in sig.parameters.items():
             if name == "ds":
@@ -288,7 +289,14 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     sections.append("\n".join(params_lines))
 
     # Returns section
-    returns_section = f"Returns\n-------\n{return_doc_type}\n    The computed index."
+    returns_section = inspect.cleandoc(
+        f"""
+        Returns
+        -------
+        {return_doc_type}
+            The computed indicator.
+    """
+    )
     sections.append(returns_section)
 
     return "\n\n".join(sections)

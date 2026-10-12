@@ -46,7 +46,7 @@ def base_flow_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.base_flow_index(
         q=q,
@@ -96,11 +96,10 @@ def base_flow_index_seasonal_ratio(
 
     Returns
     -------
-    tuple[
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-    ]
-        The computed index.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
     """
     return xclim.indicators.land.base_flow_index_seasonal_ratio(
         q=q,
@@ -158,7 +157,7 @@ def blowing_snow(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.blowing_snow(
         snd=snd,
@@ -206,7 +205,7 @@ def doy_qmax(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.doy_qmax(
         da=da,
@@ -250,7 +249,7 @@ def doy_qmin(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.doy_qmin(
         da=da,
@@ -294,7 +293,7 @@ def flow_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.flow_index(
         q=q,
@@ -345,7 +344,7 @@ def high_flow_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.high_flow_frequency(
         q=q,
@@ -412,7 +411,7 @@ def holiday_snow_and_snowfall_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.holiday_snow_and_snowfall_days(
         snd=snd,
@@ -476,7 +475,7 @@ def holiday_snow_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.holiday_snow_days(
         snd=snd,
@@ -533,7 +532,7 @@ def lag_snowpack_flow_peaks(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.lag_snowpack_flow_peaks(
         snw=snw,
@@ -586,7 +585,7 @@ def low_flow_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.low_flow_frequency(
         q=q,
@@ -631,7 +630,7 @@ def rb_flashiness_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.rb_flashiness_index(
         q=q,
@@ -681,7 +680,7 @@ def runoff_ratio(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.runoff_ratio(
         q=q,
@@ -727,11 +726,10 @@ def sen_slope(
 
     Returns
     -------
-    tuple[
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-    ]
-        The computed index.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
     """
     return xclim.indicators.land.sen_slope(
         q=q,
@@ -810,7 +808,7 @@ def standardized_groundwater_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.standardized_groundwater_index(
         gwl=gwl,
@@ -866,7 +864,7 @@ def snd_days_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snd_days_above(
         snd=snd,
@@ -911,7 +909,7 @@ def snd_max_doy(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snd_max_doy(
         snd=snd,
@@ -962,7 +960,7 @@ def snd_season_end(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snd_season_end(
         snd=snd,
@@ -1014,7 +1012,7 @@ def snd_season_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snd_season_length(
         snd=snd,
@@ -1066,7 +1064,7 @@ def snd_season_start(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snd_season_start(
         snd=snd,
@@ -1115,7 +1113,7 @@ def snd_storm_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snd_storm_days(
         snd=snd,
@@ -1159,7 +1157,7 @@ def snow_depth(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snow_depth(
         snd=snd,
@@ -1205,7 +1203,7 @@ def snow_melt_we_max(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snow_melt_we_max(
         snw=snw,
@@ -1255,7 +1253,7 @@ def snw_days_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snw_days_above(
         snw=snw,
@@ -1300,7 +1298,7 @@ def snw_max(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snw_max(
         snw=snw,
@@ -1343,7 +1341,7 @@ def snw_max_doy(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snw_max_doy(
         snw=snw,
@@ -1393,7 +1391,7 @@ def snw_season_end(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snw_season_end(
         snw=snw,
@@ -1445,7 +1443,7 @@ def snw_season_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snw_season_length(
         snw=snw,
@@ -1497,7 +1495,7 @@ def snw_season_start(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snw_season_start(
         snw=snw,
@@ -1546,7 +1544,7 @@ def snw_storm_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.snw_storm_days(
         snw=snw,
@@ -1626,7 +1624,7 @@ def standardized_streamflow_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.land.standardized_streamflow_index(
         q=q,
