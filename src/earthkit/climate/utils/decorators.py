@@ -7,7 +7,7 @@ from typing import Any
 from earthkit.utils.decorators import format_handler
 
 
-def compose_decorators(
+def _compose_decorators(
     *decorators: Callable[[Callable[..., Any]], Callable[..., Any]],
 ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
     """
@@ -66,7 +66,7 @@ def wrap_indicator(
         format_handler(**kwargs),
         *(extra_decorators or []),
     ]
-    decorator = compose_decorators(*chain)
+    decorator = _compose_decorators(*chain)
 
     if func is not None:
         return decorator(func)
