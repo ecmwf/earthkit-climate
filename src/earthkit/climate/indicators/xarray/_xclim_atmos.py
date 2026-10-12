@@ -7,6 +7,7 @@ from typing import Any, Literal
 
 import xarray as xr
 import xclim.indicators.atmos
+from earthkit.data import FieldList
 from earthkit.utils.decorators import format_handler
 
 # from earthkit.climate.utils.decorators import metadata_handler
@@ -15,13 +16,13 @@ from earthkit.utils.decorators import format_handler
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.antecedent_precipitation_index)
 def antecedent_precipitation_index(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 7,
     p_exp: float = 0.935,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Antecedent precipitation index.
 
@@ -36,20 +37,20 @@ def antecedent_precipitation_index(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation data.
     window : int
         Window for the days of precipitation data to be weighted and summed, default is 7.
     p_exp : float
         Weighting exponent, default is 0.935.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.antecedent_precipitation_index(
@@ -62,15 +63,64 @@ def antecedent_precipitation_index(
 
 
 @format_handler()
+# @metadata_handler(xclim.indicators.atmos.aridity_index)
+def aridity_index(
+    pr: xr.DataArray | FieldList | str = "pr",
+    evspsblpot: xr.DataArray | FieldList | str = "evspsblpot",
+    ds: xr.Dataset | None = None,
+    *,
+    freq: str = "YS",
+    **kwargs: Any,
+) -> xr.DataArray | FieldList:
+    """
+    Aridity index.
+
+    The ratio of total precipitation over potential evapotranspiration. Classification based
+    on the Aridity Index (AI).
+
+    **Units:**
+
+    - aridity_index: dimensionless
+
+    This function wraps `xclim.indicators.atmos.aridity_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.aridity_index>`_.
+
+    Parameters
+    ----------
+    pr : xarray.DataArray | earthkit.data.FieldList | str
+        Precipitation.
+    evspsblpot : xarray.DataArray | earthkit.data.FieldList | str
+        Potential evapotranspiration.
+    freq : str
+        Resampling frequency. A monthly or yearly frequency is expected.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+    xarray.DataArray | earthkit.data.FieldList
+        The computed index.
+    """
+    return xclim.indicators.atmos.aridity_index(
+        pr=pr,
+        evspsblpot=evspsblpot,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
 # @metadata_handler(xclim.indicators.atmos.australian_hardiness_zones)
 def australian_hardiness_zones(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 30,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Australian hardiness zones.
 
@@ -88,20 +138,20 @@ def australian_hardiness_zones(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum temperature.
     window : int
         The length of the averaging window, in years.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.australian_hardiness_zones(
@@ -116,22 +166,22 @@ def australian_hardiness_zones(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.biologically_effective_degree_days)
 def biologically_effective_degree_days(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    lat: xr.DataArray | str = "lat",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    lat: xr.DataArray | FieldList | str = "lat",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "10 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "10 degC",
     method: Literal["gladstones", "icclim", "jones", "smoothed", "stepwise"] = "gladstones",
     cap_value: float = 1.0,
-    low_dtr: Any = "10 degC",
-    high_dtr: Any = "13 degC",
-    max_daily_degree_days: Any = "9 degC",
+    low_dtr: str | float | int | xr.DataArray | FieldList = "10 degC",
+    high_dtr: str | float | int | xr.DataArray | FieldList = "13 degC",
+    max_daily_degree_days: str | float | int | xr.DataArray | FieldList = "9 degC",
     start_date: str | str = "04-01",
     end_date: str | str = "11-01",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Biologically effective degree days.
 
@@ -149,38 +199,37 @@ def biologically_effective_degree_days(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    lat : xarray.DataArray | str
+    lat : xarray.DataArray | earthkit.data.FieldList | str
         Latitude coordinate. If None and method is not "icclim", a CF-conformant "latitude"
         field must be available within the passed DataArray.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The minimum temperature threshold.
     method : Literal['gladstones', 'icclim', 'jones', 'smoothed', 'stepwise']
         The formula to use for the daily temperature range and latitude coefficient. The
         "gladstones" method uses a temperature range adjustment and a latitude coefficient
-        based on :cite:t:`gladstones_wine_2011`. End_date should be "11-01" for the Northern
+        based on ``gladstones_wine_2011``. End_date should be "11-01" for the Northern
         Hemisphere. The "huglin" method uses a temperature range adjustment and a stepwise
         latitude coefficient for values between 40° and 50° based on
-        :cite:t:`huglin_nouveau_1978`. End_date should be "11-01" for the Northern
-        Hemisphere. The "icclim" method does not implement daily temperature range and nor a
-        latitude coefficient based on :cite:t:`project_team_eca&d_algorithm_2013`. End date
-        should be "10-01" for the Northern Hemisphere. The "interpolated" method uses a
-        temperature range adjustment and a smoothed curve latitude coefficient for values
-        between 40° and 50° based on :cite:t:`huglin_nouveau_1978`. The "jones" method uses
-        a temperature range adjustment and integrates axial tilt, latitude, and day-of-year
-        based on :cite:t:`hall_spatial_2010`. End_date should be "11-01" for the Northern
-        Hemisphere.
+        ``huglin_nouveau_1978``. End_date should be "11-01" for the Northern Hemisphere. The
+        "icclim" method does not implement daily temperature range and nor a latitude
+        coefficient based on ``project_team_eca&d_algorithm_2013``. End date should be
+        "10-01" for the Northern Hemisphere. The "interpolated" method uses a temperature
+        range adjustment and a smoothed curve latitude coefficient for values between 40°
+        and 50° based on ``huglin_nouveau_1978``. The "jones" method uses a temperature
+        range adjustment and integrates axial tilt, latitude, and day-of-year based on
+        ``hall_spatial_2010``. End_date should be "11-01" for the Northern Hemisphere.
     cap_value : float
         The value to use for the latitude coefficient for latitudes north of 50°N or south
         of 50°S. Only applicable for methods "huglin" and "interpolated".
-    low_dtr : Any
+    low_dtr : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The lower bound for daily temperature range adjustment.
-    high_dtr : Any
+    high_dtr : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The higher bound for daily temperature range adjustment.
-    max_daily_degree_days : Any
+    max_daily_degree_days : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The maximum number of biologically effective degrees days that can be summed daily.
     start_date : str | str
         The hemisphere-based start date to consider (north = April, south = October).
@@ -189,14 +238,14 @@ def biologically_effective_degree_days(
         date is non-inclusive.
     freq : str
         Resampling frequency (For Southern Hemisphere, should be "YS-JUL").
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.biologically_effective_degree_days(
@@ -220,13 +269,13 @@ def biologically_effective_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.calm_days)
 def calm_days(
-    sfcWind: xr.DataArray | str = "sfcWind",
-    ds: xr.Dataset | Any = None,
+    sfcWind: xr.DataArray | FieldList | str = "sfcWind",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "2 m s-1",
+    thresh: str | float | int | xr.DataArray | FieldList = "2 m s-1",
     freq: str = "MS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Calm days.
 
@@ -240,20 +289,20 @@ def calm_days(
 
     Parameters
     ----------
-    sfcWind : xarray.DataArray | str
+    sfcWind : xarray.DataArray | earthkit.data.FieldList | str
         Daily windspeed.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold average near-surface wind speed on which to base evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.calm_days(
@@ -268,14 +317,15 @@ def calm_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.maximum_consecutive_dry_days)
 def maximum_consecutive_dry_days(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum consecutive dry days.
 
@@ -290,28 +340,31 @@ def maximum_consecutive_dry_days(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold precipitation on which to base evaluation.
+    op : Literal['<', 'lt', '<=', 'le']
+        Comparison operator to use to find wet days.
     freq : str
         Resampling frequency.
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.maximum_consecutive_dry_days(
         pr=pr,
         thresh=thresh,
+        op=op,
         freq=freq,
         resample_before_rl=resample_before_rl,
         ds=ds,
@@ -322,24 +375,31 @@ def maximum_consecutive_dry_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cffwis_indices)
 def cffwis_indices(
-    tas: xr.DataArray | str = "tas",
-    pr: xr.DataArray | str = "pr",
-    sfcWind: xr.DataArray | str = "sfcWind",
-    hurs: xr.DataArray | str = "hurs",
-    lat: xr.DataArray | str = "lat",
-    snd: xr.DataArray | str | None = None,
-    ffmc0: xr.DataArray | str | None = None,
-    dmc0: xr.DataArray | str | None = None,
-    dc0: xr.DataArray | str | None = None,
-    season_mask: xr.DataArray | str | None = None,
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    pr: xr.DataArray | FieldList | str = "pr",
+    sfcWind: xr.DataArray | FieldList | str = "sfcWind",
+    hurs: xr.DataArray | FieldList | str = "hurs",
+    lat: xr.DataArray | FieldList | str = "lat",
+    snd: xr.DataArray | FieldList | str | None = None,
+    ffmc0: xr.DataArray | FieldList | str | None = None,
+    dmc0: xr.DataArray | FieldList | str | None = None,
+    dc0: xr.DataArray | FieldList | str | None = None,
+    season_mask: xr.DataArray | FieldList | str | None = None,
+    ds: xr.Dataset | None = None,
     *,
     season_method: str | None = None,
     overwintering: bool = False,
     dry_start: str | None = None,
     initial_start_up: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> tuple[
+    xr.DataArray | FieldList,
+    xr.DataArray | FieldList,
+    xr.DataArray | FieldList,
+    xr.DataArray | FieldList,
+    xr.DataArray | FieldList,
+    xr.DataArray | FieldList,
+]:
     """
     Canadian fire weather index system indices.
 
@@ -360,25 +420,25 @@ def cffwis_indices(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Noon temperature.
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Rain fall in open over previous 24 hours, at noon.
-    sfcWind : xarray.DataArray | str
+    sfcWind : xarray.DataArray | earthkit.data.FieldList | str
         Noon wind speed.
-    hurs : xarray.DataArray | str
+    hurs : xarray.DataArray | earthkit.data.FieldList | str
         Noon relative humidity.
-    lat : xarray.DataArray | str
+    lat : xarray.DataArray | earthkit.data.FieldList | str
         Latitude coordinate.
-    snd : xarray.DataArray | str | None
+    snd : xarray.DataArray | earthkit.data.FieldList | str | None
         Noon snow depth, only used if `season_method='LA08'` is passed.
-    ffmc0 : xarray.DataArray | str | None
+    ffmc0 : xarray.DataArray | earthkit.data.FieldList | str | None
         Initial values of the fine fuel moisture code.
-    dmc0 : xarray.DataArray | str | None
+    dmc0 : xarray.DataArray | earthkit.data.FieldList | str | None
         Initial values of the Duff moisture code.
-    dc0 : xarray.DataArray | str | None
+    dc0 : xarray.DataArray | earthkit.data.FieldList | str | None
         Initial values of the drought code.
-    season_mask : xarray.DataArray | str | None
+    season_mask : xarray.DataArray | earthkit.data.FieldList | str | None
         Boolean mask, True where/when the fire season is active.
     season_method : str | None
         How to compute the start-up and shutdown of the fire season. If "None", no start-ups
@@ -389,20 +449,27 @@ def cffwis_indices(
         season_mask must be given.
     dry_start : str | None
         Whether to activate the DC and DMC "dry start" mechanism or not, see
-        :py:func:`fire_weather_ufunc`.
+        ``fire_weather_ufunc``.
     initial_start_up : bool
         If True (default), gridpoints where the fire season is active on the first timestep
         go through a start_up phase for that time step. Otherwise, previous codes must be
         given as a continuing fire season is assumed for those points.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
-        The computed index.
+        tuple[
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+    ]
+            The computed index.
     """
     return xclim.indicators.atmos.cffwis_indices(
         tas=tas,
@@ -427,15 +494,15 @@ def cffwis_indices(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_and_dry_days)
 def cold_and_dry_days(
-    tas: xr.DataArray | str = "tas",
-    pr: xr.DataArray | str = "pr",
-    tas_per: xr.DataArray | str = "tas_per",
-    pr_per: xr.DataArray | str = "pr_per",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas_per: xr.DataArray | FieldList | str = "tas_per",
+    pr_per: xr.DataArray | FieldList | str = "pr_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cold and dry days.
 
@@ -450,24 +517,24 @@ def cold_and_dry_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature values.
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    tas_per : xarray.DataArray | str
+    tas_per : xarray.DataArray | earthkit.data.FieldList | str
         First quartile of daily mean temperature computed by month.
-    pr_per : xarray.DataArray | str
+    pr_per : xarray.DataArray | earthkit.data.FieldList | str
         First quartile of daily total precipitation computed by month.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cold_and_dry_days(
@@ -484,15 +551,15 @@ def cold_and_dry_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_and_wet_days)
 def cold_and_wet_days(
-    tas: xr.DataArray | str = "tas",
-    pr: xr.DataArray | str = "pr",
-    tas_per: xr.DataArray | str = "tas_per",
-    pr_per: xr.DataArray | str = "pr_per",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas_per: xr.DataArray | FieldList | str = "tas_per",
+    pr_per: xr.DataArray | FieldList | str = "pr_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cold and wet days.
 
@@ -507,24 +574,24 @@ def cold_and_wet_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature values.
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    tas_per : xarray.DataArray | str
+    tas_per : xarray.DataArray | earthkit.data.FieldList | str
         First quartile of daily mean temperature computed by month.
-    pr_per : xarray.DataArray | str
+    pr_per : xarray.DataArray | earthkit.data.FieldList | str
         Third quartile of daily total precipitation computed by month.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cold_and_wet_days(
@@ -541,16 +608,16 @@ def cold_and_wet_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_days)
 def cold_spell_days(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "-10 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "-10 degC",
     window: int = 5,
     freq: str = "YS-JUL",
     op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cold spell days.
 
@@ -565,9 +632,9 @@ def cold_spell_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature below which a cold spell begins.
     window : int
         Minimum number of days with temperature below the threshold to qualify as a cold
@@ -579,14 +646,14 @@ def cold_spell_days(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cold_spell_days(
@@ -604,9 +671,9 @@ def cold_spell_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_duration_index)
 def cold_spell_duration_index(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmin_per: xr.DataArray | str = "tasmin_per",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmin_per: xr.DataArray | FieldList | str = "tasmin_per",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 6,
     freq: str = "YS",
@@ -614,7 +681,7 @@ def cold_spell_duration_index(
     bootstrap: bool = False,
     op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cold spell duration index (csdi).
 
@@ -630,9 +697,9 @@ def cold_spell_duration_index(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmin_per : xarray.DataArray | str
+    tasmin_per : xarray.DataArray | earthkit.data.FieldList | str
         The nth percentile of daily minimum temperature with `dayofyear` coordinate.
     window : int
         Minimum number of days with temperature below threshold to qualify as a cold spell.
@@ -650,14 +717,14 @@ def cold_spell_duration_index(
         computationally expensive, and it might provide the wrong results.
     op : Literal['<', '<=', 'lt', 'le']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cold_spell_duration_index(
@@ -676,16 +743,16 @@ def cold_spell_duration_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_frequency)
 def cold_spell_frequency(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "-10 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "-10 degC",
     window: int = 5,
     freq: str = "YS-JUL",
     op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cold spell frequency.
 
@@ -700,9 +767,9 @@ def cold_spell_frequency(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature below which a cold spell begins.
     window : int
         Minimum number of days with temperature below the threshold to qualify as a cold
@@ -713,14 +780,14 @@ def cold_spell_frequency(
         Comparison operation. Default: "<".
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cold_spell_frequency(
@@ -738,16 +805,16 @@ def cold_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_max_length)
 def cold_spell_max_length(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "-10 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "-10 degC",
     window: int = 1,
     freq: str = "YS-JUL",
     op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cold spell maximum length.
 
@@ -762,9 +829,9 @@ def cold_spell_max_length(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a cold spell.
     window : int
         Minimum number of days with temperatures below the threshold to qualify as a cold
@@ -776,14 +843,14 @@ def cold_spell_max_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cold_spell_max_length(
@@ -801,16 +868,16 @@ def cold_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cold_spell_total_length)
 def cold_spell_total_length(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "-10 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "-10 degC",
     window: int = 3,
     freq: str = "YS-JUL",
     op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cold spell total length.
 
@@ -825,9 +892,9 @@ def cold_spell_total_length(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a cold spell.
     window : int
         Minimum number of days with temperatures below the threshold to qualify as a cold
@@ -839,14 +906,14 @@ def cold_spell_total_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cold_spell_total_length(
@@ -864,18 +931,20 @@ def cold_spell_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.consecutive_frost_days)
 def consecutive_frost_days(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS-JUL",
+    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Consecutive frost days.
 
-    Maximum number of consecutive days where the daily minimum temperature is below 0°C
+    Maximum number of consecutive days where the daily minimum temperature is below a given
+    threshold
 
     **Units:**
 
@@ -885,29 +954,32 @@ def consecutive_frost_days(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
-        Minimum daily temperature.
-    thresh : Any
-        Threshold temperature.
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
+        Minimum surface temperature.
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
+        The temperature threshold needed to trigger a cold spell.
     freq : str
         Resampling frequency.
+    op : Literal['<', 'lt', '<=', 'le']
+        Comparison operation. Default: "<".
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.consecutive_frost_days(
         tasmin=tasmin,
         thresh=thresh,
         freq=freq,
+        op=op,
         resample_before_rl=resample_before_rl,
         ds=ds,
         **kwargs,
@@ -917,19 +989,20 @@ def consecutive_frost_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.maximum_consecutive_frost_free_days)
 def maximum_consecutive_frost_free_days(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum consecutive frost free days.
 
     Maximum number of consecutive frost-free days: where the daily minimum temperature is
-    above or equal to 0°C
+    above or equal to given threshold.
 
     **Units:**
 
@@ -939,29 +1012,32 @@ def maximum_consecutive_frost_free_days(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
-        Threshold temperature.
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
+        The temperature threshold needed to trigger a frost-free spell.
     freq : str
         Resampling frequency.
+    op : Literal['>', 'gt', '>=', 'ge']
+        Comparison operation. Default: ">=".
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.maximum_consecutive_frost_free_days(
         tasmin=tasmin,
         thresh=thresh,
         freq=freq,
+        op=op,
         resample_before_rl=resample_before_rl,
         ds=ds,
         **kwargs,
@@ -971,13 +1047,13 @@ def maximum_consecutive_frost_free_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cool_night_index)
 def cool_night_index(
-    tasmin: xr.DataArray | str = "tasmin",
-    lat: xr.DataArray | str | None = None,
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    lat: xr.DataArray | FieldList | str | None = None,
+    ds: xr.Dataset | None = None,
     *,
     freq: Literal["YS", "YS-JAN"] = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cool night index.
 
@@ -992,21 +1068,21 @@ def cool_night_index(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    lat : xarray.DataArray | str | None
+    lat : xarray.DataArray | earthkit.data.FieldList | str | None
         Latitude coordinate as an array, float or string. If None, a CF-conformant
         "latitude" field must be available within the passed DataArray.
     freq : Literal['YS', 'YS-JAN']
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cool_night_index(
@@ -1021,13 +1097,13 @@ def cool_night_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cooling_degree_days)
 def cooling_degree_days(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "18.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "18.0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cooling degree days.
 
@@ -1042,20 +1118,20 @@ def cooling_degree_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Temperature threshold above which air is cooled.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cooling_degree_days(
@@ -1070,15 +1146,15 @@ def cooling_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.cooling_degree_days_approximation)
 def cooling_degree_days_approximation(
-    tasmax: xr.DataArray | str = "tasmax",
-    tasmin: xr.DataArray | str = "tasmin",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "18.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "18.0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Cooling degree days approximation.
 
@@ -1095,24 +1171,24 @@ def cooling_degree_days_approximation(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Temperature threshold above which air is cooled.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.cooling_degree_days_approximation(
@@ -1129,14 +1205,14 @@ def cooling_degree_days_approximation(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.corn_heat_units)
 def corn_heat_units(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "4.44 degC",
-    thresh_tasmax: Any = "10 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "4.44 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "10 degC",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Corn heat units.
 
@@ -1151,22 +1227,22 @@ def corn_heat_units(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The minimum temperature threshold needed for corn growth.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The maximum temperature threshold needed for corn growth.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.corn_heat_units(
@@ -1182,12 +1258,12 @@ def corn_heat_units(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.chill_portions)
 def chill_portions(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Chill portions.
 
@@ -1209,18 +1285,18 @@ def chill_portions(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Hourly temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.chill_portions(
@@ -1234,13 +1310,13 @@ def chill_portions(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.chill_units)
 def chill_units(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
     positive_only: bool = False,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Chill units.
 
@@ -1258,20 +1334,20 @@ def chill_units(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Hourly temperature.
     positive_only : bool
         If `True`, only positive daily chill units are aggregated.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.chill_units(
@@ -1286,14 +1362,15 @@ def chill_units(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.maximum_consecutive_wet_days)
 def maximum_consecutive_wet_days(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
+    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum consecutive wet days.
 
@@ -1308,28 +1385,31 @@ def maximum_consecutive_wet_days(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold precipitation on which to base evaluation.
+    op : Literal['>', 'gt', '>=', 'ge']
+        Comparison operator to use to find wet days.
     freq : str
         Resampling frequency.
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.maximum_consecutive_wet_days(
         pr=pr,
         thresh=thresh,
+        op=op,
         freq=freq,
         resample_before_rl=resample_before_rl,
         ds=ds,
@@ -1340,16 +1420,16 @@ def maximum_consecutive_wet_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.days_over_precip_doy_thresh)
 def days_over_precip_doy_thresh(
-    pr: xr.DataArray | str = "pr",
-    pr_per: xr.DataArray | str = "pr_per",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    pr_per: xr.DataArray | FieldList | str = "pr_per",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with precipitation above a given daily percentile.
 
@@ -1364,12 +1444,12 @@ def days_over_precip_doy_thresh(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    pr_per : xarray.DataArray | str
+    pr_per : xarray.DataArray | earthkit.data.FieldList | str
         Percentile of wet day precipitation flux. Either computed daily (one value per day
         of year) or computed over a period (one value per spatial point).
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation value over which a day is considered wet.
     freq : str
         Resampling frequency.
@@ -1382,14 +1462,14 @@ def days_over_precip_doy_thresh(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.days_over_precip_doy_thresh(
@@ -1407,16 +1487,16 @@ def days_over_precip_doy_thresh(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.days_over_precip_thresh)
 def days_over_precip_thresh(
-    pr: xr.DataArray | str = "pr",
-    pr_per: xr.DataArray | str = "pr_per",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    pr_per: xr.DataArray | FieldList | str = "pr_per",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with precipitation above a given percentile.
 
@@ -1431,12 +1511,12 @@ def days_over_precip_thresh(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    pr_per : xarray.DataArray | str
+    pr_per : xarray.DataArray | earthkit.data.FieldList | str
         Percentile of wet day precipitation flux. Either computed daily (one value per day
         of year) or computed over a period (one value per spatial point).
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation value over which a day is considered wet.
     freq : str
         Resampling frequency.
@@ -1449,14 +1529,14 @@ def days_over_precip_thresh(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.days_over_precip_thresh(
@@ -1474,14 +1554,14 @@ def days_over_precip_thresh(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.days_with_snow)
 def days_with_snow(
-    prsn: xr.DataArray | str = "prsn",
-    ds: xr.Dataset | Any = None,
+    prsn: xr.DataArray | FieldList | str = "prsn",
+    ds: xr.Dataset | None = None,
     *,
-    low: Any = "0 kg m-2 s-1",
-    high: Any = "1E6 kg m-2 s-1",
+    low: str | float | int | xr.DataArray | FieldList = "0 kg m-2 s-1",
+    high: str | float | int | xr.DataArray | FieldList = "1E6 kg m-2 s-1",
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with snowfall.
 
@@ -1495,22 +1575,22 @@ def days_with_snow(
 
     Parameters
     ----------
-    prsn : xarray.DataArray | str
+    prsn : xarray.DataArray | earthkit.data.FieldList | str
         Snowfall flux.
-    low : Any
+    low : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Minimum threshold snowfall flux or liquid water equivalent snowfall rate.
-    high : Any
+    high : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Maximum threshold snowfall flux or liquid water equivalent snowfall rate.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.days_with_snow(
@@ -1526,20 +1606,20 @@ def days_with_snow(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.drought_code)
 def drought_code(
-    tas: xr.DataArray | str = "tas",
-    pr: xr.DataArray | str = "pr",
-    lat: xr.DataArray | str = "lat",
-    snd: xr.DataArray | str | None = None,
-    dc0: xr.DataArray | str | None = None,
-    season_mask: xr.DataArray | str | None = None,
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    pr: xr.DataArray | FieldList | str = "pr",
+    lat: xr.DataArray | FieldList | str = "lat",
+    snd: xr.DataArray | FieldList | str | None = None,
+    dc0: xr.DataArray | FieldList | str | None = None,
+    season_mask: xr.DataArray | FieldList | str | None = None,
+    ds: xr.Dataset | None = None,
     *,
     season_method: str | None = None,
     overwintering: bool = False,
     dry_start: str | None = None,
     initial_start_up: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Daily drought code.
 
@@ -1554,17 +1634,17 @@ def drought_code(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Noon temperature.
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Rain fall in open over previous 24 hours, at noon.
-    lat : xarray.DataArray | str
+    lat : xarray.DataArray | earthkit.data.FieldList | str
         Latitude coordinate.
-    snd : xarray.DataArray | str | None
+    snd : xarray.DataArray | earthkit.data.FieldList | str | None
         Noon snow depth.
-    dc0 : xarray.DataArray | str | None
+    dc0 : xarray.DataArray | earthkit.data.FieldList | str | None
         Initial values of the drought code.
-    season_mask : xarray.DataArray | str | None
+    season_mask : xarray.DataArray | earthkit.data.FieldList | str | None
         Boolean mask, True where/when the fire season is active.
     season_method : str | None
         How to compute the start-up and shutdown of the fire season. If "None", no start-ups
@@ -1575,19 +1655,19 @@ def drought_code(
         season_mask must be given.
     dry_start : str | None
         Whether to activate the DC and DMC "dry start" mechanism and which method to use.
-        See :py:func:`fire_weather_ufunc`.
+        See ``fire_weather_ufunc``.
     initial_start_up : bool
         If True (default), grid points where the fire season is active on the first timestep
         go through a start_up phase for that time step. Otherwise, previous codes must be
         given as a continuing fire season is assumed for those points.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.drought_code(
@@ -1609,17 +1689,17 @@ def drought_code(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.degree_days_exceedance_date)
 def degree_days_exceedance_date(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
-    sum_thresh: Any = "25 K days",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
+    sum_thresh: str | float | int | xr.DataArray | FieldList = "25 K days",
     op: Literal[">", "gt", "<", "lt", ">=", "ge", "<=", "le"] = ">",
     after_date: str | None = None,
     never_reached: str | int | None = None,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Degree day exceedance date.
 
@@ -1634,11 +1714,11 @@ def degree_days_exceedance_date(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base degree-days evaluation.
-    sum_thresh : Any
+    sum_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold of the degree days sum.
     op : Literal['>', 'gt', '<', 'lt', '>=', 'ge', '<=', 'le']
         If equivalent to '>', degree days are computed as `tas - thresh` and if equivalent
@@ -1652,14 +1732,14 @@ def degree_days_exceedance_date(
         assigned. Default (None) assigns "NaN".
     freq : str
         Resampling frequency. If `after_date` is given, `freq` should be annual.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.degree_days_exceedance_date(
@@ -1678,19 +1758,19 @@ def degree_days_exceedance_date(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.griffiths_drought_factor)
 def griffiths_drought_factor(
-    pr: xr.DataArray | str = "pr",
-    smd: xr.DataArray | str = "smd",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    smd: xr.DataArray | FieldList | str = "smd",
+    ds: xr.Dataset | None = None,
     *,
     limiting_func: str = "xlim",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Griffiths drought factor based on the soil moisture deficit.
 
     The drought factor is a numeric indicator of the forest fire fuel availability in the
     deep litter bed. It is often used in the calculation of the McArthur Forest Fire Danger
-    Index. The method implemented here follows :cite:t:`ffdi-finkele_2006`.
+    Index. The method implemented here follows ``ffdi-finkele_2006``.
 
     **Units:**
 
@@ -1700,23 +1780,23 @@ def griffiths_drought_factor(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Total rainfall over previous 24 hours [mm/day].
-    smd : xarray.DataArray | str
+    smd : xarray.DataArray | earthkit.data.FieldList | str
         Daily soil moisture deficit (often KBDI) [mm/day].
     limiting_func : str
         How to limit the values of the drought factor. If "xlim" (default), use equation
-        (14) in :cite:t:`ffdi-finkele_2006`. If "discrete", use equation Eq (13) in
-        :cite:t:`ffdi-finkele_2006`, but with the lower limit of each category bound
-        adjusted to match the upper limit of the previous bound.
-    ds : xarray.Dataset | Any
+        (14) in ``ffdi-finkele_2006``. If "discrete", use equation Eq (13) in ``ffdi-
+        finkele_2006``, but with the lower limit of each category bound adjusted to match
+        the upper limit of the previous bound.
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.griffiths_drought_factor(
@@ -1731,18 +1811,18 @@ def griffiths_drought_factor(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.daily_freezethaw_cycles)
 def daily_freezethaw_cycles(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "0 degC",
-    thresh_tasmax: Any = "0 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "0 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "0 degC",
     op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
     op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Daily freeze-thaw cycles.
 
@@ -1758,13 +1838,13 @@ def daily_freezethaw_cycles(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a freeze event.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a thaw event.
     op_tasmin : Literal['<', '<=', 'lt', 'le']
         Comparison operation for tasmin. Default: "<=".
@@ -1775,14 +1855,14 @@ def daily_freezethaw_cycles(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.daily_freezethaw_cycles(
@@ -1802,20 +1882,20 @@ def daily_freezethaw_cycles(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.duff_moisture_code)
 def duff_moisture_code(
-    tas: xr.DataArray | str = "tas",
-    pr: xr.DataArray | str = "pr",
-    hurs: xr.DataArray | str = "hurs",
-    lat: xr.DataArray | str = "lat",
-    snd: xr.DataArray | str | None = None,
-    dmc0: xr.DataArray | str | None = None,
-    season_mask: xr.DataArray | str | None = None,
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    pr: xr.DataArray | FieldList | str = "pr",
+    hurs: xr.DataArray | FieldList | str = "hurs",
+    lat: xr.DataArray | FieldList | str = "lat",
+    snd: xr.DataArray | FieldList | str | None = None,
+    dmc0: xr.DataArray | FieldList | str | None = None,
+    season_mask: xr.DataArray | FieldList | str | None = None,
+    ds: xr.Dataset | None = None,
     *,
     season_method: str | None = None,
     dry_start: str | None = None,
     initial_start_up: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Duff moisture code (fwi component).
 
@@ -1831,19 +1911,19 @@ def duff_moisture_code(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Noon temperature.
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Rain fall in open over previous 24 hours, at noon.
-    hurs : xarray.DataArray | str
+    hurs : xarray.DataArray | earthkit.data.FieldList | str
         Noon relative humidity.
-    lat : xarray.DataArray | str
+    lat : xarray.DataArray | earthkit.data.FieldList | str
         Latitude coordinate.
-    snd : xarray.DataArray | str | None
+    snd : xarray.DataArray | earthkit.data.FieldList | str | None
         Noon snow depth.
-    dmc0 : xarray.DataArray | str | None
+    dmc0 : xarray.DataArray | earthkit.data.FieldList | str | None
         Initial values of the duff moisture code.
-    season_mask : xarray.DataArray | str | None
+    season_mask : xarray.DataArray | earthkit.data.FieldList | str | None
         Boolean mask, True where/when the fire season is active.
     season_method : str | None
         How to compute the start-up and shutdown of the fire season. If "None", no start-ups
@@ -1851,19 +1931,19 @@ def duff_moisture_code(
         is given.
     dry_start : str | None
         Whether to activate the DC and DMC "dry start" mechanism and which method to use.
-        See :py:func:`fire_weather_ufunc`.
+        See ``fire_weather_ufunc``.
     initial_start_up : bool
         If True (default), grid points where the fire season is active on the first timestep
         go through a start_up phase for that time step. Otherwise, previous codes must be
         given as a continuing fire season is assumed for those points.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.duff_moisture_code(
@@ -1885,14 +1965,14 @@ def duff_moisture_code(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.dry_days)
 def dry_days(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0.2 mm/d",
+    thresh: str | float | int | xr.DataArray | FieldList = "0.2 mm/d",
     freq: str = "YS",
     op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of dry days.
 
@@ -1906,22 +1986,22 @@ def dry_days(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold precipitation on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.dry_days(
@@ -1937,16 +2017,16 @@ def dry_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.dry_spell_frequency)
 def dry_spell_frequency(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
     op: Literal["sum", "max", "min", "mean"] = "sum",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Dry spell frequency.
 
@@ -1961,9 +2041,9 @@ def dry_spell_frequency(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation amount under which a period is considered dry. The value against which
         the threshold is compared depends on `op`.
     window : int
@@ -1979,14 +2059,14 @@ def dry_spell_frequency(
         checks that the maximal daily precipitation amount within the window is less than
         the threshold. This is the same as verifying that each individual day is below the
         threshold.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.dry_spell_frequency(
@@ -2004,16 +2084,16 @@ def dry_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.dry_spell_max_length)
 def dry_spell_max_length(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 1,
     op: Literal["max", "sum"] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Dry spell maximum length.
 
@@ -2028,9 +2108,9 @@ def dry_spell_max_length(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Accumulated precipitation value under which a period is considered dry.
     window : int
         Number of days when the maximum or accumulated precipitation is under the threshold.
@@ -2041,14 +2121,14 @@ def dry_spell_max_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.dry_spell_max_length(
@@ -2066,16 +2146,16 @@ def dry_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.dry_spell_total_length)
 def dry_spell_total_length(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 3,
     op: Literal["sum", "max", "min", "mean"] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Dry spell total length.
 
@@ -2090,9 +2170,9 @@ def dry_spell_total_length(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Accumulated precipitation value under which a period is considered dry.
     window : int
         Number of days when the maximum or accumulated precipitation is under the threshold.
@@ -2107,14 +2187,14 @@ def dry_spell_total_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.dry_spell_total_length(
@@ -2132,15 +2212,15 @@ def dry_spell_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.dryness_index)
 def dryness_index(
-    pr: xr.DataArray | str = "pr",
-    evspsblpot: xr.DataArray | str = "evspsblpot",
-    lat: xr.DataArray | str | None = None,
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    evspsblpot: xr.DataArray | FieldList | str = "evspsblpot",
+    lat: xr.DataArray | FieldList | str | None = None,
+    ds: xr.Dataset | None = None,
     *,
-    wo: Any = "200 mm",
+    wo: str | float | int | xr.DataArray | FieldList = "200 mm",
     freq: Literal["YS", "YS-JAN"] = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Dryness index.
 
@@ -2156,25 +2236,25 @@ def dryness_index(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Precipitation.
-    evspsblpot : xarray.DataArray | str
+    evspsblpot : xarray.DataArray | earthkit.data.FieldList | str
         Potential evapotranspiration.
-    lat : xarray.DataArray | str | None
+    lat : xarray.DataArray | earthkit.data.FieldList | str | None
         Latitude coordinate as an array, float or string. If None, a CF-conformant
         "latitude" field must be available within the passed DataArray.
-    wo : Any
+    wo : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The initial soil water reserve accessible to root systems [length]. Default: 200 mm.
     freq : Literal['YS', 'YS-JAN']
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.dryness_index(
@@ -2191,13 +2271,13 @@ def dryness_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.daily_temperature_range)
 def daily_temperature_range(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Mean of daily temperature range.
 
@@ -2211,20 +2291,20 @@ def daily_temperature_range(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.daily_temperature_range(
@@ -2239,13 +2319,13 @@ def daily_temperature_range(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.max_daily_temperature_range)
 def max_daily_temperature_range(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum of daily temperature range.
 
@@ -2259,20 +2339,20 @@ def max_daily_temperature_range(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.max_daily_temperature_range(
@@ -2287,13 +2367,13 @@ def max_daily_temperature_range(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.daily_temperature_range_variability)
 def daily_temperature_range_variability(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Variability of daily temperature range.
 
@@ -2307,20 +2387,20 @@ def daily_temperature_range_variability(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.daily_temperature_range_variability(
@@ -2335,13 +2415,13 @@ def daily_temperature_range_variability(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.extreme_temperature_range)
 def extreme_temperature_range(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Extreme temperature range.
 
@@ -2355,20 +2435,20 @@ def extreme_temperature_range(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.extreme_temperature_range(
@@ -2383,13 +2463,13 @@ def extreme_temperature_range(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.mcarthur_forest_fire_danger_index)
 def mcarthur_forest_fire_danger_index(
-    drought_factor: xr.DataArray | str = "drought_factor",
-    tasmax: xr.DataArray | str = "tasmax",
-    hurs: xr.DataArray | str = "hurs",
-    sfcWind: xr.DataArray | str = "sfcWind",
-    ds: xr.Dataset | Any = None,
+    drought_factor: xr.DataArray | FieldList | str = "drought_factor",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    hurs: xr.DataArray | FieldList | str = "hurs",
+    sfcWind: xr.DataArray | FieldList | str = "sfcWind",
+    ds: xr.Dataset | None = None,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Mcarthur forest fire danger index (ffdi) mark 5.
 
@@ -2403,31 +2483,31 @@ def mcarthur_forest_fire_danger_index(
 
     Parameters
     ----------
-    drought_factor : xarray.DataArray | str
+    drought_factor : xarray.DataArray | earthkit.data.FieldList | str
         The drought factor, often the daily Griffiths drought factor (see
-        :py:func:`griffiths_drought_factor`).
-    tasmax : xarray.DataArray | str
+        ``griffiths_drought_factor``).
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         The daily maximum temperature near the surface, or similar. Different applications
         have used different inputs here, including the previous/current day's maximum daily
         temperature at a height of 2m, and the daily mean temperature at a height of 2m.
-    hurs : xarray.DataArray | str
+    hurs : xarray.DataArray | earthkit.data.FieldList | str
         The relative humidity near the surface and near the time of the maximum daily
         temperature, or similar. Different applications have used different inputs here,
         including the mid-afternoon relative humidity at a height of 2m, and the daily mean
         relative humidity at a height of 2m.
-    sfcWind : xarray.DataArray | str
+    sfcWind : xarray.DataArray | earthkit.data.FieldList | str
         The wind speed near the surface and near the time of the maximum daily temperature,
         or similar. Different applications have used different inputs here, including the
         mid-afternoon wind speed at a height of 10m, and the daily mean wind speed at a
         height of 10m.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.mcarthur_forest_fire_danger_index(
@@ -2443,19 +2523,19 @@ def mcarthur_forest_fire_danger_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.fire_season)
 def fire_season(
-    tas: xr.DataArray | str = "tas",
-    snd: xr.DataArray | str | None = None,
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    snd: xr.DataArray | FieldList | str | None = None,
+    ds: xr.Dataset | None = None,
     *,
     method: str = "WF93",
     freq: str | None = None,
-    temp_start_thresh: Any = "12 degC",
-    temp_end_thresh: Any = "5 degC",
+    temp_start_thresh: str | float | int | xr.DataArray | FieldList = "12 degC",
+    temp_end_thresh: str | float | int | xr.DataArray | FieldList = "5 degC",
     temp_condition_days: int = 3,
     snow_condition_days: int = 3,
-    snow_thresh: Any = "0.01 m",
+    snow_thresh: str | float | int | xr.DataArray | FieldList = "0.01 m",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Fire season mask.
 
@@ -2470,37 +2550,37 @@ def fire_season(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Daily surface temperature, cffdrs recommends using maximum daily temperature.
-    snd : xarray.DataArray | str | None
+    snd : xarray.DataArray | earthkit.data.FieldList | str | None
         Snow depth, used with method == 'LA08'.
     method : str
         Which method to use. "LA08"  and "GFWED" need the snow depth.
     freq : str | None
         If given only the longest fire season for each period defined by this frequency,
         Every "seasons" are returned if None, including the short shoulder seasons.
-    temp_start_thresh : Any
+    temp_start_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Minimal temperature needed to start the season. Must be scalar.
-    temp_end_thresh : Any
+    temp_end_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Maximal temperature needed to end the season. Must be scalar.
     temp_condition_days : int
         Number of days with temperature above or below the thresholds to trigger a start or
         an end of the fire season.
     snow_condition_days : int
-        Parameters for the fire season determination. See :py:func:`fire_season`.
-        Temperature is in degC, snow in m. The `snow_thresh` parameters is also used when
-        `dry_start` is set to "GFWED".
-    snow_thresh : Any
+        Parameters for the fire season determination. See ``fire_season``. Temperature is in
+        degC, snow in m. The `snow_thresh` parameters is also used when `dry_start` is set
+        to "GFWED".
+    snow_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Minimal snow depth level to end a fire season, only used with method "LA08". Must be
         scalar.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.fire_season(
@@ -2521,16 +2601,16 @@ def fire_season(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tg_above)
 def first_day_tg_above(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     First day of temperatures superior to a given temperature threshold.
 
@@ -2545,9 +2625,9 @@ def first_day_tg_above(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">".
@@ -2558,14 +2638,14 @@ def first_day_tg_above(
         Minimum number of days with temperature above the threshold needed for evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.first_day_tg_above(
@@ -2583,16 +2663,16 @@ def first_day_tg_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tg_below)
 def first_day_tg_below(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     First day of temperatures inferior to a given temperature threshold.
 
@@ -2607,9 +2687,9 @@ def first_day_tg_below(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: ">".
@@ -2620,14 +2700,14 @@ def first_day_tg_below(
         Minimum number of days with temperature below the threshold needed for evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.first_day_tg_below(
@@ -2645,16 +2725,16 @@ def first_day_tg_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tn_above)
 def first_day_tn_above(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     First day of temperatures superior to a given temperature threshold.
 
@@ -2669,9 +2749,9 @@ def first_day_tn_above(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum surface temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">".
@@ -2682,14 +2762,14 @@ def first_day_tn_above(
         Minimum number of days with temperature above the threshold needed for evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.first_day_tn_above(
@@ -2707,16 +2787,16 @@ def first_day_tn_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tn_below)
 def first_day_tn_below(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     First day of temperatures inferior to a given temperature threshold.
 
@@ -2731,9 +2811,9 @@ def first_day_tn_below(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum surface temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: ">".
@@ -2744,14 +2824,14 @@ def first_day_tn_below(
         Minimum number of days with temperature below the threshold needed for evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.first_day_tn_below(
@@ -2769,16 +2849,16 @@ def first_day_tn_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tx_above)
 def first_day_tx_above(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     First day of temperatures superior to a given temperature threshold.
 
@@ -2793,9 +2873,9 @@ def first_day_tx_above(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum surface temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">".
@@ -2806,14 +2886,14 @@ def first_day_tx_above(
         Minimum number of days with temperature above the threshold needed for evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.first_day_tx_above(
@@ -2831,16 +2911,16 @@ def first_day_tx_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_day_tx_below)
 def first_day_tx_below(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     op: Literal["<", "lt", "<=", "le"] = "<",
     after_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     First day of temperatures inferior to a given temperature threshold.
 
@@ -2855,9 +2935,9 @@ def first_day_tx_below(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum surface temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: ">".
@@ -2868,14 +2948,14 @@ def first_day_tx_below(
         Minimum number of days with temperature below the threshold needed for evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.first_day_tx_below(
@@ -2893,13 +2973,13 @@ def first_day_tx_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.first_snowfall)
 def first_snowfall(
-    prsn: xr.DataArray | str = "prsn",
-    ds: xr.Dataset | Any = None,
+    prsn: xr.DataArray | FieldList | str = "prsn",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     First day where snowfall exceeded a given threshold.
 
@@ -2914,21 +2994,21 @@ def first_snowfall(
 
     Parameters
     ----------
-    prsn : xarray.DataArray | str
+    prsn : xarray.DataArray | earthkit.data.FieldList | str
         Snowfall flux.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snowfall flux or liquid water equivalent snowfall rate. (default: 1
         mm/day).
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.first_snowfall(
@@ -2943,16 +3023,16 @@ def first_snowfall(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.fraction_over_precip_doy_thresh)
 def fraction_over_precip_doy_thresh(
-    pr: xr.DataArray | str = "pr",
-    pr_per: xr.DataArray | str = "pr_per",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    pr_per: xr.DataArray | FieldList | str = "pr_per",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Fraction of precipitation due to wet days with daily precipitation over a given daily percentile.
 
@@ -2968,12 +3048,12 @@ def fraction_over_precip_doy_thresh(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    pr_per : xarray.DataArray | str
+    pr_per : xarray.DataArray | earthkit.data.FieldList | str
         Percentile of wet day precipitation flux. Either computed daily (one value per day
         of year) or computed over a period (one value per spatial point).
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation value over which a day is considered wet.
     freq : str
         Resampling frequency.
@@ -2986,14 +3066,14 @@ def fraction_over_precip_doy_thresh(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.fraction_over_precip_doy_thresh(
@@ -3011,16 +3091,16 @@ def fraction_over_precip_doy_thresh(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.fraction_over_precip_thresh)
 def fraction_over_precip_thresh(
-    pr: xr.DataArray | str = "pr",
-    pr_per: xr.DataArray | str = "pr_per",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    pr_per: xr.DataArray | FieldList | str = "pr_per",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Fraction of precipitation due to wet days with daily precipitation over a given percentile.
 
@@ -3036,12 +3116,12 @@ def fraction_over_precip_thresh(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    pr_per : xarray.DataArray | str
+    pr_per : xarray.DataArray | earthkit.data.FieldList | str
         Percentile of wet day precipitation flux. Either computed daily (one value per day
         of year) or computed over a period (one value per spatial point).
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation value over which a day is considered wet.
     freq : str
         Resampling frequency.
@@ -3054,14 +3134,14 @@ def fraction_over_precip_thresh(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.fraction_over_precip_thresh(
@@ -3079,19 +3159,19 @@ def fraction_over_precip_thresh(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freezethaw_spell_frequency)
 def freezethaw_spell_frequency(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "0 degC",
-    thresh_tasmax: Any = "0 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "0 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 1,
     op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
     op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Freeze-thaw spell frequency.
 
@@ -3107,13 +3187,13 @@ def freezethaw_spell_frequency(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a freeze event.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a thaw event.
     window : int
         The minimal length of spells to be included in the statistics.
@@ -3126,14 +3206,14 @@ def freezethaw_spell_frequency(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.freezethaw_spell_frequency(
@@ -3154,19 +3234,19 @@ def freezethaw_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freezethaw_spell_max_length)
 def freezethaw_spell_max_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "0 degC",
-    thresh_tasmax: Any = "0 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "0 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 1,
     op_tasmin: Literal["<", "<=", "lt", "le"] = "<=",
     op_tasmax: Literal[">", ">=", "gt", "ge"] = ">",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximal length of freeze-thaw spells.
 
@@ -3182,13 +3262,13 @@ def freezethaw_spell_max_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a freeze event.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a thaw event.
     window : int
         The minimal length of spells to be included in the statistics.
@@ -3201,14 +3281,14 @@ def freezethaw_spell_max_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.freezethaw_spell_max_length(
@@ -3229,17 +3309,17 @@ def freezethaw_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freezethaw_spell_mean_length)
 def freezethaw_spell_mean_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "0 degC",
-    thresh_tasmax: Any = "0 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "0 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 1,
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Freeze-thaw spell mean length.
 
@@ -3255,13 +3335,13 @@ def freezethaw_spell_mean_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a freeze event.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a thaw event.
     window : int
         The minimal length of spells to be included in the statistics.
@@ -3270,14 +3350,14 @@ def freezethaw_spell_mean_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.freezethaw_spell_mean_length(
@@ -3296,13 +3376,13 @@ def freezethaw_spell_mean_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freezing_degree_days)
 def freezing_degree_days(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Freezing degree days.
 
@@ -3317,20 +3397,20 @@ def freezing_degree_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.freezing_degree_days(
@@ -3345,16 +3425,16 @@ def freezing_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.freshet_start)
 def freshet_start(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     after_date: str = "01-01",
     window: int = 5,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Day of year of spring freshet start.
 
@@ -3369,9 +3449,9 @@ def freshet_start(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">".
@@ -3382,14 +3462,14 @@ def freshet_start(
         Minimum number of days with temperature above the threshold needed for evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.freshet_start(
@@ -3407,13 +3487,13 @@ def freshet_start(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_days)
 def frost_days(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Frost days.
 
@@ -3427,20 +3507,20 @@ def frost_days(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Freezing temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.frost_days(
@@ -3455,16 +3535,16 @@ def frost_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_free_season_end)
 def frost_free_season_end(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Frost free season end.
 
@@ -3479,9 +3559,9 @@ def frost_free_season_end(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     window : int
         Minimum number of days with temperature above/under the threshold to start/end the
@@ -3492,14 +3572,14 @@ def frost_free_season_end(
         How to compare tasmin and the threshold.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.frost_free_season_end(
@@ -3517,16 +3597,16 @@ def frost_free_season_end(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_free_season_length)
 def frost_free_season_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Frost free season length.
 
@@ -3542,9 +3622,9 @@ def frost_free_season_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     window : int
         Minimum number of days with temperature above/under the threshold to start/end the
@@ -3555,14 +3635,14 @@ def frost_free_season_length(
         How to compare tasmin and the threshold.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.frost_free_season_length(
@@ -3580,16 +3660,16 @@ def frost_free_season_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_free_season_start)
 def frost_free_season_start(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     window: int = 5,
     mid_date: str | None = "07-01",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Frost free season start.
 
@@ -3604,9 +3684,9 @@ def frost_free_season_start(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     window : int
         Minimum number of days with temperature above/under the threshold to start/end the
@@ -3617,14 +3697,14 @@ def frost_free_season_start(
         How to compare tasmin and the threshold.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.frost_free_season_start(
@@ -3642,16 +3722,16 @@ def frost_free_season_start(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_free_spell_max_length)
 def frost_free_spell_max_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0.0 degC",
     window: int = 1,
     freq: str = "YS-JUL",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Frost free spell maximum length.
 
@@ -3666,9 +3746,9 @@ def frost_free_spell_max_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a frost-free spell.
     window : int
         Minimum number of days with temperatures above thresholds to qualify as a frost-free
@@ -3680,14 +3760,14 @@ def frost_free_spell_max_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.frost_free_spell_max_length(
@@ -3705,16 +3785,16 @@ def frost_free_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.frost_season_length)
 def frost_season_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 5,
     mid_date: str | None = "01-01",
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS-JUL",
     op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Frost season length.
 
@@ -3730,7 +3810,7 @@ def frost_season_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
     window : int
         Minimum number of days with temperature below threshold to mark the beginning and
@@ -3738,20 +3818,20 @@ def frost_season_length(
     mid_date : str | None
         The date must be included in the season. It is the earliest the end of the season
         can be. ``None`` removes that constraint.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.frost_season_length(
@@ -3769,13 +3849,13 @@ def frost_season_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.growing_degree_days)
 def growing_degree_days(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "4.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "4.0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Growing degree days.
 
@@ -3790,20 +3870,20 @@ def growing_degree_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.growing_degree_days(
@@ -3818,16 +3898,16 @@ def growing_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.growing_season_end)
 def growing_season_end(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "5.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "5.0 degC",
     mid_date: str | None = "07-01",
     window: int = 5,
     freq: str = "YS",
     op: Literal[">", ">=", "lt", "le"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Growing season end.
 
@@ -3842,9 +3922,9 @@ def growing_season_end(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     mid_date : str | None
         Date of the year after which to look for the end of the season. Should have the
@@ -3857,14 +3937,14 @@ def growing_season_end(
         Comparison operation. Default: ">". Note that this comparison is what defines the
         season. The end of the season happens when the condition is NOT met for `window`
         consecutive days.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.growing_season_end(
@@ -3882,16 +3962,16 @@ def growing_season_end(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.growing_season_length)
 def growing_season_length(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "5.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "5.0 degC",
     window: int = 6,
     mid_date: str | None = "07-01",
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Growing season length.
 
@@ -3907,9 +3987,9 @@ def growing_season_length(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     window : int
         Minimum number of days with temperature above the threshold to mark the beginning
@@ -3921,14 +4001,14 @@ def growing_season_length(
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.growing_season_length(
@@ -3946,16 +4026,16 @@ def growing_season_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.growing_season_start)
 def growing_season_start(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "5.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "5.0 degC",
     mid_date: str | None = "07-01",
     window: int = 5,
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Growing season start.
 
@@ -3970,9 +4050,9 @@ def growing_season_start(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     mid_date : str | None
         Date of the year before which the season must start. Should have the format '%m-%d'.
@@ -3983,14 +4063,14 @@ def growing_season_start(
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.growing_season_start(
@@ -4008,19 +4088,19 @@ def growing_season_start(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_spell_frequency)
 def heat_spell_frequency(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 3,
     win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
-    thresh_tasmin: Any = "20 °C",
-    thresh_tasmax: Any = "33 °C",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "20 °C",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "33 °C",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heat spell frequency.
 
@@ -4035,9 +4115,9 @@ def heat_spell_frequency(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum surface temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum surface temperature.
     window : int
         Minimum length of a spell.
@@ -4052,18 +4132,18 @@ def heat_spell_frequency(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold for tasmin
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold for tasmax
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heat_spell_frequency(
@@ -4084,19 +4164,19 @@ def heat_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_spell_max_length)
 def heat_spell_max_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 3,
     win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
-    thresh_tasmin: Any = "20 °C",
-    thresh_tasmax: Any = "33 °C",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "20 °C",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "33 °C",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heat spell maximum length.
 
@@ -4111,9 +4191,9 @@ def heat_spell_max_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum surface temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum surface temperature.
     window : int
         Minimum length of a spell.
@@ -4128,18 +4208,18 @@ def heat_spell_max_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold for tasmin
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold for tasmax
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heat_spell_max_length(
@@ -4160,19 +4240,19 @@ def heat_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_spell_total_length)
 def heat_spell_total_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 3,
     win_reducer: Literal["min", "max", "sum", "mean"] = "mean",
     freq: str = "YS",
     min_gap: int = 1,
     resample_before_rl: bool = True,
-    thresh_tasmin: Any = "20 °C",
-    thresh_tasmax: Any = "33 °C",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "20 °C",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "33 °C",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heat spell total length.
 
@@ -4187,9 +4267,9 @@ def heat_spell_total_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum surface temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum surface temperature.
     window : int
         Minimum length of a spell.
@@ -4204,18 +4284,18 @@ def heat_spell_total_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold for tasmin
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold for tasmax
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heat_spell_total_length(
@@ -4236,18 +4316,18 @@ def heat_spell_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_wave_frequency)
 def heat_wave_frequency(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "22.0 degC",
-    thresh_tasmax: Any = "30 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "22.0 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
     op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heat wave frequency.
 
@@ -4262,13 +4342,13 @@ def heat_wave_frequency(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The minimum temperature threshold needed to trigger a heatwave event.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The maximum temperature threshold needed to trigger a heatwave event.
     window : int
         Minimum number of days with temperatures above thresholds to qualify as a heatwave.
@@ -4279,14 +4359,14 @@ def heat_wave_frequency(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heat_wave_frequency(
@@ -4306,16 +4386,16 @@ def heat_wave_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_wave_index)
 def heat_wave_index(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "25 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "25 degC",
     window: int = 5,
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heat wave index.
 
@@ -4330,9 +4410,9 @@ def heat_wave_index(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a hot spell.
     window : int
         Minimum number of days with temperatures below the threshold to qualify as a hot
@@ -4344,14 +4424,14 @@ def heat_wave_index(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heat_wave_index(
@@ -4369,18 +4449,18 @@ def heat_wave_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_wave_max_length)
 def heat_wave_max_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "22.0 degC",
-    thresh_tasmax: Any = "30 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "22.0 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
     op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heat wave maximum length.
 
@@ -4395,13 +4475,13 @@ def heat_wave_max_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The minimum temperature threshold needed to trigger a heatwave event.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The maximum temperature threshold needed to trigger a heatwave event.
     window : int
         Minimum number of days with temperatures above thresholds to qualify as a heatwave.
@@ -4412,14 +4492,14 @@ def heat_wave_max_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heat_wave_max_length(
@@ -4439,18 +4519,18 @@ def heat_wave_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heat_wave_total_length)
 def heat_wave_total_length(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "22.0 degC",
-    thresh_tasmax: Any = "30 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "22.0 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
     op: Literal[">", ">=", "gt", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heat wave total length.
 
@@ -4465,13 +4545,13 @@ def heat_wave_total_length(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The minimum temperature threshold needed to trigger a heatwave event.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The maximum temperature threshold needed to trigger a heatwave event.
     window : int
         Minimum number of days with temperatures above thresholds to qualify as a heatwave.
@@ -4482,14 +4562,14 @@ def heat_wave_total_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heat_wave_total_length(
@@ -4509,13 +4589,13 @@ def heat_wave_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heating_degree_days)
 def heating_degree_days(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "17.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "17.0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heating degree days.
 
@@ -4530,20 +4610,20 @@ def heating_degree_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heating_degree_days(
@@ -4558,15 +4638,15 @@ def heating_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.heating_degree_days_approximation)
 def heating_degree_days_approximation(
-    tasmax: xr.DataArray | str = "tasmax",
-    tasmin: xr.DataArray | str = "tasmin",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "17.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "17.0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Heating degree days approximation.
 
@@ -4583,24 +4663,24 @@ def heating_degree_days_approximation(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.heating_degree_days_approximation(
@@ -4617,15 +4697,15 @@ def heating_degree_days_approximation(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.high_precip_low_temp)
 def high_precip_low_temp(
-    pr: xr.DataArray | str = "pr",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    pr_thresh: Any = "0.4 mm/d",
-    tas_thresh: Any = "-0.2 degC",
+    pr_thresh: str | float | int | xr.DataArray | FieldList = "0.4 mm/d",
+    tas_thresh: str | float | int | xr.DataArray | FieldList = "-0.2 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with precipitation and cold temperature.
 
@@ -4640,24 +4720,24 @@ def high_precip_low_temp(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Daily mean, minimum or maximum temperature.
-    pr_thresh : Any
+    pr_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation threshold to exceed.
-    tas_thresh : Any
+    tas_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Temperature threshold not to exceed.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.high_precip_low_temp(
@@ -4674,13 +4754,13 @@ def high_precip_low_temp(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_days)
 def hot_days(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "25 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "25 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Hot days.
 
@@ -4694,20 +4774,20 @@ def hot_days(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.hot_days(
@@ -4722,16 +4802,16 @@ def hot_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_spell_frequency)
 def hot_spell_frequency(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "30 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Hot spell frequency.
 
@@ -4746,9 +4826,9 @@ def hot_spell_frequency(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature below which a hot spell begins.
     window : int
         Minimum number of days with temperature above the threshold to qualify as a hot
@@ -4759,14 +4839,14 @@ def hot_spell_frequency(
         Comparison operation. Default: ">".
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.hot_spell_frequency(
@@ -4784,16 +4864,16 @@ def hot_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_spell_max_length)
 def hot_spell_max_length(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "30 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 1,
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Hot spell maximum length.
 
@@ -4808,9 +4888,9 @@ def hot_spell_max_length(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a hot spell.
     window : int
         Minimum number of days with temperatures below thresholds to qualify as a hot spell.
@@ -4821,14 +4901,14 @@ def hot_spell_max_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.hot_spell_max_length(
@@ -4846,15 +4926,15 @@ def hot_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_spell_max_magnitude)
 def hot_spell_max_magnitude(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "25.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "25.0 degC",
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Hot spell maximum magnitude.
 
@@ -4869,9 +4949,9 @@ def hot_spell_max_magnitude(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to designate a heatwave.
     window : int
         Minimum number of days with temperature above the threshold to qualify as a
@@ -4881,14 +4961,14 @@ def hot_spell_max_magnitude(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.hot_spell_max_magnitude(
@@ -4905,16 +4985,16 @@ def hot_spell_max_magnitude(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.hot_spell_total_length)
 def hot_spell_total_length(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "30 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "30 degC",
     window: int = 3,
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Hot spell total length.
 
@@ -4929,9 +5009,9 @@ def hot_spell_total_length(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold needed to trigger a hot spell.
     window : int
         Minimum number of days with temperatures below the threshold to qualify as a hot
@@ -4943,14 +5023,14 @@ def hot_spell_total_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.hot_spell_total_length(
@@ -4968,19 +5048,19 @@ def hot_spell_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.huglin_index)
 def huglin_index(
-    tas: xr.DataArray | str = "tas",
-    tasmax: xr.DataArray | str = "tasmax",
-    lat: xr.DataArray | str = "lat",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    lat: xr.DataArray | FieldList | str = "lat",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "10 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "10 degC",
     method: str = "jones",
     cap_value: float = 1.0,
     start_date: str | str = "04-01",
     end_date: str | str = "10-01",
     freq: Literal["YS", "YS-JAN", "YS-JUL"] = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Huglin heliothermal index.
 
@@ -4998,23 +5078,23 @@ def huglin_index(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    lat : xarray.DataArray | str
+    lat : xarray.DataArray | earthkit.data.FieldList | str
         Latitude coordinate. If None, a CF-conformant "latitude" field must be available
         within the passed DataArray.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         The temperature threshold.
     method : str
         The formula to use for the latitude coefficient calculation. The "huglin" method
         uses a stepwise latitude coefficient for values between 40° and 50° based on
-        :cite:t:`huglin_nouveau_1978`. The "interpolated" method uses a smoothed curve
-        latitude coefficient for values based on the intervals set in
-        :cite:t:`huglin_nouveau_1978`. The "jones" method integrates axial tilt, latitude,
-        and day-of-year based on :cite:t:`hall_spatial_2010`. The "icclim" method is
-        deprecated but is identical to method "huglin".
+        ``huglin_nouveau_1978``. The "interpolated" method uses a smoothed curve latitude
+        coefficient for values based on the intervals set in ``huglin_nouveau_1978``. The
+        "jones" method integrates axial tilt, latitude, and day-of-year based on
+        ``hall_spatial_2010``. The "icclim" method is deprecated but is identical to method
+        "huglin".
     cap_value : float
         The value to use for the latitude coefficient when latitude is above 50°N or below
         50°S. Only applicable for methods "huglin", "icclim", and "interpolated" (default:
@@ -5026,14 +5106,14 @@ def huglin_index(
         date is non-inclusive.
     freq : Literal['YS', 'YS-JAN', 'YS-JUL']
         Resampling frequency (default: "YS"; For Southern Hemisphere, should be "YS-JUL").
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.huglin_index(
@@ -5054,13 +5134,13 @@ def huglin_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.ice_days)
 def ice_days(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Ice days.
 
@@ -5074,20 +5154,20 @@ def ice_days(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Freezing temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.ice_days(
@@ -5102,17 +5182,16 @@ def ice_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.jetstream_metric_woollings)
 def jetstream_metric_woollings(
-    ua: xr.DataArray | str = "ua",
-    ds: xr.Dataset | Any = None,
+    ua: xr.DataArray | FieldList | str = "ua",
+    ds: xr.Dataset | None = None,
     **kwargs: Any,
-) -> Any:
+) -> tuple[xr.DataArray | FieldList, xr.DataArray | FieldList]:
     """
     Strength and latitude of jetstream.
 
     Identify latitude and strength of maximum smoothed zonal wind speed in the region from
-    15 to 75°N and -60 to 0°E, using the formula outlined in
-    :cite:p:`woollings_variability_2010`. Wind is smoothened using a Lanczos filter
-    approach.
+    15 to 75°N and -60 to 0°E, using the formula outlined in ``woollings_variability_2010``.
+    Wind is smoothened using a Lanczos filter approach.
 
     **Units:**
 
@@ -5123,17 +5202,20 @@ def jetstream_metric_woollings(
 
     Parameters
     ----------
-    ua : xarray.DataArray | str
+    ua : xarray.DataArray | earthkit.data.FieldList | str
         Eastward wind component (u) at between 750 and 950 hPa.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
-        The computed index.
+        tuple[
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+    ]
+            The computed index.
     """
     return xclim.indicators.atmos.jetstream_metric_woollings(ua=ua, ds=ds, **kwargs)
 
@@ -5141,21 +5223,21 @@ def jetstream_metric_woollings(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.keetch_byram_drought_index)
 def keetch_byram_drought_index(
-    pr: xr.DataArray | str = "pr",
-    tasmax: xr.DataArray | str = "tasmax",
-    pr_annual: xr.DataArray | str = "pr_annual",
-    kbdi0: xr.DataArray | str | None = None,
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    pr_annual: xr.DataArray | FieldList | str = "pr_annual",
+    kbdi0: xr.DataArray | FieldList | str | None = None,
+    ds: xr.Dataset | None = None,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Keetch-byram drought index (kbdi) for soil moisture deficit.
 
     The KBDI indicates the amount of water necessary to bring the soil moisture content back
     to field capacity. It is often used in the calculation of the McArthur Forest Fire
-    Danger Index. The method implemented here follows :cite:t:`ffdi-finkele_2006` but limits
-    the maximum KBDI to 203.2 mm, rather than 200 mm, in order to align best with the
-    majority of the literature.
+    Danger Index. The method implemented here follows ``ffdi-finkele_2006`` but limits the
+    maximum KBDI to 203.2 mm, rather than 200 mm, in order to align best with the majority
+    of the literature.
 
     **Units:**
 
@@ -5165,23 +5247,23 @@ def keetch_byram_drought_index(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Total rainfall over previous 24 hours [mm/day].
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum temperature near the surface over previous 24 hours [degC].
-    pr_annual : xarray.DataArray | str
+    pr_annual : xarray.DataArray | earthkit.data.FieldList | str
         Mean (over years) annual accumulated rainfall [mm/year].
-    kbdi0 : xarray.DataArray | str | None
+    kbdi0 : xarray.DataArray | earthkit.data.FieldList | str | None
         Previous KBDI values used to initialise the KBDI calculation [mm/day]. Defaults to
         0.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.keetch_byram_drought_index(
@@ -5197,13 +5279,13 @@ def keetch_byram_drought_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.last_snowfall)
 def last_snowfall(
-    prsn: xr.DataArray | str = "prsn",
-    ds: xr.Dataset | Any = None,
+    prsn: xr.DataArray | FieldList | str = "prsn",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Last day where snowfall exceeded a given threshold.
 
@@ -5218,21 +5300,21 @@ def last_snowfall(
 
     Parameters
     ----------
-    prsn : xarray.DataArray | str
+    prsn : xarray.DataArray | earthkit.data.FieldList | str
         Snowfall flux.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snowfall flux or liquid water equivalent snowfall rate (default: 1
         mm/day).
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.last_snowfall(
@@ -5247,16 +5329,16 @@ def last_snowfall(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.last_spring_frost)
 def last_spring_frost(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     op: Literal["<", "lt", "<=", "le"] = "<",
     before_date: str = "07-01",
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Last spring frost.
 
@@ -5271,9 +5353,9 @@ def last_spring_frost(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: "<".
@@ -5284,14 +5366,14 @@ def last_spring_frost(
         Minimum number of days with temperature below the threshold needed for evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.last_spring_frost(
@@ -5309,13 +5391,13 @@ def last_spring_frost(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.late_frost_days)
 def late_frost_days(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Late frost days.
 
@@ -5330,20 +5412,20 @@ def late_frost_days(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Freezing temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.late_frost_days(
@@ -5358,13 +5440,13 @@ def late_frost_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.latitude_temperature_index)
 def latitude_temperature_index(
-    tas: xr.DataArray | str = "tas",
-    lat: xr.DataArray | str = "lat",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    lat: xr.DataArray | FieldList | str = "lat",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Latitude temperature index.
 
@@ -5382,21 +5464,21 @@ def latitude_temperature_index(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    lat : xarray.DataArray | str
+    lat : xarray.DataArray | earthkit.data.FieldList | str
         Latitude coordinate. If None, a CF-conformant "latitude" field must be available
         within the passed DataArray.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.latitude_temperature_index(
@@ -5411,14 +5493,14 @@ def latitude_temperature_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.liquid_precip_ratio)
 def liquid_precip_ratio(
-    pr: xr.DataArray | str = "pr",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "QS-DEC",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Fraction of liquid to total precipitation.
 
@@ -5434,22 +5516,22 @@ def liquid_precip_ratio(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature under which precipitation is assumed to be solid.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.liquid_precip_ratio(
@@ -5465,14 +5547,14 @@ def liquid_precip_ratio(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.liquid_precip_average)
 def liquid_precip_average(
-    pr: xr.DataArray | str = "pr",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Averaged liquid precipitation.
 
@@ -5487,22 +5569,22 @@ def liquid_precip_average(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean, maximum or minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold of `tas` over which the precipication is assumed to be liquid rain.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.liquid_precip_average(
@@ -5518,14 +5600,14 @@ def liquid_precip_average(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.liquid_precip_accumulation)
 def liquid_precip_accumulation(
-    pr: xr.DataArray | str = "pr",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Total accumulated liquid precipitation.
 
@@ -5540,22 +5622,22 @@ def liquid_precip_accumulation(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean, maximum or minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold of `tas` over which the precipication is assumed to be liquid rain.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.liquid_precip_accumulation(
@@ -5571,13 +5653,13 @@ def liquid_precip_accumulation(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.max_n_day_precipitation_amount)
 def max_n_day_precipitation_amount(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum n-day total precipitation.
 
@@ -5591,20 +5673,20 @@ def max_n_day_precipitation_amount(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation values.
     window : int
         Window size in days.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.max_n_day_precipitation_amount(
@@ -5619,13 +5701,13 @@ def max_n_day_precipitation_amount(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.max_pr_intensity)
 def max_pr_intensity(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 1,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum precipitation intensity over time window.
 
@@ -5639,20 +5721,20 @@ def max_pr_intensity(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Hourly precipitation values.
     window : int
         Window size in hours.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.max_pr_intensity(
@@ -5667,14 +5749,15 @@ def max_pr_intensity(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.maximum_consecutive_warm_days)
 def maximum_consecutive_warm_days(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "25 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "25 °C",
     freq: str = "YS",
+    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum consecutive warm days.
 
@@ -5689,29 +5772,32 @@ def maximum_consecutive_warm_days(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
-        Max daily temperature.
-    thresh : Any
-        Threshold temperature.
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
+        Maximum daily temperature.
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
+        The temperature threshold needed to trigger a hot spell.
     freq : str
         Resampling frequency.
+    op : Literal['>', 'gt', '>=', 'ge']
+        Comparison operation. Default: ">".
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.maximum_consecutive_warm_days(
         tasmax=tasmax,
         thresh=thresh,
         freq=freq,
+        op=op,
         resample_before_rl=resample_before_rl,
         ds=ds,
         **kwargs,
@@ -5721,13 +5807,13 @@ def maximum_consecutive_warm_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.precip_average)
 def precip_average(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Averaged precipitation (solid and liquid).
 
@@ -5744,20 +5830,20 @@ def precip_average(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold of `tas` over which the precipication is assumed to be liquid rain.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.precip_average(
@@ -5772,12 +5858,12 @@ def precip_average(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.precip_accumulation)
 def precip_accumulation(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Total accumulated precipitation (solid and liquid).
 
@@ -5794,18 +5880,18 @@ def precip_accumulation(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.precip_accumulation(
@@ -5819,15 +5905,15 @@ def precip_accumulation(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.rain_on_frozen_ground_days)
 def rain_on_frozen_ground_days(
-    pr: xr.DataArray | str = "pr",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/d",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/d",
     window: int = 7,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of rain on frozen ground days.
 
@@ -5843,25 +5929,25 @@ def rain_on_frozen_ground_days(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation threshold to consider a day as a rain event.
     window : int
         Minimum number of days below freezing temperature needed to consider the ground
         frozen.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.rain_on_frozen_ground_days(
@@ -5878,25 +5964,29 @@ def rain_on_frozen_ground_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.rain_season)
 def rain_season(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_wet_start: Any = "25.0 mm",
+    thresh_wet_start: str | float | int | xr.DataArray | FieldList = "25.0 mm",
     window_wet_start: int = 3,
     window_not_dry_start: int = 30,
-    thresh_dry_start: Any = "1.0 mm",
+    thresh_dry_start: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window_dry_start: int = 7,
     method_dry_start: str = "per_day",
     date_min_start: str = "05-01",
     date_max_start: str = "12-31",
-    thresh_dry_end: Any = "0.0 mm",
+    thresh_dry_end: str | float | int | xr.DataArray | FieldList = "0.0 mm",
     window_dry_end: int = 20,
     method_dry_end: str = "per_day",
     date_min_end: str = "09-01",
     date_max_end: str = "12-31",
-    freq: Any = "YS-JAN",
+    freq: dict[str, Any] | None = "YS-JAN",
     **kwargs: Any,
-) -> Any:
+) -> tuple[
+    xr.DataArray | FieldList,
+    xr.DataArray | FieldList,
+    xr.DataArray | FieldList,
+]:
     """
     Rain season.
 
@@ -5915,9 +6005,9 @@ def rain_season(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Precipitation data.
-    thresh_wet_start : Any
+    thresh_wet_start : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Accumulated precipitation threshold associated with `window_wet_start`.
     window_wet_start : int
         Number of days when accumulated precipitation is above `thresh_wet_start`. Defines
@@ -5926,7 +6016,7 @@ def rain_season(
         Number of days, after `window_wet_start` days, during which no dry period must be
         found as a second and last condition to start the rain season. A dry sequence is
         defined with `thresh_dry_start`, `window_dry_start` and `method_dry_start`.
-    thresh_dry_start : Any
+    thresh_dry_start : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold length defining a dry day in the sequence related to `window_dry_start`.
     window_dry_start : int
         Number of days used to define a dry sequence in the start of the season. Daily
@@ -5943,7 +6033,7 @@ def rain_season(
         First day of year when season can start ("mm-dd").
     date_max_start : str
         Last day of year when season can start ("mm-dd").
-    thresh_dry_end : Any
+    thresh_dry_end : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold length defining a dry day in the sequence related to `window_dry_end`.
     window_dry_end : int
         Number of days used to define a dry sequence in the end of the season. Daily
@@ -5960,17 +6050,21 @@ def rain_season(
         First day of year when season can end ("mm-dd").
     date_max_end : str
         Last day of year when season can end ("mm-dd").
-    freq : Any
+    freq : dict[str, Any] | None
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
-        The computed index.
+        tuple[
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+    ]
+            The computed index.
     """
     return xclim.indicators.atmos.rain_season(
         pr=pr,
@@ -5996,15 +6090,15 @@ def rain_season(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.rprctot)
 def rprctot(
-    pr: xr.DataArray | str = "pr",
-    prc: xr.DataArray | str = "prc",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    prc: xr.DataArray | FieldList | str = "prc",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm/day",
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Proportion of accumulated precipitation arising from convective processes.
 
@@ -6019,24 +6113,24 @@ def rprctot(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    prc : xarray.DataArray | str
+    prc : xarray.DataArray | earthkit.data.FieldList | str
         Daily convective precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation value over which a day is considered wet.
     freq : str
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.rprctot(
@@ -6053,12 +6147,12 @@ def rprctot(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.max_1day_precipitation_amount)
 def max_1day_precipitation_amount(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum 1-day total precipitation.
 
@@ -6072,18 +6166,18 @@ def max_1day_precipitation_amount(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation values.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.max_1day_precipitation_amount(
@@ -6097,14 +6191,14 @@ def max_1day_precipitation_amount(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.daily_pr_intensity)
 def daily_pr_intensity(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Simple daily intensity index.
 
@@ -6118,22 +6212,22 @@ def daily_pr_intensity(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation value over which a day is considered wet.
     freq : str
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.daily_pr_intensity(
@@ -6149,12 +6243,12 @@ def daily_pr_intensity(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.sfcWind_max)
 def sfcWind_max(
-    sfcWind: xr.DataArray | str = "sfcWind",
-    ds: xr.Dataset | Any = None,
+    sfcWind: xr.DataArray | FieldList | str = "sfcWind",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum near-surface mean wind speed.
 
@@ -6168,18 +6262,18 @@ def sfcWind_max(
 
     Parameters
     ----------
-    sfcWind : xarray.DataArray | str
+    sfcWind : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily wind speed.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.sfcWind_max(
@@ -6193,12 +6287,12 @@ def sfcWind_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.sfcWind_mean)
 def sfcWind_mean(
-    sfcWind: xr.DataArray | str = "sfcWind",
-    ds: xr.Dataset | Any = None,
+    sfcWind: xr.DataArray | FieldList | str = "sfcWind",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Mean near-surface wind speed.
 
@@ -6212,18 +6306,18 @@ def sfcWind_mean(
 
     Parameters
     ----------
-    sfcWind : xarray.DataArray | str
+    sfcWind : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily wind speed.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.sfcWind_mean(
@@ -6237,12 +6331,12 @@ def sfcWind_mean(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.sfcWind_min)
 def sfcWind_min(
-    sfcWind: xr.DataArray | str = "sfcWind",
-    ds: xr.Dataset | Any = None,
+    sfcWind: xr.DataArray | FieldList | str = "sfcWind",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Minimum near-surface mean wind speed.
 
@@ -6256,18 +6350,18 @@ def sfcWind_min(
 
     Parameters
     ----------
-    sfcWind : xarray.DataArray | str
+    sfcWind : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily wind speed.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.sfcWind_min(
@@ -6281,12 +6375,12 @@ def sfcWind_min(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.sfcWindmax_max)
 def sfcWindmax_max(
-    sfcWindmax: xr.DataArray | str = "sfcWindmax",
-    ds: xr.Dataset | Any = None,
+    sfcWindmax: xr.DataArray | FieldList | str = "sfcWindmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum near-surface maximum wind speed.
 
@@ -6300,18 +6394,18 @@ def sfcWindmax_max(
 
     Parameters
     ----------
-    sfcWindmax : xarray.DataArray | str
+    sfcWindmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily wind speed.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.sfcWindmax_max(
@@ -6325,12 +6419,12 @@ def sfcWindmax_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.sfcWindmax_mean)
 def sfcWindmax_mean(
-    sfcWindmax: xr.DataArray | str = "sfcWindmax",
-    ds: xr.Dataset | Any = None,
+    sfcWindmax: xr.DataArray | FieldList | str = "sfcWindmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Mean near-surface maximum wind speed.
 
@@ -6344,18 +6438,18 @@ def sfcWindmax_mean(
 
     Parameters
     ----------
-    sfcWindmax : xarray.DataArray | str
+    sfcWindmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily wind speed.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.sfcWindmax_mean(
@@ -6369,12 +6463,12 @@ def sfcWindmax_mean(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.sfcWindmax_min)
 def sfcWindmax_min(
-    sfcWindmax: xr.DataArray | str = "sfcWindmax",
-    ds: xr.Dataset | Any = None,
+    sfcWindmax: xr.DataArray | FieldList | str = "sfcWindmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Minimum near-surface maximum wind speed.
 
@@ -6388,18 +6482,18 @@ def sfcWindmax_min(
 
     Parameters
     ----------
-    sfcWindmax : xarray.DataArray | str
+    sfcWindmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily wind speed.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.sfcWindmax_min(
@@ -6413,13 +6507,13 @@ def sfcWindmax_min(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.snowfall_frequency)
 def snowfall_frequency(
-    prsn: xr.DataArray | str = "prsn",
-    ds: xr.Dataset | Any = None,
+    prsn: xr.DataArray | FieldList | str = "prsn",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Snowfall frequency.
 
@@ -6434,21 +6528,21 @@ def snowfall_frequency(
 
     Parameters
     ----------
-    prsn : xarray.DataArray | str
+    prsn : xarray.DataArray | earthkit.data.FieldList | str
         Snowfall flux.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snowfall flux or liquid water equivalent snowfall rate (default: 1
         mm/day).
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.snowfall_frequency(
@@ -6463,13 +6557,13 @@ def snowfall_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.snowfall_intensity)
 def snowfall_intensity(
-    prsn: xr.DataArray | str = "prsn",
-    ds: xr.Dataset | Any = None,
+    prsn: xr.DataArray | FieldList | str = "prsn",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Snowfall intensity.
 
@@ -6484,21 +6578,21 @@ def snowfall_intensity(
 
     Parameters
     ----------
-    prsn : xarray.DataArray | str
+    prsn : xarray.DataArray | earthkit.data.FieldList | str
         Snowfall flux.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snowfall flux or liquid water equivalent snowfall rate (default: 1
         mm/day).
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.snowfall_intensity(
@@ -6513,14 +6607,14 @@ def snowfall_intensity(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.solid_precip_average)
 def solid_precip_average(
-    pr: xr.DataArray | str = "pr",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Averaged solid precipitation.
 
@@ -6535,22 +6629,22 @@ def solid_precip_average(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean, maximum or minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold of `tas` over which the precipication is assumed to be liquid rain.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.solid_precip_average(
@@ -6566,14 +6660,14 @@ def solid_precip_average(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.solid_precip_accumulation)
 def solid_precip_accumulation(
-    pr: xr.DataArray | str = "pr",
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Total accumulated solid precipitation.
 
@@ -6588,22 +6682,22 @@ def solid_precip_accumulation(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily precipitation flux.
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean, maximum or minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold of `tas` over which the precipication is assumed to be liquid rain.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.solid_precip_accumulation(
@@ -6619,8 +6713,8 @@ def solid_precip_accumulation(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index)
 def standardized_precipitation_evapotranspiration_index(
-    wb: xr.DataArray | str = "wb",
-    ds: xr.Dataset | Any = None,
+    wb: xr.DataArray | FieldList | str = "wb",
+    ds: xr.Dataset | None = None,
     *,
     freq: str | None = "MS",
     window: int = 1,
@@ -6629,9 +6723,9 @@ def standardized_precipitation_evapotranspiration_index(
     fitkwargs: dict | None = None,
     cal_start: str | None = None,
     cal_end: str | None = None,
-    params: Any | None = None,
+    params: str | float | int | xr.DataArray | FieldList | None = None,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Standardized precipitation evapotranspiration index (spei).
 
@@ -6647,7 +6741,7 @@ def standardized_precipitation_evapotranspiration_index(
 
     Parameters
     ----------
-    wb : xarray.DataArray | str
+    wb : xarray.DataArray | earthkit.data.FieldList | str
         Daily water budget (pr - pet).
     freq : str | None
         Resampling frequency. A monthly or daily frequency is expected. Option `None`
@@ -6658,7 +6752,7 @@ def standardized_precipitation_evapotranspiration_index(
         `freq="MS"`, i.e. a monthly resampling, the window is an integer number of months.
     dist : str | Any
         Name of the univariate distribution, or a callable `rv_continuous` (see
-        :py:mod:`scipy.stats`).
+        ``scipy.stats``).
     method : str
         Name of the fitting method, such as `ML` (maximum likelihood), `APP` (approximate).
         The approximate method uses a deterministic function that does not involve any
@@ -6676,18 +6770,18 @@ def standardized_precipitation_evapotranspiration_index(
         End date of the calibration period. A `DateStr` is expected, that is a `str` in
         format `"YYYY-MM-DD"`. Default option `None` means that the calibration period
         finishes at the end of the input dataset.
-    params : Any | None
+    params : str | float | int | xarray.DataArray | earthkit.data.FieldList | None
         Fit parameters. The `params` can be computed using
         ``xclim.indices.stats.standardized_index_fit_params`` in advance. The output can be
         given here as input, and it overrides other options.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index(
@@ -6708,8 +6802,8 @@ def standardized_precipitation_evapotranspiration_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.standardized_precipitation_index)
 def standardized_precipitation_index(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
     freq: str | None = "MS",
     window: int = 1,
@@ -6718,11 +6812,11 @@ def standardized_precipitation_index(
     fitkwargs: dict | None = None,
     cal_start: str | None = None,
     cal_end: str | None = None,
-    params: Any | None = None,
+    params: str | float | int | xr.DataArray | FieldList | None = None,
     prob_zero_interpolation: str | float = "upper",
     plotting_position_zero: str | tuple[float, float] = "ecdf",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Standardized precipitation index (spi).
 
@@ -6738,7 +6832,7 @@ def standardized_precipitation_index(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
     freq : str | None
         Resampling frequency. A monthly or daily frequency is expected. Option `None`
@@ -6749,7 +6843,7 @@ def standardized_precipitation_index(
         `freq="MS"`, i.e. a monthly resampling, the window is an integer number of months.
     dist : str | Any
         Name of the univariate distribution, or a callable `rv_continuous` (see
-        :py:mod:`scipy.stats`).
+        ``scipy.stats``).
     method : str
         Name of the fitting method, such as `ML` (maximum likelihood), `APP` (approximate).
         The approximate method uses a deterministic function that does not involve any
@@ -6767,7 +6861,7 @@ def standardized_precipitation_index(
         End date of the calibration period. A `DateStr` is expected, that is a `str` in
         format `"YYYY-MM-DD"`. Default option `None` means that the calibration period
         finishes at the end of the input dataset.
-    params : Any | None
+    params : str | float | int | xarray.DataArray | earthkit.data.FieldList | None
         Fit parameters. The `params` can be computed using
         ``xclim.indices.stats.standardized_index_fit_params`` in advance. The output can be
         given here as input, and it overrides other options.
@@ -6787,15 +6881,15 @@ def standardized_precipitation_index(
         "weibull" implements the unbiased version, dividing by the total number of
         observation plus one. A tuple consisting of two coefficients in [0,1] to relate the
         number of zeros and the total number of observations. "ecdf" corresponds to (0,1)
-        and "weibull" to (0,0). See :py:func:`scipy.stats.mstats.plotting_positions`
-    ds : xarray.Dataset | Any
+        and "weibull" to (0,0). See ``scipy.stats.mstats.plotting_positions``
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.standardized_precipitation_index(
@@ -6818,15 +6912,15 @@ def standardized_precipitation_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg10p)
 def tg10p(
-    tas: xr.DataArray | str = "tas",
-    tas_per: xr.DataArray | str = "tas_per",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    tas_per: xr.DataArray | FieldList | str = "tas_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal[">", ">=", "gt", "ge"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with mean temperature below the 10th percentile.
 
@@ -6840,9 +6934,9 @@ def tg10p(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    tas_per : xarray.DataArray | str
+    tas_per : xarray.DataArray | earthkit.data.FieldList | str
         10th percentile of daily mean temperature.
     freq : str
         Resampling frequency.
@@ -6855,14 +6949,14 @@ def tg10p(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tg10p(
@@ -6879,15 +6973,15 @@ def tg10p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg90p)
 def tg90p(
-    tas: xr.DataArray | str = "tas",
-    tas_per: xr.DataArray | str = "tas_per",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    tas_per: xr.DataArray | FieldList | str = "tas_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with mean temperature above the 90th percentile.
 
@@ -6901,9 +6995,9 @@ def tg90p(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    tas_per : xarray.DataArray | str
+    tas_per : xarray.DataArray | earthkit.data.FieldList | str
         90th percentile of daily mean temperature.
     freq : str
         Resampling frequency.
@@ -6916,14 +7010,14 @@ def tg90p(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tg90p(
@@ -6940,14 +7034,14 @@ def tg90p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_days_above)
 def tg_days_above(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "10.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "10.0 degC",
     freq: str = "YS",
     op: Literal["<", "lt", "<=", "le"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with mean temperature above a given threshold.
 
@@ -6961,22 +7055,22 @@ def tg_days_above(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tg_days_above(
@@ -6992,14 +7086,14 @@ def tg_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_days_below)
 def tg_days_below(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "10.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "10.0 degC",
     freq: str = "YS",
     op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with mean temperature below a given threshold.
 
@@ -7013,22 +7107,22 @@ def tg_days_below(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tg_days_below(
@@ -7044,12 +7138,12 @@ def tg_days_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_max)
 def tg_max(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum of mean temperature.
 
@@ -7063,18 +7157,18 @@ def tg_max(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tg_max(
@@ -7088,12 +7182,12 @@ def tg_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_mean)
 def tg_mean(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Mean temperature.
 
@@ -7107,18 +7201,18 @@ def tg_mean(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tg_mean(
@@ -7132,12 +7226,12 @@ def tg_mean(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tg_min)
 def tg_min(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Minimum of mean temperature.
 
@@ -7151,18 +7245,18 @@ def tg_min(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tg_min(
@@ -7176,13 +7270,13 @@ def tg_min(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.thawing_degree_days)
 def thawing_degree_days(
-    tas: xr.DataArray | str = "tas",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Thawing degree days.
 
@@ -7197,20 +7291,20 @@ def thawing_degree_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.thawing_degree_days(
@@ -7225,15 +7319,15 @@ def thawing_degree_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn10p)
 def tn10p(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmin_per: xr.DataArray | str = "tasmin_per",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmin_per: xr.DataArray | FieldList | str = "tasmin_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with minimum temperature below the 10th percentile.
 
@@ -7247,9 +7341,9 @@ def tn10p(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature.
-    tasmin_per : xarray.DataArray | str
+    tasmin_per : xarray.DataArray | earthkit.data.FieldList | str
         10th percentile of daily minimum temperature.
     freq : str
         Resampling frequency.
@@ -7262,14 +7356,14 @@ def tn10p(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['<', '<=', 'lt', 'le']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tn10p(
@@ -7286,15 +7380,15 @@ def tn10p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn90p)
 def tn90p(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmin_per: xr.DataArray | str = "tasmin_per",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmin_per: xr.DataArray | FieldList | str = "tasmin_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with minimum temperature above the 90th percentile.
 
@@ -7308,9 +7402,9 @@ def tn90p(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmin_per : xarray.DataArray | str
+    tasmin_per : xarray.DataArray | earthkit.data.FieldList | str
         90th percentile of daily minimum temperature.
     freq : str
         Resampling frequency.
@@ -7323,14 +7417,14 @@ def tn90p(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tn90p(
@@ -7347,14 +7441,14 @@ def tn90p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_days_above)
 def tn_days_above(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "20.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "20.0 degC",
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with minimum temperature above a given threshold.
 
@@ -7368,22 +7462,22 @@ def tn_days_above(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tn_days_above(
@@ -7399,14 +7493,14 @@ def tn_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_days_below)
 def tn_days_below(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "-10.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "-10.0 degC",
     freq: str = "YS",
     op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with minimum temperature below a given threshold.
 
@@ -7420,22 +7514,22 @@ def tn_days_below(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tn_days_below(
@@ -7451,12 +7545,12 @@ def tn_days_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_max)
 def tn_max(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum of minimum temperature.
 
@@ -7470,18 +7564,18 @@ def tn_max(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tn_max(
@@ -7495,12 +7589,12 @@ def tn_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_mean)
 def tn_mean(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Mean of minimum temperature.
 
@@ -7514,18 +7608,18 @@ def tn_mean(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tn_mean(
@@ -7539,12 +7633,12 @@ def tn_mean(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tn_min)
 def tn_min(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Minimum temperature.
 
@@ -7558,18 +7652,18 @@ def tn_min(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tn_min(
@@ -7583,14 +7677,14 @@ def tn_min(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tropical_nights)
 def tropical_nights(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "20.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "20.0 degC",
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Tropical nights.
 
@@ -7604,22 +7698,22 @@ def tropical_nights(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tropical_nights(
@@ -7635,15 +7729,15 @@ def tropical_nights(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx10p)
 def tx10p(
-    tasmax: xr.DataArray | str = "tasmax",
-    tasmax_per: xr.DataArray | str = "tasmax_per",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    tasmax_per: xr.DataArray | FieldList | str = "tasmax_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal["<", "<=", "lt", "le"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with maximum temperature below the 10th percentile.
 
@@ -7657,9 +7751,9 @@ def tx10p(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    tasmax_per : xarray.DataArray | str
+    tasmax_per : xarray.DataArray | earthkit.data.FieldList | str
         10th percentile of daily maximum temperature.
     freq : str
         Resampling frequency.
@@ -7672,14 +7766,14 @@ def tx10p(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['<', '<=', 'lt', 'le']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tx10p(
@@ -7696,15 +7790,15 @@ def tx10p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx90p)
 def tx90p(
-    tasmax: xr.DataArray | str = "tasmax",
-    tasmax_per: xr.DataArray | str = "tasmax_per",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    tasmax_per: xr.DataArray | FieldList | str = "tasmax_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     bootstrap: bool = False,
     op: Literal["<", "<=", "lt", "le"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with maximum temperature above the 90th percentile.
 
@@ -7718,9 +7812,9 @@ def tx90p(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    tasmax_per : xarray.DataArray | str
+    tasmax_per : xarray.DataArray | earthkit.data.FieldList | str
         90th percentile of daily maximum temperature.
     freq : str
         Resampling frequency.
@@ -7733,14 +7827,14 @@ def tx90p(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['<', '<=', 'lt', 'le']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tx90p(
@@ -7757,14 +7851,14 @@ def tx90p(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_days_above)
 def tx_days_above(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "25.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "25.0 degC",
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with maximum temperature above a given threshold.
 
@@ -7778,22 +7872,22 @@ def tx_days_above(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tx_days_above(
@@ -7809,14 +7903,14 @@ def tx_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_days_below)
 def tx_days_below(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "25.0 degC",
+    thresh: str | float | int | xr.DataArray | FieldList = "25.0 degC",
     freq: str = "YS",
     op: Literal["<", "lt", "<=", "le"] = "<",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with maximum temperature below a given threshold.
 
@@ -7830,22 +7924,22 @@ def tx_days_below(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['<', 'lt', '<=', 'le']
         Comparison operation. Default: "<".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tx_days_below(
@@ -7861,12 +7955,12 @@ def tx_days_below(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_max)
 def tx_max(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum temperature.
 
@@ -7880,18 +7974,18 @@ def tx_max(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tx_max(
@@ -7905,12 +7999,12 @@ def tx_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_mean)
 def tx_mean(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Mean of maximum temperature.
 
@@ -7924,18 +8018,18 @@ def tx_mean(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tx_mean(
@@ -7949,12 +8043,12 @@ def tx_mean(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_min)
 def tx_min(
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Minimum of maximum temperature.
 
@@ -7968,18 +8062,18 @@ def tx_min(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tx_min(
@@ -7993,16 +8087,16 @@ def tx_min(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.tx_tn_days_above)
 def tx_tn_days_above(
-    tasmin: xr.DataArray | str = "tasmin",
-    tasmax: xr.DataArray | str = "tasmax",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    ds: xr.Dataset | None = None,
     *,
-    thresh_tasmin: Any = "22 degC",
-    thresh_tasmax: Any = "30 degC",
+    thresh_tasmin: str | float | int | xr.DataArray | FieldList = "22 degC",
+    thresh_tasmax: str | float | int | xr.DataArray | FieldList = "30 degC",
     freq: str = "YS",
     op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of days with daily minimum and maximum temperatures exceeding thresholds.
 
@@ -8016,26 +8110,26 @@ def tx_tn_days_above(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    thresh_tasmin : Any
+    thresh_tasmin : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature for tasmin on which to base evaluation.
-    thresh_tasmax : Any
+    thresh_tasmax : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold temperature for tasmax on which to base evaluation.
     freq : str
         Resampling frequency.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.tx_tn_days_above(
@@ -8053,13 +8147,13 @@ def tx_tn_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.usda_hardiness_zones)
 def usda_hardiness_zones(
-    tasmin: xr.DataArray | str = "tasmin",
-    ds: xr.Dataset | Any = None,
+    tasmin: xr.DataArray | FieldList | str = "tasmin",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 30,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Usda hardiness zones.
 
@@ -8077,20 +8171,20 @@ def usda_hardiness_zones(
 
     Parameters
     ----------
-    tasmin : xarray.DataArray | str
+    tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum temperature.
     window : int
         The length of the averaging window, in years.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.usda_hardiness_zones(
@@ -8105,15 +8199,15 @@ def usda_hardiness_zones(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.warm_and_dry_days)
 def warm_and_dry_days(
-    tas: xr.DataArray | str = "tas",
-    pr: xr.DataArray | str = "pr",
-    tas_per: xr.DataArray | str = "tas_per",
-    pr_per: xr.DataArray | str = "pr_per",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas_per: xr.DataArray | FieldList | str = "tas_per",
+    pr_per: xr.DataArray | FieldList | str = "pr_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Warm and dry days.
 
@@ -8128,24 +8222,24 @@ def warm_and_dry_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature values.
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    tas_per : xarray.DataArray | str
+    tas_per : xarray.DataArray | earthkit.data.FieldList | str
         Third quartile of daily mean temperature computed by month.
-    pr_per : xarray.DataArray | str
+    pr_per : xarray.DataArray | earthkit.data.FieldList | str
         First quartile of daily total precipitation computed by month.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.warm_and_dry_days(
@@ -8162,15 +8256,15 @@ def warm_and_dry_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.warm_and_wet_days)
 def warm_and_wet_days(
-    tas: xr.DataArray | str = "tas",
-    pr: xr.DataArray | str = "pr",
-    tas_per: xr.DataArray | str = "tas_per",
-    pr_per: xr.DataArray | str = "pr_per",
-    ds: xr.Dataset | Any = None,
+    tas: xr.DataArray | FieldList | str = "tas",
+    pr: xr.DataArray | FieldList | str = "pr",
+    tas_per: xr.DataArray | FieldList | str = "tas_per",
+    pr_per: xr.DataArray | FieldList | str = "pr_per",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Warm and wet days.
 
@@ -8185,24 +8279,24 @@ def warm_and_wet_days(
 
     Parameters
     ----------
-    tas : xarray.DataArray | str
+    tas : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily temperature values.
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    tas_per : xarray.DataArray | str
+    tas_per : xarray.DataArray | earthkit.data.FieldList | str
         Third quartile of daily mean temperature computed by month.
-    pr_per : xarray.DataArray | str
+    pr_per : xarray.DataArray | earthkit.data.FieldList | str
         Third quartile of daily total precipitation computed by month.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.warm_and_wet_days(
@@ -8219,9 +8313,9 @@ def warm_and_wet_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.warm_spell_duration_index)
 def warm_spell_duration_index(
-    tasmax: xr.DataArray | str = "tasmax",
-    tasmax_per: xr.DataArray | str = "tasmax_per",
-    ds: xr.Dataset | Any = None,
+    tasmax: xr.DataArray | FieldList | str = "tasmax",
+    tasmax_per: xr.DataArray | FieldList | str = "tasmax_per",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 6,
     freq: str = "YS",
@@ -8229,7 +8323,7 @@ def warm_spell_duration_index(
     bootstrap: bool = False,
     op: Literal[">", ">=", "gt", "ge"] = ">",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Warm spell duration index.
 
@@ -8245,9 +8339,9 @@ def warm_spell_duration_index(
 
     Parameters
     ----------
-    tasmax : xarray.DataArray | str
+    tasmax : xarray.DataArray | earthkit.data.FieldList | str
         Maximum daily temperature.
-    tasmax_per : xarray.DataArray | str
+    tasmax_per : xarray.DataArray | earthkit.data.FieldList | str
         Percentile(s) of daily maximum temperature.
     window : int
         Minimum number of days with temperature above threshold to qualify as a warm spell.
@@ -8265,14 +8359,14 @@ def warm_spell_duration_index(
         results. Note that bootstrapping is computationally expensive.
     op : Literal['>', '>=', 'gt', 'ge']
         Comparison operation. Default: ">".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.warm_spell_duration_index(
@@ -8291,13 +8385,13 @@ def warm_spell_duration_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.water_cycle_intensity)
 def water_cycle_intensity(
-    pr: xr.DataArray | str = "pr",
-    evspsbl: xr.DataArray | str = "evspsbl",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    evspsbl: xr.DataArray | FieldList | str = "evspsbl",
+    ds: xr.Dataset | None = None,
     *,
-    freq: Any = "YS",
+    freq: dict[str, Any] | None = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Water cycle intensity.
 
@@ -8311,20 +8405,20 @@ def water_cycle_intensity(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Precipitation flux.
-    evspsbl : xarray.DataArray | str
+    evspsbl : xarray.DataArray | earthkit.data.FieldList | str
         Actual evapotranspiration flux.
-    freq : Any
+    freq : dict[str, Any] | None
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.water_cycle_intensity(
@@ -8339,13 +8433,13 @@ def water_cycle_intensity(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.wet_precip_accumulation)
 def wet_precip_accumulation(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Total accumulated precipitation (solid and liquid) during wet days.
 
@@ -8360,20 +8454,20 @@ def wet_precip_accumulation(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Total precipitation flux [mm d-1], [mm week-1], [mm month-1] or similar.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold over which precipitation starts being cumulated.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.wet_precip_accumulation(
@@ -8388,16 +8482,16 @@ def wet_precip_accumulation(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.wet_spell_frequency)
 def wet_spell_frequency(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 3,
     freq: str = "YS",
     resample_before_rl: bool = True,
     op: Literal["sum", "min", "max", "mean"] = "sum",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Wet spell frequency.
 
@@ -8413,9 +8507,9 @@ def wet_spell_frequency(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation amount over which a period is considered dry. The value against which
         the threshold is compared depends on `op`.
     window : int
@@ -8431,14 +8525,14 @@ def wet_spell_frequency(
         checks that the maximal daily precipitation amount within the window is more than
         the threshold. This is the same as verifying that each individual day is above the
         threshold.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.wet_spell_frequency(
@@ -8456,16 +8550,16 @@ def wet_spell_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.wet_spell_max_length)
 def wet_spell_max_length(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 1,
     op: Literal["min", "sum", "max", "mean"] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Wet spell maximum length.
 
@@ -8481,9 +8575,9 @@ def wet_spell_max_length(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Accumulated precipitation value over which a period is considered wet.
     window : int
         Number of days when the maximum or accumulated precipitation is over threshold.
@@ -8497,14 +8591,14 @@ def wet_spell_max_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.wet_spell_max_length(
@@ -8522,16 +8616,16 @@ def wet_spell_max_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.wet_spell_total_length)
 def wet_spell_total_length(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm",
     window: int = 3,
     op: Literal["min", "sum", "max", "mean"] = "sum",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Wet spell total length.
 
@@ -8547,9 +8641,9 @@ def wet_spell_total_length(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Accumulated precipitation value over which a period is considered wet.
     window : int
         Number of days when the maximum or accumulated precipitation is over the threshold.
@@ -8563,14 +8657,14 @@ def wet_spell_total_length(
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.wet_spell_total_length(
@@ -8588,14 +8682,14 @@ def wet_spell_total_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.wetdays)
 def wetdays(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm/day",
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Number of wet days.
 
@@ -8609,22 +8703,22 @@ def wetdays(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation value over which a day is considered wet.
     freq : str
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.wetdays(
@@ -8640,14 +8734,14 @@ def wetdays(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.wetdays_prop)
 def wetdays_prop(
-    pr: xr.DataArray | str = "pr",
-    ds: xr.Dataset | Any = None,
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "1.0 mm/day",
+    thresh: str | float | int | xr.DataArray | FieldList = "1.0 mm/day",
     freq: str = "YS",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Proportion of wet days.
 
@@ -8661,22 +8755,22 @@ def wetdays_prop(
 
     Parameters
     ----------
-    pr : xarray.DataArray | str
+    pr : xarray.DataArray | earthkit.data.FieldList | str
         Daily precipitation.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Precipitation value over which a day is considered wet.
     freq : str
         Resampling frequency.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.wetdays_prop(
@@ -8692,13 +8786,13 @@ def wetdays_prop(
 @format_handler()
 # @metadata_handler(xclim.indicators.atmos.windy_days)
 def windy_days(
-    sfcWind: xr.DataArray | str = "sfcWind",
-    ds: xr.Dataset | Any = None,
+    sfcWind: xr.DataArray | FieldList | str = "sfcWind",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "10.8 m s-1",
+    thresh: str | float | int | xr.DataArray | FieldList = "10.8 m s-1",
     freq: str = "MS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Windy days.
 
@@ -8712,20 +8806,20 @@ def windy_days(
 
     Parameters
     ----------
-    sfcWind : xarray.DataArray | str
+    sfcWind : xarray.DataArray | earthkit.data.FieldList | str
         Daily average near-surface wind speed.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold average near-surface wind speed on which to base evaluation.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.atmos.windy_days(

@@ -51,7 +51,7 @@ Earthkit-climate documentation
 
       Hands-on lessons to learn earthkit-climate step-by-step.
 
-   .. grid-item-card:: How-tos and case studies
+   .. grid-item-card:: How-to Guides
       :img-top: _static/tool.svg
       :link: how-tos/index
       :link-type: doc

@@ -7,6 +7,7 @@ from typing import Any, Literal
 
 import xarray as xr
 import xclim.indicators.land
+from earthkit.data import FieldList
 from earthkit.utils.decorators import format_handler
 
 # from earthkit.climate.utils.decorators import metadata_handler
@@ -15,12 +16,12 @@ from earthkit.utils.decorators import format_handler
 @format_handler()
 # @metadata_handler(xclim.indicators.land.base_flow_index)
 def base_flow_index(
-    q: xr.DataArray | str = "q",
-    ds: xr.Dataset | Any = None,
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Base flow index.
 
@@ -34,18 +35,18 @@ def base_flow_index(
 
     Parameters
     ----------
-    q : xarray.DataArray | str
+    q : xarray.DataArray | earthkit.data.FieldList | str
         Rate of river discharge.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.base_flow_index(
@@ -57,18 +58,75 @@ def base_flow_index(
 
 
 @format_handler()
+# @metadata_handler(xclim.indicators.land.base_flow_index_seasonal_ratio)
+def base_flow_index_seasonal_ratio(
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
+    *,
+    freq: str = "QS-DEC",
+    numerator: str = "DJF",
+    denominator: str = "JJA",
+    **kwargs: Any,
+) -> tuple[xr.DataArray | FieldList, xr.DataArray | FieldList]:
+    """
+    Seasonal base flow index (bfi) and {numerator} to {denominator} bfi ratio.
+
+    Yearly base flow index per season, defined as the minimum 7-day average flow divided by
+    the mean flowas well as yearly  {numerator} to {denominator} bfi ratio.
+
+    **Units:**
+
+    - bfi: dimensionless
+    - bfi_ratio: dimensionless
+
+    This function wraps `xclim.indicators.land.base_flow_index_seasonal_ratio <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.base_flow_index_seasonal_ratio>`_.
+
+    Parameters
+    ----------
+    q : xarray.DataArray | earthkit.data.FieldList | str
+        Rate of river discharge.
+    freq : str
+        Resampling frequency.
+    numerator : str
+        String indicating the season in the numerator of the ratio.
+    denominator : str
+        String indicating the season in the denominator of the ratio.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+        tuple[
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+    ]
+            The computed index.
+    """
+    return xclim.indicators.land.base_flow_index_seasonal_ratio(
+        q=q,
+        freq=freq,
+        numerator=numerator,
+        denominator=denominator,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
 # @metadata_handler(xclim.indicators.land.blowing_snow)
 def blowing_snow(
-    snd: xr.DataArray | str = "snd",
-    sfcWind: xr.DataArray | str = "sfcWind",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    sfcWind: xr.DataArray | FieldList | str = "sfcWind",
+    ds: xr.Dataset | None = None,
     *,
-    snd_thresh: Any = "5 cm",
-    sfcWind_thresh: Any = "15 km/h",
+    snd_thresh: str | float | int | xr.DataArray | FieldList = "5 cm",
+    sfcWind_thresh: str | float | int | xr.DataArray | FieldList = "15 km/h",
     window: int = 3,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Blowing snow days.
 
@@ -83,26 +141,26 @@ def blowing_snow(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow depth.
-    sfcWind : xarray.DataArray | str
+    sfcWind : xarray.DataArray | earthkit.data.FieldList | str
         Wind velocity.
-    snd_thresh : Any
+    snd_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold on net snowfall accumulation over the last `window` days.
-    sfcWind_thresh : Any
+    sfcWind_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Wind speed threshold.
     window : int
         Period over which snow is accumulated before comparing against threshold.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.blowing_snow(
@@ -120,12 +178,12 @@ def blowing_snow(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.doy_qmax)
 def doy_qmax(
-    da: xr.DataArray | str = "da",
-    ds: xr.Dataset | Any = None,
+    da: xr.DataArray | FieldList | str = "da",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Day of year of the maximum streamflow.
 
@@ -139,19 +197,19 @@ def doy_qmax(
 
     Parameters
     ----------
-    da : xarray.DataArray | str
+    da : xarray.DataArray | earthkit.data.FieldList | str
         Input data.
     freq : str
-        Resampling frequency defining the periods as defined in
-        :ref:`timeseries.resampling`.
-    ds : xarray.Dataset | Any
+        Resampling frequency defining the periods as defined in `xclim time handling
+        <https://xclim.readthedocs.io/en/stable/time_handling.html>`_.
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.doy_qmax(
@@ -165,12 +223,12 @@ def doy_qmax(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.doy_qmin)
 def doy_qmin(
-    da: xr.DataArray | str = "da",
-    ds: xr.Dataset | Any = None,
+    da: xr.DataArray | FieldList | str = "da",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Day of year of the minimum streamflow.
 
@@ -184,19 +242,19 @@ def doy_qmin(
 
     Parameters
     ----------
-    da : xarray.DataArray | str
+    da : xarray.DataArray | earthkit.data.FieldList | str
         Input data.
     freq : str
-        Resampling frequency defining the periods as defined in
-        :ref:`timeseries.resampling`.
-    ds : xarray.Dataset | Any
+        Resampling frequency defining the periods as defined in `xclim time handling
+        <https://xclim.readthedocs.io/en/stable/time_handling.html>`_.
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.doy_qmin(
@@ -210,12 +268,12 @@ def doy_qmin(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.flow_index)
 def flow_index(
-    q: xr.DataArray | str = "q",
-    ds: xr.Dataset | Any = None,
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
     *,
     p: float = 0.95,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Flow index.
 
@@ -229,19 +287,19 @@ def flow_index(
 
     Parameters
     ----------
-    q : xarray.DataArray | str
+    q : xarray.DataArray | earthkit.data.FieldList | str
         Daily streamflow data.
     p : float
         Percentile for calculating the flow index, between 0 and 1. Default of 0.95 is for
         high flows.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.flow_index(
@@ -255,13 +313,13 @@ def flow_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.high_flow_frequency)
 def high_flow_frequency(
-    q: xr.DataArray | str = "q",
-    ds: xr.Dataset | Any = None,
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
     *,
     threshold_factor: int = 9,
     freq: str = "YS-OCT",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     High flow frequency.
 
@@ -278,7 +336,7 @@ def high_flow_frequency(
 
     Parameters
     ----------
-    q : xarray.DataArray | str
+    q : xarray.DataArray | earthkit.data.FieldList | str
         Daily streamflow data.
     threshold_factor : int
         Factor by which the median flow is multiplied to set the high flow threshold,
@@ -286,14 +344,14 @@ def high_flow_frequency(
     freq : str
         Resampling frequency, default is 'YS-OCT' for water year starting in October and
         ending in September.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.high_flow_frequency(
@@ -308,19 +366,19 @@ def high_flow_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.holiday_snow_and_snowfall_days)
 def holiday_snow_and_snowfall_days(
-    snd: xr.DataArray | str = "snd",
-    prsn: xr.DataArray | str | None = None,
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    prsn: xr.DataArray | FieldList | str | None = None,
+    ds: xr.Dataset | None = None,
     *,
-    snd_thresh: Any = "20 mm",
-    prsn_thresh: Any = "1 mm",
+    snd_thresh: str | float | int | xr.DataArray | FieldList = "20 mm",
+    prsn_thresh: str | float | int | xr.DataArray | FieldList = "1 mm",
     snd_op: Literal[">", "gt", ">=", "ge"] = ">=",
     prsn_op: Literal[">", "gt", ">=", "ge"] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Perfect christmas snow days.
 
@@ -335,13 +393,13 @@ def holiday_snow_and_snowfall_days(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow depth.
-    prsn : xarray.DataArray | str | None
+    prsn : xarray.DataArray | earthkit.data.FieldList | str | None
         Snowfall flux.
-    snd_thresh : Any
+    snd_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow amount. Default: 20 mm.
-    prsn_thresh : Any
+    prsn_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold daily snowfall liquid-water equivalent thickness. Default: 1 mm.
     snd_op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation for snow depth. Default: ">=".
@@ -354,14 +412,14 @@ def holiday_snow_and_snowfall_days(
     freq : str
         Resampling frequency. Default: "YS-JUL". The default value is chosen for the
         northern hemisphere.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.holiday_snow_and_snowfall_days(
@@ -382,16 +440,16 @@ def holiday_snow_and_snowfall_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.holiday_snow_days)
 def holiday_snow_days(
-    snd: xr.DataArray | str = "snd",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    ds: xr.Dataset | None = None,
     *,
-    snd_thresh: Any = "20 mm",
+    snd_thresh: str | float | int | xr.DataArray | FieldList = "20 mm",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     date_start: str = "12-25",
     date_end: str | None = None,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Christmas snow days.
 
@@ -406,9 +464,9 @@ def holiday_snow_days(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow depth.
-    snd_thresh : Any
+    snd_thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow amount. Default: 20 mm.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
@@ -419,14 +477,14 @@ def holiday_snow_days(
     freq : str
         Resampling frequency. Default: "YS". The default value is chosen for the northern
         hemisphere.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.holiday_snow_days(
@@ -442,15 +500,71 @@ def holiday_snow_days(
 
 
 @format_handler()
+# @metadata_handler(xclim.indicators.land.lag_snowpack_flow_peaks)
+def lag_snowpack_flow_peaks(
+    snw: xr.DataArray | FieldList | str = "snw",
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
+    *,
+    freq: str = "YS-OCT",
+    p: float = 0.9,
+    **kwargs: Any,
+) -> xr.DataArray | FieldList:
+    """
+    Time lag between maximum snowpack and river high flows.
+
+    Number of days between the annual maximum snowpack, measured by the surface snow amount,
+    and the mean date when river flow exceeds a percentile threshold during a given year. If
+    the time lag between maximum snowpack and river high flows is ≤ 50 days, the watershed
+    is likely in a nival regime.
+
+    **Units:**
+
+    - lag_snowpack_flow_peaks: days
+
+    This function wraps `xclim.indicators.land.lag_snowpack_flow_peaks <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.lag_snowpack_flow_peaks>`_.
+
+    Parameters
+    ----------
+    snw : xarray.DataArray | earthkit.data.FieldList | str
+        Surface snow amount.
+    q : xarray.DataArray | earthkit.data.FieldList | str
+        Streamflow.
+    freq : str
+        Resampling frequency. Defaults to the water year starting on the 1st of October.
+    p : float
+        Percentile for calculating the flow index, between 0 and 1. Default of 0.9 is for
+        high flows.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+    xarray.DataArray | earthkit.data.FieldList
+        The computed index.
+    """
+    return xclim.indicators.land.lag_snowpack_flow_peaks(
+        snw=snw,
+        q=q,
+        freq=freq,
+        p=p,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
 # @metadata_handler(xclim.indicators.land.low_flow_frequency)
 def low_flow_frequency(
-    q: xr.DataArray | str = "q",
-    ds: xr.Dataset | Any = None,
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
     *,
     threshold_factor: float = 0.2,
     freq: str = "YS-OCT",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Low flow frequency.
 
@@ -467,7 +581,7 @@ def low_flow_frequency(
 
     Parameters
     ----------
-    q : xarray.DataArray | str
+    q : xarray.DataArray | earthkit.data.FieldList | str
         Daily streamflow data.
     threshold_factor : float
         Factor by which the mean flow is multiplied to set the low flow threshold, default
@@ -475,14 +589,14 @@ def low_flow_frequency(
     freq : str
         Resampling frequency, default is 'YS-OCT' for water year starting in October and
         ending in September.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.low_flow_frequency(
@@ -497,12 +611,12 @@ def low_flow_frequency(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.rb_flashiness_index)
 def rb_flashiness_index(
-    q: xr.DataArray | str = "q",
-    ds: xr.Dataset | Any = None,
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Richards-baker flashiness index.
 
@@ -517,18 +631,18 @@ def rb_flashiness_index(
 
     Parameters
     ----------
-    q : xarray.DataArray | str
+    q : xarray.DataArray | earthkit.data.FieldList | str
         Rate of river discharge.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.rb_flashiness_index(
@@ -540,10 +654,112 @@ def rb_flashiness_index(
 
 
 @format_handler()
+# @metadata_handler(xclim.indicators.land.runoff_ratio)
+def runoff_ratio(
+    q: xr.DataArray | FieldList | str = "q",
+    pr: xr.DataArray | FieldList | str = "pr",
+    ds: xr.Dataset | None = None,
+    *,
+    area: str | float | int | xr.DataArray | FieldList,
+    freq: str = "YS",
+    **kwargs: Any,
+) -> xr.DataArray | FieldList:
+    """
+    Runoff ratio.
+
+    Ratio of runoff volume measured at the stream to the total precipitation volume over the
+    watershed.
+
+    **Units:**
+
+    - runoff_ratio: dimensionless
+
+    This function wraps `xclim.indicators.land.runoff_ratio <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.runoff_ratio>`_.
+
+    Parameters
+    ----------
+    q : xarray.DataArray | earthkit.data.FieldList | str
+        Streamflow in discharge units.
+    pr : xarray.DataArray | earthkit.data.FieldList | str
+        Mean daily precipitation in precipitation units.
+    area : str | float | int | xarray.DataArray | earthkit.data.FieldList
+        Watershed area in area units.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+    xarray.DataArray | earthkit.data.FieldList
+        The computed index.
+    """
+    return xclim.indicators.land.runoff_ratio(
+        q=q,
+        pr=pr,
+        area=area,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
+# @metadata_handler(xclim.indicators.land.sen_slope)
+def sen_slope(
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
+    *,
+    freq: str = "YS",
+    **kwargs: Any,
+) -> tuple[xr.DataArray | FieldList, xr.DataArray | FieldList]:
+    """
+    Sen slope : temporal robustness analysis of streamflow.
+
+    Computes Theil-Sen slope estimators and performs the Mann-Kendall test for trend
+    evaluation.
+
+    **Units:**
+
+    - sen_slope: dimensionless
+    - p_value: dimensionless
+
+    This function wraps `xclim.indicators.land.sen_slope <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.sen_slope>`_.
+
+    Parameters
+    ----------
+    q : xarray.DataArray | earthkit.data.FieldList | str
+        Observed streamflow vector.
+    freq : str
+        Resampling frequency.
+    ds : xarray.Dataset | None
+        Input dataset.
+    **kwargs : Any
+        Additional keyword arguments.
+
+    Returns
+    -------
+        tuple[
+        xarray.DataArray | earthkit.data.FieldList,
+        xarray.DataArray | earthkit.data.FieldList,
+    ]
+            The computed index.
+    """
+    return xclim.indicators.land.sen_slope(
+        q=q,
+        freq=freq,
+        ds=ds,
+        **kwargs,
+    )
+
+
+@format_handler()
 # @metadata_handler(xclim.indicators.land.standardized_groundwater_index)
 def standardized_groundwater_index(
-    gwl: xr.DataArray | str = "gwl",
-    ds: xr.Dataset | Any = None,
+    gwl: xr.DataArray | FieldList | str = "gwl",
+    ds: xr.Dataset | None = None,
     *,
     freq: str | None = "MS",
     window: int = 1,
@@ -552,9 +768,9 @@ def standardized_groundwater_index(
     fitkwargs: dict | None = None,
     cal_start: str | None = None,
     cal_end: str | None = None,
-    params: Any | None = None,
+    params: str | float | int | xr.DataArray | FieldList | None = None,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Standardized groundwater index (sgi).
 
@@ -570,7 +786,7 @@ def standardized_groundwater_index(
 
     Parameters
     ----------
-    gwl : xarray.DataArray | str
+    gwl : xarray.DataArray | earthkit.data.FieldList | str
         Groundwater head level.
     freq : str | None
         Resampling frequency. A monthly or daily frequency is expected. Option `None`
@@ -581,7 +797,7 @@ def standardized_groundwater_index(
         `freq="MS"`, i.e. a monthly resampling, the window is an integer number of months.
     dist : str | Any
         Name of the univariate distribution, or a callable `rv_continuous` (see
-        :py:mod:`scipy.stats`).
+        ``scipy.stats``).
     method : str
         Name of the fitting method, such as `ML` (maximum likelihood), `APP` (approximate).
         The approximate method uses a deterministic function that does not involve any
@@ -597,18 +813,18 @@ def standardized_groundwater_index(
         End date of the calibration period. A `DateStr` is expected, that is a `str` in
         format `"YYYY-MM-DD"`. Default option `None` means that the calibration period
         finishes at the end of the input dataset.
-    params : Any | None
+    params : str | float | int | xarray.DataArray | earthkit.data.FieldList | None
         Fit parameters. The `params` can be computed using
         ``xclim.indices.stats.standardized_index_fit_params`` in advance. The output can be
         given here as input, and it overrides other options.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.standardized_groundwater_index(
@@ -629,14 +845,14 @@ def standardized_groundwater_index(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snd_days_above)
 def snd_days_above(
-    snd: xr.DataArray | str = "snd",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "2 cm",
+    thresh: str | float | int | xr.DataArray | FieldList = "2 cm",
     freq: str = "YS-JUL",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with snow (depth).
 
@@ -650,22 +866,22 @@ def snd_days_above(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow thickness.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow thickness.
     freq : str
         Resampling frequency. The default value is chosen for the Northern Hemisphere.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snd_days_above(
@@ -681,12 +897,12 @@ def snd_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snd_max_doy)
 def snd_max_doy(
-    snd: xr.DataArray | str = "snd",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Day of year of maximum snow depth.
 
@@ -700,18 +916,18 @@ def snd_max_doy(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow depth.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snd_max_doy(
@@ -725,14 +941,14 @@ def snd_max_doy(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snd_season_end)
 def snd_season_end(
-    snd: xr.DataArray | str = "snd",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "2 cm",
+    thresh: str | float | int | xr.DataArray | FieldList = "2 cm",
     window: int = 14,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Snow cover end date (depth).
 
@@ -747,23 +963,23 @@ def snd_season_end(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow thickness.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow thickness.
     window : int
         Minimum number of days with snow depth below the threshold.
     freq : str
         Resampling frequency. Default: "YS-JUL". The default value is chosen for the
         northern hemisphere.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snd_season_end(
@@ -779,14 +995,14 @@ def snd_season_end(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snd_season_length)
 def snd_season_length(
-    snd: xr.DataArray | str = "snd",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "2 cm",
+    thresh: str | float | int | xr.DataArray | FieldList = "2 cm",
     window: int = 14,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Snow cover duration (depth).
 
@@ -801,22 +1017,22 @@ def snd_season_length(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow thickness.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow thickness.
     window : int
         Minimum number of days with snow depth above and below threshold.
     freq : str
         Resampling frequency. The default value is chosen for the northern hemisphere.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snd_season_length(
@@ -832,14 +1048,14 @@ def snd_season_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snd_season_start)
 def snd_season_start(
-    snd: xr.DataArray | str = "snd",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "2 cm",
+    thresh: str | float | int | xr.DataArray | FieldList = "2 cm",
     window: int = 14,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Snow cover start date (depth).
 
@@ -854,22 +1070,22 @@ def snd_season_start(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow thickness.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow thickness.
     window : int
         Minimum number of days with snow depth above or equal to the threshold.
     freq : str
         Resampling frequency. The default value is chosen for the Northern Hemisphere.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snd_season_start(
@@ -885,13 +1101,13 @@ def snd_season_start(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snd_storm_days)
 def snd_storm_days(
-    snd: xr.DataArray | str = "snd",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "25 cm",
+    thresh: str | float | int | xr.DataArray | FieldList = "25 cm",
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Winter storm days.
 
@@ -906,20 +1122,20 @@ def snd_storm_days(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow depth.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold on snowfall depth accumulation require to label an event a `snd storm`.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snd_storm_days(
@@ -934,12 +1150,12 @@ def snd_storm_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snow_depth)
 def snow_depth(
-    snd: xr.DataArray | str = "snd",
-    ds: xr.Dataset | Any = None,
+    snd: xr.DataArray | FieldList | str = "snd",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Mean snow depth.
 
@@ -953,18 +1169,18 @@ def snow_depth(
 
     Parameters
     ----------
-    snd : xarray.DataArray | str
+    snd : xarray.DataArray | earthkit.data.FieldList | str
         Mean daily snow depth.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snow_depth(
@@ -978,13 +1194,13 @@ def snow_depth(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snow_melt_we_max)
 def snow_melt_we_max(
-    snw: xr.DataArray | str = "snw",
-    ds: xr.Dataset | Any = None,
+    snw: xr.DataArray | FieldList | str = "snw",
+    ds: xr.Dataset | None = None,
     *,
     window: int = 3,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum snow melt.
 
@@ -998,20 +1214,20 @@ def snow_melt_we_max(
 
     Parameters
     ----------
-    snw : xarray.DataArray | str
+    snw : xarray.DataArray | earthkit.data.FieldList | str
         Snow amount (mass per area).
     window : int
         Number of days during which the melt is accumulated.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snow_melt_we_max(
@@ -1026,14 +1242,14 @@ def snow_melt_we_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snw_days_above)
 def snw_days_above(
-    snw: xr.DataArray | str = "snw",
-    ds: xr.Dataset | Any = None,
+    snw: xr.DataArray | FieldList | str = "snw",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "4 kg m-2",
+    thresh: str | float | int | xr.DataArray | FieldList = "4 kg m-2",
     freq: str = "YS-JUL",
     op: Literal[">", "gt", ">=", "ge"] = ">=",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Days with snow (amount).
 
@@ -1047,22 +1263,22 @@ def snw_days_above(
 
     Parameters
     ----------
-    snw : xarray.DataArray | str
+    snw : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow amount.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow amount.
     freq : str
         Resampling frequency. The default value is chosen for the Northern hemisphere.
     op : Literal['>', 'gt', '>=', 'ge']
         Comparison operation. Default: ">=".
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snw_days_above(
@@ -1078,12 +1294,12 @@ def snw_days_above(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snw_max)
 def snw_max(
-    snw: xr.DataArray | str = "snw",
-    ds: xr.Dataset | Any = None,
+    snw: xr.DataArray | FieldList | str = "snw",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Maximum snow amount.
 
@@ -1097,18 +1313,18 @@ def snw_max(
 
     Parameters
     ----------
-    snw : xarray.DataArray | str
+    snw : xarray.DataArray | earthkit.data.FieldList | str
         Snow amount (mass per area).
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snw_max(
@@ -1122,12 +1338,12 @@ def snw_max(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snw_max_doy)
 def snw_max_doy(
-    snw: xr.DataArray | str = "snw",
-    ds: xr.Dataset | Any = None,
+    snw: xr.DataArray | FieldList | str = "snw",
+    ds: xr.Dataset | None = None,
     *,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Day of year of maximum snow amount.
 
@@ -1141,18 +1357,18 @@ def snw_max_doy(
 
     Parameters
     ----------
-    snw : xarray.DataArray | str
+    snw : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow amount.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snw_max_doy(
@@ -1166,14 +1382,14 @@ def snw_max_doy(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snw_season_end)
 def snw_season_end(
-    snw: xr.DataArray | str = "snw",
-    ds: xr.Dataset | Any = None,
+    snw: xr.DataArray | FieldList | str = "snw",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "4 kg m-2",
+    thresh: str | float | int | xr.DataArray | FieldList = "4 kg m-2",
     window: int = 14,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Snow cover end date (amount).
 
@@ -1188,22 +1404,22 @@ def snw_season_end(
 
     Parameters
     ----------
-    snw : xarray.DataArray | str
+    snw : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow amount.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow amount.
     window : int
         Minimum number of days with snow water below the threshold.
     freq : str
         Resampling frequency. The default value is chosen for the Northern Hemisphere.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snw_season_end(
@@ -1219,14 +1435,14 @@ def snw_season_end(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snw_season_length)
 def snw_season_length(
-    snw: xr.DataArray | str = "snw",
-    ds: xr.Dataset | Any = None,
+    snw: xr.DataArray | FieldList | str = "snw",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "4 kg m-2",
+    thresh: str | float | int | xr.DataArray | FieldList = "4 kg m-2",
     window: int = 14,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Snow cover duration (amount).
 
@@ -1241,22 +1457,22 @@ def snw_season_length(
 
     Parameters
     ----------
-    snw : xarray.DataArray | str
+    snw : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow amount.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow amount.
     window : int
         Minimum number of days with snow amount above and below threshold.
     freq : str
         Resampling frequency. The default value is chosen for the northern hemisphere.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snw_season_length(
@@ -1272,14 +1488,14 @@ def snw_season_length(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snw_season_start)
 def snw_season_start(
-    snw: xr.DataArray | str = "snw",
-    ds: xr.Dataset | Any = None,
+    snw: xr.DataArray | FieldList | str = "snw",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "4 kg m-2",
+    thresh: str | float | int | xr.DataArray | FieldList = "4 kg m-2",
     window: int = 14,
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Snow cover start date (amount).
 
@@ -1294,22 +1510,22 @@ def snw_season_start(
 
     Parameters
     ----------
-    snw : xarray.DataArray | str
+    snw : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow amount.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold snow amount.
     window : int
         Minimum number of days with snow amount above or equal to the threshold.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snw_season_start(
@@ -1325,13 +1541,13 @@ def snw_season_start(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.snw_storm_days)
 def snw_storm_days(
-    snw: xr.DataArray | str = "snw",
-    ds: xr.Dataset | Any = None,
+    snw: xr.DataArray | FieldList | str = "snw",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "10 kg m-2",
+    thresh: str | float | int | xr.DataArray | FieldList = "10 kg m-2",
     freq: str = "YS-JUL",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Winter storm days.
 
@@ -1346,20 +1562,20 @@ def snw_storm_days(
 
     Parameters
     ----------
-    snw : xarray.DataArray | str
+    snw : xarray.DataArray | earthkit.data.FieldList | str
         Surface snow amount.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold on snowfall amount accumulation require to label an event a `snw storm`.
     freq : str
         Resampling frequency.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.snw_storm_days(
@@ -1374,8 +1590,8 @@ def snw_storm_days(
 @format_handler()
 # @metadata_handler(xclim.indicators.land.standardized_streamflow_index)
 def standardized_streamflow_index(
-    q: xr.DataArray | str = "q",
-    ds: xr.Dataset | Any = None,
+    q: xr.DataArray | FieldList | str = "q",
+    ds: xr.Dataset | None = None,
     *,
     freq: str | None = "MS",
     window: int = 1,
@@ -1384,9 +1600,9 @@ def standardized_streamflow_index(
     fitkwargs: dict | None = None,
     cal_start: str | None = None,
     cal_end: str | None = None,
-    params: Any | None = None,
+    params: str | float | int | xr.DataArray | FieldList | None = None,
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Standardized streamflow index (ssi).
 
@@ -1402,7 +1618,7 @@ def standardized_streamflow_index(
 
     Parameters
     ----------
-    q : xarray.DataArray | str
+    q : xarray.DataArray | earthkit.data.FieldList | str
         Rate of river discharge.
     freq : str | None
         Resampling frequency. A monthly or daily frequency is expected. Option `None`
@@ -1413,7 +1629,7 @@ def standardized_streamflow_index(
         `freq="MS"`, i.e. a monthly resampling, the window is an integer number of months.
     dist : str | Any
         Name of the univariate distribution, or a callable `rv_continuous` (see
-        :py:mod:`scipy.stats`).
+        ``scipy.stats``).
     method : str
         Name of the fitting method, such as `ML` (maximum likelihood), `APP` (approximate).
         The approximate method uses a deterministic function that does not involve any
@@ -1429,18 +1645,18 @@ def standardized_streamflow_index(
         End date of the calibration period. A `DateStr` is expected, that is a `str` in
         format `"YYYY-MM-DD"`. Default option `None` means that the calibration period
         finishes at the end of the input dataset.
-    params : Any | None
+    params : str | float | int | xarray.DataArray | earthkit.data.FieldList | None
         Fit parameters. The `params` can be computed using
         ``xclim.indices.stats.standardized_index_fit_params`` in advance. The output can be
         given here as input, and it overrides other options.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.land.standardized_streamflow_index(

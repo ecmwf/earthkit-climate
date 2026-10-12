@@ -7,6 +7,7 @@ from typing import Any
 
 import xarray as xr
 import xclim.indicators.seaIce
+from earthkit.data import FieldList
 from earthkit.utils.decorators import format_handler
 
 # from earthkit.climate.utils.decorators import metadata_handler
@@ -15,13 +16,13 @@ from earthkit.utils.decorators import format_handler
 @format_handler()
 # @metadata_handler(xclim.indicators.seaIce.sea_ice_area)
 def sea_ice_area(
-    siconc: xr.DataArray | str = "siconc",
-    areacello: xr.DataArray | str = "areacello",
-    ds: xr.Dataset | Any = None,
+    siconc: xr.DataArray | FieldList | str = "siconc",
+    areacello: xr.DataArray | FieldList | str = "areacello",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "15 %",
+    thresh: str | float | int | xr.DataArray | FieldList = "15 %",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Sea ice area.
 
@@ -35,20 +36,20 @@ def sea_ice_area(
 
     Parameters
     ----------
-    siconc : xarray.DataArray | str
+    siconc : xarray.DataArray | earthkit.data.FieldList | str
         Sea ice concentration (area fraction).
-    areacello : xarray.DataArray | str
+    areacello : xarray.DataArray | earthkit.data.FieldList | str
         Grid cell area (usually over the ocean).
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Minimum sea ice concentration for a grid cell to contribute to the sea ice extent.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.seaIce.sea_ice_area(
@@ -63,13 +64,13 @@ def sea_ice_area(
 @format_handler()
 # @metadata_handler(xclim.indicators.seaIce.sea_ice_extent)
 def sea_ice_extent(
-    siconc: xr.DataArray | str = "siconc",
-    areacello: xr.DataArray | str = "areacello",
-    ds: xr.Dataset | Any = None,
+    siconc: xr.DataArray | FieldList | str = "siconc",
+    areacello: xr.DataArray | FieldList | str = "areacello",
+    ds: xr.Dataset | None = None,
     *,
-    thresh: Any = "15 %",
+    thresh: str | float | int | xr.DataArray | FieldList = "15 %",
     **kwargs: Any,
-) -> Any:
+) -> xr.DataArray | FieldList:
     """
     Sea ice extent.
 
@@ -83,20 +84,20 @@ def sea_ice_extent(
 
     Parameters
     ----------
-    siconc : xarray.DataArray | str
+    siconc : xarray.DataArray | earthkit.data.FieldList | str
         Sea ice concentration (area fraction).
-    areacello : xarray.DataArray | str
+    areacello : xarray.DataArray | earthkit.data.FieldList | str
         Grid cell area.
-    thresh : Any
+    thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Minimum sea ice concentration for a grid cell to contribute to the sea ice extent.
-    ds : xarray.Dataset | Any
+    ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
         Additional keyword arguments.
 
     Returns
     -------
-    Any
+    xarray.DataArray | earthkit.data.FieldList
         The computed index.
     """
     return xclim.indicators.seaIce.sea_ice_extent(
