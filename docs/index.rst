@@ -27,7 +27,7 @@ Earthkit-climate documentation
 .. grid:: 1 1 2 2
    :gutter: 2
 
-   .. grid-item-card:: Installation and getting started
+   .. grid-item-card:: Installation and Getting Started
       :img-top: _static/rocket.svg
       :link: getting-started
       :link-type: doc
@@ -35,7 +35,7 @@ Earthkit-climate documentation
 
       New to earthkit-climate? Start here with installation and a quick overview.
 
-   .. grid-item-card:: Frequently asked questions
+   .. grid-item-card:: Frequently Asked Questions
       :img-top: _static/message-question.svg
       :link: faq
       :link-type: doc
@@ -49,7 +49,7 @@ Earthkit-climate documentation
       :link-type: doc
       :class-card: sd-shadow-sm
 
-      Hands-on lessons to learn earthkit-climate step-by-step.
+      Step-by-step guides to learn earthkit-climate.
 
    .. grid-item-card:: How-to Guides
       :img-top: _static/tool.svg
@@ -57,7 +57,7 @@ Earthkit-climate documentation
       :link-type: doc
       :class-card: sd-shadow-sm
 
-      Practical recipes and real-world case studies.
+      Practical recipes for common tasks.
 
    .. grid-item-card:: Concepts
       :img-top: _static/bulb.svg
@@ -65,15 +65,16 @@ Earthkit-climate documentation
       :link-type: doc
       :class-card: sd-shadow-sm
 
-      Design principles, missing values, scalability, and ecosystem fit.
+      Understand the core ideas behind earthkit-climate.
 
-   .. grid-item-card:: API reference guide
+
+   .. grid-item-card:: API Reference
       :img-top: _static/brackets-contain.svg
       :link: api-reference
       :link-type: doc
       :class-card: sd-shadow-sm
 
-      Technical specifications for functions and classes.
+      Detailed documentation of all functions and classes.
 
 
 **Support**
