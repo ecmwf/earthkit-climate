@@ -88,21 +88,19 @@ def clean_xclim_refs(text: str) -> str:
         or plain-text equivalents.
     """
 
-    def _replace_ref(match: re.Match) -> str:
-        label = match.group(1)
-        if label in _XCLIM_REF_URL_MAP:
+    def _replace_roles(match: re.Match) -> str:
+        role = match.group(1)
+        label = match.group(2)
+        if role.startswith("cite:"):
+            return f":cite:`{label}`"
+        # :ref:`label` -> external hyperlink or plain text
+        if role == "ref" and label in _XCLIM_REF_URL_MAP:
             display, url = _XCLIM_REF_URL_MAP[label]
             return f"`{display} <{url}>`_"
-        # Unknown label: fall back to plain inline code
+        # Unknown role: fall back to plain inline code
         return f"``{label}``"
 
-    # :ref:`label` -> external hyperlink or plain text
-    text = re.sub(r":ref:`([^`]+)`", _replace_ref, text)
-    # :py:mod/func/class/attr:`name` -> ``name``
-    text = re.sub(r":py:[a-z]+:`([^`]+)`", r"``\1``", text)
-    # generic :role:`text` fallback
-    text = re.sub(r":[a-z:]+:`([^`]+)`", r"``\1``", text)
-    return text
+    return re.sub(r":([a-z:]+):`([^`]+)`", _replace_roles, text)
 
 
 def simplify_type(type_obj: Any, is_docstring: bool = False) -> str:
@@ -247,7 +245,8 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
             return_doc_type = "xarray.DataArray | xarray.Dataset | FieldList | tuple[xarray.DataArray | FieldList, ...]"
         if len(return_doc_type) > 80 and return_doc_type.startswith("tuple[") and return_doc_type.endswith("]"):
             elements = return_doc_type[6:-1].split(", ")
-            return_doc_type = "tuple[\n    " + ",\n    ".join(elements) + ",\n]"
+            # TODO add names and descriptions of the elements
+            return_doc_type = "\n            The computed indicator.\n        ".join(elements)
 
         for name, param in sig.parameters.items():
             if name == "ds":
@@ -290,7 +289,14 @@ def generate_docstring(indicator: Any, module_name: str, xclim_func_name: str) -
     sections.append("\n".join(params_lines))
 
     # Returns section
-    returns_section = f"Returns\n-------\n{return_doc_type}\n    The computed index."
+    returns_section = inspect.cleandoc(
+        f"""
+        Returns
+        -------
+        {return_doc_type}
+            The computed indicator.
+    """
+    )
     sections.append(returns_section)
 
     return "\n\n".join(sections)

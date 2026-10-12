@@ -50,7 +50,7 @@ def antecedent_precipitation_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.antecedent_precipitation_index(
         pr=pr,
@@ -98,7 +98,7 @@ def aridity_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.aridity_index(
         pr=pr,
@@ -149,7 +149,7 @@ def australian_hardiness_zones(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.australian_hardiness_zones(
         tasmin=tasmin,
@@ -207,17 +207,17 @@ def biologically_effective_degree_days(
     method : Literal['gladstones', 'icclim', 'jones', 'smoothed', 'stepwise']
         The formula to use for the daily temperature range and latitude coefficient. The
         "gladstones" method uses a temperature range adjustment and a latitude coefficient
-        based on ``gladstones_wine_2011``. End_date should be "11-01" for the Northern
+        based on :cite:`gladstones_wine_2011`. End_date should be "11-01" for the Northern
         Hemisphere. The "huglin" method uses a temperature range adjustment and a stepwise
         latitude coefficient for values between 40° and 50° based on
-        ``huglin_nouveau_1978``. End_date should be "11-01" for the Northern Hemisphere. The
-        "icclim" method does not implement daily temperature range and nor a latitude
-        coefficient based on ``project_team_eca&d_algorithm_2013``. End date should be
+        :cite:`huglin_nouveau_1978`. End_date should be "11-01" for the Northern Hemisphere.
+        The "icclim" method does not implement daily temperature range and nor a latitude
+        coefficient based on :cite:`project_team_eca&d_algorithm_2013`. End date should be
         "10-01" for the Northern Hemisphere. The "interpolated" method uses a temperature
         range adjustment and a smoothed curve latitude coefficient for values between 40°
-        and 50° based on ``huglin_nouveau_1978``. The "jones" method uses a temperature
+        and 50° based on :cite:`huglin_nouveau_1978`. The "jones" method uses a temperature
         range adjustment and integrates axial tilt, latitude, and day-of-year based on
-        ``hall_spatial_2010``. End_date should be "11-01" for the Northern Hemisphere.
+        :cite:`hall_spatial_2010`. End_date should be "11-01" for the Northern Hemisphere.
     cap_value : float
         The value to use for the latitude coefficient for latitudes north of 50°N or south
         of 50°S. Only applicable for methods "huglin" and "interpolated".
@@ -242,7 +242,7 @@ def biologically_effective_degree_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.biologically_effective_degree_days(
         tasmin=tasmin,
@@ -298,7 +298,7 @@ def calm_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.calm_days(
         sfcWind=sfcWind,
@@ -353,7 +353,7 @@ def maximum_consecutive_dry_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.maximum_consecutive_dry_days(
         pr=pr,
@@ -454,15 +454,18 @@ def cffwis_indices(
 
     Returns
     -------
-    tuple[
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-    ]
-        The computed index.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
     """
     return xclim.indicators.atmos.cffwis_indices(
         tas=tas,
@@ -527,7 +530,7 @@ def cold_and_dry_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cold_and_dry_days(
         tas=tas,
@@ -583,7 +586,7 @@ def cold_and_wet_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cold_and_wet_days(
         tas=tas,
@@ -644,7 +647,7 @@ def cold_spell_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cold_spell_days(
         tas=tas,
@@ -714,7 +717,7 @@ def cold_spell_duration_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cold_spell_duration_index(
         tasmin=tasmin,
@@ -776,7 +779,7 @@ def cold_spell_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cold_spell_frequency(
         tas=tas,
@@ -838,7 +841,7 @@ def cold_spell_max_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cold_spell_max_length(
         tas=tas,
@@ -900,7 +903,7 @@ def cold_spell_total_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cold_spell_total_length(
         tas=tas,
@@ -958,7 +961,7 @@ def consecutive_frost_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.consecutive_frost_days(
         tasmin=tasmin,
@@ -1015,7 +1018,7 @@ def maximum_consecutive_frost_free_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.maximum_consecutive_frost_free_days(
         tasmin=tasmin,
@@ -1066,7 +1069,7 @@ def cool_night_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cool_night_index(
         tasmin=tasmin,
@@ -1114,7 +1117,7 @@ def cooling_degree_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cooling_degree_days(
         tas=tas,
@@ -1170,7 +1173,7 @@ def cooling_degree_days_approximation(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.cooling_degree_days_approximation(
         tasmax=tasmax,
@@ -1223,7 +1226,7 @@ def corn_heat_units(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.corn_heat_units(
         tasmin=tasmin,
@@ -1276,7 +1279,7 @@ def chill_portions(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.chill_portions(
         tas=tas,
@@ -1326,7 +1329,7 @@ def chill_units(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.chill_units(
         tas=tas,
@@ -1381,7 +1384,7 @@ def maximum_consecutive_wet_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.maximum_consecutive_wet_days(
         pr=pr,
@@ -1446,7 +1449,7 @@ def days_over_precip_doy_thresh(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.days_over_precip_doy_thresh(
         pr=pr,
@@ -1512,7 +1515,7 @@ def days_over_precip_thresh(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.days_over_precip_thresh(
         pr=pr,
@@ -1565,7 +1568,7 @@ def days_with_snow(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.days_with_snow(
         prsn=prsn,
@@ -1641,7 +1644,7 @@ def drought_code(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.drought_code(
         tas=tas,
@@ -1712,7 +1715,7 @@ def degree_days_exceedance_date(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.degree_days_exceedance_date(
         tas=tas,
@@ -1741,7 +1744,7 @@ def griffiths_drought_factor(
 
     The drought factor is a numeric indicator of the forest fire fuel availability in the
     deep litter bed. It is often used in the calculation of the McArthur Forest Fire Danger
-    Index. The method implemented here follows ``ffdi-finkele_2006``.
+    Index. The method implemented here follows :cite:`ffdi-finkele_2006`.
 
     **Units:**
 
@@ -1757,9 +1760,9 @@ def griffiths_drought_factor(
         Daily soil moisture deficit (often KBDI) [mm/day].
     limiting_func : str
         How to limit the values of the drought factor. If "xlim" (default), use equation
-        (14) in ``ffdi-finkele_2006``. If "discrete", use equation Eq (13) in ``ffdi-
-        finkele_2006``, but with the lower limit of each category bound adjusted to match
-        the upper limit of the previous bound.
+        (14) in :cite:`ffdi-finkele_2006`. If "discrete", use equation Eq (13) in
+        :cite:`ffdi-finkele_2006`, but with the lower limit of each category bound adjusted
+        to match the upper limit of the previous bound.
     ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
@@ -1768,7 +1771,7 @@ def griffiths_drought_factor(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.griffiths_drought_factor(
         pr=pr,
@@ -1833,7 +1836,7 @@ def daily_freezethaw_cycles(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.daily_freezethaw_cycles(
         tasmin=tasmin,
@@ -1913,7 +1916,7 @@ def duff_moisture_code(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.duff_moisture_code(
         tas=tas,
@@ -1970,7 +1973,7 @@ def dry_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.dry_days(
         pr=pr,
@@ -2034,7 +2037,7 @@ def dry_spell_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.dry_spell_frequency(
         pr=pr,
@@ -2095,7 +2098,7 @@ def dry_spell_max_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.dry_spell_max_length(
         pr=pr,
@@ -2160,7 +2163,7 @@ def dry_spell_total_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.dry_spell_total_length(
         pr=pr,
@@ -2219,7 +2222,7 @@ def dryness_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.dryness_index(
         pr=pr,
@@ -2268,7 +2271,7 @@ def daily_temperature_range(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.daily_temperature_range(
         tasmin=tasmin,
@@ -2315,7 +2318,7 @@ def max_daily_temperature_range(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.max_daily_temperature_range(
         tasmin=tasmin,
@@ -2362,7 +2365,7 @@ def daily_temperature_range_variability(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.daily_temperature_range_variability(
         tasmin=tasmin,
@@ -2409,7 +2412,7 @@ def extreme_temperature_range(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.extreme_temperature_range(
         tasmin=tasmin,
@@ -2467,7 +2470,7 @@ def mcarthur_forest_fire_danger_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.mcarthur_forest_fire_danger_index(
         drought_factor=drought_factor,
@@ -2539,7 +2542,7 @@ def fire_season(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.fire_season(
         tas=tas,
@@ -2603,7 +2606,7 @@ def first_day_tg_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.first_day_tg_above(
         tas=tas,
@@ -2664,7 +2667,7 @@ def first_day_tg_below(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.first_day_tg_below(
         tas=tas,
@@ -2725,7 +2728,7 @@ def first_day_tn_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.first_day_tn_above(
         tasmin=tasmin,
@@ -2786,7 +2789,7 @@ def first_day_tn_below(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.first_day_tn_below(
         tasmin=tasmin,
@@ -2847,7 +2850,7 @@ def first_day_tx_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.first_day_tx_above(
         tasmax=tasmax,
@@ -2908,7 +2911,7 @@ def first_day_tx_below(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.first_day_tx_below(
         tasmax=tasmax,
@@ -2960,7 +2963,7 @@ def first_snowfall(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.first_snowfall(
         prsn=prsn,
@@ -3024,7 +3027,7 @@ def fraction_over_precip_doy_thresh(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.fraction_over_precip_doy_thresh(
         pr=pr,
@@ -3091,7 +3094,7 @@ def fraction_over_precip_thresh(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.fraction_over_precip_thresh(
         pr=pr,
@@ -3162,7 +3165,7 @@ def freezethaw_spell_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.freezethaw_spell_frequency(
         tasmin=tasmin,
@@ -3236,7 +3239,7 @@ def freezethaw_spell_max_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.freezethaw_spell_max_length(
         tasmin=tasmin,
@@ -3304,7 +3307,7 @@ def freezethaw_spell_mean_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.freezethaw_spell_mean_length(
         tasmin=tasmin,
@@ -3356,7 +3359,7 @@ def freezing_degree_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.freezing_degree_days(
         tas=tas,
@@ -3414,7 +3417,7 @@ def freshet_start(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.freshet_start(
         tas=tas,
@@ -3464,7 +3467,7 @@ def frost_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.frost_days(
         tasmin=tasmin,
@@ -3522,7 +3525,7 @@ def frost_free_season_end(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.frost_free_season_end(
         tasmin=tasmin,
@@ -3584,7 +3587,7 @@ def frost_free_season_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.frost_free_season_length(
         tasmin=tasmin,
@@ -3645,7 +3648,7 @@ def frost_free_season_start(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.frost_free_season_start(
         tasmin=tasmin,
@@ -3707,7 +3710,7 @@ def frost_free_spell_max_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.frost_free_spell_max_length(
         tasmin=tasmin,
@@ -3770,7 +3773,7 @@ def frost_season_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.frost_season_length(
         tasmin=tasmin,
@@ -3821,7 +3824,7 @@ def growing_degree_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.growing_degree_days(
         tas=tas,
@@ -3881,7 +3884,7 @@ def growing_season_end(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.growing_season_end(
         tas=tas,
@@ -3944,7 +3947,7 @@ def growing_season_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.growing_season_length(
         tas=tas,
@@ -4005,7 +4008,7 @@ def growing_season_start(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.growing_season_start(
         tas=tas,
@@ -4077,7 +4080,7 @@ def heat_spell_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heat_spell_frequency(
         tasmin=tasmin,
@@ -4152,7 +4155,7 @@ def heat_spell_max_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heat_spell_max_length(
         tasmin=tasmin,
@@ -4227,7 +4230,7 @@ def heat_spell_total_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heat_spell_total_length(
         tasmin=tasmin,
@@ -4297,7 +4300,7 @@ def heat_wave_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heat_wave_frequency(
         tasmin=tasmin,
@@ -4361,7 +4364,7 @@ def heat_wave_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heat_wave_index(
         tasmax=tasmax,
@@ -4428,7 +4431,7 @@ def heat_wave_max_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heat_wave_max_length(
         tasmin=tasmin,
@@ -4497,7 +4500,7 @@ def heat_wave_total_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heat_wave_total_length(
         tasmin=tasmin,
@@ -4550,7 +4553,7 @@ def heating_degree_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heating_degree_days(
         tas=tas,
@@ -4606,7 +4609,7 @@ def heating_degree_days_approximation(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.heating_degree_days_approximation(
         tasmax=tasmax,
@@ -4662,7 +4665,7 @@ def high_precip_low_temp(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.high_precip_low_temp(
         pr=pr,
@@ -4711,7 +4714,7 @@ def hot_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.hot_days(
         tasmax=tasmax,
@@ -4769,7 +4772,7 @@ def hot_spell_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.hot_spell_frequency(
         tasmax=tasmax,
@@ -4830,7 +4833,7 @@ def hot_spell_max_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.hot_spell_max_length(
         tasmax=tasmax,
@@ -4889,7 +4892,7 @@ def hot_spell_max_magnitude(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.hot_spell_max_magnitude(
         tasmax=tasmax,
@@ -4950,7 +4953,7 @@ def hot_spell_total_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.hot_spell_total_length(
         tasmax=tasmax,
@@ -5008,11 +5011,11 @@ def huglin_index(
     method : str
         The formula to use for the latitude coefficient calculation. The "huglin" method
         uses a stepwise latitude coefficient for values between 40° and 50° based on
-        ``huglin_nouveau_1978``. The "interpolated" method uses a smoothed curve latitude
-        coefficient for values based on the intervals set in ``huglin_nouveau_1978``. The
-        "jones" method integrates axial tilt, latitude, and day-of-year based on
-        ``hall_spatial_2010``. The "icclim" method is deprecated but is identical to method
-        "huglin".
+        :cite:`huglin_nouveau_1978`. The "interpolated" method uses a smoothed curve
+        latitude coefficient for values based on the intervals set in
+        :cite:`huglin_nouveau_1978`. The "jones" method integrates axial tilt, latitude, and
+        day-of-year based on :cite:`hall_spatial_2010`. The "icclim" method is deprecated
+        but is identical to method "huglin".
     cap_value : float
         The value to use for the latitude coefficient when latitude is above 50°N or below
         50°S. Only applicable for methods "huglin", "icclim", and "interpolated" (default:
@@ -5032,7 +5035,7 @@ def huglin_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.huglin_index(
         tas=tas,
@@ -5085,7 +5088,7 @@ def ice_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.ice_days(
         tasmax=tasmax,
@@ -5106,8 +5109,8 @@ def jetstream_metric_woollings(
     Strength and latitude of jetstream.
 
     Identify latitude and strength of maximum smoothed zonal wind speed in the region from
-    15 to 75°N and -60 to 0°E, using the formula outlined in ``woollings_variability_2010``.
-    Wind is smoothened using a Lanczos filter approach.
+    15 to 75°N and -60 to 0°E, using the formula outlined in
+    :cite:`woollings_variability_2010`. Wind is smoothened using a Lanczos filter approach.
 
     **Units:**
 
@@ -5127,11 +5130,10 @@ def jetstream_metric_woollings(
 
     Returns
     -------
-    tuple[
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-    ]
-        The computed index.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
     """
     return xclim.indicators.atmos.jetstream_metric_woollings(ua=ua, ds=ds, **kwargs)
 
@@ -5150,9 +5152,9 @@ def keetch_byram_drought_index(
 
     The KBDI indicates the amount of water necessary to bring the soil moisture content back
     to field capacity. It is often used in the calculation of the McArthur Forest Fire
-    Danger Index. The method implemented here follows ``ffdi-finkele_2006`` but limits the
-    maximum KBDI to 203.2 mm, rather than 200 mm, in order to align best with the majority
-    of the literature.
+    Danger Index. The method implemented here follows :cite:`ffdi-finkele_2006` but limits
+    the maximum KBDI to 203.2 mm, rather than 200 mm, in order to align best with the
+    majority of the literature.
 
     **Units:**
 
@@ -5179,7 +5181,7 @@ def keetch_byram_drought_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.keetch_byram_drought_index(
         pr=pr,
@@ -5229,7 +5231,7 @@ def last_snowfall(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.last_snowfall(
         prsn=prsn,
@@ -5287,7 +5289,7 @@ def last_spring_frost(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.last_spring_frost(
         tasmin=tasmin,
@@ -5338,7 +5340,7 @@ def late_frost_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.late_frost_days(
         tasmin=tasmin,
@@ -5390,7 +5392,7 @@ def latitude_temperature_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.latitude_temperature_index(
         tas=tas,
@@ -5442,7 +5444,7 @@ def liquid_precip_ratio(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.liquid_precip_ratio(
         pr=pr,
@@ -5494,7 +5496,7 @@ def liquid_precip_average(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.liquid_precip_average(
         pr=pr,
@@ -5546,7 +5548,7 @@ def liquid_precip_accumulation(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.liquid_precip_accumulation(
         pr=pr,
@@ -5594,7 +5596,7 @@ def max_n_day_precipitation_amount(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.max_n_day_precipitation_amount(
         pr=pr,
@@ -5641,7 +5643,7 @@ def max_pr_intensity(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.max_pr_intensity(
         pr=pr,
@@ -5696,7 +5698,7 @@ def maximum_consecutive_warm_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.maximum_consecutive_warm_days(
         tasmax=tasmax,
@@ -5748,7 +5750,7 @@ def precip_average(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.precip_average(
         pr=pr,
@@ -5795,7 +5797,7 @@ def precip_accumulation(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.precip_accumulation(
         pr=pr,
@@ -5850,7 +5852,7 @@ def rain_on_frozen_ground_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.rain_on_frozen_ground_days(
         pr=pr,
@@ -5960,12 +5962,12 @@ def rain_season(
 
     Returns
     -------
-    tuple[
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-    ]
-        The computed index.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
+    xarray.DataArray | earthkit.data.FieldList
+        The computed indicator.
     """
     return xclim.indicators.atmos.rain_season(
         pr=pr,
@@ -6031,7 +6033,7 @@ def rprctot(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.rprctot(
         pr=pr,
@@ -6077,7 +6079,7 @@ def max_1day_precipitation_amount(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.max_1day_precipitation_amount(
         pr=pr,
@@ -6126,7 +6128,7 @@ def daily_pr_intensity(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.daily_pr_intensity(
         pr=pr,
@@ -6171,7 +6173,7 @@ def sfcWind_max(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.sfcWind_max(
         sfcWind=sfcWind,
@@ -6214,7 +6216,7 @@ def sfcWind_mean(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.sfcWind_mean(
         sfcWind=sfcWind,
@@ -6257,7 +6259,7 @@ def sfcWind_min(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.sfcWind_min(
         sfcWind=sfcWind,
@@ -6300,7 +6302,7 @@ def sfcWindmax_max(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.sfcWindmax_max(
         sfcWindmax=sfcWindmax,
@@ -6343,7 +6345,7 @@ def sfcWindmax_mean(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.sfcWindmax_mean(
         sfcWindmax=sfcWindmax,
@@ -6386,7 +6388,7 @@ def sfcWindmax_min(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.sfcWindmax_min(
         sfcWindmax=sfcWindmax,
@@ -6434,7 +6436,7 @@ def snowfall_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.snowfall_frequency(
         prsn=prsn,
@@ -6483,7 +6485,7 @@ def snowfall_intensity(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.snowfall_intensity(
         prsn=prsn,
@@ -6534,7 +6536,7 @@ def solid_precip_average(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.solid_precip_average(
         pr=pr,
@@ -6586,7 +6588,7 @@ def solid_precip_accumulation(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.solid_precip_accumulation(
         pr=pr,
@@ -6669,7 +6671,7 @@ def standardized_precipitation_evapotranspiration_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index(
         wb=wb,
@@ -6776,7 +6778,7 @@ def standardized_precipitation_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.standardized_precipitation_index(
         pr=pr,
@@ -6842,7 +6844,7 @@ def tg10p(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tg10p(
         tas=tas,
@@ -6902,7 +6904,7 @@ def tg90p(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tg90p(
         tas=tas,
@@ -6954,7 +6956,7 @@ def tg_days_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tg_days_above(
         tas=tas,
@@ -7005,7 +7007,7 @@ def tg_days_below(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tg_days_below(
         tas=tas,
@@ -7050,7 +7052,7 @@ def tg_max(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tg_max(
         tas=tas,
@@ -7093,7 +7095,7 @@ def tg_mean(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tg_mean(
         tas=tas,
@@ -7136,7 +7138,7 @@ def tg_min(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tg_min(
         tas=tas,
@@ -7183,7 +7185,7 @@ def thawing_degree_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.thawing_degree_days(
         tas=tas,
@@ -7241,7 +7243,7 @@ def tn10p(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tn10p(
         tasmin=tasmin,
@@ -7301,7 +7303,7 @@ def tn90p(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tn90p(
         tasmin=tasmin,
@@ -7353,7 +7355,7 @@ def tn_days_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tn_days_above(
         tasmin=tasmin,
@@ -7404,7 +7406,7 @@ def tn_days_below(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tn_days_below(
         tasmin=tasmin,
@@ -7449,7 +7451,7 @@ def tn_max(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tn_max(
         tasmin=tasmin,
@@ -7492,7 +7494,7 @@ def tn_mean(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tn_mean(
         tasmin=tasmin,
@@ -7535,7 +7537,7 @@ def tn_min(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tn_min(
         tasmin=tasmin,
@@ -7584,7 +7586,7 @@ def tropical_nights(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tropical_nights(
         tasmin=tasmin,
@@ -7643,7 +7645,7 @@ def tx10p(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tx10p(
         tasmax=tasmax,
@@ -7703,7 +7705,7 @@ def tx90p(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tx90p(
         tasmax=tasmax,
@@ -7755,7 +7757,7 @@ def tx_days_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tx_days_above(
         tasmax=tasmax,
@@ -7806,7 +7808,7 @@ def tx_days_below(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tx_days_below(
         tasmax=tasmax,
@@ -7851,7 +7853,7 @@ def tx_max(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tx_max(
         tasmax=tasmax,
@@ -7894,7 +7896,7 @@ def tx_mean(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tx_mean(
         tasmax=tasmax,
@@ -7937,7 +7939,7 @@ def tx_min(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tx_min(
         tasmax=tasmax,
@@ -7992,7 +7994,7 @@ def tx_tn_days_above(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.tx_tn_days_above(
         tasmin=tasmin,
@@ -8046,7 +8048,7 @@ def usda_hardiness_zones(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.usda_hardiness_zones(
         tasmin=tasmin,
@@ -8100,7 +8102,7 @@ def warm_and_dry_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.warm_and_dry_days(
         tas=tas,
@@ -8156,7 +8158,7 @@ def warm_and_wet_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.warm_and_wet_days(
         tas=tas,
@@ -8225,7 +8227,7 @@ def warm_spell_duration_index(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.warm_spell_duration_index(
         tasmax=tasmax,
@@ -8276,7 +8278,7 @@ def water_cycle_intensity(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.water_cycle_intensity(
         pr=pr,
@@ -8324,7 +8326,7 @@ def wet_precip_accumulation(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.wet_precip_accumulation(
         pr=pr,
@@ -8388,7 +8390,7 @@ def wet_spell_frequency(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.wet_spell_frequency(
         pr=pr,
@@ -8453,7 +8455,7 @@ def wet_spell_max_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.wet_spell_max_length(
         pr=pr,
@@ -8518,7 +8520,7 @@ def wet_spell_total_length(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.wet_spell_total_length(
         pr=pr,
@@ -8571,7 +8573,7 @@ def wetdays(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.wetdays(
         pr=pr,
@@ -8622,7 +8624,7 @@ def wetdays_prop(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.wetdays_prop(
         pr=pr,
@@ -8670,7 +8672,7 @@ def windy_days(
     Returns
     -------
     xarray.DataArray | earthkit.data.FieldList
-        The computed index.
+        The computed indicator.
     """
     return xclim.indicators.atmos.windy_days(
         sfcWind=sfcWind,
