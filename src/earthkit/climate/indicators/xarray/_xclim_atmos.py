@@ -8,13 +8,11 @@ from typing import Any, Literal
 import xarray as xr
 import xclim.indicators.atmos
 from earthkit.data import FieldList
-from earthkit.utils.decorators import format_handler
 
-# from earthkit.climate.utils.decorators import metadata_handler
+from earthkit.climate.utils.decorators import wrap_indicator
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.antecedent_precipitation_index)
+@wrap_indicator()
 def antecedent_precipitation_index(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -62,57 +60,7 @@ def antecedent_precipitation_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.aridity_index)
-def aridity_index(
-    pr: xr.DataArray | FieldList | str = "pr",
-    evspsblpot: xr.DataArray | FieldList | str = "evspsblpot",
-    ds: xr.Dataset | None = None,
-    *,
-    freq: str = "YS",
-    **kwargs: Any,
-) -> xr.DataArray | FieldList:
-    """
-    Aridity index.
-
-    The ratio of total precipitation over potential evapotranspiration. Classification based
-    on the Aridity Index (AI).
-
-    **Units:**
-
-    - aridity_index: dimensionless
-
-    This function wraps `xclim.indicators.atmos.aridity_index <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.atmos.aridity_index>`_.
-
-    Parameters
-    ----------
-    pr : xarray.DataArray | earthkit.data.FieldList | str
-        Precipitation.
-    evspsblpot : xarray.DataArray | earthkit.data.FieldList | str
-        Potential evapotranspiration.
-    freq : str
-        Resampling frequency. A monthly or yearly frequency is expected.
-    ds : xarray.Dataset | None
-        Input dataset.
-    **kwargs : Any
-        Additional keyword arguments.
-
-    Returns
-    -------
-    xarray.DataArray | earthkit.data.FieldList
-        The computed index.
-    """
-    return xclim.indicators.atmos.aridity_index(
-        pr=pr,
-        evspsblpot=evspsblpot,
-        freq=freq,
-        ds=ds,
-        **kwargs,
-    )
-
-
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.australian_hardiness_zones)
+@wrap_indicator()
 def australian_hardiness_zones(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -163,8 +111,7 @@ def australian_hardiness_zones(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.biologically_effective_degree_days)
+@wrap_indicator()
 def biologically_effective_degree_days(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -266,8 +213,7 @@ def biologically_effective_degree_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.calm_days)
+@wrap_indicator()
 def calm_days(
     sfcWind: xr.DataArray | FieldList | str = "sfcWind",
     ds: xr.Dataset | None = None,
@@ -314,14 +260,12 @@ def calm_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.maximum_consecutive_dry_days)
+@wrap_indicator()
 def maximum_consecutive_dry_days(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
-    op: Literal["<", "lt", "<=", "le"] = "<",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -344,8 +288,6 @@ def maximum_consecutive_dry_days(
         Mean daily precipitation flux.
     thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold precipitation on which to base evaluation.
-    op : Literal['<', 'lt', '<=', 'le']
-        Comparison operator to use to find wet days.
     freq : str
         Resampling frequency.
     resample_before_rl : bool
@@ -364,7 +306,6 @@ def maximum_consecutive_dry_days(
     return xclim.indicators.atmos.maximum_consecutive_dry_days(
         pr=pr,
         thresh=thresh,
-        op=op,
         freq=freq,
         resample_before_rl=resample_before_rl,
         ds=ds,
@@ -372,8 +313,7 @@ def maximum_consecutive_dry_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cffwis_indices)
+@wrap_indicator()
 def cffwis_indices(
     tas: xr.DataArray | FieldList | str = "tas",
     pr: xr.DataArray | FieldList | str = "pr",
@@ -461,7 +401,7 @@ def cffwis_indices(
 
     Returns
     -------
-        tuple[
+    tuple[
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
@@ -469,7 +409,7 @@ def cffwis_indices(
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
     ]
-            The computed index.
+        The computed index.
     """
     return xclim.indicators.atmos.cffwis_indices(
         tas=tas,
@@ -491,8 +431,7 @@ def cffwis_indices(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cold_and_dry_days)
+@wrap_indicator()
 def cold_and_dry_days(
     tas: xr.DataArray | FieldList | str = "tas",
     pr: xr.DataArray | FieldList | str = "pr",
@@ -548,8 +487,7 @@ def cold_and_dry_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cold_and_wet_days)
+@wrap_indicator()
 def cold_and_wet_days(
     tas: xr.DataArray | FieldList | str = "tas",
     pr: xr.DataArray | FieldList | str = "pr",
@@ -605,8 +543,7 @@ def cold_and_wet_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cold_spell_days)
+@wrap_indicator()
 def cold_spell_days(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -668,8 +605,7 @@ def cold_spell_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cold_spell_duration_index)
+@wrap_indicator()
 def cold_spell_duration_index(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmin_per: xr.DataArray | FieldList | str = "tasmin_per",
@@ -740,8 +676,7 @@ def cold_spell_duration_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cold_spell_frequency)
+@wrap_indicator()
 def cold_spell_frequency(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -802,8 +737,7 @@ def cold_spell_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cold_spell_max_length)
+@wrap_indicator()
 def cold_spell_max_length(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -865,8 +799,7 @@ def cold_spell_max_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cold_spell_total_length)
+@wrap_indicator()
 def cold_spell_total_length(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -928,23 +861,20 @@ def cold_spell_total_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.consecutive_frost_days)
+@wrap_indicator()
 def consecutive_frost_days(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS-JUL",
-    op: Literal["<", "lt", "<=", "le"] = "<",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
     """
     Consecutive frost days.
 
-    Maximum number of consecutive days where the daily minimum temperature is below a given
-    threshold
+    Maximum number of consecutive days where the daily minimum temperature is below 0°C
 
     **Units:**
 
@@ -955,13 +885,11 @@ def consecutive_frost_days(
     Parameters
     ----------
     tasmin : xarray.DataArray | earthkit.data.FieldList | str
-        Minimum surface temperature.
+        Minimum daily temperature.
     thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
-        The temperature threshold needed to trigger a cold spell.
+        Threshold temperature.
     freq : str
         Resampling frequency.
-    op : Literal['<', 'lt', '<=', 'le']
-        Comparison operation. Default: "<".
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
@@ -979,22 +907,19 @@ def consecutive_frost_days(
         tasmin=tasmin,
         thresh=thresh,
         freq=freq,
-        op=op,
         resample_before_rl=resample_before_rl,
         ds=ds,
         **kwargs,
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.maximum_consecutive_frost_free_days)
+@wrap_indicator()
 def maximum_consecutive_frost_free_days(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "0 degC",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -1002,7 +927,7 @@ def maximum_consecutive_frost_free_days(
     Maximum consecutive frost free days.
 
     Maximum number of consecutive frost-free days: where the daily minimum temperature is
-    above or equal to given threshold.
+    above or equal to 0°C
 
     **Units:**
 
@@ -1015,11 +940,9 @@ def maximum_consecutive_frost_free_days(
     tasmin : xarray.DataArray | earthkit.data.FieldList | str
         Minimum daily temperature.
     thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
-        The temperature threshold needed to trigger a frost-free spell.
+        Threshold temperature.
     freq : str
         Resampling frequency.
-    op : Literal['>', 'gt', '>=', 'ge']
-        Comparison operation. Default: ">=".
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
@@ -1037,15 +960,13 @@ def maximum_consecutive_frost_free_days(
         tasmin=tasmin,
         thresh=thresh,
         freq=freq,
-        op=op,
         resample_before_rl=resample_before_rl,
         ds=ds,
         **kwargs,
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cool_night_index)
+@wrap_indicator()
 def cool_night_index(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     lat: xr.DataArray | FieldList | str | None = None,
@@ -1094,8 +1015,7 @@ def cool_night_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cooling_degree_days)
+@wrap_indicator()
 def cooling_degree_days(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -1143,8 +1063,7 @@ def cooling_degree_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.cooling_degree_days_approximation)
+@wrap_indicator()
 def cooling_degree_days_approximation(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     tasmin: xr.DataArray | FieldList | str = "tasmin",
@@ -1202,8 +1121,7 @@ def cooling_degree_days_approximation(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.corn_heat_units)
+@wrap_indicator()
 def corn_heat_units(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -1255,8 +1173,7 @@ def corn_heat_units(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.chill_portions)
+@wrap_indicator()
 def chill_portions(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -1307,8 +1224,7 @@ def chill_portions(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.chill_units)
+@wrap_indicator()
 def chill_units(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -1359,14 +1275,12 @@ def chill_units(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.maximum_consecutive_wet_days)
+@wrap_indicator()
 def maximum_consecutive_wet_days(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
     *,
     thresh: str | float | int | xr.DataArray | FieldList = "1 mm/day",
-    op: Literal[">", "gt", ">=", "ge"] = ">=",
     freq: str = "YS",
     resample_before_rl: bool = True,
     **kwargs: Any,
@@ -1389,8 +1303,6 @@ def maximum_consecutive_wet_days(
         Mean daily precipitation flux.
     thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
         Threshold precipitation on which to base evaluation.
-    op : Literal['>', 'gt', '>=', 'ge']
-        Comparison operator to use to find wet days.
     freq : str
         Resampling frequency.
     resample_before_rl : bool
@@ -1409,7 +1321,6 @@ def maximum_consecutive_wet_days(
     return xclim.indicators.atmos.maximum_consecutive_wet_days(
         pr=pr,
         thresh=thresh,
-        op=op,
         freq=freq,
         resample_before_rl=resample_before_rl,
         ds=ds,
@@ -1417,8 +1328,7 @@ def maximum_consecutive_wet_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.days_over_precip_doy_thresh)
+@wrap_indicator()
 def days_over_precip_doy_thresh(
     pr: xr.DataArray | FieldList | str = "pr",
     pr_per: xr.DataArray | FieldList | str = "pr_per",
@@ -1484,8 +1394,7 @@ def days_over_precip_doy_thresh(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.days_over_precip_thresh)
+@wrap_indicator()
 def days_over_precip_thresh(
     pr: xr.DataArray | FieldList | str = "pr",
     pr_per: xr.DataArray | FieldList | str = "pr_per",
@@ -1551,8 +1460,7 @@ def days_over_precip_thresh(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.days_with_snow)
+@wrap_indicator()
 def days_with_snow(
     prsn: xr.DataArray | FieldList | str = "prsn",
     ds: xr.Dataset | None = None,
@@ -1603,8 +1511,7 @@ def days_with_snow(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.drought_code)
+@wrap_indicator()
 def drought_code(
     tas: xr.DataArray | FieldList | str = "tas",
     pr: xr.DataArray | FieldList | str = "pr",
@@ -1686,8 +1593,7 @@ def drought_code(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.degree_days_exceedance_date)
+@wrap_indicator()
 def degree_days_exceedance_date(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -1755,8 +1661,7 @@ def degree_days_exceedance_date(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.griffiths_drought_factor)
+@wrap_indicator()
 def griffiths_drought_factor(
     pr: xr.DataArray | FieldList | str = "pr",
     smd: xr.DataArray | FieldList | str = "smd",
@@ -1808,8 +1713,7 @@ def griffiths_drought_factor(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.daily_freezethaw_cycles)
+@wrap_indicator()
 def daily_freezethaw_cycles(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -1879,8 +1783,7 @@ def daily_freezethaw_cycles(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.duff_moisture_code)
+@wrap_indicator()
 def duff_moisture_code(
     tas: xr.DataArray | FieldList | str = "tas",
     pr: xr.DataArray | FieldList | str = "pr",
@@ -1962,8 +1865,7 @@ def duff_moisture_code(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.dry_days)
+@wrap_indicator()
 def dry_days(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -2014,8 +1916,7 @@ def dry_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.dry_spell_frequency)
+@wrap_indicator()
 def dry_spell_frequency(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -2081,8 +1982,7 @@ def dry_spell_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.dry_spell_max_length)
+@wrap_indicator()
 def dry_spell_max_length(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -2143,8 +2043,7 @@ def dry_spell_max_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.dry_spell_total_length)
+@wrap_indicator()
 def dry_spell_total_length(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -2209,8 +2108,7 @@ def dry_spell_total_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.dryness_index)
+@wrap_indicator()
 def dryness_index(
     pr: xr.DataArray | FieldList | str = "pr",
     evspsblpot: xr.DataArray | FieldList | str = "evspsblpot",
@@ -2268,8 +2166,7 @@ def dryness_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.daily_temperature_range)
+@wrap_indicator()
 def daily_temperature_range(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -2316,8 +2213,7 @@ def daily_temperature_range(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.max_daily_temperature_range)
+@wrap_indicator()
 def max_daily_temperature_range(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -2364,8 +2260,7 @@ def max_daily_temperature_range(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.daily_temperature_range_variability)
+@wrap_indicator()
 def daily_temperature_range_variability(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -2412,8 +2307,7 @@ def daily_temperature_range_variability(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.extreme_temperature_range)
+@wrap_indicator()
 def extreme_temperature_range(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -2460,8 +2354,7 @@ def extreme_temperature_range(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.mcarthur_forest_fire_danger_index)
+@wrap_indicator()
 def mcarthur_forest_fire_danger_index(
     drought_factor: xr.DataArray | FieldList | str = "drought_factor",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -2520,8 +2413,7 @@ def mcarthur_forest_fire_danger_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.fire_season)
+@wrap_indicator()
 def fire_season(
     tas: xr.DataArray | FieldList | str = "tas",
     snd: xr.DataArray | FieldList | str | None = None,
@@ -2598,8 +2490,7 @@ def fire_season(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.first_day_tg_above)
+@wrap_indicator()
 def first_day_tg_above(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -2660,8 +2551,7 @@ def first_day_tg_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.first_day_tg_below)
+@wrap_indicator()
 def first_day_tg_below(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -2722,8 +2612,7 @@ def first_day_tg_below(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.first_day_tn_above)
+@wrap_indicator()
 def first_day_tn_above(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -2784,8 +2673,7 @@ def first_day_tn_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.first_day_tn_below)
+@wrap_indicator()
 def first_day_tn_below(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -2846,8 +2734,7 @@ def first_day_tn_below(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.first_day_tx_above)
+@wrap_indicator()
 def first_day_tx_above(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -2908,8 +2795,7 @@ def first_day_tx_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.first_day_tx_below)
+@wrap_indicator()
 def first_day_tx_below(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -2970,8 +2856,7 @@ def first_day_tx_below(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.first_snowfall)
+@wrap_indicator()
 def first_snowfall(
     prsn: xr.DataArray | FieldList | str = "prsn",
     ds: xr.Dataset | None = None,
@@ -3020,8 +2905,7 @@ def first_snowfall(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.fraction_over_precip_doy_thresh)
+@wrap_indicator()
 def fraction_over_precip_doy_thresh(
     pr: xr.DataArray | FieldList | str = "pr",
     pr_per: xr.DataArray | FieldList | str = "pr_per",
@@ -3088,8 +2972,7 @@ def fraction_over_precip_doy_thresh(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.fraction_over_precip_thresh)
+@wrap_indicator()
 def fraction_over_precip_thresh(
     pr: xr.DataArray | FieldList | str = "pr",
     pr_per: xr.DataArray | FieldList | str = "pr_per",
@@ -3156,8 +3039,7 @@ def fraction_over_precip_thresh(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.freezethaw_spell_frequency)
+@wrap_indicator()
 def freezethaw_spell_frequency(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -3231,8 +3113,7 @@ def freezethaw_spell_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.freezethaw_spell_max_length)
+@wrap_indicator()
 def freezethaw_spell_max_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -3306,8 +3187,7 @@ def freezethaw_spell_max_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.freezethaw_spell_mean_length)
+@wrap_indicator()
 def freezethaw_spell_mean_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -3373,8 +3253,7 @@ def freezethaw_spell_mean_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.freezing_degree_days)
+@wrap_indicator()
 def freezing_degree_days(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -3422,8 +3301,7 @@ def freezing_degree_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.freshet_start)
+@wrap_indicator()
 def freshet_start(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -3484,8 +3362,7 @@ def freshet_start(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.frost_days)
+@wrap_indicator()
 def frost_days(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -3532,8 +3409,7 @@ def frost_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.frost_free_season_end)
+@wrap_indicator()
 def frost_free_season_end(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -3594,8 +3470,7 @@ def frost_free_season_end(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.frost_free_season_length)
+@wrap_indicator()
 def frost_free_season_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -3657,8 +3532,7 @@ def frost_free_season_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.frost_free_season_start)
+@wrap_indicator()
 def frost_free_season_start(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -3719,8 +3593,7 @@ def frost_free_season_start(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.frost_free_spell_max_length)
+@wrap_indicator()
 def frost_free_spell_max_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -3782,8 +3655,7 @@ def frost_free_spell_max_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.frost_season_length)
+@wrap_indicator()
 def frost_season_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -3846,8 +3718,7 @@ def frost_season_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.growing_degree_days)
+@wrap_indicator()
 def growing_degree_days(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -3895,8 +3766,7 @@ def growing_degree_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.growing_season_end)
+@wrap_indicator()
 def growing_season_end(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -3959,8 +3829,7 @@ def growing_season_end(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.growing_season_length)
+@wrap_indicator()
 def growing_season_length(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -4023,8 +3892,7 @@ def growing_season_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.growing_season_start)
+@wrap_indicator()
 def growing_season_start(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -4085,8 +3953,7 @@ def growing_season_start(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heat_spell_frequency)
+@wrap_indicator()
 def heat_spell_frequency(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -4161,8 +4028,7 @@ def heat_spell_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heat_spell_max_length)
+@wrap_indicator()
 def heat_spell_max_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -4237,8 +4103,7 @@ def heat_spell_max_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heat_spell_total_length)
+@wrap_indicator()
 def heat_spell_total_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -4313,8 +4178,7 @@ def heat_spell_total_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heat_wave_frequency)
+@wrap_indicator()
 def heat_wave_frequency(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -4383,8 +4247,7 @@ def heat_wave_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heat_wave_index)
+@wrap_indicator()
 def heat_wave_index(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -4446,8 +4309,7 @@ def heat_wave_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heat_wave_max_length)
+@wrap_indicator()
 def heat_wave_max_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -4516,8 +4378,7 @@ def heat_wave_max_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heat_wave_total_length)
+@wrap_indicator()
 def heat_wave_total_length(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -4586,8 +4447,7 @@ def heat_wave_total_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heating_degree_days)
+@wrap_indicator()
 def heating_degree_days(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -4635,8 +4495,7 @@ def heating_degree_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.heating_degree_days_approximation)
+@wrap_indicator()
 def heating_degree_days_approximation(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     tasmin: xr.DataArray | FieldList | str = "tasmin",
@@ -4694,8 +4553,7 @@ def heating_degree_days_approximation(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.high_precip_low_temp)
+@wrap_indicator()
 def high_precip_low_temp(
     pr: xr.DataArray | FieldList | str = "pr",
     tas: xr.DataArray | FieldList | str = "tas",
@@ -4751,8 +4609,7 @@ def high_precip_low_temp(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.hot_days)
+@wrap_indicator()
 def hot_days(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -4799,8 +4656,7 @@ def hot_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.hot_spell_frequency)
+@wrap_indicator()
 def hot_spell_frequency(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -4861,8 +4717,7 @@ def hot_spell_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.hot_spell_max_length)
+@wrap_indicator()
 def hot_spell_max_length(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -4923,8 +4778,7 @@ def hot_spell_max_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.hot_spell_max_magnitude)
+@wrap_indicator()
 def hot_spell_max_magnitude(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -4982,8 +4836,7 @@ def hot_spell_max_magnitude(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.hot_spell_total_length)
+@wrap_indicator()
 def hot_spell_total_length(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -5045,8 +4898,7 @@ def hot_spell_total_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.huglin_index)
+@wrap_indicator()
 def huglin_index(
     tas: xr.DataArray | FieldList | str = "tas",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -5131,8 +4983,7 @@ def huglin_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.ice_days)
+@wrap_indicator()
 def ice_days(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -5179,8 +5030,7 @@ def ice_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.jetstream_metric_woollings)
+@wrap_indicator()
 def jetstream_metric_woollings(
     ua: xr.DataArray | FieldList | str = "ua",
     ds: xr.Dataset | None = None,
@@ -5211,17 +5061,16 @@ def jetstream_metric_woollings(
 
     Returns
     -------
-        tuple[
+    tuple[
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
     ]
-            The computed index.
+        The computed index.
     """
     return xclim.indicators.atmos.jetstream_metric_woollings(ua=ua, ds=ds, **kwargs)
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.keetch_byram_drought_index)
+@wrap_indicator()
 def keetch_byram_drought_index(
     pr: xr.DataArray | FieldList | str = "pr",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -5276,8 +5125,7 @@ def keetch_byram_drought_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.last_snowfall)
+@wrap_indicator()
 def last_snowfall(
     prsn: xr.DataArray | FieldList | str = "prsn",
     ds: xr.Dataset | None = None,
@@ -5326,8 +5174,7 @@ def last_snowfall(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.last_spring_frost)
+@wrap_indicator()
 def last_spring_frost(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -5388,8 +5235,7 @@ def last_spring_frost(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.late_frost_days)
+@wrap_indicator()
 def late_frost_days(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -5437,8 +5283,7 @@ def late_frost_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.latitude_temperature_index)
+@wrap_indicator()
 def latitude_temperature_index(
     tas: xr.DataArray | FieldList | str = "tas",
     lat: xr.DataArray | FieldList | str = "lat",
@@ -5490,8 +5335,7 @@ def latitude_temperature_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.liquid_precip_ratio)
+@wrap_indicator()
 def liquid_precip_ratio(
     pr: xr.DataArray | FieldList | str = "pr",
     tas: xr.DataArray | FieldList | str = "tas",
@@ -5544,8 +5388,7 @@ def liquid_precip_ratio(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.liquid_precip_average)
+@wrap_indicator()
 def liquid_precip_average(
     pr: xr.DataArray | FieldList | str = "pr",
     tas: xr.DataArray | FieldList | str = "tas",
@@ -5597,8 +5440,7 @@ def liquid_precip_average(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.liquid_precip_accumulation)
+@wrap_indicator()
 def liquid_precip_accumulation(
     pr: xr.DataArray | FieldList | str = "pr",
     tas: xr.DataArray | FieldList | str = "tas",
@@ -5650,8 +5492,7 @@ def liquid_precip_accumulation(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.max_n_day_precipitation_amount)
+@wrap_indicator()
 def max_n_day_precipitation_amount(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -5698,8 +5539,7 @@ def max_n_day_precipitation_amount(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.max_pr_intensity)
+@wrap_indicator()
 def max_pr_intensity(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -5746,15 +5586,13 @@ def max_pr_intensity(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.maximum_consecutive_warm_days)
+@wrap_indicator()
 def maximum_consecutive_warm_days(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
     *,
-    thresh: str | float | int | xr.DataArray | FieldList = "25 °C",
+    thresh: str | float | int | xr.DataArray | FieldList = "25 degC",
     freq: str = "YS",
-    op: Literal[">", "gt", ">=", "ge"] = ">",
     resample_before_rl: bool = True,
     **kwargs: Any,
 ) -> xr.DataArray | FieldList:
@@ -5773,13 +5611,11 @@ def maximum_consecutive_warm_days(
     Parameters
     ----------
     tasmax : xarray.DataArray | earthkit.data.FieldList | str
-        Maximum daily temperature.
+        Max daily temperature.
     thresh : str | float | int | xarray.DataArray | earthkit.data.FieldList
-        The temperature threshold needed to trigger a hot spell.
+        Threshold temperature.
     freq : str
         Resampling frequency.
-    op : Literal['>', 'gt', '>=', 'ge']
-        Comparison operation. Default: ">".
     resample_before_rl : bool
         Determines if the resampling should take place before or after the run length
         encoding (or a similar algorithm) is applied to runs.
@@ -5797,15 +5633,13 @@ def maximum_consecutive_warm_days(
         tasmax=tasmax,
         thresh=thresh,
         freq=freq,
-        op=op,
         resample_before_rl=resample_before_rl,
         ds=ds,
         **kwargs,
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.precip_average)
+@wrap_indicator()
 def precip_average(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -5855,8 +5689,7 @@ def precip_average(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.precip_accumulation)
+@wrap_indicator()
 def precip_accumulation(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -5902,8 +5735,7 @@ def precip_accumulation(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.rain_on_frozen_ground_days)
+@wrap_indicator()
 def rain_on_frozen_ground_days(
     pr: xr.DataArray | FieldList | str = "pr",
     tas: xr.DataArray | FieldList | str = "tas",
@@ -5961,8 +5793,7 @@ def rain_on_frozen_ground_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.rain_season)
+@wrap_indicator()
 def rain_season(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -6059,12 +5890,12 @@ def rain_season(
 
     Returns
     -------
-        tuple[
+    tuple[
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
         xarray.DataArray | earthkit.data.FieldList,
     ]
-            The computed index.
+        The computed index.
     """
     return xclim.indicators.atmos.rain_season(
         pr=pr,
@@ -6087,8 +5918,7 @@ def rain_season(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.rprctot)
+@wrap_indicator()
 def rprctot(
     pr: xr.DataArray | FieldList | str = "pr",
     prc: xr.DataArray | FieldList | str = "prc",
@@ -6144,8 +5974,7 @@ def rprctot(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.max_1day_precipitation_amount)
+@wrap_indicator()
 def max_1day_precipitation_amount(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -6188,8 +6017,7 @@ def max_1day_precipitation_amount(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.daily_pr_intensity)
+@wrap_indicator()
 def daily_pr_intensity(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -6240,8 +6068,7 @@ def daily_pr_intensity(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.sfcWind_max)
+@wrap_indicator()
 def sfcWind_max(
     sfcWind: xr.DataArray | FieldList | str = "sfcWind",
     ds: xr.Dataset | None = None,
@@ -6284,8 +6111,7 @@ def sfcWind_max(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.sfcWind_mean)
+@wrap_indicator()
 def sfcWind_mean(
     sfcWind: xr.DataArray | FieldList | str = "sfcWind",
     ds: xr.Dataset | None = None,
@@ -6328,8 +6154,7 @@ def sfcWind_mean(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.sfcWind_min)
+@wrap_indicator()
 def sfcWind_min(
     sfcWind: xr.DataArray | FieldList | str = "sfcWind",
     ds: xr.Dataset | None = None,
@@ -6372,8 +6197,7 @@ def sfcWind_min(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.sfcWindmax_max)
+@wrap_indicator()
 def sfcWindmax_max(
     sfcWindmax: xr.DataArray | FieldList | str = "sfcWindmax",
     ds: xr.Dataset | None = None,
@@ -6416,8 +6240,7 @@ def sfcWindmax_max(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.sfcWindmax_mean)
+@wrap_indicator()
 def sfcWindmax_mean(
     sfcWindmax: xr.DataArray | FieldList | str = "sfcWindmax",
     ds: xr.Dataset | None = None,
@@ -6460,8 +6283,7 @@ def sfcWindmax_mean(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.sfcWindmax_min)
+@wrap_indicator()
 def sfcWindmax_min(
     sfcWindmax: xr.DataArray | FieldList | str = "sfcWindmax",
     ds: xr.Dataset | None = None,
@@ -6504,8 +6326,7 @@ def sfcWindmax_min(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.snowfall_frequency)
+@wrap_indicator()
 def snowfall_frequency(
     prsn: xr.DataArray | FieldList | str = "prsn",
     ds: xr.Dataset | None = None,
@@ -6554,8 +6375,7 @@ def snowfall_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.snowfall_intensity)
+@wrap_indicator()
 def snowfall_intensity(
     prsn: xr.DataArray | FieldList | str = "prsn",
     ds: xr.Dataset | None = None,
@@ -6604,8 +6424,7 @@ def snowfall_intensity(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.solid_precip_average)
+@wrap_indicator()
 def solid_precip_average(
     pr: xr.DataArray | FieldList | str = "pr",
     tas: xr.DataArray | FieldList | str = "tas",
@@ -6657,8 +6476,7 @@ def solid_precip_average(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.solid_precip_accumulation)
+@wrap_indicator()
 def solid_precip_accumulation(
     pr: xr.DataArray | FieldList | str = "pr",
     tas: xr.DataArray | FieldList | str = "tas",
@@ -6710,8 +6528,7 @@ def solid_precip_accumulation(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.standardized_precipitation_evapotranspiration_index)
+@wrap_indicator()
 def standardized_precipitation_evapotranspiration_index(
     wb: xr.DataArray | FieldList | str = "wb",
     ds: xr.Dataset | None = None,
@@ -6799,8 +6616,7 @@ def standardized_precipitation_evapotranspiration_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.standardized_precipitation_index)
+@wrap_indicator()
 def standardized_precipitation_index(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -6909,8 +6725,7 @@ def standardized_precipitation_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tg10p)
+@wrap_indicator()
 def tg10p(
     tas: xr.DataArray | FieldList | str = "tas",
     tas_per: xr.DataArray | FieldList | str = "tas_per",
@@ -6970,8 +6785,7 @@ def tg10p(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tg90p)
+@wrap_indicator()
 def tg90p(
     tas: xr.DataArray | FieldList | str = "tas",
     tas_per: xr.DataArray | FieldList | str = "tas_per",
@@ -7031,8 +6845,7 @@ def tg90p(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tg_days_above)
+@wrap_indicator()
 def tg_days_above(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -7083,8 +6896,7 @@ def tg_days_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tg_days_below)
+@wrap_indicator()
 def tg_days_below(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -7135,8 +6947,7 @@ def tg_days_below(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tg_max)
+@wrap_indicator()
 def tg_max(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -7179,8 +6990,7 @@ def tg_max(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tg_mean)
+@wrap_indicator()
 def tg_mean(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -7223,8 +7033,7 @@ def tg_mean(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tg_min)
+@wrap_indicator()
 def tg_min(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -7267,8 +7076,7 @@ def tg_min(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.thawing_degree_days)
+@wrap_indicator()
 def thawing_degree_days(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
@@ -7316,8 +7124,7 @@ def thawing_degree_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tn10p)
+@wrap_indicator()
 def tn10p(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmin_per: xr.DataArray | FieldList | str = "tasmin_per",
@@ -7377,8 +7184,7 @@ def tn10p(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tn90p)
+@wrap_indicator()
 def tn90p(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmin_per: xr.DataArray | FieldList | str = "tasmin_per",
@@ -7438,8 +7244,7 @@ def tn90p(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tn_days_above)
+@wrap_indicator()
 def tn_days_above(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -7490,8 +7295,7 @@ def tn_days_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tn_days_below)
+@wrap_indicator()
 def tn_days_below(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -7542,8 +7346,7 @@ def tn_days_below(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tn_max)
+@wrap_indicator()
 def tn_max(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -7586,8 +7389,7 @@ def tn_max(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tn_mean)
+@wrap_indicator()
 def tn_mean(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -7630,8 +7432,7 @@ def tn_mean(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tn_min)
+@wrap_indicator()
 def tn_min(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -7674,8 +7475,7 @@ def tn_min(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tropical_nights)
+@wrap_indicator()
 def tropical_nights(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -7726,8 +7526,7 @@ def tropical_nights(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tx10p)
+@wrap_indicator()
 def tx10p(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     tasmax_per: xr.DataArray | FieldList | str = "tasmax_per",
@@ -7787,8 +7586,7 @@ def tx10p(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tx90p)
+@wrap_indicator()
 def tx90p(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     tasmax_per: xr.DataArray | FieldList | str = "tasmax_per",
@@ -7848,8 +7646,7 @@ def tx90p(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tx_days_above)
+@wrap_indicator()
 def tx_days_above(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -7900,8 +7697,7 @@ def tx_days_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tx_days_below)
+@wrap_indicator()
 def tx_days_below(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -7952,8 +7748,7 @@ def tx_days_below(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tx_max)
+@wrap_indicator()
 def tx_max(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -7996,8 +7791,7 @@ def tx_max(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tx_mean)
+@wrap_indicator()
 def tx_mean(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -8040,8 +7834,7 @@ def tx_mean(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tx_min)
+@wrap_indicator()
 def tx_min(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
@@ -8084,8 +7877,7 @@ def tx_min(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.tx_tn_days_above)
+@wrap_indicator()
 def tx_tn_days_above(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmax: xr.DataArray | FieldList | str = "tasmax",
@@ -8144,8 +7936,7 @@ def tx_tn_days_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.usda_hardiness_zones)
+@wrap_indicator()
 def usda_hardiness_zones(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
@@ -8196,8 +7987,7 @@ def usda_hardiness_zones(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.warm_and_dry_days)
+@wrap_indicator()
 def warm_and_dry_days(
     tas: xr.DataArray | FieldList | str = "tas",
     pr: xr.DataArray | FieldList | str = "pr",
@@ -8253,8 +8043,7 @@ def warm_and_dry_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.warm_and_wet_days)
+@wrap_indicator()
 def warm_and_wet_days(
     tas: xr.DataArray | FieldList | str = "tas",
     pr: xr.DataArray | FieldList | str = "pr",
@@ -8310,8 +8099,7 @@ def warm_and_wet_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.warm_spell_duration_index)
+@wrap_indicator()
 def warm_spell_duration_index(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     tasmax_per: xr.DataArray | FieldList | str = "tasmax_per",
@@ -8382,8 +8170,7 @@ def warm_spell_duration_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.water_cycle_intensity)
+@wrap_indicator()
 def water_cycle_intensity(
     pr: xr.DataArray | FieldList | str = "pr",
     evspsbl: xr.DataArray | FieldList | str = "evspsbl",
@@ -8430,8 +8217,7 @@ def water_cycle_intensity(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.wet_precip_accumulation)
+@wrap_indicator()
 def wet_precip_accumulation(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -8479,8 +8265,7 @@ def wet_precip_accumulation(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.wet_spell_frequency)
+@wrap_indicator()
 def wet_spell_frequency(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -8547,8 +8332,7 @@ def wet_spell_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.wet_spell_max_length)
+@wrap_indicator()
 def wet_spell_max_length(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -8613,8 +8397,7 @@ def wet_spell_max_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.wet_spell_total_length)
+@wrap_indicator()
 def wet_spell_total_length(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -8679,8 +8462,7 @@ def wet_spell_total_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.wetdays)
+@wrap_indicator()
 def wetdays(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -8731,8 +8513,7 @@ def wetdays(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.wetdays_prop)
+@wrap_indicator()
 def wetdays_prop(
     pr: xr.DataArray | FieldList | str = "pr",
     ds: xr.Dataset | None = None,
@@ -8783,8 +8564,7 @@ def wetdays_prop(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.atmos.windy_days)
+@wrap_indicator()
 def windy_days(
     sfcWind: xr.DataArray | FieldList | str = "sfcWind",
     ds: xr.Dataset | None = None,

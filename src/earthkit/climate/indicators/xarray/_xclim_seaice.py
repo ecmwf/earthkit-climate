@@ -8,13 +8,11 @@ from typing import Any
 import xarray as xr
 import xclim.indicators.seaIce
 from earthkit.data import FieldList
-from earthkit.utils.decorators import format_handler
 
-# from earthkit.climate.utils.decorators import metadata_handler
+from earthkit.climate.utils.decorators import wrap_indicator
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.seaIce.sea_ice_area)
+@wrap_indicator()
 def sea_ice_area(
     siconc: xr.DataArray | FieldList | str = "siconc",
     areacello: xr.DataArray | FieldList | str = "areacello",
@@ -61,8 +59,7 @@ def sea_ice_area(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.seaIce.sea_ice_extent)
+@wrap_indicator()
 def sea_ice_extent(
     siconc: xr.DataArray | FieldList | str = "siconc",
     areacello: xr.DataArray | FieldList | str = "areacello",

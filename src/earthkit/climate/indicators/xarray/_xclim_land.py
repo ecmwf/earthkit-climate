@@ -8,13 +8,11 @@ from typing import Any, Literal
 import xarray as xr
 import xclim.indicators.land
 from earthkit.data import FieldList
-from earthkit.utils.decorators import format_handler
 
-# from earthkit.climate.utils.decorators import metadata_handler
+from earthkit.climate.utils.decorators import wrap_indicator
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.base_flow_index)
+@wrap_indicator()
 def base_flow_index(
     q: xr.DataArray | FieldList | str = "q",
     ds: xr.Dataset | None = None,
@@ -57,65 +55,7 @@ def base_flow_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.base_flow_index_seasonal_ratio)
-def base_flow_index_seasonal_ratio(
-    q: xr.DataArray | FieldList | str = "q",
-    ds: xr.Dataset | None = None,
-    *,
-    freq: str = "QS-DEC",
-    numerator: str = "DJF",
-    denominator: str = "JJA",
-    **kwargs: Any,
-) -> tuple[xr.DataArray | FieldList, xr.DataArray | FieldList]:
-    """
-    Seasonal base flow index (bfi) and {numerator} to {denominator} bfi ratio.
-
-    Yearly base flow index per season, defined as the minimum 7-day average flow divided by
-    the mean flowas well as yearly  {numerator} to {denominator} bfi ratio.
-
-    **Units:**
-
-    - bfi: dimensionless
-    - bfi_ratio: dimensionless
-
-    This function wraps `xclim.indicators.land.base_flow_index_seasonal_ratio <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.base_flow_index_seasonal_ratio>`_.
-
-    Parameters
-    ----------
-    q : xarray.DataArray | earthkit.data.FieldList | str
-        Rate of river discharge.
-    freq : str
-        Resampling frequency.
-    numerator : str
-        String indicating the season in the numerator of the ratio.
-    denominator : str
-        String indicating the season in the denominator of the ratio.
-    ds : xarray.Dataset | None
-        Input dataset.
-    **kwargs : Any
-        Additional keyword arguments.
-
-    Returns
-    -------
-        tuple[
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-    ]
-            The computed index.
-    """
-    return xclim.indicators.land.base_flow_index_seasonal_ratio(
-        q=q,
-        freq=freq,
-        numerator=numerator,
-        denominator=denominator,
-        ds=ds,
-        **kwargs,
-    )
-
-
-@format_handler()
-# @metadata_handler(xclim.indicators.land.blowing_snow)
+@wrap_indicator()
 def blowing_snow(
     snd: xr.DataArray | FieldList | str = "snd",
     sfcWind: xr.DataArray | FieldList | str = "sfcWind",
@@ -175,8 +115,7 @@ def blowing_snow(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.doy_qmax)
+@wrap_indicator()
 def doy_qmax(
     da: xr.DataArray | FieldList | str = "da",
     ds: xr.Dataset | None = None,
@@ -220,8 +159,7 @@ def doy_qmax(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.doy_qmin)
+@wrap_indicator()
 def doy_qmin(
     da: xr.DataArray | FieldList | str = "da",
     ds: xr.Dataset | None = None,
@@ -265,8 +203,7 @@ def doy_qmin(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.flow_index)
+@wrap_indicator()
 def flow_index(
     q: xr.DataArray | FieldList | str = "q",
     ds: xr.Dataset | None = None,
@@ -310,8 +247,7 @@ def flow_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.high_flow_frequency)
+@wrap_indicator()
 def high_flow_frequency(
     q: xr.DataArray | FieldList | str = "q",
     ds: xr.Dataset | None = None,
@@ -363,8 +299,7 @@ def high_flow_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.holiday_snow_and_snowfall_days)
+@wrap_indicator()
 def holiday_snow_and_snowfall_days(
     snd: xr.DataArray | FieldList | str = "snd",
     prsn: xr.DataArray | FieldList | str | None = None,
@@ -437,8 +372,7 @@ def holiday_snow_and_snowfall_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.holiday_snow_days)
+@wrap_indicator()
 def holiday_snow_days(
     snd: xr.DataArray | FieldList | str = "snd",
     ds: xr.Dataset | None = None,
@@ -499,64 +433,7 @@ def holiday_snow_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.lag_snowpack_flow_peaks)
-def lag_snowpack_flow_peaks(
-    snw: xr.DataArray | FieldList | str = "snw",
-    q: xr.DataArray | FieldList | str = "q",
-    ds: xr.Dataset | None = None,
-    *,
-    freq: str = "YS-OCT",
-    p: float = 0.9,
-    **kwargs: Any,
-) -> xr.DataArray | FieldList:
-    """
-    Time lag between maximum snowpack and river high flows.
-
-    Number of days between the annual maximum snowpack, measured by the surface snow amount,
-    and the mean date when river flow exceeds a percentile threshold during a given year. If
-    the time lag between maximum snowpack and river high flows is ≤ 50 days, the watershed
-    is likely in a nival regime.
-
-    **Units:**
-
-    - lag_snowpack_flow_peaks: days
-
-    This function wraps `xclim.indicators.land.lag_snowpack_flow_peaks <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.lag_snowpack_flow_peaks>`_.
-
-    Parameters
-    ----------
-    snw : xarray.DataArray | earthkit.data.FieldList | str
-        Surface snow amount.
-    q : xarray.DataArray | earthkit.data.FieldList | str
-        Streamflow.
-    freq : str
-        Resampling frequency. Defaults to the water year starting on the 1st of October.
-    p : float
-        Percentile for calculating the flow index, between 0 and 1. Default of 0.9 is for
-        high flows.
-    ds : xarray.Dataset | None
-        Input dataset.
-    **kwargs : Any
-        Additional keyword arguments.
-
-    Returns
-    -------
-    xarray.DataArray | earthkit.data.FieldList
-        The computed index.
-    """
-    return xclim.indicators.land.lag_snowpack_flow_peaks(
-        snw=snw,
-        q=q,
-        freq=freq,
-        p=p,
-        ds=ds,
-        **kwargs,
-    )
-
-
-@format_handler()
-# @metadata_handler(xclim.indicators.land.low_flow_frequency)
+@wrap_indicator()
 def low_flow_frequency(
     q: xr.DataArray | FieldList | str = "q",
     ds: xr.Dataset | None = None,
@@ -608,8 +485,7 @@ def low_flow_frequency(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.rb_flashiness_index)
+@wrap_indicator()
 def rb_flashiness_index(
     q: xr.DataArray | FieldList | str = "q",
     ds: xr.Dataset | None = None,
@@ -653,110 +529,7 @@ def rb_flashiness_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.runoff_ratio)
-def runoff_ratio(
-    q: xr.DataArray | FieldList | str = "q",
-    pr: xr.DataArray | FieldList | str = "pr",
-    ds: xr.Dataset | None = None,
-    *,
-    area: str | float | int | xr.DataArray | FieldList,
-    freq: str = "YS",
-    **kwargs: Any,
-) -> xr.DataArray | FieldList:
-    """
-    Runoff ratio.
-
-    Ratio of runoff volume measured at the stream to the total precipitation volume over the
-    watershed.
-
-    **Units:**
-
-    - runoff_ratio: dimensionless
-
-    This function wraps `xclim.indicators.land.runoff_ratio <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.runoff_ratio>`_.
-
-    Parameters
-    ----------
-    q : xarray.DataArray | earthkit.data.FieldList | str
-        Streamflow in discharge units.
-    pr : xarray.DataArray | earthkit.data.FieldList | str
-        Mean daily precipitation in precipitation units.
-    area : str | float | int | xarray.DataArray | earthkit.data.FieldList
-        Watershed area in area units.
-    freq : str
-        Resampling frequency.
-    ds : xarray.Dataset | None
-        Input dataset.
-    **kwargs : Any
-        Additional keyword arguments.
-
-    Returns
-    -------
-    xarray.DataArray | earthkit.data.FieldList
-        The computed index.
-    """
-    return xclim.indicators.land.runoff_ratio(
-        q=q,
-        pr=pr,
-        area=area,
-        freq=freq,
-        ds=ds,
-        **kwargs,
-    )
-
-
-@format_handler()
-# @metadata_handler(xclim.indicators.land.sen_slope)
-def sen_slope(
-    q: xr.DataArray | FieldList | str = "q",
-    ds: xr.Dataset | None = None,
-    *,
-    freq: str = "YS",
-    **kwargs: Any,
-) -> tuple[xr.DataArray | FieldList, xr.DataArray | FieldList]:
-    """
-    Sen slope : temporal robustness analysis of streamflow.
-
-    Computes Theil-Sen slope estimators and performs the Mann-Kendall test for trend
-    evaluation.
-
-    **Units:**
-
-    - sen_slope: dimensionless
-    - p_value: dimensionless
-
-    This function wraps `xclim.indicators.land.sen_slope <https://xclim.readthedocs.io/en/stable/api_indicators.html#xclim.indicators.land.sen_slope>`_.
-
-    Parameters
-    ----------
-    q : xarray.DataArray | earthkit.data.FieldList | str
-        Observed streamflow vector.
-    freq : str
-        Resampling frequency.
-    ds : xarray.Dataset | None
-        Input dataset.
-    **kwargs : Any
-        Additional keyword arguments.
-
-    Returns
-    -------
-        tuple[
-        xarray.DataArray | earthkit.data.FieldList,
-        xarray.DataArray | earthkit.data.FieldList,
-    ]
-            The computed index.
-    """
-    return xclim.indicators.land.sen_slope(
-        q=q,
-        freq=freq,
-        ds=ds,
-        **kwargs,
-    )
-
-
-@format_handler()
-# @metadata_handler(xclim.indicators.land.standardized_groundwater_index)
+@wrap_indicator()
 def standardized_groundwater_index(
     gwl: xr.DataArray | FieldList | str = "gwl",
     ds: xr.Dataset | None = None,
@@ -842,8 +615,7 @@ def standardized_groundwater_index(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snd_days_above)
+@wrap_indicator()
 def snd_days_above(
     snd: xr.DataArray | FieldList | str = "snd",
     ds: xr.Dataset | None = None,
@@ -894,8 +666,7 @@ def snd_days_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snd_max_doy)
+@wrap_indicator()
 def snd_max_doy(
     snd: xr.DataArray | FieldList | str = "snd",
     ds: xr.Dataset | None = None,
@@ -938,8 +709,7 @@ def snd_max_doy(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snd_season_end)
+@wrap_indicator()
 def snd_season_end(
     snd: xr.DataArray | FieldList | str = "snd",
     ds: xr.Dataset | None = None,
@@ -992,8 +762,7 @@ def snd_season_end(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snd_season_length)
+@wrap_indicator()
 def snd_season_length(
     snd: xr.DataArray | FieldList | str = "snd",
     ds: xr.Dataset | None = None,
@@ -1045,8 +814,7 @@ def snd_season_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snd_season_start)
+@wrap_indicator()
 def snd_season_start(
     snd: xr.DataArray | FieldList | str = "snd",
     ds: xr.Dataset | None = None,
@@ -1098,8 +866,7 @@ def snd_season_start(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snd_storm_days)
+@wrap_indicator()
 def snd_storm_days(
     snd: xr.DataArray | FieldList | str = "snd",
     ds: xr.Dataset | None = None,
@@ -1147,8 +914,7 @@ def snd_storm_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snow_depth)
+@wrap_indicator()
 def snow_depth(
     snd: xr.DataArray | FieldList | str = "snd",
     ds: xr.Dataset | None = None,
@@ -1191,8 +957,7 @@ def snow_depth(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snow_melt_we_max)
+@wrap_indicator()
 def snow_melt_we_max(
     snw: xr.DataArray | FieldList | str = "snw",
     ds: xr.Dataset | None = None,
@@ -1239,8 +1004,7 @@ def snow_melt_we_max(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snw_days_above)
+@wrap_indicator()
 def snw_days_above(
     snw: xr.DataArray | FieldList | str = "snw",
     ds: xr.Dataset | None = None,
@@ -1291,8 +1055,7 @@ def snw_days_above(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snw_max)
+@wrap_indicator()
 def snw_max(
     snw: xr.DataArray | FieldList | str = "snw",
     ds: xr.Dataset | None = None,
@@ -1335,8 +1098,7 @@ def snw_max(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snw_max_doy)
+@wrap_indicator()
 def snw_max_doy(
     snw: xr.DataArray | FieldList | str = "snw",
     ds: xr.Dataset | None = None,
@@ -1379,8 +1141,7 @@ def snw_max_doy(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snw_season_end)
+@wrap_indicator()
 def snw_season_end(
     snw: xr.DataArray | FieldList | str = "snw",
     ds: xr.Dataset | None = None,
@@ -1432,8 +1193,7 @@ def snw_season_end(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snw_season_length)
+@wrap_indicator()
 def snw_season_length(
     snw: xr.DataArray | FieldList | str = "snw",
     ds: xr.Dataset | None = None,
@@ -1485,8 +1245,7 @@ def snw_season_length(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snw_season_start)
+@wrap_indicator()
 def snw_season_start(
     snw: xr.DataArray | FieldList | str = "snw",
     ds: xr.Dataset | None = None,
@@ -1538,8 +1297,7 @@ def snw_season_start(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.snw_storm_days)
+@wrap_indicator()
 def snw_storm_days(
     snw: xr.DataArray | FieldList | str = "snw",
     ds: xr.Dataset | None = None,
@@ -1587,8 +1345,7 @@ def snw_storm_days(
     )
 
 
-@format_handler()
-# @metadata_handler(xclim.indicators.land.standardized_streamflow_index)
+@wrap_indicator()
 def standardized_streamflow_index(
     q: xr.DataArray | FieldList | str = "q",
     ds: xr.Dataset | None = None,
