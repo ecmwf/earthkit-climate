@@ -4,7 +4,7 @@
 from collections.abc import Callable
 from typing import Any
 
-from earthkit.climate.utils.decorators import compose_decorators, wrap_indicator
+from earthkit.climate.utils.decorators import _compose_decorators, wrap_indicator
 
 
 def test_wrap_indicator_without_parentheses() -> None:
@@ -119,7 +119,7 @@ def test_compose_decorators_execution_order() -> None:
 
         return wrapper
 
-    composite = compose_decorators(dec1, dec2)
+    composite = _compose_decorators(dec1, dec2)
 
     @composite
     def sample() -> str:
