@@ -33,11 +33,13 @@ dependencies = [
 ]
 description = "Tools for calculating climate indicies, climate change analysis and attribution."
 dynamic = ["readme", "version"]
-# Sample data source plugin for earthkit-data
-entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate.sample_source:SampleSource"
 license = { file = "LICENSE" }
 name = "earthkit-climate"
 requires-python = ">=3.11"
+
+# Sample data source plugin for earthkit-data
+[project.entry-points."earthkit.data.sources"]
+earthkit-climate-sample = "earthkit.climate._sample_source:SampleSource"
 
 [project.optional-dependencies]
 dev = [
@@ -68,7 +70,7 @@ test = [
   "pytest-cov",
   "pytest-mock",
   "pytest-xdist",
-  "earthkit-transforms[all]>=1"
+  "earthkit-transforms>=1"
 ]
 test-benchmark = [
   "earthkit-climate[test]",
@@ -82,8 +84,7 @@ test-benchmark = [
 test-docs = [
   "earthkit-climate[test,docs-notebooks]",
   "nbformat",
-  "nbconvert",
-  "sphinxcontrib-bibtex"
+  "nbconvert"
 ]
 
 [tool.coverage.run]

@@ -94,7 +94,7 @@ autodocs_hidden_modules = ["aggregate", "version"]
 # autoapi configuration
 add_module_names = False
 autoapi_dirs = ["../src/earthkit"]
-autoapi_ignore = ["*/version.py", "*/sample_source.py"]
+autoapi_ignore = ["*/version.py"]
 autoapi_options = [
     "members",
     "undoc-members",

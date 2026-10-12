@@ -4,7 +4,7 @@
 import pytest
 import xarray as xr
 
-from earthkit.climate.sample_source import SampleSource
+from earthkit.climate._sample_source import SampleSource
 
 
 def test_sample_source_with_valid_name() -> None:
