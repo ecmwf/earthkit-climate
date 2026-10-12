@@ -211,17 +211,17 @@ def biologically_effective_degree_days(
     method : Literal['gladstones', 'icclim', 'jones', 'smoothed', 'stepwise']
         The formula to use for the daily temperature range and latitude coefficient. The
         "gladstones" method uses a temperature range adjustment and a latitude coefficient
-        based on ``gladstones_wine_2011``. End_date should be "11-01" for the Northern
+        based on :cite:`gladstones_wine_2011`. End_date should be "11-01" for the Northern
         Hemisphere. The "huglin" method uses a temperature range adjustment and a stepwise
         latitude coefficient for values between 40° and 50° based on
-        ``huglin_nouveau_1978``. End_date should be "11-01" for the Northern Hemisphere. The
-        "icclim" method does not implement daily temperature range and nor a latitude
-        coefficient based on ``project_team_eca&d_algorithm_2013``. End date should be
+        :cite:`huglin_nouveau_1978`. End_date should be "11-01" for the Northern Hemisphere.
+        The "icclim" method does not implement daily temperature range and nor a latitude
+        coefficient based on :cite:`project_team_eca&d_algorithm_2013`. End date should be
         "10-01" for the Northern Hemisphere. The "interpolated" method uses a temperature
         range adjustment and a smoothed curve latitude coefficient for values between 40°
-        and 50° based on ``huglin_nouveau_1978``. The "jones" method uses a temperature
+        and 50° based on :cite:`huglin_nouveau_1978`. The "jones" method uses a temperature
         range adjustment and integrates axial tilt, latitude, and day-of-year based on
-        ``hall_spatial_2010``. End_date should be "11-01" for the Northern Hemisphere.
+        :cite:`hall_spatial_2010`. End_date should be "11-01" for the Northern Hemisphere.
     cap_value : float
         The value to use for the latitude coefficient for latitudes north of 50°N or south
         of 50°S. Only applicable for methods "huglin" and "interpolated".
@@ -1770,7 +1770,7 @@ def griffiths_drought_factor(
 
     The drought factor is a numeric indicator of the forest fire fuel availability in the
     deep litter bed. It is often used in the calculation of the McArthur Forest Fire Danger
-    Index. The method implemented here follows ``ffdi-finkele_2006``.
+    Index. The method implemented here follows :cite:`ffdi-finkele_2006`.
 
     **Units:**
 
@@ -1786,9 +1786,9 @@ def griffiths_drought_factor(
         Daily soil moisture deficit (often KBDI) [mm/day].
     limiting_func : str
         How to limit the values of the drought factor. If "xlim" (default), use equation
-        (14) in ``ffdi-finkele_2006``. If "discrete", use equation Eq (13) in ``ffdi-
-        finkele_2006``, but with the lower limit of each category bound adjusted to match
-        the upper limit of the previous bound.
+        (14) in :cite:`ffdi-finkele_2006`. If "discrete", use equation Eq (13) in
+        :cite:`ffdi-finkele_2006`, but with the lower limit of each category bound adjusted
+        to match the upper limit of the previous bound.
     ds : xarray.Dataset | None
         Input dataset.
     **kwargs : Any
@@ -5090,11 +5090,11 @@ def huglin_index(
     method : str
         The formula to use for the latitude coefficient calculation. The "huglin" method
         uses a stepwise latitude coefficient for values between 40° and 50° based on
-        ``huglin_nouveau_1978``. The "interpolated" method uses a smoothed curve latitude
-        coefficient for values based on the intervals set in ``huglin_nouveau_1978``. The
-        "jones" method integrates axial tilt, latitude, and day-of-year based on
-        ``hall_spatial_2010``. The "icclim" method is deprecated but is identical to method
-        "huglin".
+        :cite:`huglin_nouveau_1978`. The "interpolated" method uses a smoothed curve
+        latitude coefficient for values based on the intervals set in
+        :cite:`huglin_nouveau_1978`. The "jones" method integrates axial tilt, latitude, and
+        day-of-year based on :cite:`hall_spatial_2010`. The "icclim" method is deprecated
+        but is identical to method "huglin".
     cap_value : float
         The value to use for the latitude coefficient when latitude is above 50°N or below
         50°S. Only applicable for methods "huglin", "icclim", and "interpolated" (default:
@@ -5190,8 +5190,8 @@ def jetstream_metric_woollings(
     Strength and latitude of jetstream.
 
     Identify latitude and strength of maximum smoothed zonal wind speed in the region from
-    15 to 75°N and -60 to 0°E, using the formula outlined in ``woollings_variability_2010``.
-    Wind is smoothened using a Lanczos filter approach.
+    15 to 75°N and -60 to 0°E, using the formula outlined in
+    :cite:`woollings_variability_2010`. Wind is smoothened using a Lanczos filter approach.
 
     **Units:**
 
@@ -5235,9 +5235,9 @@ def keetch_byram_drought_index(
 
     The KBDI indicates the amount of water necessary to bring the soil moisture content back
     to field capacity. It is often used in the calculation of the McArthur Forest Fire
-    Danger Index. The method implemented here follows ``ffdi-finkele_2006`` but limits the
-    maximum KBDI to 203.2 mm, rather than 200 mm, in order to align best with the majority
-    of the literature.
+    Danger Index. The method implemented here follows :cite:`ffdi-finkele_2006` but limits
+    the maximum KBDI to 203.2 mm, rather than 200 mm, in order to align best with the
+    majority of the literature.
 
     **Units:**
 

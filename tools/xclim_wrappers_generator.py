@@ -88,21 +88,19 @@ def clean_xclim_refs(text: str) -> str:
         or plain-text equivalents.
     """
 
-    def _replace_ref(match: re.Match) -> str:
-        label = match.group(1)
-        if label in _XCLIM_REF_URL_MAP:
+    def _replace_roles(match: re.Match) -> str:
+        role = match.group(1)
+        label = match.group(2)
+        if role.startswith("cite:"):
+            return f":cite:`{label}`"
+        # :ref:`label` -> external hyperlink or plain text
+        if role == "ref" and label in _XCLIM_REF_URL_MAP:
             display, url = _XCLIM_REF_URL_MAP[label]
             return f"`{display} <{url}>`_"
-        # Unknown label: fall back to plain inline code
+        # Unknown role: fall back to plain inline code
         return f"``{label}``"
 
-    # :ref:`label` -> external hyperlink or plain text
-    text = re.sub(r":ref:`([^`]+)`", _replace_ref, text)
-    # :py:mod/func/class/attr:`name` -> ``name``
-    text = re.sub(r":py:[a-z]+:`([^`]+)`", r"``\1``", text)
-    # generic :role:`text` fallback
-    text = re.sub(r":[a-z:]+:`([^`]+)`", r"``\1``", text)
-    return text
+    return re.sub(r":([a-z:]+):`([^`]+)`", _replace_roles, text)
 
 
 def simplify_type(type_obj: Any, is_docstring: bool = False) -> str:
