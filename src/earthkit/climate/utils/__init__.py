@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: 2025 European Centre for Medium-Range Weather Forecasts (ECMWF)
 # SPDX-License-Identifier: Apache-2.0
 
-from earthkit.climate.utils import climatology  # noqa
+from earthkit.climate.utils import climatology, decorators  # noqa
 from earthkit.climate.utils.trend import linear_trend  # noqa

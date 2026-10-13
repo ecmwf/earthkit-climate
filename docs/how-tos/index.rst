@@ -6,12 +6,12 @@
 How-to Guides
 =============
 
-A collection of practical examples for working with earthkit-climate.
-Each example is an interactive Jupyter notebook.
-
+Short, task-focused guides covering core indicator workflows and specific dataset types.
 
 .. toctree::
    :maxdepth: 1
 
+   station_data_indicators.ipynb
+   format_compatibility.ipynb
    intro_precipitation_indices.ipynb
    intro_temperature_indices.ipynb
