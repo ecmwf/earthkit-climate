@@ -2,3 +2,4 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from earthkit.climate.utils import climatology, decorators  # noqa
+from earthkit.climate.utils.trend import linear_trend  # noqa
