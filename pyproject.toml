@@ -27,9 +27,8 @@ dependencies = [
   "earthkit-utils>=1",
   "flox>=0.11",
   "numpy>=1.22",
-  "pre-commit==4.6.2",
   "xarray>=2023.1",
-  "xclim>=0.59.1,<1",
+  "xclim>=0.62.0,<1",
   "xsdba>=0.5,<0.6"
 ]
 description = "Tools for calculating climate indicies, climate change analysis and attribution."
@@ -37,8 +36,10 @@ dynamic = ["readme", "version"]
 license = {file = "LICENSE"}
 name = "earthkit-climate"
 requires-python = ">=3.11"
+
 # Sample data source plugin for earthkit-data
-entry-points."earthkit.data.sources".earthkit-climate-sample = "earthkit.climate.sample_source:SampleSource"
+[project.entry-points."earthkit.data.sources"]
+earthkit-climate-sample = "earthkit.climate._sample_source:SampleSource"
 
 [project.optional-dependencies]
 dev = [
@@ -55,7 +56,8 @@ docs = [
   "roman-numerals-py>=3.1,<4",
   "sphinx",
   "sphinx-autoapi",
-  "sphinx_design"
+  "sphinx_design",
+  "sphinxcontrib-bibtex"
 ]
 docs-notebooks = [
   "cdsapi",

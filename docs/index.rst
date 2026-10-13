@@ -67,7 +67,8 @@ Earthkit-climate documentation
 
       Understand the core ideas behind earthkit-climate.
 
-   .. grid-item-card:: API Reference Guide
+
+   .. grid-item-card:: API Reference
       :img-top: _static/brackets-contain.svg
       :link: api-reference
       :link-type: doc
@@ -115,5 +116,6 @@ Have a feature request or found a bug? Feel free to open an
    :hidden:
 
    release-notes/index
+   bibliography
    licence
    genindex
