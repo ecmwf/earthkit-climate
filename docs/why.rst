@@ -11,7 +11,7 @@ Main features
 -------------
 
 * **High-level, domain-aware API** to climate indicator computations.
-* **Scalable parallel execution** with Dask and xarray to ensure efficient processing of large datasets.
+* **Scalable parallel execution** with dask and xarray to ensure efficient processing of large datasets.
 * **Support for gridded fields and time series** from ERA5, CMIP6, CORDEX, and point/station observations.
 * Works natively with data formats returned by the Climate Data Store (CDS) and ECMWF data services.
 * Computed climate indicators retain complete CF-convention attributes, physical units, and cell methods.
@@ -31,6 +31,6 @@ Earthkit ecosystem integration
 Scientific Python ecosystem integration
 ---------------------------------------
 
-**earthkit-climate** will delegate computations to established packages where possible instead reimplementing existing functionality from scratch:
+**earthkit-climate** will delegate computations to established packages where possible instead of reimplementing existing functionality from scratch:
 
-* `xclim <https://xclim.readthedocs.io/en/stable/>`_ :cite:p:`bourgault2023xclim` provides 100+ robust, unit-aware climate indicator definitions and associated utilities.
+* `xclim <https://xclim.readthedocs.io/en/stable/>`_ :cite:p:`bourgault2023xclim` provides 100+ robust, unit-aware climate indicator definitions and utilities.
