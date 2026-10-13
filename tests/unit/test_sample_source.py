@@ -4,7 +4,8 @@
 import numpy as np
 import pytest
 import xarray as xr
-from earthkit.climate.sample_source import SampleSource, generate_sample_dataset
+
+from earthkit.climate._sample_source import SampleSource, generate_sample_dataset
 
 
 def test_generate_sample_dataset_defaults():
