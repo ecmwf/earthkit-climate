@@ -27,6 +27,77 @@ _SAMPLE_DATA_URLS: dict[str, str] = {
 }
 
 
+def generate_sample_dataset(
+    start_date: str,
+    end_date: str,
+    *,
+    tas_value: float = 20.0,
+    hurs_value: float = 70.0,
+    pr_value: float = 0.0,
+) -> xr.Dataset:
+    """Generate a daily sample dataset for climate-indicator examples.
+
+    Parameters
+    ----------
+    start_date : str
+        First date in the dataset, in a format accepted by
+        :func:`xarray.date_range`.
+    end_date : str
+        Last date in the dataset, in a format accepted by
+        :func:`xarray.date_range`. The date is included in the dataset.
+    tas_value : float, default: 20.0
+        Constant daily mean near-surface air temperature, in degrees Celsius.
+    hurs_value : float, default: 70.0
+        Constant daily mean relative humidity, in percent.
+    pr_value : float, default: 0.0
+        Constant daily precipitation rate, in millimetres per day.
+
+    Returns
+    -------
+    xarray.Dataset
+        Dataset containing daily ``tas``, ``hurs``, and ``pr`` variables with
+        units, standard names, and cell methods.
+    """
+    time = xr.date_range(start=start_date, end=end_date, freq="D")
+    shape = time.size
+
+    tas = xr.DataArray(
+        np.full(shape, tas_value),
+        coords={"time": time},
+        dims="time",
+        name="tas",
+        attrs={
+            "units": "degC",
+            "standard_name": "air_temperature",
+            "cell_methods": "time: mean within days",
+        },
+    )
+    hurs = xr.DataArray(
+        np.full(shape, hurs_value),
+        coords={"time": time},
+        dims="time",
+        name="hurs",
+        attrs={
+            "units": "%",
+            "standard_name": "relative_humidity",
+            "cell_methods": "time: mean within days",
+        },
+    )
+    pr = xr.DataArray(
+        np.full(shape, pr_value),
+        coords={"time": time},
+        dims="time",
+        name="pr",
+        attrs={
+            "units": "mm/day",
+            "standard_name": "precipitation_flux",
+            "cell_methods": "time: mean within days",
+        },
+    )
+
+    return xr.Dataset({"tas": tas, "hurs": hurs, "pr": pr})
+
+
 def _generate_synthetic_daily_temperature() -> xr.DataArray:
     """
     Generate synthetic 1D daily maximum temperature DataArray.
