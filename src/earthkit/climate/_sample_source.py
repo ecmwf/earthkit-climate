@@ -211,10 +211,68 @@ def _generate_synthetic_daily_station_temperature() -> xr.DataArray:
     )
 
 
+def _generate_fusarium_input_timeseries(
+    start_date: str = "2020-01-01",
+    end_date: str = "2021-12-31",
+    **kwargs: Any,
+) -> xr.Dataset:
+    """
+    Generate synthetic daily time series for the Fusarium head blight indicator tutorial.
+
+    Creates a two-year daily time series (2020-2021) with temperature, relative humidity,
+    and precipitation. Days that satisfy all FHB-conducive conditions (3 days in 2020,
+    4 days in 2021) as well as controlled near-miss days are baked into the dataset.
+
+    Parameters
+    ----------
+    start_date : str, default: "2020-01-01"
+        First date in the dataset, in a format accepted by
+        :func:`xarray.date_range`.
+    end_date : str, default: "2021-12-31"
+        Last date in the dataset, in a format accepted by
+        :func:`xarray.date_range`.
+    **kwargs : Any
+        Additional keyword arguments forwarded to :func:`generate_sample_dataset`.
+
+    Returns
+    -------
+    xr.Dataset
+        Dataset containing daily ``tas``, ``hurs``, and ``pr`` variables with
+        FHB-conducive conditions and near misses baked in.
+    """
+    ds = generate_sample_dataset(start_date=start_date, end_date=end_date, **kwargs)
+
+    fhb_dates_2020 = ["2020-06-10", "2020-06-11", "2020-06-20"]
+    fhb_dates_2021 = ["2021-05-15", "2021-05-16", "2021-05-17", "2021-05-30"]
+    fhb_dates = fhb_dates_2020 + fhb_dates_2021
+
+    time_strings = ds.indexes["time"].strftime("%Y-%m-%d")
+    valid_fhb = [d for d in fhb_dates if d in time_strings]
+    if valid_fhb:
+        ds["hurs"].loc[{"time": valid_fhb}] = 95.0
+        ds["pr"].loc[{"time": valid_fhb}] = 1.0
+
+    if "2020-06-25" in time_strings:
+        ds["tas"].loc[{"time": "2020-06-25"}] = 31.0
+        ds["hurs"].loc[{"time": "2020-06-25"}] = 95.0
+        ds["pr"].loc[{"time": "2020-06-25"}] = 1.0
+    if "2021-06-01" in time_strings:
+        ds["tas"].loc[{"time": "2021-06-01"}] = 20.0
+        ds["hurs"].loc[{"time": "2021-06-01"}] = 85.0
+        ds["pr"].loc[{"time": "2021-06-01"}] = 1.0
+    if "2021-06-02" in time_strings:
+        ds["tas"].loc[{"time": "2021-06-02"}] = 20.0
+        ds["hurs"].loc[{"time": "2021-06-02"}] = 95.0
+        ds["pr"].loc[{"time": "2021-06-02"}] = 0.0
+
+    return ds
+
+
 _SYNTHETIC_DATASETS: dict[str, Any] = {
     "synthetic-daily-temperature": _generate_synthetic_daily_temperature,
     "synthetic-daily-dask-temperature": _generate_synthetic_daily_dask_temperature,
     "synthetic-daily-station-temperature": _generate_synthetic_daily_station_temperature,
+    "fusarium-input-timeseries": _generate_fusarium_input_timeseries,
 }
 
 
@@ -272,23 +330,61 @@ class SampleSource(Source):
             return self
         return _from_source_internal("url", _SAMPLE_DATA_URLS[self._name], **self._kwargs)
 
-    def to_xarray(self, **kwargs: Any) -> xr.DataArray:
+    def to_xarray(self, **kwargs: Any) -> xr.DataArray | xr.Dataset:
         """
-        Convert source dataset to an xarray DataArray.
+        Convert source dataset to an xarray DataArray or Dataset.
 
         Parameters
         ----------
         **kwargs : Any
-            Additional keyword arguments passed to xarray.
+            Additional keyword arguments passed to xarray or synthetic generator.
 
         Returns
         -------
-        xr.DataArray
-            Synthetic or loaded xarray DataArray.
+        xr.DataArray | xr.Dataset
+            Synthetic or loaded xarray DataArray or Dataset.
         """
         if self._name in _SYNTHETIC_DATASETS:
-            return _SYNTHETIC_DATASETS[self._name]()
+            call_kwargs = {**self._kwargs, **kwargs}
+            generator = _SYNTHETIC_DATASETS[self._name]
+            try:
+                return generator(**call_kwargs)
+            except TypeError:
+                return generator()
         return super().to_xarray(**kwargs)
+
+    def to_dataframe(self, **kwargs: Any) -> pd.DataFrame:
+        """
+        Convert source dataset to a pandas DataFrame.
+
+        Parameters
+        ----------
+        **kwargs : Any
+            Additional keyword arguments passed to :meth:`to_xarray`.
+
+        Returns
+        -------
+        pd.DataFrame
+            Synthetic or loaded dataset converted to a pandas DataFrame.
+        """
+        obj = self.to_xarray(**kwargs)
+        return obj.to_dataframe()
+
+    def to_pandas(self, **kwargs: Any) -> pd.DataFrame:
+        """
+        Convert source dataset to a pandas DataFrame.
+
+        Parameters
+        ----------
+        **kwargs : Any
+            Additional keyword arguments passed to :meth:`to_dataframe`.
+
+        Returns
+        -------
+        pd.DataFrame
+            Synthetic or loaded dataset converted to a pandas DataFrame.
+        """
+        return self.to_dataframe(**kwargs)
 
 
 source = SampleSource
