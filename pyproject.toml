@@ -63,7 +63,8 @@ docs-notebooks = [
   "cdsapi",
   "ipykernel",
   "earthkit-plots>=1",
-  "earthkit-transforms>=1"
+  "earthkit-transforms>=1",
+  "pint<0.26.2"
 ]
 test = [
   "pytest",
