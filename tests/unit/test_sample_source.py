@@ -162,6 +162,6 @@ def test_sample_source_fusarium_input_timeseries() -> None:
 
     # Verify through earthkit-data from_source plugin
     src_plugin = ekd.from_source("earthkit-climate-sample", "fusarium-input-timeseries")
-    df_plugin = src_plugin.to_dataframe()
+    df_plugin = src_plugin.to_pandas()
     assert isinstance(df_plugin, pd.DataFrame)
     assert len(df_plugin) == 731
