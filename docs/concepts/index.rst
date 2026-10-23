@@ -4,6 +4,14 @@
 .. _concepts:
 
 Concepts
-===========================
+========
 
-This section is currently under construction. Please check back later for explanations of the core ideas behind earthkit-climate.
+This section provides background explanations of key concepts, architectural choices, and design principles behind **earthkit-climate**.
+
+
+.. toctree::
+   :maxdepth: 1
+
+   climate_indicators
+   missing_values
+   calendars

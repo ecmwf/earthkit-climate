@@ -9,6 +9,7 @@ import os
 import sys
 
 import yaml
+from docutils import nodes
 
 on_rtd = os.environ.get("READTHEDOCS") == "True"
 
@@ -56,7 +57,7 @@ extensions = [
     # Generates summary tables for modules/classes/functions
     "sphinx.ext.autosummary",
     # Allows citing BibTeX bibliographic entries in reStructuredText
-    # "sphinxcontrib.bibtex",
+    "sphinxcontrib.bibtex",
     # Tests snippets in documentation by running embedded Python examples
     # "sphinx.ext.doctest",
     # Checks documentation coverage of the codebase
@@ -102,11 +103,38 @@ autoapi_options = [
     "imported-members",
     "inherited-members",
 ]
+_autoapi_skipped_indicator_members = {
+    f"earthkit.climate.indicators.{name}"
+    for name in {
+        "Any",
+        "Literal",
+        "xr",
+        "xarray",
+        "xclim",
+        "format_handler",
+        "wrap_indicator",
+    }
+}
 autoapi_root = "autoapi"
 autoapi_member_order = "alphabetical"
 autoapi_add_toctree_entry = False
 autoapi_own_page_level = "function"
 autoapi_python_use_implicit_namespaces = True
+suppress_warnings = ["autoapi.python_import_resolution"]
+
+
+def shorten_api_page_titles(app, doctree):
+    docname = app.env.docname
+    if not docname.startswith("autoapi/"):
+        return
+    title = next(doctree.findall(nodes.title), None)  # first title = page title
+    if title is None:
+        return
+    full = title.astext()
+    short = full.rsplit(".", 1)[-1]
+    if short != full and full != "earthkit.climate":
+        title.children = [nodes.Text(short)]
+
 
 # napoleon configuration
 napoleon_google_docstring = False
@@ -203,6 +231,16 @@ html_theme_options = {
     ],
 }
 
+# see: https://sphinxcontrib-bibtex.readthedocs.io/en/latest/usage.html#unknown-target-name-when-using-footnote-citations-with-numpydoc
+numpydoc_class_members_toctree = False
+bibtex_bibfiles = ["references.bib"]
+# bibtex_default_style = "xcstyle"
+bibtex_reference_style = "author_year"
+
+
+def _skip_indicator_members(_app, _what, name, _obj, skip, _options):
+    return skip or name in _autoapi_skipped_indicator_members
+
 
 def _write_earthkit_packages_js(app):
     """Read earthkit-packages.yml and write a JS data file into the output _static dir."""
@@ -218,4 +256,8 @@ def _write_earthkit_packages_js(app):
 
 
 def setup(app):
+    app.connect("autoapi-skip-member", _skip_indicator_members)
     app.connect("builder-inited", _write_earthkit_packages_js)
+    app.connect(
+        "doctree-read", shorten_api_page_titles, priority=100
+    )  # priority < 500 to run before Sphinx's TitleCollector/TocTreeCollector
