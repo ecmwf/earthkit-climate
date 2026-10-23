@@ -69,6 +69,6 @@ A typical climate indicator workflow follows a 4-step pipeline:
 
 .. seealso::
 
-   * :doc:`../tutorials/climate_indicators`
+   * :doc:`../tutorials/computing_indicators`
    * :doc:`../how-tos/station_data_indicators`
    * `earthkit-transforms Documentation <https://earthkit-transforms.readthedocs.io/en/latest/>`_

@@ -14,3 +14,5 @@ This section provides background explanations of key concepts, architectural cho
 
    climate_indicators
    scalability_performance
+   missing_values
+   calendars

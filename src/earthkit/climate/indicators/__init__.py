@@ -12,6 +12,15 @@ __all__ = sorted(
         name
         for mod in (_xclim_atmos, _xclim_land, _xclim_seaice)
         for name in dir(mod)
-        if not name.startswith("_") and name not in {"Any", "Literal", "xr", "xclim", "format_handler"}
+        if not name.startswith("_")
+        and name
+        not in {
+            "Any",
+            "Literal",
+            "xr",
+            "xclim",
+            "format_handler",
+            "wrap_indicator",
+        }
     })
 )
