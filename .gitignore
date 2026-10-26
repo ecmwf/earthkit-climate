@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2022 European Centre for Medium-Range Weather Forecasts (ECMWF)
+# SPDX-License-Identifier: Apache-2.0
+
 # setuptools-scm
 version.py
 
@@ -349,3 +352,7 @@ tags
 # End of https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks,vim,visualstudiocode,pycharm
 
 notebooks/dev-notebook.ipynb
+tests/integration/benchmark_results/
+
+# Package manager lock files
+uv.lock

@@ -1,4 +1,0 @@
-Gallery
-=======
-
-(Coming soon)

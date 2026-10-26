@@ -1,5 +1,8 @@
-earthkit-climate
-================
+.. SPDX-FileCopyrightText: 2025 European Centre for Medium-Range Weather Forecasts (ECMWF)
+.. SPDX-License-Identifier: Apache-2.0
+
+Earthkit-climate documentation
+==============================
 
 .. important::
 
@@ -9,54 +12,110 @@ earthkit-climate
 **earthkit-climate** is the package responsible for climate index calculations within the earthkit ecosystem. It includes a wrapper prototype that allows the use of the `xclim <https://xclim.readthedocs.io/en/stable/>`_ Python package to compute a large amount of pre-defined climate indices used by the climate science community, and to define new ones.
 
 
-Quickstart
-==========
+.. grid:: 1
+   :gutter: 2
 
-Install the package from PyPI:
+   .. grid-item-card:: Why earthkit-climate?
+      :img-top:  _static/earthkit-climate-grey.svg
+      :link: why
+      :link-type: doc
+      :class-card: sd-shadow-sm
+
+      The motivation and key features of earthkit-climate.
 
 
-.. code-block:: bash
+.. grid:: 1 1 2 2
+   :gutter: 2
 
-   pip install earthkit-climate
+   .. grid-item-card:: Installation and Getting Started
+      :img-top: _static/rocket.svg
+      :link: getting-started
+      :link-type: doc
+      :class-card: sd-shadow-sm
+
+      New to earthkit-climate? Start here with installation and a quick overview.
+
+   .. grid-item-card:: Frequently Asked Questions
+      :img-top: _static/message-question.svg
+      :link: faq
+      :link-type: doc
+      :class-card: sd-shadow-sm
+
+      The most common questions, answered.
+
+   .. grid-item-card:: Tutorials
+      :img-top: _static/book.svg
+      :link: tutorials/index
+      :link-type: doc
+      :class-card: sd-shadow-sm
+
+      Step-by-step guides to learn earthkit-climate.
+
+   .. grid-item-card:: How-to Guides
+      :img-top: _static/tool.svg
+      :link: how-tos/index
+      :link-type: doc
+      :class-card: sd-shadow-sm
+
+      Practical recipes for common tasks.
+
+   .. grid-item-card:: Concepts
+      :img-top: _static/bulb.svg
+      :link: concepts/index
+      :link-type: doc
+      :class-card: sd-shadow-sm
+
+      Understand the core ideas behind earthkit-climate.
 
 
-Compute a precipitation indicator from xclim:
+   .. grid-item-card:: API Reference
+      :img-top: _static/brackets-contain.svg
+      :link: api-reference
+      :link-type: doc
+      :class-card: sd-shadow-sm
 
-.. code-block:: python
+      Detailed documentation of all functions and classes.
 
-   from earthkit.climate.indicators import precipitation
-   pr = precipitation.simple_daily_intensity(precip_data, freq="monthly")
 
+**Support**
+
+Have a feature request or found a bug? Feel free to open an
+`issue <https://github.com/ecmwf/earthkit-climate/issues/new/choose>`_.
 
 
 .. toctree::
-   :caption: Examples
-   :maxdepth: 1
+   :maxdepth: 2
+   :hidden:
 
-   tutorials
-   gallery
+   why
+
+.. toctree::
+   :caption: User guide
+   :maxdepth: 2
+   :hidden:
+
+   getting-started
+   faq
+   tutorials/index
+   how-tos/index
+   concepts/index
+   api-reference
 
 
 .. toctree::
-   :caption: Documentation
-   :maxdepth: 1
+   :caption: Developer guide
+   :maxdepth: 2
+   :hidden:
 
-   user-guide
-   API Reference <_api/index>
-
-
-.. toctree::
-   :caption: Package
-   :maxdepth: 1
-
-   installation
    development
-   release-notes/index
-   license
 
 
 .. toctree::
-   :caption: Projects
-   :maxdepth: 1
+   :maxdepth: 2
+   :caption: Extras
+   :hidden:
 
-   earthkit <https://earthkit.readthedocs.io/en/latest/>
+   release-notes/index
+   bibliography
+   licence
+   genindex
