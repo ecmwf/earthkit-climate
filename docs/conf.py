@@ -103,6 +103,18 @@ autoapi_options = [
     "imported-members",
     "inherited-members",
 ]
+_autoapi_skipped_indicator_members = {
+    f"earthkit.climate.indicators.{name}"
+    for name in {
+        "Any",
+        "Literal",
+        "xr",
+        "xarray",
+        "xclim",
+        "format_handler",
+        "wrap_indicator",
+    }
+}
 autoapi_root = "autoapi"
 autoapi_member_order = "alphabetical"
 autoapi_add_toctree_entry = False
@@ -226,6 +238,10 @@ bibtex_bibfiles = ["references.bib"]
 bibtex_reference_style = "author_year"
 
 
+def _skip_indicator_members(_app, _what, name, _obj, skip, _options):
+    return skip or name in _autoapi_skipped_indicator_members
+
+
 def _write_earthkit_packages_js(app):
     """Read earthkit-packages.yml and write a JS data file into the output _static dir."""
     config_path = os.path.join(os.path.dirname(__file__), "earthkit-packages.yml")
@@ -240,6 +256,7 @@ def _write_earthkit_packages_js(app):
 
 
 def setup(app):
+    app.connect("autoapi-skip-member", _skip_indicator_members)
     app.connect("builder-inited", _write_earthkit_packages_js)
     app.connect(
         "doctree-read", shorten_api_page_titles, priority=100

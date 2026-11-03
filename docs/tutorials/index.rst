@@ -13,4 +13,6 @@ Step-by-step, hands-on lessons designed to help newcomers learn **earthkit-clima
    :maxdepth: 1
 
    computing_indicators.ipynb
+   custom_indicator_example.ipynb
+   dask_large_datasets.ipynb
    cases/index
