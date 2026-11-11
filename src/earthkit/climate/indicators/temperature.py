@@ -582,7 +582,9 @@ def daily_freezethaw_cycles(
     return wrapper(ds, **kwargs)
 
 @format_handler()
-@metadata_handler(ensure_units=ENSURE_UNITS)
+@metadata_handler(
+    ensure_units=ENSURE_UNITS, provenance=True, extra_provenance={"xclim_version": xclim.__version__}
+)
 def daily_temperature_range(
     ds: xarray.Dataset,
     **kwargs: Any,

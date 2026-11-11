@@ -52,6 +52,7 @@ def wrap_xclim_indicator(xclim_fn: Callable) -> Callable:
         conversions.EarthkitData
             The result of the indicator calculation wrapped as an Earthkit object.
         """
+        return xclim_fn(*args, ds=earthkit_input, **kwargs)
         metadata: Dict[str, Any] = {}
 
         # # --- STEP 1: Load & Standardize Main Data ---
@@ -67,8 +68,8 @@ def wrap_xclim_indicator(xclim_fn: Callable) -> Callable:
 
         # --- STEP 2: Execution ---
         # We pass the single merged dataset (ds) and the variable name mappings
-        print("ek-clim wrapper Args:", args)
-        print("ek-clim wrapper Kwargs:", kwargs)
+        # print("ek-clim wrapper Args:", args)
+        # print("ek-clim wrapper Kwargs:", kwargs)
         output_dataset: xr.Dataset = xclim_fn(*args, ds=earthkit_input, **kwargs)
 
         # --- STEP 3: Provenance & Output ---
