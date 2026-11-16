@@ -64,6 +64,9 @@ _XCLIM_REF_URL_MAP: dict[str, tuple[str, str]] = {
 }
 
 
+OVERLAPPING_PERCENTILES: set[str] = {"tg10p", "tg90p", "tn10p", "tn90p", "tx10p", "tx90p"}
+
+
 def clean_xclim_refs(text: str) -> str:
     """Replace xclim-internal RST cross-references with external hyperlinks or plain text.
 
@@ -450,7 +453,12 @@ def generate_module_content(module_name: str, indicators: List[Any]) -> str:
             xclim_func_name = ind.identifier
 
         # Use the xclim variable name as the function name to match existing conventions
-        func_name = xclim_func_name
+        if module_name == "atmos" and xclim_func_name in OVERLAPPING_PERCENTILES:
+            func_name = f"_{xclim_func_name}"
+            alias_code = f"\n\nxclim_{xclim_func_name} = _{xclim_func_name}\n"
+        else:
+            func_name = xclim_func_name
+            alias_code = ""
 
         docstring = generate_docstring(ind, module_name, xclim_func_name)
 
@@ -482,6 +490,8 @@ def generate_module_content(module_name: str, indicators: List[Any]) -> str:
             docstring=indented_doc,
             return_type=return_type,
         )
+        if alias_code:
+            code = code + alias_code
         functions_code.append(code)
 
     typing_imports = "Any, Literal" if any("Literal[" in f for f in functions_code) else "Any"

@@ -171,9 +171,13 @@ def test_icclim_module_has_all_indices() -> None:
     -------
     None
     """
-    for index_name in ["su", "fd", "cdd", "rx1day", "rx5day", "dtr", "tx90p"]:
+    for index_name in ["su", "fd", "cdd", "rx1day", "rx5day", "dtr"]:
         assert hasattr(_icclim, index_name)
         assert callable(getattr(_icclim, index_name))
+    for index_name in ["tx90p", "tx10p", "tn90p", "tn10p", "tg90p", "tg10p"]:
+        assert hasattr(_icclim, f"_{index_name}")
+        assert hasattr(_icclim, f"icclim_{index_name}")
+        assert hasattr(indicators, index_name)
 
 
 def test_icclim_overlapping_aliases() -> None:

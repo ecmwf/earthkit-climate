@@ -2014,7 +2014,7 @@ def tg(
 
 
 @wrap_indicator()
-def tg10p(
+def _tg10p(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
     *,
@@ -2058,8 +2058,11 @@ def tg10p(
     )
 
 
+icclim_tg10p = _tg10p
+
+
 @wrap_indicator()
-def tg90p(
+def _tg90p(
     tas: xr.DataArray | FieldList | str = "tas",
     ds: xr.Dataset | None = None,
     *,
@@ -2103,6 +2106,9 @@ def tg90p(
     )
 
 
+icclim_tg90p = _tg90p
+
+
 @wrap_indicator()
 def tn(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
@@ -2144,7 +2150,7 @@ def tn(
 
 
 @wrap_indicator()
-def tn10p(
+def _tn10p(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
     *,
@@ -2188,8 +2194,11 @@ def tn10p(
     )
 
 
+icclim_tn10p = _tn10p
+
+
 @wrap_indicator()
-def tn90p(
+def _tn90p(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     ds: xr.Dataset | None = None,
     *,
@@ -2231,6 +2240,9 @@ def tn90p(
         freq,
         extra_args,
     )
+
+
+icclim_tn90p = _tn90p
 
 
 @wrap_indicator()
@@ -2394,7 +2406,7 @@ def tx(
 
 
 @wrap_indicator()
-def tx10p(
+def _tx10p(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
     *,
@@ -2438,8 +2450,11 @@ def tx10p(
     )
 
 
+icclim_tx10p = _tx10p
+
+
 @wrap_indicator()
-def tx90p(
+def _tx90p(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     ds: xr.Dataset | None = None,
     *,
@@ -2481,6 +2496,9 @@ def tx90p(
         freq,
         extra_args,
     )
+
+
+icclim_tx90p = _tx90p
 
 
 @wrap_indicator()
@@ -2747,12 +2765,3 @@ def ww(
         freq,
         extra_args,
     )
-
-
-# Explicit aliases for indices that overlap with xclim indicator names:
-icclim_tg10p = tg10p
-icclim_tg90p = tg90p
-icclim_tn10p = tn10p
-icclim_tn90p = tn90p
-icclim_tx10p = tx10p
-icclim_tx90p = tx90p

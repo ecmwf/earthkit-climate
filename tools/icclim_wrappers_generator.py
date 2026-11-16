@@ -79,6 +79,9 @@ def _run_icclim_ecad(
 """
 
 
+OVERLAPPING_PERCENTILES: set[str] = {"tg10p", "tg90p", "tn10p", "tn90p", "tx10p", "tx90p"}
+
+
 def generate_function(item: Any) -> str:
     """
     Generate wrapper function code for an icclim ECAD index.
@@ -142,9 +145,16 @@ def generate_function(item: Any) -> str:
         subsequent_indent="    ",
     ).lstrip()
 
+    if fn_name in OVERLAPPING_PERCENTILES:
+        func_symbol = f"_{fn_name}"
+        alias_code = f"\n\nicclim_{fn_name} = _{fn_name}\n"
+    else:
+        func_symbol = fn_name
+        alias_code = ""
+
     code = f"""
 @wrap_indicator()
-def {fn_name}(
+def {func_symbol}(
 {signature_str}
 ) -> xr.DataArray | FieldList:
     \"\"\"
@@ -177,6 +187,8 @@ def {fn_name}(
         extra_args,
     )
 """
+    if alias_code:
+        code = code + alias_code
     return code
 
 
@@ -196,13 +208,8 @@ def main() -> None:
     for item in sorted(EcadIndexRegistry.values(), key=lambda x: x.short_name.lower()):
         content_parts.append(generate_function(item))
 
-    content_parts.append("\n# Explicit aliases for indices that overlap with xclim indicator names:")
-    overlapping_indices = ["tg10p", "tg90p", "tn10p", "tn90p", "tx10p", "tx90p"]
-    for name in overlapping_indices:
-        content_parts.append(f"icclim_{name} = {name}")
-
     with open(output_file, "w") as f:
-        f.write("\n".join(content_parts) + "\n")
+        f.write("\n".join(content_parts).strip() + "\n")
 
     print(f"Generated {output_file} with {len(EcadIndexRegistry.values())} icclim indices.")
 
