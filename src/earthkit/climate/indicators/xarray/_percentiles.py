@@ -49,7 +49,11 @@ def tx90p(
     xarray.DataArray | earthkit.data.FieldList
         Number of warm days (TX > 90th percentile).
     """
-    selected_backend = ("xclim" if tasmax_per is not None else "icclim") if backend == "auto" else backend
+    selected_backend = (
+        ("xclim" if tasmax_per is not None else "icclim")
+        if backend == "auto"
+        else backend
+    )
 
     if selected_backend == "icclim":
         return _icclim.tx90p(
@@ -72,7 +76,9 @@ def tx90p(
             freq=freq,
             **kwargs,
         )
-    raise ValueError(f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'.")
+    raise ValueError(
+        f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'."
+    )
 
 
 @wrap_indicator()
@@ -114,7 +120,11 @@ def tx10p(
     xarray.DataArray | earthkit.data.FieldList
         Number of cold day-times (TX < 10th percentile).
     """
-    selected_backend = ("xclim" if tasmax_per is not None else "icclim") if backend == "auto" else backend
+    selected_backend = (
+        ("xclim" if tasmax_per is not None else "icclim")
+        if backend == "auto"
+        else backend
+    )
 
     if selected_backend == "icclim":
         return _icclim.tx10p(
@@ -137,7 +147,9 @@ def tx10p(
             freq=freq,
             **kwargs,
         )
-    raise ValueError(f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'.")
+    raise ValueError(
+        f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'."
+    )
 
 
 @wrap_indicator()
@@ -179,7 +191,11 @@ def tn90p(
     xarray.DataArray | earthkit.data.FieldList
         Number of warm nights (TN > 90th percentile).
     """
-    selected_backend = ("xclim" if tasmin_per is not None else "icclim") if backend == "auto" else backend
+    selected_backend = (
+        ("xclim" if tasmin_per is not None else "icclim")
+        if backend == "auto"
+        else backend
+    )
 
     if selected_backend == "icclim":
         return _icclim.tn90p(
@@ -202,7 +218,9 @@ def tn90p(
             freq=freq,
             **kwargs,
         )
-    raise ValueError(f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'.")
+    raise ValueError(
+        f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'."
+    )
 
 
 @wrap_indicator()
@@ -244,7 +262,11 @@ def tn10p(
     xarray.DataArray | earthkit.data.FieldList
         Number of cold nights (TN < 10th percentile).
     """
-    selected_backend = ("xclim" if tasmin_per is not None else "icclim") if backend == "auto" else backend
+    selected_backend = (
+        ("xclim" if tasmin_per is not None else "icclim")
+        if backend == "auto"
+        else backend
+    )
 
     if selected_backend == "icclim":
         return _icclim.tn10p(
@@ -267,7 +289,9 @@ def tn10p(
             freq=freq,
             **kwargs,
         )
-    raise ValueError(f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'.")
+    raise ValueError(
+        f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'."
+    )
 
 
 @wrap_indicator()
@@ -309,7 +333,9 @@ def tg90p(
     xarray.DataArray | earthkit.data.FieldList
         Number of days with TG > 90th percentile.
     """
-    selected_backend = ("xclim" if tas_per is not None else "icclim") if backend == "auto" else backend
+    selected_backend = (
+        ("xclim" if tas_per is not None else "icclim") if backend == "auto" else backend
+    )
 
     if selected_backend == "icclim":
         return _icclim.tg90p(
@@ -332,7 +358,9 @@ def tg90p(
             freq=freq,
             **kwargs,
         )
-    raise ValueError(f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'.")
+    raise ValueError(
+        f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'."
+    )
 
 
 @wrap_indicator()
@@ -374,7 +402,9 @@ def tg10p(
     xarray.DataArray | earthkit.data.FieldList
         Number of days with TG < 10th percentile.
     """
-    selected_backend = ("xclim" if tas_per is not None else "icclim") if backend == "auto" else backend
+    selected_backend = (
+        ("xclim" if tas_per is not None else "icclim") if backend == "auto" else backend
+    )
 
     if selected_backend == "icclim":
         return _icclim.tg10p(
@@ -397,4 +427,6 @@ def tg10p(
             freq=freq,
             **kwargs,
         )
-    raise ValueError(f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'.")
+    raise ValueError(
+        f"Unknown backend: {backend!r}. Expected 'auto', 'xclim', or 'icclim'."
+    )
