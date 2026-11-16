@@ -191,3 +191,44 @@ def test_icclim_overlapping_aliases() -> None:
         fn = getattr(indicators, alias_name)
         assert callable(fn)
         assert fn.__module__ == "earthkit.climate.indicators.xarray._icclim"
+
+
+def test_percentile_backend_dispatch_auto_and_explicit(synthetic_temp_da: xr.DataArray) -> None:
+    """
+    Test unified tx90p dispatch with backend='auto', backend='icclim', and backend='xclim'.
+
+    Parameters
+    ----------
+    synthetic_temp_da : xarray.DataArray
+        Synthetic temperature series fixture.
+
+    Returns
+    -------
+    None
+    """
+    # 1. Auto dispatch without tasmax_per selects icclim
+    res_auto = indicators.tx90p(
+        synthetic_temp_da,
+        base_period_time_range=["2020-01-01", "2020-06-30"],
+        freq="YS",
+    )
+    assert isinstance(res_auto, xr.DataArray)
+    assert res_auto.name == "TX90p"
+
+    # 2. Explicit backend='icclim'
+    res_icclim = indicators.tx90p(
+        synthetic_temp_da,
+        base_period_time_range=["2020-01-01", "2020-06-30"],
+        freq="YS",
+        backend="icclim",
+    )
+    assert isinstance(res_icclim, xr.DataArray)
+    assert res_icclim.name == "TX90p"
+
+    # 3. Explicit backend='xclim' without tasmax_per raises ValueError
+    with pytest.raises(ValueError, match="When using backend='xclim', 'tasmax_per'"):
+        indicators.tx90p(synthetic_temp_da, backend="xclim")
+
+    # 4. Unknown backend raises ValueError
+    with pytest.raises(ValueError, match="Unknown backend: 'invalid'"):
+        indicators.tx90p(synthetic_temp_da, backend="invalid")  # type: ignore[arg-type]
