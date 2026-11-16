@@ -33,3 +33,4 @@ Generated files are placed in `src/earthkit/climate/indicators/xarray/`:
 - `_xclim_land.py`
 - `_xclim_seaice.py`
 - `_icclim.py`
+
