@@ -2747,3 +2747,12 @@ def ww(
         freq,
         extra_args,
     )
+
+
+# Explicit aliases for indices that overlap with xclim indicator names:
+icclim_tg10p = tg10p
+icclim_tg90p = tg90p
+icclim_tn10p = tn10p
+icclim_tn90p = tn90p
+icclim_tx10p = tx10p
+icclim_tx90p = tx90p

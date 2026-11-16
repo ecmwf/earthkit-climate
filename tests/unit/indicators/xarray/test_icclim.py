@@ -174,3 +174,20 @@ def test_icclim_module_has_all_indices() -> None:
     for index_name in ["su", "fd", "cdd", "rx1day", "rx5day", "dtr", "tx90p"]:
         assert hasattr(_icclim, index_name)
         assert callable(getattr(_icclim, index_name))
+
+
+def test_icclim_overlapping_aliases() -> None:
+    """
+    Test explicit icclim_* aliases for the 6 overlapping percentile indices.
+
+    Returns
+    -------
+    None
+    """
+    overlapping = ["tg10p", "tg90p", "tn10p", "tn90p", "tx10p", "tx90p"]
+    for name in overlapping:
+        alias_name = f"icclim_{name}"
+        assert hasattr(indicators, alias_name)
+        fn = getattr(indicators, alias_name)
+        assert callable(fn)
+        assert fn.__module__ == "earthkit.climate.indicators.xarray._icclim"
