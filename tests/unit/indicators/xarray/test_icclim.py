@@ -7,7 +7,7 @@ import pytest
 import xarray as xr
 
 from earthkit.climate import indicators
-from earthkit.climate.indicators import icclim
+from earthkit.climate.indicators.xarray import _icclim
 
 
 @pytest.fixture
@@ -78,25 +78,6 @@ def test_icclim_su_direct_call(synthetic_temp_da: xr.DataArray) -> None:
     assert res.attrs["units"] == "d"
 
 
-def test_icclim_submodule_namespace(synthetic_temp_da: xr.DataArray) -> None:
-    """
-    Test summer days (su) indicator called via icclim submodule namespace.
-
-    Parameters
-    ----------
-    synthetic_temp_da : xarray.DataArray
-        Synthetic temperature data fixture.
-
-    Returns
-    -------
-    None
-    """
-    res = icclim.su(synthetic_temp_da, freq="YS")
-    assert isinstance(res, xr.DataArray)
-    assert res.name == "SU"
-    assert res.values[0] == 366.0
-
-
 def test_icclim_dtr_dataset_call(synthetic_temp_dataset: xr.Dataset) -> None:
     """
     Test diurnal temperature range (dtr) indicator called with a Dataset.
@@ -160,13 +141,36 @@ def test_icclim_cdd_dry_days() -> None:
     assert res.values[0] == 366.0
 
 
-def test_icclim_tx90p_available_in_submodule() -> None:
+def test_icclim_rx5day() -> None:
     """
-    Test that tx90p is accessible via the icclim submodule for explicit ECA&D calls.
+    Test maximum 5-day precipitation amount (rx5day) indicator.
 
     Returns
     -------
     None
     """
-    assert hasattr(icclim, "tx90p")
-    assert callable(icclim.tx90p)
+    dates = pd.date_range("2020-01-01", periods=366, freq="D")
+    pr = xr.DataArray(
+        np.ones(len(dates)) * 10.0,
+        coords={"time": dates},
+        dims=["time"],
+        name="pr",
+        attrs={"units": "mm/day"},
+    )
+    res = indicators.rx5day(pr, freq="YS")
+    assert isinstance(res, xr.DataArray)
+    assert res.name == "RX5day"
+    assert np.isclose(res.values[0], 50.0)
+
+
+def test_icclim_module_has_all_indices() -> None:
+    """
+    Test that _icclim defines the standard ECA&D indices.
+
+    Returns
+    -------
+    None
+    """
+    for index_name in ["su", "fd", "cdd", "rx1day", "rx5day", "dtr", "tx90p"]:
+        assert hasattr(_icclim, index_name)
+        assert callable(getattr(_icclim, index_name))

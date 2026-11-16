@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from earthkit.climate.indicators import icclim as icclim
 from earthkit.climate.indicators.xarray import (
     _icclim,
     _xclim_atmos,
@@ -15,24 +14,21 @@ from earthkit.climate.indicators.xarray._xclim_land import *  # noqa
 from earthkit.climate.indicators.xarray._xclim_seaice import *  # noqa
 
 __all__ = sorted(
-    list(
-        {
-            name
-            for mod in (_icclim, _xclim_atmos, _xclim_land, _xclim_seaice)
-            for name in dir(mod)
-            if not name.startswith("_")
-            and name
-            not in {
-                "Any",
-                "Callable",
-                "FieldList",
-                "Literal",
-                "xr",
-                "xclim",
-                "format_handler",
-                "wrap_indicator",
-            }
+    list({
+        name
+        for mod in (_icclim, _xclim_atmos, _xclim_land, _xclim_seaice)
+        for name in dir(mod)
+        if not name.startswith("_")
+        and name
+        not in {
+            "Any",
+            "Callable",
+            "FieldList",
+            "Literal",
+            "xr",
+            "xclim",
+            "format_handler",
+            "wrap_indicator",
         }
-        | {"icclim"}
-    )
+    })
 )
