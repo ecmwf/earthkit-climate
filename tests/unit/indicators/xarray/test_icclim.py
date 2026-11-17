@@ -74,7 +74,7 @@ def test_icclim_su_direct_call(synthetic_temp_da: xr.DataArray) -> None:
     res = indicators.su(synthetic_temp_da, freq="YS")
     assert isinstance(res, xr.DataArray)
     assert res.name == "SU"
-    assert res.values[0] == 366.0
+    assert np.isclose(res.values[0], 366.0)
     assert res.attrs["units"] == "d"
 
 
@@ -116,7 +116,7 @@ def test_icclim_fd_frost_days() -> None:
     res = indicators.fd(tn, freq="YS")
     assert isinstance(res, xr.DataArray)
     assert res.name == "FD"
-    assert res.values[0] == 366.0
+    assert np.isclose(res.values[0], 366.0)
 
 
 def test_icclim_cdd_dry_days() -> None:
@@ -138,7 +138,7 @@ def test_icclim_cdd_dry_days() -> None:
     res = indicators.cdd(pr, freq="YS")
     assert isinstance(res, xr.DataArray)
     assert res.name == "CDD"
-    assert res.values[0] == 366.0
+    assert np.isclose(res.values[0], 366.0)
 
 
 def test_icclim_rx5day() -> None:
