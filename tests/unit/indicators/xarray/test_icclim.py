@@ -236,3 +236,37 @@ def test_percentile_backend_dispatch_auto_and_explicit(synthetic_temp_da: xr.Dat
     # 4. Unknown backend raises ValueError
     with pytest.raises(ValueError, match="Unknown backend: 'invalid'"):
         indicators.tx90p(synthetic_temp_da, backend="invalid")  # type: ignore[arg-type]
+
+
+def test_regression_icclim_unnamed_dataarrays() -> None:
+    """
+    Verify that multi-variable icclim indices accept unnamed DataArrays without error.
+
+    Returns
+    -------
+    None
+    """
+    t = pd.date_range("2000-01-01", periods=10)
+    tas = xr.DataArray(np.ones(10) * 300, coords={"time": t}, dims=["time"])
+    pr = xr.DataArray(np.ones(10) * 5, coords={"time": t}, dims=["time"])
+    res = indicators.cd(tas=tas, pr=pr)
+    assert isinstance(res, xr.DataArray)
+    assert res.name == "CD"
+
+
+def test_regression_icclim_custom_ds_var_names() -> None:
+    """
+    Verify that custom variable names passed as strings in ds resolve correctly in icclim.
+
+    Returns
+    -------
+    None
+    """
+    t = pd.date_range("2000-01-01", periods=10)
+    ds = xr.Dataset(
+        {"temp_max": (["time"], np.ones(10) * 300), "extra": (["time"], np.ones(10))},
+        coords={"time": t},
+    )
+    res = indicators.su(tasmax="temp_max", ds=ds)
+    assert isinstance(res, xr.DataArray)
+    assert res.name == "SU"

@@ -51,12 +51,18 @@ def _run_icclim_ecad(
     in_files: Any
     if ds is not None:
         in_files = ds
+        if "var_name" not in kwargs:
+            str_vars = [v for v in data_inputs.values() if isinstance(v, str) and v in ds]
+            if len(str_vars) == 1:
+                kwargs["var_name"] = str_vars[0]
+            elif len(str_vars) > 1:
+                kwargs["var_name"] = str_vars
     else:
         arrays = {k: v for k, v in data_inputs.items() if isinstance(v, xr.DataArray)}
         if len(arrays) == 1:
             in_files = next(iter(arrays.values()))
         elif len(arrays) > 1:
-            in_files = xr.merge(list(arrays.values()))
+            in_files = xr.Dataset({k: v for k, v in arrays.items()})
         else:
             in_files = next(iter(data_inputs.values()))
 
