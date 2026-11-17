@@ -58,13 +58,23 @@ def _run_icclim_ecad(
             elif len(str_vars) > 1:
                 kwargs["var_name"] = str_vars
     else:
-        arrays = {k: v for k, v in data_inputs.items() if isinstance(v, xr.DataArray)}
-        if len(arrays) == 1:
-            in_files = next(iter(arrays.values()))
-        elif len(arrays) > 1:
-            in_files = xr.Dataset({k: v for k, v in arrays.items()})
+        ds_inputs = [v for v in data_inputs.values() if isinstance(v, xr.Dataset)]
+        if len(ds_inputs) == 1:
+            in_files = ds_inputs[0]
+            if "var_name" not in kwargs:
+                matching_vars = [k for k in data_inputs if k in in_files]
+                if len(matching_vars) == 1:
+                    kwargs["var_name"] = matching_vars[0]
+                elif len(matching_vars) > 1:
+                    kwargs["var_name"] = matching_vars
         else:
-            in_files = next(iter(data_inputs.values()))
+            arrays = {k: v for k, v in data_inputs.items() if isinstance(v, xr.DataArray)}
+            if len(arrays) == 1:
+                in_files = next(iter(arrays.values()))
+            elif len(arrays) > 1:
+                in_files = xr.Dataset({k: v for k, v in arrays.items()})
+            else:
+                in_files = next(iter(data_inputs.values()))
 
     result = func(in_files=in_files, slice_mode=slice_mode, logs_verbosity=logs_verbosity, **kwargs)
     return result[short_name]
