@@ -6,12 +6,14 @@
 How-to Guides
 =============
 
-A collection of practical examples for working with earthkit-climate.
-
+Short, task-focused guides covering core indicator workflows and specific dataset types.
 
 .. toctree::
    :maxdepth: 1
 
-   dask-presets
+   reparameterising_indicators.ipynb
+   station_data_indicators.ipynb
+   format_compatibility.ipynb
    intro_precipitation_indices.ipynb
    intro_temperature_indices.ipynb
+   dask-presets.ipynb
