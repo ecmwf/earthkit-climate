@@ -137,8 +137,11 @@ def simplify_type(type_obj: Any, is_docstring: bool = False) -> str:
         "xarray.core.dataset.Dataset": f"{ds} | {fl}",
         "xarray.core.datatree.DataTree": (f"xr.DataTree | {fl}" if not is_docstring else f"xarray.DataTree | {fl}"),
         "Quantified": f"str | float | int | {da} | {fl}",
+        "Condition": "str",
         "DayOfYearStr": "str",
         "DateStr": "str",
+        "Freq": "str",
+        "offset alias (string)": "str",
         "rv_continuous": "Any",
         "Indexer": "dict[str, Any]",
     }
