@@ -6798,7 +6798,7 @@ def standardized_precipitation_index(
 
 
 @wrap_indicator()
-def tg10p(
+def _tg10p(
     tas: xr.DataArray | FieldList | str = "tas",
     tas_per: xr.DataArray | FieldList | str = "tas_per",
     ds: xr.Dataset | None = None,
@@ -6857,8 +6857,11 @@ def tg10p(
     )
 
 
+xclim_tg10p = _tg10p
+
+
 @wrap_indicator()
-def tg90p(
+def _tg90p(
     tas: xr.DataArray | FieldList | str = "tas",
     tas_per: xr.DataArray | FieldList | str = "tas_per",
     ds: xr.Dataset | None = None,
@@ -6915,6 +6918,9 @@ def tg90p(
         ds=ds,
         **kwargs,
     )
+
+
+xclim_tg90p = _tg90p
 
 
 @wrap_indicator()
@@ -7197,7 +7203,7 @@ def thawing_degree_days(
 
 
 @wrap_indicator()
-def tn10p(
+def _tn10p(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmin_per: xr.DataArray | FieldList | str = "tasmin_per",
     ds: xr.Dataset | None = None,
@@ -7256,8 +7262,11 @@ def tn10p(
     )
 
 
+xclim_tn10p = _tn10p
+
+
 @wrap_indicator()
-def tn90p(
+def _tn90p(
     tasmin: xr.DataArray | FieldList | str = "tasmin",
     tasmin_per: xr.DataArray | FieldList | str = "tasmin_per",
     ds: xr.Dataset | None = None,
@@ -7314,6 +7323,9 @@ def tn90p(
         ds=ds,
         **kwargs,
     )
+
+
+xclim_tn90p = _tn90p
 
 
 @wrap_indicator()
@@ -7599,7 +7611,7 @@ def tropical_nights(
 
 
 @wrap_indicator()
-def tx10p(
+def _tx10p(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     tasmax_per: xr.DataArray | FieldList | str = "tasmax_per",
     ds: xr.Dataset | None = None,
@@ -7658,8 +7670,11 @@ def tx10p(
     )
 
 
+xclim_tx10p = _tx10p
+
+
 @wrap_indicator()
-def tx90p(
+def _tx90p(
     tasmax: xr.DataArray | FieldList | str = "tasmax",
     tasmax_per: xr.DataArray | FieldList | str = "tasmax_per",
     ds: xr.Dataset | None = None,
@@ -7716,6 +7731,9 @@ def tx90p(
         ds=ds,
         **kwargs,
     )
+
+
+xclim_tx90p = _tx90p
 
 
 @wrap_indicator()

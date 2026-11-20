@@ -165,3 +165,26 @@ def test_sample_source_fusarium_input_timeseries() -> None:
     df_plugin = src_plugin.to_pandas()
     assert isinstance(df_plugin, pd.DataFrame)
     assert len(df_plugin) == 731
+
+
+def test_sample_source_synthetic_daily_comparison() -> None:
+    """
+    Test SampleSource with synthetic-daily-comparison dataset.
+
+    Returns
+    -------
+    None
+    """
+    src = SampleSource("synthetic-daily-comparison")
+    ds = src.to_xarray()
+    assert isinstance(ds, xr.Dataset)
+    assert set(ds.data_vars) == {"tasmax", "tasmin", "pr"}
+    assert ds.sizes == {"time": 3652}
+    assert ds["tasmax"].attrs["units"] == "degC"
+    assert ds["tasmin"].attrs["units"] == "degC"
+    assert ds["pr"].attrs["units"] == "mm/day"
+
+    src_plugin = ekd.from_source("earthkit-climate-sample", "synthetic-daily-comparison")
+    ds_plugin = src_plugin.to_xarray()
+    assert isinstance(ds_plugin, xr.Dataset)
+    assert set(ds_plugin.data_vars) == {"tasmax", "tasmin", "pr"}
