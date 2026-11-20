@@ -2,8 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-"""Tests for precipitation indicators."""
-
 from typing import Any, Callable
 
 import pytest
@@ -46,7 +44,16 @@ INDICATORS = [
     (indicators.liquid_precip_ratio, "liquid_precip_ratio", {"arg1": "val1"}),
     (indicators.liquid_precip_average, "liquid_precip_average", {"arg1": "val1"}),
     (indicators.liquid_precip_accumulation, "liquid_precip_accumulation", {"arg1": "val1"}),
-    (indicators.max_n_day_precipitation_amount, "max_n_day_precipitation_amount", {"arg1": "val1"}),
+    (
+        indicators.max_n_day_precipitation_amount,
+        "max_n_day_precipitation_amount",
+        {"window": 3, "arg1": "val1"},
+    ),
+    (
+        indicators.precipitation_concentration_index,
+        "precipitation_concentration_index",
+        {"arg1": "val1"},
+    ),
     (indicators.max_pr_intensity, "max_pr_intensity", {"arg1": "val1"}),
     (indicators.precip_average, "precip_average", {"arg1": "val1"}),
     (indicators.precip_accumulation, "precip_accumulation", {"arg1": "val1"}),
@@ -76,7 +83,7 @@ INDICATORS = [
     # Temperature
     (indicators.australian_hardiness_zones, "australian_hardiness_zones", {}),
     (indicators.biologically_effective_degree_days, "biologically_effective_degree_days", {}),
-    (indicators.cold_spell_days, "cold_spell_days", {}),
+    (indicators.cold_spell_days, "cold_spell_days", {"thresh": "-10 degC"}),
     (indicators.cold_spell_duration_index, "cold_spell_duration_index", {}),
     (indicators.cold_spell_frequency, "cold_spell_frequency", {}),
     (indicators.cold_spell_max_length, "cold_spell_max_length", {}),
@@ -94,6 +101,7 @@ INDICATORS = [
     (indicators.daily_temperature_range, "daily_temperature_range", {}),
     (indicators.max_daily_temperature_range, "max_daily_temperature_range", {}),
     (indicators.daily_temperature_range_variability, "daily_temperature_range_variability", {}),
+    (indicators.day_to_day_temperature_variability, "day_to_day_temperature_variability", {}),
     (indicators.extreme_temperature_range, "extreme_temperature_range", {}),
     (indicators.fire_season, "fire_season", {}),
     (indicators.first_day_tg_above, "first_day_tg_above", {}),

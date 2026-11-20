@@ -1,14 +1,6 @@
 # SPDX-FileCopyrightText: 2025 European Centre for Medium-Range Weather Forecasts (ECMWF)
 # SPDX-License-Identifier: Apache-2.0
 
-"""
-Integration tests for climate indicator correctness.
-
-These tests verify that the earthkit-climate indicators produce results that are
-consistent with their xclim counterparts when applied to real CMIP6 datasets.
-They run in optimized mode (flox enabled, time axis rechunked to -1).
-"""
-
 from typing import Any
 
 import pytest
@@ -54,7 +46,10 @@ def test_indicator_correctness(indicator_config: dict[str, Any]) -> None:
     )
     if hasattr(xc_result, "compute"):
         xc_result = xc_result.compute()
-    xc_da: xr.DataArray = xc_result
+    if isinstance(xc_result, xr.Dataset):
+        xc_da: xr.DataArray = xc_result[list(xc_result.data_vars)[0]]
+    else:
+        xc_da = xc_result
 
     # --- Assertions ---
     assert isinstance(ek_da, xr.DataArray), f"[{name}] earthkit result is not a DataArray: {type(ek_da)}"

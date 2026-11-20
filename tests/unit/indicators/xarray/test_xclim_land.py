@@ -2,8 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-"""Tests for land indicators."""
-
 from typing import Any, Callable
 
 import pytest
@@ -17,8 +15,8 @@ INDICATORS = [
     (indicators.standardized_groundwater_index, "standardized_groundwater_index", {"val": "test"}),
     (indicators.standardized_streamflow_index, "standardized_streamflow_index", {"val": "test"}),
     (indicators.base_flow_index, "base_flow_index", {"val": "test"}),
-    (indicators.doy_qmax, "doy_qmax", {"val": "test"}),
-    (indicators.doy_qmin, "doy_qmin", {"val": "test"}),
+    (indicators.rivo_max_doy, "rivo_max_doy", {"val": "test"}),
+    (indicators.rivo_min_doy, "rivo_min_doy", {"val": "test"}),
     (indicators.high_flow_frequency, "high_flow_frequency", {"val": "test"}),
     (indicators.low_flow_frequency, "low_flow_frequency", {"val": "test"}),
     (indicators.rb_flashiness_index, "rb_flashiness_index", {"val": "test"}),
@@ -26,6 +24,7 @@ INDICATORS = [
     (indicators.holiday_snow_and_snowfall_days, "holiday_snow_and_snowfall_days", {"val": "test"}),
     (indicators.holiday_snow_days, "holiday_snow_days", {"val": "test"}),
     (indicators.snd_days_above, "snd_days_above", {"val": "test"}),
+    (indicators.snd_max, "snd_max", {"val": "test"}),
     (indicators.snd_max_doy, "snd_max_doy", {"val": "test"}),
     (indicators.snd_season_end, "snd_season_end", {"val": "test"}),
     (indicators.snd_season_length, "snd_season_length", {"val": "test"}),
