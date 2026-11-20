@@ -13,3 +13,4 @@ Traverse through the API reference guide to find out more about the available fu
 
 - :doc:`autoapi/earthkit/climate/indicators/index`
 - :doc:`autoapi/earthkit/climate/utils/index`
+- :doc:`autoapi/earthkit/climate/dask/index`

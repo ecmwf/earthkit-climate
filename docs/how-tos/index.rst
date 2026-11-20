@@ -16,3 +16,4 @@ Short, task-focused guides covering core indicator workflows and specific datase
    format_compatibility.ipynb
    intro_precipitation_indices.ipynb
    intro_temperature_indices.ipynb
+   dask-presets.ipynb
