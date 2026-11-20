@@ -248,8 +248,8 @@ def test_regression_icclim_unnamed_dataarrays() -> None:
     None
     """
     t = pd.date_range("2000-01-01", periods=10)
-    tas = xr.DataArray(np.ones(10) * 300, coords={"time": t}, dims=["time"])
-    pr = xr.DataArray(np.ones(10) * 5, coords={"time": t}, dims=["time"])
+    tas = xr.DataArray(np.ones(10) * 300, coords={"time": t}, dims=["time"], attrs={"units": "K"})
+    pr = xr.DataArray(np.ones(10) * 5, coords={"time": t}, dims=["time"], attrs={"units": "mm/day"})
     res = indicators.cd(tas=tas, pr=pr)
     assert isinstance(res, xr.DataArray)
     assert res.name == "CD"
