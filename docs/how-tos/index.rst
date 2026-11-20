@@ -11,6 +11,7 @@ Short, task-focused guides covering core indicator workflows and specific datase
 .. toctree::
    :maxdepth: 1
 
+   agro_indicators.ipynb
    reparameterising_indicators.ipynb
    station_data_indicators.ipynb
    format_compatibility.ipynb

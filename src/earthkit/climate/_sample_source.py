@@ -1,8 +1,6 @@
 # SPDX-FileCopyrightText: 2025 European Centre for Medium-Range Weather Forecasts (ECMWF)
 # SPDX-License-Identifier: Apache-2.0
 
-"""Source plugin for earthkit-data to access sample data of earthkit-climate."""
-
 import warnings
 from typing import Any
 
@@ -268,10 +266,85 @@ def _generate_fusarium_input_timeseries(
     return ds
 
 
+def _generate_synthetic_daily_agro(
+    start_date: str = "2020-01-01",
+    end_date: str = "2022-12-31",
+    **kwargs: Any,
+) -> xr.Dataset:
+    """
+    Generate synthetic daily meteorological Dataset for agricultural indicators.
+
+    Creates a multi-year daily time series containing mean air temperature,
+    maximum air temperature, and solar shortwave radiation with seasonal cycles
+    and complete CF metadata.
+
+    Parameters
+    ----------
+    start_date : str, default="2020-01-01"
+        First date in the dataset.
+    end_date : str, default="2022-12-31"
+        Last date in the dataset.
+    **kwargs : Any
+        Ignored extra keyword arguments for compatibility.
+
+    Returns
+    -------
+    xarray.Dataset
+        Dataset containing tas, tasmax, and rsds variables.
+    """
+    dates = pd.date_range(start_date, end_date, freq="D")
+    n_days = len(dates)
+    rng = np.random.default_rng(42)
+
+    annual_cycle = np.sin(2 * np.pi * dates.dayofyear.values / 365.25 - np.pi / 2)
+    tas_values = 14.0 + 12.0 * annual_cycle + rng.normal(0, 2.5, n_days)
+    tasmax_values = tas_values + rng.uniform(4.0, 9.0, n_days)
+    rsds_values = np.maximum(180.0 + 110.0 * annual_cycle + rng.normal(0, 20.0, n_days), 0.0)
+
+    tas = xr.DataArray(
+        tas_values,
+        coords={"time": dates},
+        dims=["time"],
+        name="tas",
+        attrs={
+            "units": "degC",
+            "standard_name": "air_temperature",
+            "cell_methods": "time: mean within days",
+            "long_name": "Near-surface air temperature",
+        },
+    )
+    tasmax = xr.DataArray(
+        tasmax_values,
+        coords={"time": dates},
+        dims=["time"],
+        name="tasmax",
+        attrs={
+            "units": "degC",
+            "standard_name": "air_temperature",
+            "cell_methods": "time: maximum within days",
+            "long_name": "Daily maximum near-surface air temperature",
+        },
+    )
+    rsds = xr.DataArray(
+        rsds_values,
+        coords={"time": dates},
+        dims=["time"],
+        name="rsds",
+        attrs={
+            "units": "W m-2",
+            "standard_name": "surface_downwelling_shortwave_flux_in_air",
+            "cell_methods": "time: mean within days",
+            "long_name": "Surface solar radiation downwards",
+        },
+    )
+    return xr.Dataset({"tas": tas, "tasmax": tasmax, "rsds": rsds})
+
+
 _SYNTHETIC_DATASETS: dict[str, Any] = {
     "synthetic-daily-temperature": _generate_synthetic_daily_temperature,
     "synthetic-daily-dask-temperature": _generate_synthetic_daily_dask_temperature,
     "synthetic-daily-station-temperature": _generate_synthetic_daily_station_temperature,
+    "synthetic-daily-agro": _generate_synthetic_daily_agro,
     "fusarium-input-timeseries": _generate_fusarium_input_timeseries,
 }
 
