@@ -1,8 +1,6 @@
 # SPDX-FileCopyrightText: 2025 European Centre for Medium-Range Weather Forecasts (ECMWF)
 # SPDX-License-Identifier: Apache-2.0
 
-"""Source plugin for earthkit-data to access sample data of earthkit-climate."""
-
 import warnings
 from typing import Any
 
@@ -268,10 +266,89 @@ def _generate_fusarium_input_timeseries(
     return ds
 
 
+def _generate_synthetic_daily_comparison(
+    start_date: str = "1990-01-01",
+    end_date: str = "1999-12-31",
+    **kwargs: Any,
+) -> xr.Dataset:
+    """
+    Generate synthetic 10-year daily meteorological Dataset for indicator engine comparisons.
+
+    Creates a multi-year daily time series containing maximum temperature,
+    minimum temperature, and precipitation with seasonal cycles, intermittent
+    dry/wet spells, and CF metadata.
+
+    Parameters
+    ----------
+    start_date : str, default="1990-01-01"
+        First date in the dataset.
+    end_date : str, default="1999-12-31"
+        Last date in the dataset.
+    **kwargs : Any
+        Ignored extra keyword arguments for compatibility.
+
+    Returns
+    -------
+    xarray.Dataset
+        Dataset containing tasmax, tasmin, and pr variables.
+    """
+    dates = pd.date_range(start_date, end_date, freq="D")
+    n_days = len(dates)
+    rng = np.random.default_rng(42)
+
+    doy = dates.dayofyear.values
+    seasonal_cycle = 14.0 + 12.0 * np.sin(2 * np.pi * (doy - 80) / 365.25)
+    noise_tx = rng.normal(0, 3.0, n_days)
+    noise_tn = rng.normal(0, 2.5, n_days)
+
+    tasmax = xr.DataArray(
+        seasonal_cycle + 5.0 + noise_tx,
+        coords={"time": dates},
+        dims=["time"],
+        name="tasmax",
+        attrs={
+            "units": "degC",
+            "standard_name": "air_temperature",
+            "cell_methods": "time: maximum",
+            "long_name": "Daily maximum near-surface air temperature",
+        },
+    )
+    tasmin = xr.DataArray(
+        seasonal_cycle - 5.0 + noise_tn,
+        coords={"time": dates},
+        dims=["time"],
+        name="tasmin",
+        attrs={
+            "units": "degC",
+            "standard_name": "air_temperature",
+            "cell_methods": "time: minimum",
+            "long_name": "Daily minimum near-surface air temperature",
+        },
+    )
+
+    is_wet = rng.random(n_days) < 0.28
+    pr_vals = np.where(is_wet, rng.exponential(7.5, n_days), 0.0)
+    pr = xr.DataArray(
+        pr_vals,
+        coords={"time": dates},
+        dims=["time"],
+        name="pr",
+        attrs={
+            "units": "mm/day",
+            "standard_name": "precipitation_flux",
+            "cell_methods": "time: mean",
+            "long_name": "Precipitation",
+        },
+    )
+
+    return xr.Dataset({"tasmax": tasmax, "tasmin": tasmin, "pr": pr})
+
+
 _SYNTHETIC_DATASETS: dict[str, Any] = {
     "synthetic-daily-temperature": _generate_synthetic_daily_temperature,
     "synthetic-daily-dask-temperature": _generate_synthetic_daily_dask_temperature,
     "synthetic-daily-station-temperature": _generate_synthetic_daily_station_temperature,
+    "synthetic-daily-comparison": _generate_synthetic_daily_comparison,
     "fusarium-input-timeseries": _generate_fusarium_input_timeseries,
 }
 
