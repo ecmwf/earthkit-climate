@@ -6,6 +6,7 @@ import pytest
 from nbconvert.preprocessors import ExecutePreprocessor
 
 NOTEBOOK_PATHS = [
+    "docs/how-tos/agro_indicators.ipynb",
     "docs/tutorials/computing_indicators.ipynb",
     "docs/tutorials/dask_large_datasets.ipynb",
     "docs/how-tos/reparameterising_indicators.ipynb",
