@@ -93,4 +93,5 @@ To ensure efficient memory usage and maintain performance during Dask calculatio
 
 .. seealso::
 
+   * :doc:`../how-tos/dask-presets` explains how to apply memory presets and size a Dask Distributed cluster.
    * :doc:`../tutorials/dask_large_datasets`, a tutorial with concrete code examples demonstrating how to apply Dask chunking and calculate indicators on lazy arrays.
