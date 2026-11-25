@@ -305,30 +305,30 @@ def benchmark_indicator(
         monitor.start()
 
         start = time.perf_counter()
-        res = run_indicator(
-            func,
-            kwargs,
-            use_flox=use_flox,
-        )
-        if sink == "compute":
-            if hasattr(res, "compute"):
-                res.compute()
-            elif hasattr(res, "to_xarray"):
-                res.to_xarray().compute()
-        elif sink == "netcdf":
-            output_path = output_dir / f"{output_prefix}_repeat-{repeat + 1}.nc"
-            dataset = result_to_dataset(res)
-            to_netcdf_kwargs = {"compute": False}
-            if netcdf_engine:
-                to_netcdf_kwargs["engine"] = netcdf_engine
-            write_task = dataset.to_netcdf(output_path, **to_netcdf_kwargs)
-            dask.compute(write_task)
-        else:
-            raise ValueError("sink must be 'compute' or 'netcdf'")
-        duration = time.perf_counter() - start
-
-        monitor.stop()
-        monitor.join()
+        try:
+            res = run_indicator(func, kwargs, use_flox=use_flox)
+            if sink == "compute":
+                if hasattr(res, "compute"):
+                    res.compute()
+                elif hasattr(res, "to_xarray"):
+                    res.to_xarray().compute()
+            elif sink in {"netcdf", "zarr"}:
+                output_stem = f"{output_prefix}_repeat-{repeat + 1}"
+                dataset = result_to_dataset(res)
+                if sink == "zarr":
+                    write_task = dataset.to_zarr(output_dir / f"{output_stem}.zarr", mode="w", compute=False)
+                else:
+                    to_netcdf_kwargs = {"compute": False}
+                    if netcdf_engine:
+                        to_netcdf_kwargs["engine"] = netcdf_engine
+                    write_task = dataset.to_netcdf(output_dir / f"{output_stem}.nc", **to_netcdf_kwargs)
+                dask.compute(write_task)
+            else:
+                raise ValueError("sink must be 'compute', 'netcdf', or 'zarr'")
+            duration = time.perf_counter() - start
+        finally:
+            monitor.stop()
+            monitor.join()
 
         observed = monitor.memory_usage
         peak = max(max(observed) - baseline, 0.0) if observed else 0.0
@@ -400,14 +400,15 @@ def run_benchmark(
     --------
     python tests/integration/dask_performance.py --presets=high-memory,low-memory
     python tests/integration/dask_performance.py --chunks=time=75,lat=150,lon=300
+    python tests/integration/dask_performance.py --sink=zarr
     """
     selected_presets = parse_presets(presets)
     selected_indicators = parse_indicators(indicators)
     selected_modes = parse_modes(modes)
     read_chunks = read_chunks_or_default(parse_chunks(chunks))
 
-    if sink not in {"compute", "netcdf"}:
-        raise ValueError("sink must be 'compute' or 'netcdf'")
+    if sink not in {"compute", "netcdf", "zarr"}:
+        raise ValueError("sink must be 'compute', 'netcdf', or 'zarr'")
 
     validated_presets: list[ekc.dask.PresetName] = []
     for preset_name in selected_presets:
@@ -426,7 +427,8 @@ def run_benchmark(
         f"processes={processes}, use_nanny={use_nanny}, memory_limit={memory_limit}"
     )
     print(f"sink: {sink}")
-    print(f"netcdf_engine: {netcdf_engine or 'xarray default'}")
+    if sink == "netcdf":
+        print(f"netcdf_engine: {netcdf_engine or 'xarray default'}")
     print(f"presets: {', '.join(validated_presets)}")
 
     data_cache = load_sample_tasmax_data(read_chunks)

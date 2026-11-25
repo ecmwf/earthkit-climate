@@ -76,7 +76,7 @@ Understanding what is going on
 ------------------------------
 Dask is not simple, and understanding how dask is processing your data and the bottlenecks it may be hitting can be difficult. Here we provide a more detailed explanation of what are the challenges when setting up dask and what these presets are doing.
 
-Dask divides a workflow into several smaller tasks which form a dependency graph. T and A task can run once its inputs are available, and the scheduler generally favors advancing work already underway. These tasks are sent to the workers, which have several threads and processes available for running them. Workers retain completed results as long as a downstream task or client still needs them. Root-task queuing limits how much new work gets dispatched at the entrance to the graph, this is precisely what is controlled by the scheduler worker saturation parameter. There are two common places for a bottleneck to form.
+Dask divides a workflow into several smaller tasks which form a dependency graph.  A task can run once its inputs are available, and the scheduler generally favors advancing work already underway. These tasks are sent to the workers, which have several threads and processes available for running them. Workers retain completed results as long as a downstream task or client still needs them. Root-task queuing limits how much new work gets dispatched at the entrance to the graph, this is precisely what is controlled by the scheduler worker saturation parameter. There are two common places for a bottleneck to form.
 
 * Inside the graph. A rechunk or reduction may need several upstream chunks before it can produce one downstream chunk. Some inputs can finish quickly and sit on workers while the slowest input is still being read, transferred, or computed. A rechunk that changes both time and spatial boundaries can create many such dependencies at once.
 
@@ -90,6 +90,91 @@ Important I/O considerations
 The dask tasks typically include the I/O, this is, the read and write actions from the disk or the network. As the climate data is often stored in chunks (netCDF, zarr) or messages (GRIB2), the number of reads and writes can be very large, making the graph size grow a lot. They also include compression, which increases the CPU load. The shape of the chunks of data in the I/O can dramatically influence the time it takes to compute a workflow, even with a lot of computational resources available.
 
 Even if input storage chunks and Dask chunks serve different purposes. The storage format determines what must be fetched and decoded. The Dask chunk determines how much array data a task handles at once. For chunked NetCDF4/HDF5 or Zarr, it usually makes sense to align Dask chunk boundaries with storage chunk boundaries and, where useful, group several whole storage chunks into one Dask chunk. If two Dask tasks each touch part of the same compressed storage chunk, both may have to fetch and decode it. Grouping whole storage chunks reduces Dask task overhead and avoids splitting a storage chunk across tasks. The number of storage requests still depends on how those chunks are laid out physically. It is also important to consider than, even if the I/O bandwith is large, often the reads and writes suffer from latency (when they go through a network). This is often the case in HPC clusters or S3 object storages. Concurrency can mitigate this latency, but dependent requests, a serialized writer, or a cap on outstanding requests can put them directly on the critical path. For example it is well known that netCDF/HDF5 libraries do not support concurrent writes. Thus, we encourage using Zarr whenever possible, especially if the volume of data is large.
+
+Benchmark results
+-----------------
+
+The benchmark script (``tests/integration/dask_performance.py``) runs
+earthkit-climate's Degree Days Exceedance Date (DDED) indicator at annual
+frequency on the ACCESS-CM2 SSP5-8.5 far-future daily maximum temperature
+sample. It compares three modes on a local Dask Distributed cluster for each
+preset. The two standard modes use fixed-size time chunks (31 days by default),
+with Flox disabled or enabled. The third mode enables Flox and uses xarray's
+``TimeResampler("YS")`` to align time chunks with calendar years. In the
+benchmark, ``low-memory`` also halves the configured worker count, rounding
+down and keeping at least one worker, and uses one thread per worker.
+
+The results below all use earthkit-climate for DDED and include writing the
+result to a temporary NetCDF file in each timed repeat. The script can also
+compute the result in memory. The task count comes from the indicator's Dask
+graph before adding the write tasks. The memory columns report the maximum
+and mean across repeats of the peak increase over each repeat's starting
+resident memory, sampled across the benchmark process and its descendants.
+
+Install the ``test-benchmark`` extra to run the script from the repository root.
+NetCDF is the default output.
+
+.. code-block:: bash
+   python tests/integration/dask_performance.py --sink=netcdf
+
+.. list-table:: DDED benchmark with NetCDF output
+   :header-rows: 1
+
+   * - Preset
+     - Mode
+     - Tasks
+     - Mean time (s)
+     - Median time (s)
+     - Max peak increase (MiB)
+     - Mean peak increase (MiB)
+   * - ``high-memory``
+     - 1. No Flox (Standard)
+     - 19,962
+     - 21.500
+     - 21.678
+     - 434.0
+     - 206.9
+   * - ``high-memory``
+     - 2. Flox (Standard)
+     - 21,736
+     - 24.097
+     - 23.923
+     - 104.7
+     - 81.5
+   * - ``high-memory``
+     - 2b. Flox + TimeResampler
+     - 3,008
+     - 6.363
+     - 6.368
+     - 2,620.3
+     - 2,523.7
+   * - ``low-memory``
+     - 1. No Flox (Standard)
+     - 19,962
+     - 29.909
+     - 30.187
+     - 104.5
+     - 90.4
+   * - ``low-memory``
+     - 2. Flox (Standard)
+     - 21,736
+     - 32.505
+     - 32.386
+     - 103.5
+     - 46.7
+   * - ``low-memory``
+     - 2b. Flox + TimeResampler
+     - 3,008
+     - 7.276
+     - 7.275
+     - 1,349.9
+     - 1,259.2
+
+Results show that using TimeResampler significantly increases the memory usage, while making the computation much faster. The low memory preset helps to reduce the memory usage in this case, while increasing the mean time by only a 14%. Flox on its own does greatly reduce the memory usage whith a small mean time increase. Thus, it is advised to always use flox, and also TimeResampler, unless the memory available is small. In the latter case, TimeResampler can be avoided.
+
+.. seealso::
+
+   * :doc:`../concepts/scalability_performance` covers chunking, rechunking, and worker memory management for large datasets.
 
 References
 ----------
